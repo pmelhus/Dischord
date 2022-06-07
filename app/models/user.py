@@ -1,15 +1,19 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .creation_mixin import CrUpMixin
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, CrUpMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    bio = db.Column(db.String(190), nullable=True)
+    image_url = db.Column(db.String(255), nullable=True)
+
 
     @property
     def password(self):
@@ -26,5 +30,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'bio': self.bio,
+            'image_url': self.image_url
         }

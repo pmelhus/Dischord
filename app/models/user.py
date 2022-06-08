@@ -18,15 +18,15 @@ class User(db.Model, UserMixin, CrUpMixin):
 
     # has many
 
-    servers = db.relationship("Server", back_populates="user", cascade="all, delete-orphan", lazy="joined")
-    direct_messages = db.relationship("DirectMessage", back_populates="user", cascade="all, delete-orphan", lazy="joined")
-    channel_messages = db.relationship("ChannelMessage", back_populates="user", cascade="all, delete-orphan", lazy="joined")
-    direct_messages = db.relationship("DirectMessage", back_populates="user", cascade="all, delete-orphan", lazy="joined")
+    servers = db.relationship("Server", back_populates="owner", cascade="all, delete-orphan", lazy="joined")
+    direct_messages = db.relationship("DirectMessage", back_populates="owner", cascade="all, delete-orphan", lazy="joined")
+    channel_messages = db.relationship("ChannelMessage", back_populates="owner", cascade="all, delete-orphan", lazy="joined")
+    direct_messages = db.relationship("DirectMessage", back_populates="owner", cascade="all, delete-orphan", lazy="joined")
 
     # many to many
 
     memberships = db.relationship("Server", back_populates="members", secondary=server_members)
-    dm_members = db.relationship("Inboxes", back_populates="inbox_members", secondary=inbox_users)
+    dm_members = db.relationship("Inbox", back_populates="inbox_members", secondary=inbox_users)
 
 
 

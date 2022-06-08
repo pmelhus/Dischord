@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms import StringField, FileField
+from flask_wtf.file import FileAllowed
+from wtforms.validators import DataRequired, Email, ValidationError, Length, EqualTo
 from app.models import User
 
 
@@ -23,5 +24,11 @@ def username_exists(form, field):
 class SignUpForm(FlaskForm):
     username = StringField(
         'username', validators=[DataRequired(), username_exists])
-    email = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[DataRequired()])
+    email = StringField('Email', validators=[
+                        DataRequired(), user_exists, Email(), Length(min=6, max=40)])
+    password = StringField('Password', validators=[DataRequired(), Length(
+        min=6, max=20), EqualTo('confirm_password', message="Passwords must match")])
+    confirm_password = StringField('Confirm Password', validators=[
+                                   DataRequired(), Length(min=6, max=20)])
+    image_url = FileField('Image File', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
+    bio = StringField('Bio')

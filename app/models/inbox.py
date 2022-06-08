@@ -8,7 +8,7 @@ class Inbox(db.Model, CrUpMixin):
   id = db.Column(db.Integer, primary_key=True)
 
   # belongs to
-  direct_message = db.relationship("DirectMessage", back_populates='inboxes', lazy='joined')
+  direct_message = db.relationship("DirectMessage", back_populates='inbox', lazy='joined')
 
   # many to many
 

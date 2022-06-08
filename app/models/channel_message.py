@@ -12,8 +12,8 @@ class ChannelMessage(db.Model, CrUpMixin):
   edited = db.Column(db.Boolean())
 
   # belongs to one
-  owner = db.relationship("User", back_populates="channels", lazy="joined")
-  channel = db.relationship("Channel", back_populates="channels", lazy="joined")
+  owner = db.relationship("User", back_populates="channel_messages", lazy="joined")
+  channel = db.relationship("Channel", back_populates="channel_messages", lazy="joined")
 
   def to_dict(self):
     return {

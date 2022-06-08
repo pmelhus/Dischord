@@ -11,9 +11,10 @@ class DirectMessage(db.Model, CrUpMixin):
     edited = db.Column(db.Boolean)
 
     # belongs to one
-    owner = db.relationship("User", back_populates="direct_messages", lazy="joined")
-    inbox = db.relationship("Inbox", back_populates="direct_messages", lazy="joined")
+    inbox = db.relationship("Inbox", back_populates="direct_message", lazy="joined")
 
+    # belongs to many
+    owner = db.relationship("User", back_populates="direct_messages", lazy="joined")
 
     def to_dict(self):
       return {

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, FileField
 from flask_wtf.file import FileAllowed
-from wtforms.validators import DataRequired, Email, ValidationError, Length, EqualTo
+from wtforms.validators import DataRequired, ValidationError, Length, EqualTo
 from app.models import User
 
 

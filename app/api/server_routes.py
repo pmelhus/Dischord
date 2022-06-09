@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import db, Server
 from app.forms import ServerForm
+from ..utils.s3utils import (
+    upload_file_to_s3, allowed_file, get_unique_filename)
 
 server_routes = Blueprint('servers', __name__)
 
@@ -34,10 +36,22 @@ def server_form_submit():
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    if "image" in request.files:
+        image = request.files["image"]
+        if not allowed_file(image.filename):
+            return {"errors": "file type not permitted"}, 400
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        if "url" not in upload:
+            # then the upload le failed, oh no!
+            return upload, 400
+        url = upload["url"]
+
     params = {
         "user_id": form.data['user_id'],
         "name": form.data['name'],
-        "public": form.data['public']
+        "public": form.data['public'],
+        "image_url": url
     }
     # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')
     # print(form.data)

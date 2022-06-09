@@ -9,6 +9,13 @@ const loadServers = (servers) => {
   }
 }
 
+const addServer = (server) => {
+  return {
+    type: ADD_SERVER,
+    payload: server
+  }
+}
+
 export const genServers = () => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
   const [serversResponse] = await Promise.all([fetch("/api/servers/")]);
@@ -19,6 +26,33 @@ export const genServers = () => async (dispatch) => {
     return servers;
   }
 };
+
+export const createServer = (payload) =>
+	async (dispatch) => {
+    const {name, image, publicValue, user_id} = payload
+		const f = new FormData();
+    f.append('name', name);
+    f.append('public', publicValue)
+    f.append('user_id', user_id)
+    if (image) {
+      // console.log(image);
+      f.append("image", image);
+    }
+
+    const response = await fetch(`/api/servers/`, {
+			method: "POST",
+      body: f,
+		});
+
+    const serverData = await response.json();
+		// console.log(estateData);
+		if (response.ok) {
+			dispatch(addServer(serverData));
+			return serverData;
+		} else {
+			return serverData;
+		}
+	};
 
 const serverReducer = (state = {}, action) => {
   switch (action.type) {

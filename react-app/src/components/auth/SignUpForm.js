@@ -43,6 +43,7 @@ const SignUpForm = () => {
   }
 
   return (
+    
     <form onSubmit={onSignUp}>
       <div>
         {errors.map((error, ind) => (

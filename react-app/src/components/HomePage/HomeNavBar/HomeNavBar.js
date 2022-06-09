@@ -7,7 +7,7 @@ import ExploreServersButton from './ExploreServersButton'
 const HomeNavBar = () => {
   return(
     <>
-      <nav>
+      <nav className="home-nav-bar">
         <ul>
           <div>
             <HomeButton/>

@@ -14,11 +14,11 @@ const HomeButton = () => {
   }
 
   return (
-    <>
-      <button onClick={handleClick}>
+    <div className="home-button-div">
+      <button className="server-image-icon" onClick={handleClick}>
         <h1>HB</h1>
       </button>
-    </>
+    </div>
   );
 };
 

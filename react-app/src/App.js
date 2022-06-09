@@ -45,7 +45,7 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path="/channels/@me" exact={true}>
+        <ProtectedRoute path="/channels">
           <HomePage />
         </ProtectedRoute>
       </Switch>

@@ -9,8 +9,8 @@ const ServerList = () => {
     <div>
       {servers.map((server) => {
         return (
-          <div>
-            <button className="server-image-icon-button">
+          <div className="server-list-div">
+            <button className="server-image-icon-button trans">
               <img className="server-image-icon" src={server.image_url}></img>
             </button>
           </div>

@@ -12,8 +12,8 @@ const AddServerButton = () => {
   }
 
   return (
-    <>
-    <button onClick={handleClick}>
+    <div className="home-button-div">
+    <button className="server-image-icon" onClick={handleClick}>
         <h1>AS</h1>
     </button>
     {showServerModal && (
@@ -21,7 +21,7 @@ const AddServerButton = () => {
         <ServerCreateForm />
       </Modal>
     )}
-    </>
+    </div>
   )
 }
 

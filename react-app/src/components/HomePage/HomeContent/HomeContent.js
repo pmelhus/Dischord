@@ -1,4 +1,3 @@
-import "./HomeContent.css"
 
 const HomeContent = () => {
   return (

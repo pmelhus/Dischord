@@ -10,7 +10,9 @@ const ServerList = () => {
       {servers.map((server) => {
         return (
           <div>
-            <img src={server.image_url}></img>
+            <button className="server-image-icon-button">
+              <img className="server-image-icon" src={server.image_url}></img>
+            </button>
           </div>
         );
       })}

@@ -18,7 +18,7 @@ const addServer = (server) => {
 
 export const genServers = () => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  const [serversResponse] = await Promise.all([fetch("/api/servers")]);
+  const [serversResponse] = await Promise.all([fetch("/api/servers/")]);
   const [servers] = await Promise.all([serversResponse.json()]);
 
   if (serversResponse.ok) {

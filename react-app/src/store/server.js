@@ -37,8 +37,9 @@ export const createServer = (payload) => async (dispatch) => {
     // console.log(image);
     f.append("image", image);
   }
+  console.log(f)
 
-  const response = await fetch(`/api/servers`, {
+  const response = await fetch(`/api/servers/`, {
     method: "POST",
     body: f,
   });

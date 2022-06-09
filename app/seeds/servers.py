@@ -4,25 +4,25 @@ servers = [
     {
         "owner_id": 1,
         "name": "Demo Apples",
-        "image_url": "s3://dischord-profile-images/app.png",
+        "image_url": "https://dischord-profile-images.s3.amazonaws.com/app.png",
         "public": False
     },
     {
         "owner_id": 1,
         "name": "DEMOlisher",
-        "image_url": "s3://dischord-profile-images/demolisher.jpeg",
+        "image_url": "https://dischord-profile-images.s3.amazonaws.com/demolisher.jpeg",
         "public": False
     },
     {
         "owner_id": 3,
         "name": "Now or Never",
-        "image_url": "s3://dischord-profile-images/bon2.jpeg",
+        "image_url": "https://dischord-profile-images.s3.amazonaws.com/bon2.jpeg",
         "public": False
     },
     {
         "owner_id": 5,
         "name": "NezukoChan4Ever",
-        "image_url": "s3://dischord-profile-images/Nezuko-Sparkles.webp",
+        "image_url": "https://dischord-profile-images.s3.amazonaws.com/Nezuko-Sparkles.webp",
         "public": False
     }
 ]

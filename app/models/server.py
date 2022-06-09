@@ -9,8 +9,8 @@ class Server(db.Model, CrUpMixin):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    image_url = db.Column(db.String(255), nullable=True)
-    public = db.Column(db.Boolean())
+    image_url = db.Column(db.String(255))
+    public = db.Column(db.Boolean(), nullable=False)
 
     # belongs to one
     owner = db.relationship("User", back_populates="servers", lazy="joined")

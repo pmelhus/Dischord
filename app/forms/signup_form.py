@@ -30,5 +30,3 @@ class SignUpForm(FlaskForm):
         min=6, max=20), EqualTo('confirm_password', message="Passwords must match")])
     confirm_password = StringField('Confirm Password', validators=[
                                    DataRequired(), Length(min=6, max=20)])
-    image_url = FileField('Image File', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
-    bio = StringField('Bio')

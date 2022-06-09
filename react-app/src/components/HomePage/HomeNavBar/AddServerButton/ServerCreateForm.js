@@ -21,7 +21,7 @@ const ServerCreateForm = () => {
   const publicVal = checked
   const payload = {name, user_id, publicVal, image}
   dispatch(createServer(payload))
-
+// hallo
   };
 
   const updateImage = (e) => {

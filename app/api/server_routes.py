@@ -59,6 +59,7 @@ def server_form_submit():
         }
     else:
 
+
         params = {
             "owner_id": form.data['owner_id'],
             "name": form.data['name'],
@@ -80,7 +81,7 @@ def server_update(id):
     server = Server.query.get(id)
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(form.data, '==============')
+
     if "image" in request.files:
         image = request.files["image"]
         if not allowed_file(image.filename):
@@ -92,8 +93,8 @@ def server_update(id):
             return upload, 400
         url = upload["url"]
 
-    if form.validate_on_submit():
 
+    if form.validate_on_submit():
         server.owner_id = form.data['owner_id']
         server.name = form.data['name']
         server.public = form.data['public']

@@ -9,7 +9,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate } from "./store/session";
-import {genServers} from "./store/server"
+import { genServers } from "./store/server";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -27,33 +27,36 @@ function App() {
     })();
   }, [dispatch]);
 
-
   if (!loaded) {
     return null;
   }
 
   return (
     <BrowserRouter>
-      <Route exact path="/">
-        <NavBar />
-      </Route>
-      <Switch>
-        <Route path="/login" exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path="/register" exact={true}>
-          <SignUpForm />
-        </Route>
-        <ProtectedRoute path="/users" exact={true}>
-          <UsersList />
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId" exact={true}>
-          <User />
-        </ProtectedRoute>
-        <ProtectedRoute path="/channels">
-          <HomePage />
-        </ProtectedRoute>
-      </Switch>
+      {loaded && (
+        <>
+          <Route exact path="/">
+            <NavBar />
+          </Route>
+          <Switch>
+            <Route path="/login" exact={true}>
+              <LoginForm />
+            </Route>
+            <Route path="/register" exact={true}>
+              <SignUpForm />
+            </Route>
+            <ProtectedRoute path="/users" exact={true}>
+              <UsersList />
+            </ProtectedRoute>
+            <ProtectedRoute path="/users/:userId" exact={true}>
+              <User />
+            </ProtectedRoute>
+            <ProtectedRoute path="/channels">
+              <HomePage />
+            </ProtectedRoute>
+          </Switch>
+        </>
+      )}
     </BrowserRouter>
   );
 }

@@ -15,25 +15,23 @@ const ServerEditModal = ({ setShowEditModal }) => {
   const history = useHistory();
   const [privacy, setPrivacy] = useState(currServer?.public);
   const [image, setImage] = useState(null);
-  const privacyBoolean = (currServer?.name === 'true')
+  const privacyBoolean = currServer?.name === "true";
   const [name, setName] = useState(currServer?.name);
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [changed, setChanged] = useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     if (e.target.value === "true") {
-
       setPrivacy(true);
     }
-    if (e.target.value === 'false') {
+    if (e.target.value === "false") {
       setPrivacy(false);
     }
-
-
+    setChanged(true);
   };
-
 
   const updateImage = (e) => {
     const file = e.target.files[0];
@@ -44,6 +42,9 @@ const ServerEditModal = ({ setShowEditModal }) => {
     e.preventDefault();
     const owner_id = currServer?.owner_id;
     const id = currServer?.id;
+    if (!changed) {
+      setPrivacy(currServer?.public);
+    }
 
     const payload = { id, name, privacy, image, owner_id };
 
@@ -103,22 +104,35 @@ const ServerEditModal = ({ setShowEditModal }) => {
               <h4>Private</h4>
             </>
           )}
-          <select placeholder={currServer?.public} value={privacy.value} onChange={handleChange}>
-            <option value={true}>Public</option>
-            <option value={false}>Private</option>
+          <select value={privacy} onChange={handleChange}>
+            {privacy ? (
+              <>
+                <option selected value={true}>
+                  Public
+                </option>
+                <option value={false}>Private</option>
+              </>
+            ) : (
+              <>
+                <option selected value={false}>
+                  Private
+                </option>
+                <option value={true}>Public</option>
+              </>
+            )}
           </select>
           Select your server's privacy. (Public servers can be seen by other
           users)
         </label>
       </div>
       {Object.keys(errors).length > 0 && (
-				<div className="form-errors">
-					{Object.keys(errors).map(
-						// (key) => `${errors[key]}`
-						(key) => `${errors[key]}`
-					)}
-				</div>
-			)}
+        <div className="form-errors">
+          {Object.keys(errors).map(
+            // (key) => `${errors[key]}`
+            (key) => `${errors[key]}`
+          )}
+        </div>
+      )}
       <div className="server-overview-buttons">
         <button onClick={handleSubmit}>Save Changes</button>
         <button onClick={handleDelete}>Delete Server</button>

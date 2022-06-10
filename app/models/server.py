@@ -12,6 +12,7 @@ class Server(db.Model, CrUpMixin):
     image_url = db.Column(db.String(255))
     public = db.Column(db.Boolean(), nullable=False)
 
+
     # belongs to one
     owner = db.relationship("User", back_populates="servers", lazy="joined")
 

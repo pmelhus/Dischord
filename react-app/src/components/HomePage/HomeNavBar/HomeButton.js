@@ -1,5 +1,7 @@
 import {useHistory} from "react-router-dom"
 
+import {Modal} from "../../../context/Modal"
+
 const HomeButton = () => {
 
   const history = useHistory()

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Modal } from "../../../context/Modal";
 import ServerEditModal from "./ServerEditModal";
+import ChannelList from "./ChannelList";
 
 const HomeContent = () => {
   //react
@@ -44,15 +45,15 @@ const HomeContent = () => {
       ) : (
         <div className="server-sidebar-container">
           <nav>
-              <button
-                id="server-name-div-button"
-                onClick={() => setShowDropdown(true)}
-              >
-            <div className="server-name-div">
-              <h3>{currServer?.name}</h3>
+            <button
+              id="server-name-div-button"
+              onClick={() => setShowDropdown(true)}
+            >
+              <div className="server-name-div">
+                <h3>{currServer?.name}</h3>
                 {showDropdown ? (
                   <>
-                  <i className="fa-solid fa-xmark"></i>
+                    <i className="fa-solid fa-xmark"></i>
                   </>
                 ) : (
                   <>
@@ -60,15 +61,15 @@ const HomeContent = () => {
                   </>
                 )}
               </div>
-              </button>
+            </button>
 
-              {showEditModal && (
-                <div>
-                  <Modal onClose={() => setShowEditModal(false)}>
-                    <ServerEditModal setShowEditModal={setShowEditModal} />
-                  </Modal>
-                </div>
-              )}
+            {showEditModal && (
+              <div>
+                <Modal onClose={() => setShowEditModal(false)}>
+                  <ServerEditModal setShowEditModal={setShowEditModal} />
+                </Modal>
+              </div>
+            )}
             {showDropdown && (
               <div className="dropdown-container">
                 <ul id="profile-dropdown-nav">
@@ -81,7 +82,9 @@ const HomeContent = () => {
                 </ul>
               </div>
             )}
-            <div className="channel-list-div">Channels</div>
+            <div className="channel-list-container">
+              <ChannelList />
+            </div>
             <div className="server-nav-bottom"></div>
           </nav>
           <div className="server-userinfo-div">

@@ -243,5 +243,73 @@ border-radius: 35%;
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+}
 
+.channel-list-text-channel {
+display: flex;
+ align-items: center;
+ padding-top: 10px;
+ margin-left: 5px;
+ color:rgba(204, 205, 206, 0.778);
+ height: 20px;
+}
+
+.channel-list-text-channel  p {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  margin-left: 5px;
+  left: 14px;
+  font-size: 14px;
+}
+
+.channel-text-channel-div {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+#channel-dropdown-button {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 0;
+}
+
+.channel-list-text-channel:hover {
+  color: rgba(229, 230, 232, 0.968);
+  cursor: pointer;
+}
+
+#channel-add {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 0;
+  color:rgba(204, 205, 206, 0.778);
+  padding-top: 6px;
+  padding-right: 10px;
+}
+
+#channel-add:hover {
+  color: rgba(229, 230, 232, 0.968);
+  cursor: pointer;
+}
+
+.channel-general-button {
+  padding: 0;
+  border: none;
+  background: none;
+
+  color:rgba(204, 205, 206, 0.778);
+  display: flex;
+  align-items: center;
+margin-left: 14px;
+margin-bottom: 10px;
+}
+
+.channel-general-button p {
+  padding-left: 5px;
+  font-size: 15px;
+  padding-bottom: 2px;
 }

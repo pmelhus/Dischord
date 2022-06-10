@@ -9,3 +9,27 @@ html, body {
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
 }
+
+#loading-icon {
+  box-sizing: border-box;
+  animation: spin-animation 1s infinite;
+  border-radius: 50%;
+  width: 500px;
+  height: 500px;
+  position: fixed;
+}
+
+.loading-icon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}

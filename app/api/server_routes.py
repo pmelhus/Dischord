@@ -64,9 +64,7 @@ def server_form_submit():
             "name": form.data['name'],
             "public": form.data['public']
         }
-    # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')
-    # print(form.data)
-    # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')
+
     if form.validate_on_submit():
         server = Server(**params)
         db.session.add(server)
@@ -79,11 +77,10 @@ def server_form_submit():
 @server_routes.route('/<int:id>', methods=["PATCH"])
 @login_required
 def server_update(id):
-
     server = Server.query.get(id)
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
+    print(form.data, '==============')
     if "image" in request.files:
         image = request.files["image"]
         if not allowed_file(image.filename):
@@ -112,7 +109,7 @@ def server_update(id):
 @server_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def server_delete(id):
-    print('====================================')
+    # print('====================================')
     server = Server.query.get(id)
     if not server:
         return {"errors": f"No server with id {id} exists"}, 404

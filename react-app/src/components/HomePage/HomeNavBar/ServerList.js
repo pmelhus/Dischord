@@ -14,14 +14,14 @@ const ServerList = () => {
 
   return (
     <div>
-      {servers.map((server) => {
+      {servers && servers.map((server) => {
         return (
           <div key={server.id} className="server-list-div">
             <button
               className="server-image-icon-button"
               onClick={() => handleClick(server)}
             >
-              {server.image_url ? (
+              {server?.image_url ? (
                 <img
                   alt="Server profile icon"
                   className="server-image-icon"
@@ -29,7 +29,7 @@ const ServerList = () => {
                 ></img>
               ) : (
                 <h2 className="server-image-icon">
-                  {server?.name.split("")[0]}
+                  {server?.name?.split("")[0]}
                 </h2>
               )}
             </button>

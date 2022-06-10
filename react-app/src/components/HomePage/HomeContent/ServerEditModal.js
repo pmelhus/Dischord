@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import { editServer, deleteServer } from "../../../store/server";
+import { Modal } from "../../../context/Modal";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 
 const ServerEditModal = ({ setShowEditModal }) => {
   const { pathname } = useLocation();
@@ -13,16 +15,25 @@ const ServerEditModal = ({ setShowEditModal }) => {
   const history = useHistory();
   const [privacy, setPrivacy] = useState(currServer?.public);
   const [image, setImage] = useState(null);
+  const privacyBoolean = (currServer?.name === 'true')
   const [name, setName] = useState(currServer?.name);
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
-  // console.log(currServer)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleChange = (e) => {
-    // console.log(e.target.value)
-    setPrivacy(e.target.value);
+    console.log(e.target.value)
+    if (e.target.value === "true") {
+
+      setPrivacy(true);
+    }
+    if (e.target.value === 'false') {
+      setPrivacy(false);
+    }
+
+
   };
-  // console.log(privacy)
+
 
   const updateImage = (e) => {
     const file = e.target.files[0];
@@ -33,8 +44,9 @@ const ServerEditModal = ({ setShowEditModal }) => {
     e.preventDefault();
     const owner_id = currServer?.owner_id;
     const id = currServer?.id;
+
     const payload = { id, name, privacy, image, owner_id };
-    // console.log(payload)
+
     const editedServer = await dispatch(editServer(payload));
 
     if (editedServer.errors) {
@@ -48,19 +60,9 @@ const ServerEditModal = ({ setShowEditModal }) => {
     }
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = (e) => {
     e.preventDefault();
-    const deletedServer = await dispatch(deleteServer(currServer));
-    if (deletedServer && deletedServer.errors) {
-      // console.log(newEstate.errors)
-      setErrors(deletedServer.errors);
-      return;
-    } else {
-      setName("");
-      setImage(null);
-      setShowEditModal(false);
-      history.push("/channels/@me");
-    }
+    setShowDeleteModal(true);
   };
 
   return (
@@ -101,7 +103,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
               <h4>Private</h4>
             </>
           )}
-          <select onChange={handleChange}>
+          <select placeholder={currServer?.public} value={privacy.value} onChange={handleChange}>
             <option value={true}>Public</option>
             <option value={false}>Private</option>
           </select>
@@ -109,10 +111,30 @@ const ServerEditModal = ({ setShowEditModal }) => {
           users)
         </label>
       </div>
+      {Object.keys(errors).length > 0 && (
+				<div className="form-errors">
+					{Object.keys(errors).map(
+						// (key) => `${errors[key]}`
+						(key) => `${errors[key]}`
+					)}
+				</div>
+			)}
       <div className="server-overview-buttons">
         <button onClick={handleSubmit}>Save Changes</button>
         <button onClick={handleDelete}>Delete Server</button>
       </div>
+      {showDeleteModal && (
+        <Modal>
+          <DeleteConfirmModal
+            currServer={currServer}
+            setShowDeleteModal={setShowDeleteModal}
+            setShowEditModal={setShowEditModal}
+            setName={setName}
+            setErrors={setErrors}
+            setImage={setImage}
+          />
+        </Modal>
+      )}
     </form>
   );
 };

@@ -16,12 +16,17 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (loaded) {
+      dispatch(genServers());
+    }
+  }, [dispatch, loaded]);
+  useEffect(() => {
     (async () => {
       await dispatch(authenticate());
-      await dispatch(genServers())
       setLoaded(true);
     })();
   }, [dispatch]);
+
 
   if (!loaded) {
     return null;

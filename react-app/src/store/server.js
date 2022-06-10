@@ -66,7 +66,7 @@ export const editServer = (data) => async (dispatch) => {
   // console.log(data)
   // console.log("------------editcharterTHUNK");
   const { id, name, privacy, owner_id, image } = data;
-  // console.log(data, '======================data')
+  console.log(data, '======================data')
 
   const f = new FormData();
 
@@ -86,7 +86,7 @@ export const editServer = (data) => async (dispatch) => {
   ]);
 
   const serverData = await response.json();
-  console.log(serverData);
+  // console.log(serverData);
   dispatch(addServer(serverData));
   return { ...serverData };
 };

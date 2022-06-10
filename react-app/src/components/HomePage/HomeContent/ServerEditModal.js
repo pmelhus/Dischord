@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
+import { editServer, deleteServer } from "../../../store/server";
 
-const ServerEditModal = () => {
+const ServerEditModal = ({ setShowEditModal }) => {
   const { pathname } = useLocation();
-
-  const [privacy, setPrivacy] = useState(null);
-  const [name, setName] = useState(null);
-  const [image, setImage] = useState(null);
-  const sessionUserId = useSelector((state) => state.session.user.id);
   const servers = useSelector((state) => Object.values(state.servers));
   const currServer = servers?.find(
     (server) => server.id === parseInt(pathname.split("/").pop())
   );
-
+  const sessionUserId = useSelector((state) => state.session.user.id);
+  const history = useHistory();
+  const [privacy, setPrivacy] = useState(currServer?.public);
+  const [image, setImage] = useState(null);
+  const [name, setName] = useState(currServer?.name);
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState({});
   // console.log(currServer)
 
   const handleChange = (e) => {
@@ -27,44 +29,77 @@ const ServerEditModal = () => {
     setImage(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const publicVal = privacy;
-    const payload = { name, privacy, image };
+    const owner_id = currServer?.owner_id;
+    const id = currServer?.id;
+    const payload = { id, name, privacy, image, owner_id };
+    // console.log(payload)
+    const editedServer = await dispatch(editServer(payload));
 
+    if (editedServer.errors) {
+      // console.log(newEstate.errors)
+      setErrors(editedServer.errors);
+      return;
+    } else {
+      setName("");
+      setImage(null);
+      setShowEditModal(false);
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const deletedServer = await dispatch(deleteServer(currServer));
+    if (deletedServer && deletedServer.errors) {
+      // console.log(newEstate.errors)
+      setErrors(deletedServer.errors);
+      return;
+    } else {
+      setName("");
+      setImage(null);
+      setShowEditModal(false);
+      history.push("/channels/@me");
+    }
   };
 
   return (
     <form>
       <div className="server-edit-form-msg">
-        <h2>Edit your server</h2>
+        <h2>Server Overview</h2>
       </div>
       <div>
-        <img
-          alt="profile preview"
-          className="server-image-icon-edit"
-          src={currServer.image_url}
-        />
+        {currServer?.image_url ? (
+          <img
+            alt="profile preview"
+            className="server-image-icon-edit"
+            src={currServer?.image_url}
+          />
+        ) : (
+          <h2 className="server-image-icon-edit">
+            {currServer?.name.split("")[0]}
+          </h2>
+        )}
         <label>Upload image</label>
         <input type="file" accept="image/*" onChange={updateImage}></input>
       </div>
       <div>
         <label>Server name</label>
-        <input
-          value={currServer.name}
-          onChange={(e) => setName(e.target.value)}
-        ></input>
+        <input value={name} onChange={(e) => setName(e.target.value)}></input>
       </div>
       <div>
         <label>
-          {currServer.public ? (
-            <p>
-              Server is currently<h4>Public</h4>
-            </p>
+          {currServer?.public ? (
+            <>
+              <p>Server is currently</p>
+              <h4>Public</h4>
+            </>
           ) : (
-            <p>
-              Server is currently: <h4>Private</h4>
-            </p>
+            <>
+              <p>Server is currently:</p>
+
+              <h4>Private</h4>
+            </>
           )}
           <select onChange={handleChange}>
             <option value={true}>Public</option>
@@ -74,7 +109,10 @@ const ServerEditModal = () => {
           users)
         </label>
       </div>
-      <button onClick={handleSubmit}>Save Changes</button>
+      <div className="server-overview-buttons">
+        <button onClick={handleSubmit}>Save Changes</button>
+        <button onClick={handleDelete}>Delete Server</button>
+      </div>
     </form>
   );
 };

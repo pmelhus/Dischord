@@ -44,12 +44,12 @@ const HomeContent = () => {
       ) : (
         <div className="server-sidebar-container">
           <nav>
-            <div className="server-name-div">
-              <h4>{currServer?.name}</h4>
               <button
                 id="server-name-div-button"
                 onClick={() => setShowDropdown(true)}
               >
+            <div className="server-name-div">
+              <h3>{currServer?.name}</h3>
                 {showDropdown ? (
                   <>
                   <i className="fa-solid fa-xmark"></i>
@@ -59,16 +59,16 @@ const HomeContent = () => {
                     <i className="fa-solid fa-angle-down"></i>
                   </>
                 )}
+              </div>
               </button>
 
               {showEditModal && (
                 <div>
                   <Modal onClose={() => setShowEditModal(false)}>
-                    <ServerEditModal />
+                    <ServerEditModal setShowEditModal={setShowEditModal} />
                   </Modal>
                 </div>
               )}
-            </div>
             {showDropdown && (
               <div className="dropdown-container">
                 <ul id="profile-dropdown-nav">

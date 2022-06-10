@@ -18,7 +18,7 @@ const AddServerButton = () => {
     </button>
     {showServerModal && (
       <Modal onClose={() => setShowServerModal(false)}>
-        <ServerCreateForm />
+        <ServerCreateForm setShowServerModal={setShowServerModal} />
       </Modal>
     )}
     </div>

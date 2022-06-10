@@ -10,18 +10,18 @@ const ServerCreateForm = () => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
-  const user_id= useSelector(state => state.session.user.id)
+  const user_id = useSelector((state) => state.session.user.id);
 
   const handleChange = () => {
     setChecked(!checked);
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  const publicVal = checked
-  const payload = {name, user_id, publicVal, image}
-  dispatch(createServer(payload))
-// hallo
+    e.preventDefault();
+    const publicVal = checked;
+    const payload = { name, user_id, publicVal, image };
+    dispatch(createServer(payload));
+    // hallo
   };
 
   const updateImage = (e) => {
@@ -31,18 +31,30 @@ const ServerCreateForm = () => {
   return (
     <>
       <form className="server-create-form">
-        <label>Upload</label>
-        <input type="file" accept="image/*" onChange={updateImage}></input>
-        <label>Server name</label>
-        <input onChange={(e) => setName(e.target.value)}></input>
-        <label>
-          <input
-            type="checkbox"
-            checked={checked}
-            onChange={handleChange}
-          ></input>
-          Select to make this a public server that others can see!
-        </label>
+        <div className="server-create-form-msg">
+          <h2>Customize your server</h2>
+          <p>
+            Give your new server a personality with a name and an icon.<br></br> You can
+            always change it later.
+          </p>
+        </div>
+        <div>
+          <input type="file" accept="image/*" onChange={updateImage}></input>
+        </div>
+        <div>
+          <label>Server name</label>
+          <input onChange={(e) => setName(e.target.value)}></input>
+        </div>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={handleChange}
+            ></input>
+            Select to make this a public server that others can see!
+          </label>
+        </div>
         <button onClick={handleSubmit}>Create Server</button>
       </form>
     </>

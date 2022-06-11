@@ -6,15 +6,20 @@ const ServerList = () => {
   const history = useHistory();
 
   const servers = useSelector((state) => Object.values(state.servers));
+  const channels = useSelector((state) => Object.values(state.channels))
+
+
 
   const handleClick = (server) => {
-    // console.log('=====', server)
-    return history.push(`/channels/${server.id}`);
+    const serverChannels = channels?.filter(channel=> channel.server_id === server.id)
+    console.log('=====', serverChannels)
+
+    return history.push(`/channels/${server.id}/${serverChannels[0]?.id}`);
   };
 
   return (
     <div>
-      {servers && servers.map((server) => {
+      {servers && channels && servers.map((server) => {
         return (
           <div key={server.id} className="server-list-div">
             <button

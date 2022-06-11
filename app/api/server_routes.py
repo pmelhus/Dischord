@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, Server
+from app.models import db, Server, Channel
 from app.forms import ServerForm
 from ..utils.s3utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
@@ -70,6 +70,15 @@ def server_form_submit():
         server = Server(**params)
         db.session.add(server)
         db.session.commit()
+
+
+        channel = Channel(**{
+            'server_id': server.id,
+            'name': 'general',
+        })
+        db.session.add(channel)
+        db.session.commit()
+
         return server.to_dict()
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401

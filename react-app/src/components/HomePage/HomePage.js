@@ -17,17 +17,11 @@ const HomePage = () => {
 
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    (async () => {
-      await setLoadingScreen(true);
-      await setTimeout(async () => {
-        await dispatch(genServers(sessionUser.id));
-        if (parseInt(pathname.split("/")[2])) {
-          await dispatch(genChannels(parseInt(pathname.split("/")[2])));
-        }
-        await setLoadingScreen(false);
-      }, 1000);
-    })();
+  useEffect(async () => {
+    await dispatch(genServers(sessionUser.id));
+    if (parseInt(pathname.split("/")[2])) {
+      await dispatch(genChannels(parseInt(pathname.split("/")[2])));
+    }
   }, [dispatch, pathname]);
 
   return (

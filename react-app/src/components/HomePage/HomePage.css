@@ -308,6 +308,7 @@ align-items: center;
 margin-left: 5px;
 display: flex;
 align-items: center;
+cursor: pointer;
 }
 
 .channel-general-button p {
@@ -338,7 +339,7 @@ justify-content: space-between;
   height: 100%;
 }
 
-#channel-settings {
+.channel-settings {
   padding: 0;
   border: none;
   background: none;
@@ -346,4 +347,10 @@ justify-content: space-between;
   color:rgba(204, 205, 206, 0.778);
   cursor: pointer;
   padding-right: 4px;
+  display: none;
+
+}
+
+.channel-general-container:hover .channel-settings {
+display:block;
 }

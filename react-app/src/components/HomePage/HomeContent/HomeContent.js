@@ -17,7 +17,7 @@ const HomeContent = () => {
 
   // finds server based on url params id
   const currServer = servers?.find(
-    (server) => server.id === parseInt(pathname.split("/").pop())
+    (server) => server.id === parseInt(pathname.split("/")[2])
   );
 
   const openMenu = () => {

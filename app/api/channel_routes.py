@@ -5,6 +5,7 @@ from app.forms import ChannelForm
 
 channel_routes = Blueprint('channels', __name__)
 
+
 def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
@@ -15,17 +16,20 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{error}')
     return errorMessages
 
-@channel_routes.route('/')
-@login_required
-def channels():
-  channels = Channel.query.all()
-  return {'channels': [channel.to_dict() for channel in channels]}
 
-@channel_routes.route('/<int:id>')
+@channel_routes.route('/server/<int:id>')
 @login_required
-def channel(id):
-    channel = Channel.query.get(id)
-    return channel.to_dict()
+def channels(id):
+
+    channels = Channel.query.filter(Channel.server_id == id).all()
+    return {'channels': [channel.to_dict() for channel in channels]}
+
+
+# @channel_routes.route('/server/<int:id>')
+# @login_required
+# def channel(id):
+#     channel = Channel.query.get(id)
+#     return channel.to_dict()
 
 @channel_routes.route('/', methods=["POST"])
 @login_required
@@ -48,6 +52,7 @@ def channel_form_submit():
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+
 @channel_routes.route('/<int:id>', methods=["PATCH"])
 @login_required
 def server_update(id):
@@ -59,16 +64,17 @@ def server_update(id):
     # print(form.data)
     # print('=-aptch=-0=-0=-0=-0=-0=-0')
     if form.validate_on_submit():
-    #   print('--------form is validated')
-      channel.server_id = form.data['server_id']
-      channel.name = form.data['name']
-      channel.description = form.data['description']
-      db.session.commit()
-      return channel.to_dict()
+        #   print('--------form is validated')
+        channel.server_id = form.data['server_id']
+        channel.name = form.data['name']
+        channel.description = form.data['description']
+        db.session.commit()
+        return channel.to_dict()
     else:
-    #   print('*/-/*-*/-/*-*-/*-/-*/*-/errrrrrrorsrs*/-*/-*-/*/-/*--/*/*-/*-*/-*-/')
-    #   print(form.errors)
-      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        #   print('*/-/*-*/-/*-*-/*-/-*/*-/errrrrrrorsrs*/-*/-*-/*/-/*--/*/*-/*-*/-*-/')
+        #   print(form.errors)
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 @channel_routes.route('/<int:id>', methods=["DELETE"])
 @login_required

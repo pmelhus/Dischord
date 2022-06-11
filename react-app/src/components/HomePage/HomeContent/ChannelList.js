@@ -4,7 +4,7 @@ const ChannelList = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleClick = () => {
-    setShowDropdown(true);
+    setShowDropdown(!showDropdown);
   };
 
   useEffect(() => {
@@ -13,10 +13,6 @@ const ChannelList = () => {
     const closeMenu = () => {
       setShowDropdown(false);
     };
-
-    document.addEventListener("click", closeMenu);
-
-    return () => document.removeEventListener("click", closeMenu);
   }, [showDropdown]);
 
   return (
@@ -47,6 +43,12 @@ const ChannelList = () => {
             <p>general</p>
           </button>
         </div>
+        {showDropdown && (
+
+          <>
+          
+          </>
+        )}
       </div>
     </>
   );

@@ -5,6 +5,7 @@ import { Modal } from "../../../context/Modal";
 import ServerEditModal from "./ServerEditModal";
 import ChannelList from "./ChannelList";
 
+
 const HomeContent = () => {
   //react
   const [showEditModal, setShowEditModal] = useState(false);
@@ -92,6 +93,7 @@ const HomeContent = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };

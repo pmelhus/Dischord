@@ -324,6 +324,7 @@ margin: 0 7px;
 margin-top: 5px;
 display: flex;
 align-items: center;
+justify-content: space-between;
 }
 
 .channel-general-container:hover {
@@ -335,4 +336,14 @@ align-items: center;
   background-color: #36393f;
   width: 100%;
   height: 100%;
+}
+
+#channel-settings {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 0;
+  color:rgba(204, 205, 206, 0.778);
+  cursor: pointer;
+  padding-right: 4px;
 }

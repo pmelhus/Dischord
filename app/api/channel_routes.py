@@ -39,8 +39,10 @@ def channel_form_submit():
 
     params = {
         "server_id": form.data['server_id'],
-        "name": form.data['name']
+        "name": form.data['name'],
+        "description": form.data['description']
     }
+
     # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')
     # print(form.data)
     # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')

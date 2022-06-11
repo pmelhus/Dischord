@@ -35,18 +35,13 @@ export const genChannels = (id) => async (dispatch) => {
 };
 
 export const createChannel = (payload) => async (dispatch) => {
-  const { name, image, publicValue, owner_id } = payload;
+  const { name, description, server_id} = payload;
   const f = new FormData();
   f.append("name", name);
-  f.append("public", publicValue);
-  f.append("owner_id", owner_id);
-  if (image) {
-    // console.log(image);
-    f.append("image", image);
-  }
-  console.log(f);
+  f.append("description", description);
+  f.append("server_id", server_id);
 
-  const response = await fetch(`/api/channels`, {
+  const response = await fetch(`/api/channels/`, {
     method: "POST",
     body: f,
   });

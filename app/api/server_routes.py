@@ -19,10 +19,10 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@server_routes.route('/')
+@server_routes.route('/owner_id/<int:id>')
 @login_required
-def servers():
-    servers = Server.query.all()
+def servers(id):
+    servers = Server.query.filter(Server.owner_id == id).all()
     return {'servers': [server.to_dict() for server in servers]}
 
 

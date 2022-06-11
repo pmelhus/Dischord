@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import configureStore from "./store";
 import { ModalProvider } from "./context/Modal";
+import {LoadingModalProvider} from "./context/LoadingModal"
 
 const store = configureStore();
 
@@ -12,7 +13,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ModalProvider>
-        <App />
+        <LoadingModalProvider>
+          <App />
+        </LoadingModalProvider>
       </ModalProvider>
     </Provider>
   </React.StrictMode>,

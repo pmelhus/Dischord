@@ -1,0 +1,32 @@
+#loading-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+#loading-modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  backdrop-filter: blur(2px);
+}
+
+#modal-content {
+  position: absolute;
+  height: fit-content;
+  min-height: 300px;
+  min-width: 300px;
+  width: fit-content;
+  padding: 1em;
+  background-color: white;
+  border: none;
+  border-radius: 16px;
+}

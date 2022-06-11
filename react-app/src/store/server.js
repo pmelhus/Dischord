@@ -23,9 +23,9 @@ const removeServer = (server) => {
   };
 };
 
-export const genServers = () => async (dispatch) => {
+export const genServers = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  const [serversResponse] = await Promise.all([fetch("/api/servers/")]);
+  const [serversResponse] = await Promise.all([fetch(`/api/servers/owner_id/${id}`)]);
   const [servers] = await Promise.all([serversResponse.json()]);
 
   if (serversResponse.ok) {

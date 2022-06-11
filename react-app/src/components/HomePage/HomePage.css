@@ -52,6 +52,7 @@ border-radius: 35%;
 .home-nav-bar {
   background-color: #202225;
   padding: 0;
+  padding-right: 12px;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -243,5 +244,106 @@ border-radius: 35%;
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+}
 
+.channel-list-text-channel {
+display: flex;
+ align-items: center;
+ padding-top: 10px;
+ margin-left: 5px;
+ color:rgba(204, 205, 206, 0.778);
+ height: 20px;
+}
+
+.channel-list-text-channel  p {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  margin-left: 5px;
+  left: 14px;
+  font-size: 14px;
+}
+
+.channel-text-channel-div {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+#channel-dropdown-button {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 0;
+}
+
+.channel-list-text-channel:hover {
+  color: rgba(229, 230, 232, 0.968);
+  cursor: pointer;
+}
+
+#channel-add {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 0;
+  color:rgba(204, 205, 206, 0.778);
+  padding-top: 6px;
+  padding-right: 10px;
+}
+
+#channel-add:hover {
+  color: rgba(229, 230, 232, 0.968);
+  cursor: pointer;
+}
+
+.channel-general-button {
+  padding: 0;
+  border: none;
+  background: none;
+
+  color:rgba(204, 205, 206, 0.778);
+  display: flex;
+  align-items: center;
+margin-left: 5px;
+display: flex;
+align-items: center;
+}
+
+.channel-general-button p {
+  padding-left: 5px;
+  font-size: 15px;
+  /* padding-bottom: 2px; */
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.channel-general-container {
+height: 32px;
+margin: 0 7px;
+margin-top: 5px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.channel-general-container:hover {
+  background-color: rgba(229, 230, 232, 0.214);
+  cursor: pointer;
+}
+
+.server-chat-container {
+  background-color: #36393f;
+  width: 100%;
+  height: 100%;
+}
+
+#channel-settings {
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 0;
+  color:rgba(204, 205, 206, 0.778);
+  cursor: pointer;
+  padding-right: 4px;
 }

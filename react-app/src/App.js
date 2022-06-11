@@ -10,20 +10,21 @@ import User from "./components/User";
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate } from "./store/session";
 import { genServers } from "./store/server";
+import { Modal, LoadingModal } from "./context/LoadingModal";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (loaded) {
-      dispatch(genServers());
-    }
-  }, [dispatch, loaded]);
+
   useEffect(() => {
     (async () => {
+      await setLoadingScreen(true);
       await dispatch(authenticate());
-      setLoaded(true);
+      await setLoadingScreen(false);
+      await setLoaded(true);
     })();
   }, [dispatch]);
 
@@ -32,31 +33,35 @@ function App() {
   }
 
   return (
+      
     <BrowserRouter>
-      {loaded && (
-        <>
-          <Route exact path="/">
-            <NavBar />
+        <Route exact path="/">
+          <NavBar />
+        </Route>
+        <Switch>
+          <Route path="/login" exact={true}>
+            <LoginForm />
           </Route>
-          <Switch>
-            <Route path="/login" exact={true}>
-              <LoginForm />
-            </Route>
-            <Route path="/register" exact={true}>
-              <SignUpForm />
-            </Route>
-            <ProtectedRoute path="/users" exact={true}>
-              <UsersList />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users/:userId" exact={true}>
-              <User />
-            </ProtectedRoute>
-            <ProtectedRoute path="/channels">
-              <HomePage />
-            </ProtectedRoute>
-          </Switch>
-        </>
-      )}
+          <Route path="/register" exact={true}>
+            <SignUpForm />
+          </Route>
+        </Switch>
+        {loaded && (
+          <>
+            <Switch>
+              <ProtectedRoute path="/users" exact={true}>
+                <UsersList />
+              </ProtectedRoute>
+              <ProtectedRoute path="/users/:userId" exact={true}>
+                <User />
+              </ProtectedRoute>
+              <ProtectedRoute path="/channels">
+                <HomePage />
+              </ProtectedRoute>
+            </Switch>
+          </>
+        )}
+
     </BrowserRouter>
   );
 }

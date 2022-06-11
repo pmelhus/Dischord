@@ -39,7 +39,7 @@ const ServerCreateForm = ({setShowServerModal}) => {
     const file = e.target.files[0];
     setImage(file);
   };
-  
+
   return (
     <>
       <form className="server-create-form">

@@ -9,7 +9,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
   const { pathname } = useLocation();
   const servers = useSelector((state) => Object.values(state.servers));
   const currServer = servers?.find(
-    (server) => server.id === parseInt(pathname.split("/").pop())
+    (server) => server.id === parseInt(pathname.split("/")[2])
   );
   const sessionUserId = useSelector((state) => state.session.user.id);
   const history = useHistory();

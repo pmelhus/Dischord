@@ -12,29 +12,45 @@ import ServerChatWindow from "./ServerChatWindow";
 
 const HomePage = () => {
   const [loadingScreen, setLoadingScreen] = useState(false);
+
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
-  const { pathname } = useLocation();
+  const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      await setLoadingScreen(true);
-      await setTimeout(async () => {
+//   useEffect(() => {
+
+// dispatch(genServers(sessionUser.id));
+
+
+//      dispatch(genChannels(parseInt(pathname.split("/")[2])));
+
+//     setLoaded(true);
+
+// }, []);
+
+  useEffect(async() => {
+
+      if (sessionUser) {
         await dispatch(genServers(sessionUser.id));
-        if (parseInt(pathname.split("/")[2])) {
-          await dispatch(genChannels(parseInt(pathname.split("/")[2])));
-        }
-        await setLoadingScreen(false);
-      }, 1000);
-    })();
+      }
+
+        await dispatch(genChannels());
+
+      await setLoaded(true);
+
   }, [dispatch, pathname]);
 
   return (
     <div className="home-page-container">
-      <HomeNavBar />
-      <HomeContent />
-      <ServerChatWindow />
+      {loaded && (
+        <>
+          <HomeNavBar />
+          <HomeContent />
+          <ServerChatWindow />
+        </>
+      )}
       {loadingScreen && (
         <LoadingModal>
           <LoadingScreen />

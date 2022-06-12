@@ -17,11 +17,11 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@channel_routes.route('/server/<int:id>')
+@channel_routes.route('/')
 @login_required
-def channels(id):
+def channels():
 
-    channels = Channel.query.filter(Channel.server_id == id).all()
+    channels = Channel.query.all()
     return {'channels': [channel.to_dict() for channel in channels]}
 
 
@@ -58,23 +58,20 @@ def channel_form_submit():
 @channel_routes.route('/<int:id>', methods=["PATCH"])
 @login_required
 def server_update(id):
-    # print('----------patch charters route')
+
     channel = Channel.query.get(id)
     form = ChannelForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    # print('=-aptch=-0=-0=-0=-0=-0=-0')
-    # print(form.data)
-    # print('=-aptch=-0=-0=-0=-0=-0=-0')
+
     if form.validate_on_submit():
-        #   print('--------form is validated')
+
         channel.server_id = form.data['server_id']
         channel.name = form.data['name']
         channel.description = form.data['description']
         db.session.commit()
         return channel.to_dict()
     else:
-        #   print('*/-/*-*/-/*-*-/*-/-*/*-/errrrrrrorsrs*/-*/-*-/*/-/*--/*/*-/*-*/-*-/')
-        #   print(form.errors)
+
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

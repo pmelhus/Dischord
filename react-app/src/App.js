@@ -18,12 +18,9 @@ function App() {
   const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     (async () => {
-      await setLoadingScreen(true);
       await dispatch(authenticate());
-      await setLoadingScreen(false);
       await setLoaded(true);
     })();
   }, [dispatch]);
@@ -33,35 +30,33 @@ function App() {
   }
 
   return (
-      
     <BrowserRouter>
-        <Route exact path="/">
-          <NavBar />
+      <Route exact path="/">
+        <NavBar />
+      </Route>
+      <Switch>
+        <Route path="/login" exact={true}>
+          <LoginForm />
         </Route>
-        <Switch>
-          <Route path="/login" exact={true}>
-            <LoginForm />
-          </Route>
-          <Route path="/register" exact={true}>
-            <SignUpForm />
-          </Route>
-        </Switch>
-        {loaded && (
-          <>
-            <Switch>
-              <ProtectedRoute path="/users" exact={true}>
-                <UsersList />
-              </ProtectedRoute>
-              <ProtectedRoute path="/users/:userId" exact={true}>
-                <User />
-              </ProtectedRoute>
-              <ProtectedRoute path="/channels">
-                <HomePage />
-              </ProtectedRoute>
-            </Switch>
-          </>
-        )}
-
+        <Route path="/register" exact={true}>
+          <SignUpForm />
+        </Route>
+      </Switch>
+      {loaded && (
+        <>
+          <Switch>
+            <ProtectedRoute path="/users" exact={true}>
+              <UsersList />
+            </ProtectedRoute>
+            <ProtectedRoute path="/users/:userId" exact={true}>
+              <User />
+            </ProtectedRoute>
+            <ProtectedRoute path="/channels">
+              <HomePage />
+            </ProtectedRoute>
+          </Switch>
+        </>
+      )}
     </BrowserRouter>
   );
 }

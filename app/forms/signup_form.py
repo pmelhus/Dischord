@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FileField
+from wtforms import StringField, FileField, TextAreaField
 from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, ValidationError, Length, EqualTo
 from app.models import User
@@ -30,3 +30,5 @@ class SignUpForm(FlaskForm):
         min=6, max=20), EqualTo('confirm_password', message="Passwords must match")])
     confirm_password = StringField('Confirm Password', validators=[
                                    DataRequired(), Length(min=6, max=20)])
+    image = FileField('Image file', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
+    bio = TextAreaField('Bio', validators=[Length(min=0 ,max=190)])

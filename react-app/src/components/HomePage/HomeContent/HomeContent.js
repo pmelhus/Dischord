@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Modal } from "../../../context/Modal";
 import ServerEditModal from "./ServerEditModal";
 import ChannelList from "./ChannelList";
-
+import UserTab from "./User/UserTab";
 
 const HomeContent = () => {
   //react
@@ -17,7 +17,7 @@ const HomeContent = () => {
 
   // finds server based on url params id
   const currServer = servers?.find(
-    (server) => server.id === parseInt(pathname.split("/").pop())
+    (server) => server.id === parseInt(pathname.split("/")[2])
   );
 
   const openMenu = () => {
@@ -87,13 +87,10 @@ const HomeContent = () => {
               <ChannelList />
             </div>
             <div className="server-nav-bottom"></div>
+          <UserTab />
           </nav>
-          <div className="server-userinfo-div">
-            <h3>User Info</h3>
-          </div>
         </div>
       )}
-
     </div>
   );
 };

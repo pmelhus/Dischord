@@ -29,7 +29,8 @@ class Server(db.Model, CrUpMixin):
             'owner_id': self.owner_id,
             'name': self.name,
             'image_url': self.image_url,
-            'public': self.public
+            'public': self.public,
+            'channel_ids': [channel.id for channel in self.channels]
         }
 
     @staticmethod

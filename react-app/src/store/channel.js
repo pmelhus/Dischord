@@ -23,9 +23,9 @@ const removeChannel = (channel) => {
   };
 };
 
-export const genChannels = (id) => async (dispatch) => {
+export const genChannels = () => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  const [channelsResponse] = await Promise.all([fetch(`/api/channels/server/${id}`)]);
+  const [channelsResponse] = await Promise.all([fetch(`/api/channels/`)]);
   const [channels] = await Promise.all([channelsResponse.json()]);
 
   if (channelsResponse.ok) {
@@ -57,21 +57,15 @@ export const createChannel = (payload) => async (dispatch) => {
 };
 
 export const editChannel = (data) => async (dispatch) => {
-  // console.log("------------editcharterTHUNK");
-  // console.log(data)
-  // console.log("------------editcharterTHUNK");
-  const { id, name, privacy, owner_id, image } = data;
-  // console.log(data, '======================data')
+
+  const { id, name, description, server_id} = data;
+
 
   const f = new FormData();
 
   f.append("name", name);
-  f.append("public", privacy);
-  f.append("owner_id", owner_id);
-
-  if (image) {
-    f.append("image", image);
-  }
+  f.append('description', description)
+  f.append('server_id', server_id)
 
   const [response] = await Promise.all([
     fetch(`/api/channels/${id}`, {
@@ -86,7 +80,7 @@ export const editChannel = (data) => async (dispatch) => {
   return { ...channelData };
 };
 
-export const deleteServer = (channel) => async (dispatch) => {
+export const deleteChannel = (channel) => async (dispatch) => {
   const { id } = channel;
   // console.log('inside the thunk');
   // console.log('estateowner', estate.owner_id);

@@ -80,7 +80,7 @@ export const editChannel = (data) => async (dispatch) => {
   return { ...channelData };
 };
 
-export const deleteServer = (channel) => async (dispatch) => {
+export const deleteChannel = (channel) => async (dispatch) => {
   const { id } = channel;
   // console.log('inside the thunk');
   // console.log('estateowner', estate.owner_id);

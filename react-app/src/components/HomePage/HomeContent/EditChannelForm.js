@@ -1,10 +1,10 @@
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editChannel } from "../../../store/channel";
+import { editChannel, deleteChannel } from "../../../store/channel";
 import { useLocation } from "react-router-dom";
 
-const EditChannelForm = ({setShowEditForm }) => {
+const EditChannelForm = ({ setShowEditForm }) => {
   const history = useHistory(); // so that we can redirect after the image upload is successful
   const channels = useSelector((state) => Object.values(state.channels));
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const EditChannelForm = ({setShowEditForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = currChannel.id;
-    const server_id = currChannel.server_id
+    const server_id = currChannel.server_id;
     const payload = { id, name, description, server_id };
 
     const editedChannel = await dispatch(editChannel(payload));
@@ -32,10 +32,20 @@ const EditChannelForm = ({setShowEditForm }) => {
     } else {
       setName("");
       setDescription("");
-      setShowEditForm(false)
+      setShowEditForm(false);
     }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const deletedChannel = await dispatch(deleteChannel(currChannel));
+    if (deletedChannel.errors) {
+      setErrors(deletedChannel.errors);
+      return;
+    } else {
+      setShowEditForm(false);
+    }
+  };
 
   return (
     <>
@@ -62,7 +72,10 @@ const EditChannelForm = ({setShowEditForm }) => {
             )}
           </div>
         )}
-        <button onClick={handleSubmit}>Save Changes</button>
+        <div>
+          <button onClick={handleSubmit}>Save Changes</button>
+          <button onClick={handleDelete}>Delete Server</button>
+        </div>
       </form>
     </>
   );

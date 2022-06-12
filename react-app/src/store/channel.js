@@ -23,9 +23,9 @@ const removeChannel = (channel) => {
   };
 };
 
-export const genChannels = (id) => async (dispatch) => {
+export const genChannels = () => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  const [channelsResponse] = await Promise.all([fetch(`/api/channels/server/${id}`)]);
+  const [channelsResponse] = await Promise.all([fetch(`/api/channels/`)]);
   const [channels] = await Promise.all([channelsResponse.json()]);
 
   if (channelsResponse.ok) {

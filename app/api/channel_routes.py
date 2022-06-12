@@ -17,11 +17,11 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@channel_routes.route('/server/<int:id>')
+@channel_routes.route('/')
 @login_required
-def channels(id):
+def channels():
 
-    channels = Channel.query.filter(Channel.server_id == id).all()
+    channels = Channel.query.all()
     return {'channels': [channel.to_dict() for channel in channels]}
 
 
@@ -58,7 +58,7 @@ def channel_form_submit():
 @channel_routes.route('/<int:id>', methods=["PATCH"])
 @login_required
 def server_update(id):
-    
+
     channel = Channel.query.get(id)
     form = ChannelForm()
     form['csrf_token'].data = request.cookies['csrf_token']

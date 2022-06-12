@@ -20,12 +20,10 @@ function App() {
 
   useEffect(() => {
     (async () => {
-
       await dispatch(authenticate());
-
       await setLoaded(true);
     })();
-  }, []);
+  }, [dispatch]);
 
   if (!loaded) {
     return null;

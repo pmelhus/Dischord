@@ -25,7 +25,7 @@ const ServerList = () => {
     // console.log(server.channel_ids)
     const serverChannels = channels.filter(channel=> server.channel_ids.includes(channel.id))
 
-    if (isLoaded) {
+    if (isLoaded && channels) {
       // if (localStorage.getItem(`${server.id}`)) {
       //   // console.log('========== LOCAL')
       //   history.push(
@@ -33,7 +33,7 @@ const ServerList = () => {
       //     );
       //   } else {
           // console.log(channels, '===================')
-          history.push(`/channels/${server.id}/${serverChannels[0].id}`);
+          history.push(`/channels/${server.id}/${serverChannels[0]?.id}`);
       // }
     }
   };

@@ -62,6 +62,7 @@ const EditProfileForm = ({ setEditModal }) => {
     if (user.image_url && image) {
       const objectUrl = URL.createObjectURL(image);
       setPreview(objectUrl);
+
       return () => URL.revokeObjectURL(objectUrl);
     }
 

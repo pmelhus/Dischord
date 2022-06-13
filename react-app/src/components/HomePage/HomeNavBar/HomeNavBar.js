@@ -9,16 +9,16 @@ const HomeNavBar = () => {
     <>
       <nav className="home-nav-bar">
         <ul>
-          <div>
+          <div className='home-nav-bar-home-button'>
             <HomeButton/>
           </div>
-          <div>
+          <div className='home-nav-bar-item'>
             <ServerList/>
           </div>
-          <div>
+          <div className='home-nav-bar-item'>
             <AddServerButton/>
           </div>
-          <div>
+          <div className='home-nav-bar-item'>
             <ExploreServersButton/>
           </div>
         </ul>

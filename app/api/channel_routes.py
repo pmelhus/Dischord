@@ -43,9 +43,6 @@ def channel_form_submit():
         "description": form.data['description']
     }
 
-    # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')
-    # print(form.data)
-    # print('=-0=-0=-0=-0=-0=-0=-0=-0=-0=-0')
     if form.validate_on_submit():
         channel = Channel(**params)
         db.session.add(channel)

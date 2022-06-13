@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FileField, IntegerField
-from flask_wtf.file import FileAllowed
-from wtforms.validators import DataRequired, ValidationError, Length, EqualTo
-from app.models import User
+from wtforms import StringField, IntegerField
+from wtforms.validators import DataRequired, Length
+
 
 
 class ChannelForm(FlaskForm):

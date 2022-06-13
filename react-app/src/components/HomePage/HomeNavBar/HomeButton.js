@@ -1,7 +1,5 @@
 import {useHistory} from "react-router-dom"
 
-import {Modal} from "../../../context/Modal"
-
 const HomeButton = () => {
 
   const history = useHistory()
@@ -18,7 +16,7 @@ const HomeButton = () => {
   return (
     <div className="home-button-div">
       <button className="server-image-icon" onClick={handleClick}>
-      <i class="fa-solid fa-house-chimney-heart fa-2xl"></i>
+      <i className="fa-solid fa-house-chimney-heart fa-2xl"></i>
       </button>
     </div>
   );

@@ -1,12 +1,12 @@
-import Chat from "../../Chat/Chat"
+import Chat from "../Chat/Chat"
 import ServerChatHeader from "./ServerChatHeader"
 
-const ServerChatWindow = () => {
+const ServerChatWindow = ({setLoading}) => {
 
   return (
     <div className="server-chat-container">
       <ServerChatHeader/>
-      <Chat/>
+      <Chat {...{setLoading}}/>
     </div>
   )
 }

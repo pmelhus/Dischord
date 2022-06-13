@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { Modal } from "../../../context/Modal";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CreateChannelForm from "./CreateChannelForm";
 import EditChannelForm from "./EditChannelForm";
 import ChannelListDiv from "./ChannelListDiv";
@@ -23,7 +23,7 @@ const ChannelList = () => {
   );
 
 
-  const dispatch = useDispatch();
+
   const serverChannels = channels.filter(
     (channel) => channel.server_id === parseInt(pathname.split("/")[2])
   );

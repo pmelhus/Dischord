@@ -19,9 +19,11 @@ class ChannelMessage(db.Model, CrUpMixin):
     return {
       'id': self.id,
       'channel_id': self.channel_id,
-      'user_id': self.user_id,
+      'owner_id': self.user_id,
       'content': self.content,
-      'edited': self.edited
+      'edited': self.edited,
+      'created_at': self.created_at,
+      'updated_at': self.updated_at
     }
 
   @staticmethod

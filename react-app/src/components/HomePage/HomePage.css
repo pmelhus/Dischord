@@ -50,9 +50,13 @@ border-radius: 35%;
 }
 
 .home-nav-bar {
+  box-sizing: border-box;
   background-color: #202225;
   padding: 0;
-  padding-right: 12px;
+  /* padding-right: 4px; */
+  width: 72px;
+  display: flex;
+  justify-content: center;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -66,12 +70,12 @@ border-radius: 35%;
 
 .home-nav-bar ul {
   padding: 0;
-  margin: 5px;
+  margin: 0;
 }
-
+/*
 .home-butab-div {
   padding: 5px;
-}
+} */
 
 .server-tab-div {
   padding: 5px;
@@ -88,6 +92,7 @@ border-radius: 35%;
   min-height: 0;
   vertical-align: baseline;
   min-height: 100%;
+
 }
 
 .server-sidebar-container nav {
@@ -371,6 +376,19 @@ display:block;
   align-items: center;
 }
 
+.usertab-default-profile-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 100%;
+  background-color: #950652;
+  transition: border-radius .5s;
+}
+
 .usertab-container {
   display: flex;
   justify-content: space-between;
@@ -483,16 +501,21 @@ display:block;
 
 .channel-chat-profile-image {
   box-sizing: border-box;
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-  border-radius: 100%;
   position: absolute;
   left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 100%;
+  background-color: #950652;
+  transition: border-radius .5s;
 }
 
 .channel-message-div {
-padding-left: 72px;
+padding-left: 60px;
 position: relative;
 height: 60px;
 }

@@ -40,8 +40,11 @@ const HomeContent = () => {
   return (
     <div className="home-content-container">
       {pathname === "/channels/@me" ? (
-        <div>
+        <div className="server-sidebar-container">
           <nav></nav>
+
+            <UserTab />
+
         </div>
       ) : (
         <div className="server-sidebar-container">
@@ -86,8 +89,9 @@ const HomeContent = () => {
             <div className="channel-list-container">
               <ChannelList />
             </div>
-            <div className="server-nav-bottom"></div>
-          <UserTab />
+            <div className="server-nav-bottom">
+              <UserTab />
+            </div>
           </nav>
         </div>
       )}

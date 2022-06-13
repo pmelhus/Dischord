@@ -17,6 +17,7 @@
   left: 0;
   bottom: 0;
   backdrop-filter: blur(2px);
+  background-color: #3d4147;
 }
 
 #modal-content {

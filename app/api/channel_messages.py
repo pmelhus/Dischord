@@ -36,3 +36,13 @@ def channel_message_submit():
         return channel_message.to_dict()
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@channel_message_routes.route('/<int:id>')
+@login_required
+def channel_messages(id):
+
+    channel_messages = ChannelMessage.query.filter(ChannelMessage.channel_id == id).all()
+    if channel_messages:
+
+        return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
+

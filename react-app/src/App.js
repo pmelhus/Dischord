@@ -9,18 +9,21 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate } from "./store/session";
+import LoadingScreen from "./components/LoadingScreen";
 // import { genServers } from "./store/server";
-// import { Modal, LoadingModal } from "./context/LoadingModal";
+import { LoadingModal } from "./context/LoadingModal";
 // import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
   // const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
+      // await setLoading(true);
       await setLoaded(true);
     })();
   }, [dispatch]);
@@ -52,10 +55,15 @@ function App() {
               <User />
             </ProtectedRoute>
             <ProtectedRoute path="/channels">
-              <HomePage />
+              <HomePage {...{setLoading}} />
             </ProtectedRoute>
           </Switch>
         </>
+      )}
+      {loading && (
+        <LoadingModal>
+          <LoadingScreen />
+        </LoadingModal>
       )}
     </BrowserRouter>
   );

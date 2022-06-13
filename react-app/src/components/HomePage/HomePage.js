@@ -5,12 +5,13 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { genServers } from "../../store/server";
 import { genChannels } from "../../store/channel";
+import { genChannelMessages } from "../../store/channelMessage";
 import { LoadingModal } from "../../context/LoadingModal";
 import LoadingScreen from "../LoadingScreen";
 import "./HomePage.css";
 import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
 
-const HomePage = () => {
+const HomePage = ({ setLoading }) => {
   const [loadingScreen, setLoadingScreen] = useState(false);
 
   const { pathname } = useLocation();
@@ -19,27 +20,27 @@ const HomePage = () => {
 
   const [loaded, setLoaded] = useState(false);
 
-//   useEffect(() => {
+  const channelId = parseInt(pathname.split("/")[3]);
+  //   useEffect(() => {
 
-// dispatch(genServers(sessionUser.id));
+  // dispatch(genServers(sessionUser.id));
 
+  //      dispatch(genChannels(parseInt(pathname.split("/")[2])));
 
-//      dispatch(genChannels(parseInt(pathname.split("/")[2])));
+  //     setLoaded(true);
 
-//     setLoaded(true);
+  // }, []);
 
-// }, []);
+  useEffect(async () => {
+    if (sessionUser) {
+      await dispatch(genServers(sessionUser.id));
+    }
 
-  useEffect(async() => {
-
-      if (sessionUser) {
-        await dispatch(genServers(sessionUser.id));
-      }
-
-        await dispatch(genChannels());
-
-      await setLoaded(true);
-
+    await dispatch(genChannels());
+    if (channelId) {
+      await dispatch(genChannelMessages(channelId));
+    }
+    await setLoaded(true);
   }, [dispatch, pathname]);
 
   return (
@@ -48,7 +49,7 @@ const HomePage = () => {
         <>
           <HomeNavBar />
           <HomeContent />
-          <ServerChatWindow />
+          <ServerChatWindow {...{ setLoading }} />
         </>
       )}
       {loadingScreen && (

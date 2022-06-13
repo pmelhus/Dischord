@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import session from "./session";
 import serverReducer from "./server";
 import channelReducer from "./channel"
+import channelMessageReducer from "./channelMessage"
 
 const rootReducer = combineReducers({
   session,
   servers: serverReducer,
-  channels: channelReducer
+  channels: channelReducer,
+  channelMessages: channelMessageReducer
 });
 
 let enhancer;

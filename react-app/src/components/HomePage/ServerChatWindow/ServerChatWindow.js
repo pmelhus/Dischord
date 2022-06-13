@@ -1,4 +1,4 @@
-import Chat from "../../Chat/Chat"
+import Chat from "../Chat/Chat"
 import ServerChatHeader from "./ServerChatHeader"
 
 const ServerChatWindow = () => {

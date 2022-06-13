@@ -1,17 +1,23 @@
 // import the socket
 import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { createChannelMessage } from "../../../store/channelMessage";
+import ChannelMessage from "./ChannelMessage";
+
 // outside of your component, initialize the socket variable
 let socket;
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
-
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
+  const { pathname } = useLocation();
+  const channelId = parseInt(pathname.split("/")[3]);
+  const [isSent, setIsSent] = useState(false)
 
   useEffect(() => {
     // create websocket/connect
@@ -20,9 +26,10 @@ const Chat = () => {
     // listen for chat events
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
-      setMessages((messages) => [...messages, chat]);
+        setMessages((messages) => [...messages, chat]);
     });
 
+    console.log(messages)
     // when component unmounts, disconnect
     return () => {
       socket.disconnect();
@@ -36,12 +43,38 @@ const Chat = () => {
   const sendChat = (e) => {
     e.preventDefault();
     // emit a message
-    socket.emit("chat", { user: user.username, msg: chatInput });
+
+      socket.emit("chat", {
+        user_id: user.id,
+        msg: chatInput,
+        channel_id: channelId,
+      });
+
+      // if (messages.length < 2) {
+      //   dispatch(createChannelMessage(messages[0]));
+      // } else {
+      //   dispatch(createChannelMessage(messages[messages.length - 1]));
+      // }
+
+      setIsSent(true)
     // clear the input field after the message is sent
     setChatInput("");
   };
 
+  useEffect(() => {
+    if (isSent) {
+            if (messages.length < 2) {
+        dispatch(createChannelMessage(messages[0]));
+        setIsSent(false)
+      } else {
+        dispatch(createChannelMessage(messages[messages.length - 1]));
+        setIsSent(false)
+      }
+    }
+  }, [messages])
+
   // additional code to be added
+
 
   return (
     user && (
@@ -49,21 +82,7 @@ const Chat = () => {
         <div className="channel-chat-messages">
           {messages.map((message, ind) => (
             <div className="channel-message-div" key={ind}>
-              {user.image_url ? (
-                <img
-                  className="channel-chat-profile-image"
-                  alt="profile"
-                  src={user.image_url}
-                />
-              ) : (
-                <div className='channel-chat-profile-image'>
-                  <i className="fa-solid fa-user-music"></i>
-                </div>
-              )}
-              <div className="channel-chat-user-msg">
-                <h4>{user.username}</h4>
-                <p>{`${message.msg}`}</p>
-              </div>
+              <ChannelMessage {...{user}} {...{message}} />
             </div>
           ))}
         </div>

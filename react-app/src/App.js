@@ -9,13 +9,13 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate } from "./store/session";
-import { genServers } from "./store/server";
-import { Modal, LoadingModal } from "./context/LoadingModal";
-import LoadingScreen from "./components/LoadingScreen";
+// import { genServers } from "./store/server";
+// import { Modal, LoadingModal } from "./context/LoadingModal";
+// import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
-  const [loadingScreen, setLoadingScreen] = useState(false);
+  // const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {

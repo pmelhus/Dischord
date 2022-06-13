@@ -49,12 +49,18 @@ const Chat = () => {
         <div className="channel-chat-messages">
           {messages.map((message, ind) => (
             <div className="channel-message-div" key={ind}>
-              <img
-                className="channel-chat-profile-image"
-                alt="profile"
-                src={user.image_url}
-              ></img>
-              <div className='channel-chat-user-msg'>
+              {user.image_url ? (
+                <img
+                  className="channel-chat-profile-image"
+                  alt="profile"
+                  src={user.image_url}
+                />
+              ) : (
+                <div className='channel-chat-profile-image'>
+                  <i className="fa-solid fa-user-music"></i>
+                </div>
+              )}
+              <div className="channel-chat-user-msg">
                 <h4>{user.username}</h4>
                 <p>{`${message.msg}`}</p>
               </div>

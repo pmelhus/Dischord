@@ -16,7 +16,7 @@ def validation_errors_to_error_messages(validation_errors):
     errorMessages = []
     for field in validation_errors:
         for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
+            errorMessages.append(f'{field}:{error}')
     return errorMessages
 
 
@@ -62,7 +62,7 @@ def sign_up():
     Creates a new user and logs them in
     """
     form = SignUpForm()
-    print('=====================               ')
+
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if "image" in request.files:

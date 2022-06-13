@@ -41,18 +41,33 @@ export const createChannel = (payload) => async (dispatch) => {
   f.append("description", description);
   f.append("server_id", server_id);
 
-  const response = await fetch(`/api/channels/`, {
-    method: "POST",
-    body: f,
-  });
+  const [response] = await Promise.all([
+    fetch(`/api/channels/`, {
+      method: "POST",
+      body: f,
+    }),
+  ]);
 
-  const channelData = await response.json();
   // console.log(estateData);
   if (response.ok) {
-    dispatch(addChannel(channelData));
-    return channelData;
+    const data = await response.json();
+    dispatch(addChannel(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+
+      let errorObjArr = {};
+      data.errors.forEach((error) => {
+        const errorObj = {};
+        let key = error.split(":")[0];
+        errorObjArr[key] = error.split(":")[1];
+      });
+      return {'errors': errorObjArr};
+    }
   } else {
-    return channelData;
+    return ["An error occurred. Please try again."];
   }
 };
 
@@ -74,10 +89,27 @@ export const editChannel = (data) => async (dispatch) => {
     }),
   ]);
 
-  const channelData = await response.json();
-  // console.log(channelData);
-  dispatch(addChannel(channelData));
-  return { ...channelData };
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addChannel(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+
+      let errorObjArr = [];
+      data.errors.forEach((error) => {
+        const errorObj = {};
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+        errorObjArr.push(errorObj);
+      });
+      return {'errors': errorObjArr};
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
 };
 
 export const deleteChannel = (channel) => async (dispatch) => {
@@ -90,7 +122,25 @@ export const deleteChannel = (channel) => async (dispatch) => {
     method: "DELETE",
   });
   if (response.ok) {
-    dispatch(removeChannel(channel));
+    const data = await response.json();
+    dispatch(removeChannel(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+
+      let errorObjArr = [];
+      data.errors.forEach((error) => {
+        const errorObj = {};
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+        errorObjArr.push(errorObj);
+      });
+      return {'errors': errorObjArr};
+    }
+  } else {
+    return ["An error occurred. Please try again."];
   }
 };
 

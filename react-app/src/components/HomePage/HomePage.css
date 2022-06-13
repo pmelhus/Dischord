@@ -184,6 +184,7 @@ border-radius: 35%;
   left: -1px;
   padding: 0;
   width: 100%;
+
 }
 
 #profile-dropdown-nav button {
@@ -220,6 +221,7 @@ border-radius: 35%;
 
 .dropdown-container {
   position: relative;
+  z-index: 2;
 }
 
 /* Edit server modal */
@@ -397,6 +399,11 @@ display:block;
   margin-right: 14px;
 }
 
+#usertab-gear-icon:hover {
+  color:rgba(255, 255, 255, 0.634);
+  cursor: pointer;
+}
+
 #server-name-div-button{
   padding: 0;
   border: none;
@@ -413,8 +420,21 @@ display:block;
   padding: 0 16px;
 }
 
+.server-name-div:hover {
+  cursor: pointer;
+  background-color: rgba(229, 230, 232, 0.214);
+}
+
 .channel-text-channel-div {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#user-picture-preview img {
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 100%;
 }

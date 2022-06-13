@@ -46,18 +46,33 @@ export const createServer = (payload) => async (dispatch) => {
   }
   // console.log(f);
 
-  const response = await fetch(`/api/servers/`, {
-    method: "POST",
-    body: f,
-  });
+  const [response] = await Promise.all([
+    fetch(`/api/servers/`, {
+      method: "POST",
+      body: f,
+    }),
+  ]);
 
-  const serverData = await response.json();
-  // console.log(estateData);
   if (response.ok) {
-    dispatch(addServer(serverData));
-    return serverData;
+    const data = await response.json();
+    dispatch(addServer(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+
+      let errorObjArr = [];
+      data.errors.forEach((error) => {
+        const errorObj = {};
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+        errorObjArr.push(errorObj);
+      });
+      return {'errors': errorObjArr};
+    }
   } else {
-    return serverData;
+    return ["An error occurred. Please try again."];
   }
 };
 
@@ -66,7 +81,7 @@ export const editServer = (data) => async (dispatch) => {
   // console.log(data)
   // console.log("------------editcharterTHUNK");
   const { id, name, privacy, owner_id, image } = data;
-  console.log(data, '======================data')
+  // console.log(data, '======================data')
 
   const f = new FormData();
 
@@ -85,10 +100,27 @@ export const editServer = (data) => async (dispatch) => {
     }),
   ]);
 
-  const serverData = await response.json();
-  // console.log(serverData);
-  dispatch(addServer(serverData));
-  return { ...serverData };
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addServer(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+
+      let errorObjArr = [];
+      data.errors.forEach((error) => {
+        const errorObj = {};
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+        errorObjArr.push(errorObj);
+      });
+      return {'errors': errorObjArr};
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
 };
 
 export const deleteServer = (server) => async (dispatch) => {

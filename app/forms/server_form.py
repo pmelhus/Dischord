@@ -7,7 +7,7 @@ from flask_wtf.file import FileAllowed
 from .custom_validators import check_public_boolean
 
 class ServerForm(FlaskForm):
-  owner_id = IntegerField('Owner Id', validators=[DataRequired(message="Owner Id is required")])
-  name = StringField('Server name', validators=[Length(min=2, max=32, message='Server name must be between 2 and 32 characters long')])
-  image_url = FileField('Image file', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
-  public = BooleanField('Privacy', validators=[check_public_boolean])
+  owner_id = IntegerField('owner_id', validators=[DataRequired(message="Owner Id is required")])
+  name = StringField('server_name', validators=[Length(min=2, max=32, message='Server name must be between 2 and 32 characters long')])
+  image_url = FileField('image_file', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
+  public = BooleanField('privacy', validators=[check_public_boolean])

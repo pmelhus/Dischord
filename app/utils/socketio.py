@@ -3,13 +3,13 @@ import os
 
 
 # configure cors_allowed_origins
-if os.environ.get('FLASK_ENV') == 'production':
-    origins = [
-        'http://my-dischord.herokuapp.com',
-        'https://my-dischord.herokuapp.com'
-    ]
-else:
-    origins = "*"
+# if os.environ.get('FLASK_ENV') == 'production':
+#     origins = [
+#         'http://my-dischord.herokuapp.com',
+#         'https://my-dischord.herokuapp.com'
+#     ]
+# else:
+origins = "*"
 
 # initialize your socket instance
 socketio = SocketIO(cors_allowed_origins=origins)

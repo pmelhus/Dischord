@@ -39,9 +39,11 @@ app.register_blueprint(server_routes, url_prefix='/api/servers')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 
 db.init_app(app)
-Migrate(app, db)
 
 socketio.init_app(app)
+
+Migrate(app, db)
+
 
 # Application Security
 CORS(app)

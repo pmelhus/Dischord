@@ -58,13 +58,14 @@ export const createChannel = (payload) => async (dispatch) => {
 
     if (data.errors) {
 
-      let errorObjArr = {};
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
-        errorObjArr[key] = error.split(":")[1];
+        errorObj[key] = error.split(":")[1];
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -98,14 +99,14 @@ export const editChannel = (data) => async (dispatch) => {
 
     if (data.errors) {
 
-      let errorObjArr = [];
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-        errorObjArr.push(errorObj);
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -130,14 +131,14 @@ export const deleteChannel = (channel) => async (dispatch) => {
 
     if (data.errors) {
 
-      let errorObjArr = [];
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-        errorObjArr.push(errorObj);
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];

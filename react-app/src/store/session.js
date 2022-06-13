@@ -60,7 +60,15 @@ export const login = (email, password) => async (dispatch) => {
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-      return data.errors;
+
+      let errorObj = {};
+      data.errors.forEach((error) => {
+
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+
+      });
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -104,7 +112,15 @@ export const signUp =
     } else if (response.status < 500) {
       const data = await response.json();
       if (data.errors) {
-        return data.errors;
+
+        let errorObj = {};
+        data.errors.forEach((error) => {
+
+          let key = error.split(":")[0];
+          errorObj[key] = error.split(":")[1];
+
+        });
+        return {'errors':errorObj};
       }
     } else {
       return ["An error occurred. Please try again."];
@@ -142,17 +158,16 @@ export const editUserProfile = (data) => async (dispatch) => {
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
-
     if (data.errors) {
 
-      let errorObjArr = [];
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-        errorObjArr.push(errorObj);
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -181,17 +196,16 @@ export const editUserPassword = (data) => async (dispatch) => {
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
-
     if (data.errors) {
 
-      let errorObjArr = [];
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-        errorObjArr.push(errorObj);
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];

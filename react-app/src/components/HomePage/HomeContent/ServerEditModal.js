@@ -21,6 +21,8 @@ const ServerEditModal = ({ setShowEditModal }) => {
   const [errors, setErrors] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [changed, setChanged] = useState(false);
+  const [imageError, setImageError] = useState(true);
+  const [nameError, setNameError] = useState(true);
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -66,6 +68,13 @@ const ServerEditModal = ({ setShowEditModal }) => {
     setShowDeleteModal(true);
   };
 
+  useEffect(() => {
+    setNameError(true);
+    if (name.length > 1 && name.length < 33) {
+      setNameError(false);
+    }
+  }, [name]);
+
   return (
     <form>
       <div className="server-edit-form-msg">
@@ -84,10 +93,20 @@ const ServerEditModal = ({ setShowEditModal }) => {
           </h2>
         )}
         <label>Upload image</label>
+        {imageError && errors && errors.image_url && (
+          <div className="error-msg">
+            <p>*{errors?.image_url}*</p>
+          </div>
+        )}
         <input type="file" accept="image/*" onChange={updateImage}></input>
       </div>
       <div>
         <label>Server name</label>
+        {nameError && errors && errors.name && (
+            <div className="error-msg">
+              <p>*{errors.name}*</p>
+            </div>
+          )}
         <input value={name} onChange={(e) => setName(e.target.value)}></input>
       </div>
       <div>
@@ -125,14 +144,6 @@ const ServerEditModal = ({ setShowEditModal }) => {
           users)
         </label>
       </div>
-      {Object.keys(errors).length > 0 && (
-        <div className="form-errors">
-          {Object.keys(errors).map(
-            // (key) => `${errors[key]}`
-            (key) => `${errors[key]}`
-          )}
-        </div>
-      )}
       <div className="server-overview-buttons">
         <button onClick={handleSubmit}>Save Changes</button>
         <button onClick={handleDelete}>Delete Server</button>

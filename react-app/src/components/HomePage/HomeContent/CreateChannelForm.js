@@ -12,6 +12,7 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
   const [nameError, setNameError] = useState(true)
+  const [descriptionError, setDescriptionError] = useState(true)
 
   const [errors, setErrors] = useState({});
 
@@ -35,10 +36,15 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
   };
 
 useEffect(()=> {
-  if (name.length > 1) {
+  setNameError(true)
+  setDescriptionError(true)
+  if (name.length > 1 && name.length < 33) {
     setNameError(false)
   }
-},[name])
+  if (description.length < 255) {
+    setDescriptionError(false)
+  }
+},[name, description])
 
   return (
     <>
@@ -57,7 +63,7 @@ useEffect(()=> {
         </div>
         <div>
           <label>Description</label>
-          {errors && errors.description && (
+          {descriptionError && errors && errors.description && (
             <div className='error-msg'>
               <p>*{errors.description}*</p>
             </div>

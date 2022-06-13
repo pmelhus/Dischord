@@ -62,14 +62,14 @@ export const createServer = (payload) => async (dispatch) => {
 
     if (data.errors) {
 
-      let errorObjArr = [];
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-        errorObjArr.push(errorObj);
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -109,14 +109,14 @@ export const editServer = (data) => async (dispatch) => {
 
     if (data.errors) {
 
-      let errorObjArr = [];
+      let errorObj = {};
       data.errors.forEach((error) => {
-        const errorObj = {};
+
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-        errorObjArr.push(errorObj);
+
       });
-      return {'errors': errorObjArr};
+      return {'errors':errorObj};
     }
   } else {
     return ["An error occurred. Please try again."];

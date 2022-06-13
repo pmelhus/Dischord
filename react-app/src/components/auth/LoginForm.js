@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { login } from "../../store/session";
 import "./LoginForm.css";
 
 const LoginForm = () => {
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
+  const [emailError, setEmailError] = useState(true)
+  const [passwordError, setPasswordError] = useState(true)
 
   const onLogin = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    if (data) {
-      setErrors(data);
+    if (data?.errors) {
+      setErrors(data?.errors);
     }
   };
 
@@ -27,10 +29,11 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
+
   if (user) {
     return <Redirect to="/channels/@me"/>;
   }
-
+console.log(errors)
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={onLogin}>
@@ -38,13 +41,14 @@ const LoginForm = () => {
           <h2>Welcome back!</h2>
           <p>We're so excited to see you again!</p>
         </div>
-        <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
-        </div>
+
         <div className="login-email">
           <label className='login-label' htmlFor="email">Email</label>
+          {errors && errors.email && (
+            <div className='error-msg'>
+              <p>*{errors.email}*</p>
+            </div>
+          )}
           <input
           className='login-input'
             name="email"
@@ -56,14 +60,19 @@ const LoginForm = () => {
         </div>
         <div className="login-password">
           <label className='login-label' htmlFor="password">Password</label>
+          {errors && errors.password && (
+            <div className='error-msg'>
+              <p>*{errors.password}*</p>
+            </div>
+          )}
           <input
           className="login-input"
-            id="login-input-password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={updatePassword}
+          id="login-input-password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={updatePassword}
           />
         <button type="submit">Login</button>
         </div>
@@ -73,6 +82,7 @@ const LoginForm = () => {
             <p id="login-register">Register</p>
           </Link>
         </div>
+
       </form>
     </div>
   );

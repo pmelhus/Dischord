@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editChannel, deleteChannel } from "../../../store/channel";
 import { useLocation } from "react-router-dom";
@@ -9,12 +9,13 @@ const EditChannelForm = ({ setShowEditForm }) => {
   const channels = useSelector((state) => Object.values(state.channels));
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const currChannel = channels.find(
+  const currChannel = channels?.find(
     (channel) => channel.id === parseInt(pathname.split("/")[3])
-  );
-
-  const [name, setName] = useState(currChannel.name);
-  const [description, setDescription] = useState(currChannel.description);
+    );
+    const [descriptionError, setDescriptionError] = useState(true)
+  const [nameError, setNameError] = useState(true)
+  const [name, setName] = useState(currChannel?.name);
+  const [description, setDescription] = useState(currChannel?.description);
 
   const [errors, setErrors] = useState({});
 
@@ -26,7 +27,6 @@ const EditChannelForm = ({ setShowEditForm }) => {
 
     const editedChannel = await dispatch(editChannel(payload));
     if (editedChannel.errors) {
-      // console.log(newEstate.errors)
       setErrors(editedChannel.errors);
       return;
     } else {
@@ -47,6 +47,21 @@ const EditChannelForm = ({ setShowEditForm }) => {
     }
   };
 
+  useEffect(()=> {
+    if (description === null) {
+      setDescription('')
+    }
+    setNameError(true)
+    setDescriptionError(true)
+    if (name.length > 1 && name.length < 33) {
+      setNameError(false)
+    }
+    if (description?.length < 255) {
+      setDescriptionError(false)
+    }
+
+  },[name, description, dispatch])
+
   return (
     <>
       <form className="server-create-form">
@@ -55,23 +70,25 @@ const EditChannelForm = ({ setShowEditForm }) => {
         </div>
         <div>
           <label>Channel name</label>
+          {nameError && errors && errors.name && (
+            <div className='error-msg'>
+              <p>*{errors.name}*</p>
+            </div>
+          )}
           <input value={name} onChange={(e) => setName(e.target.value)}></input>
         </div>
         <div>
           <label>Description</label>
+          {descriptionError && errors && errors.description && (
+            <div className='error-msg'>
+              <p>*{errors.description}*</p>
+            </div>
+          )}
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></input>
         </div>
-        {Object.keys(errors).length > 0 && (
-          <div className="form-errors">
-            {Object.keys(errors).map(
-              // (key) => `${errors[key]}`
-              (key) => `${errors[key]}`
-            )}
-          </div>
-        )}
         <div>
           <button onClick={handleSubmit}>Save Changes</button>
           <button onClick={handleDelete}>Delete Server</button>

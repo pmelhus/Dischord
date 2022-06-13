@@ -14,7 +14,7 @@ const AddServerButton = () => {
   return (
     <div className="home-button-div">
     <button className="server-image-icon" onClick={handleClick}>
-        <h1>AS</h1>
+    <i class="fa-solid fa-plus fa-xl"></i>
     </button>
     {showServerModal && (
       <Modal onClose={() => setShowServerModal(false)}>

@@ -8,7 +8,7 @@ import { genChannels } from "../../store/channel";
 import { LoadingModal } from "../../context/LoadingModal";
 import LoadingScreen from "../LoadingScreen";
 import "./HomePage.css";
-import ServerChatWindow from "./ServerChatWindow";
+import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
 
 const HomePage = () => {
   const [loadingScreen, setLoadingScreen] = useState(false);

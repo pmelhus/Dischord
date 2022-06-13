@@ -2,7 +2,7 @@ const ExploreServersButton = () => {
   return (
     <div className='home-button-div'>
       <button className="server-image-icon" >
-        <h1>ES</h1>
+      <i class="fa-brands fa-wpexplorer fa-2xl"></i>
       </button>
     </div>
   );

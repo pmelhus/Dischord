@@ -18,7 +18,7 @@ const HomeButton = () => {
   return (
     <div className="home-button-div">
       <button className="server-image-icon" onClick={handleClick}>
-        <h1>HB</h1>
+      <i class="fa-solid fa-house-chimney-heart fa-2xl"></i>
       </button>
     </div>
   );

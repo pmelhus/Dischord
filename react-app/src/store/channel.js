@@ -155,7 +155,7 @@ const channelReducer = (state = {}, action) => {
       return copyState;
     case LOAD_CHANNELS:
       const channelData = {};
-      
+
       for (let channel of action.payload) {
         channelData[channel.id] = channel;
       }

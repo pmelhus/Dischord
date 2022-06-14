@@ -35,6 +35,7 @@ const HomePage = ({ setLoading }) => {
   useEffect(async () => {
 
     if (sessionUser) {
+      await setLoading(true);
       await dispatch(genServers(sessionUser.id));
     }
     await dispatch(genChannels());
@@ -44,6 +45,7 @@ const HomePage = ({ setLoading }) => {
     await dispatch(genUsers())
 
     await setLoaded(true);
+    await setLoading(false)
   }, [dispatch, pathname]);
 
   return (

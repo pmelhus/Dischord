@@ -61,7 +61,7 @@ export const createServer = (payload) => async (dispatch) => {
     const data = await response.json();
 
     if (data.errors) {
-
+      console.log(data.errors)
       let errorObj = {};
       data.errors.forEach((error) => {
 

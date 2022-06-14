@@ -39,10 +39,11 @@ def channel_message_submit():
 
 @channel_message_routes.route('/<int:id>')
 @login_required
-def channel_messages(id):
+def get_messages(id):
 
     channel_messages = ChannelMessage.query.filter(ChannelMessage.channel_id == id).all()
-    if channel_messages:
-
+    print(channel_messages, '==================')
+    if not len(channel_messages):
+        return {"errors": "No messages to be found"}
+    else:
         return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
-

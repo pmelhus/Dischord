@@ -27,6 +27,9 @@ const Chat = ({ setLoading }) => {
   const allChannelMessages = useSelector((state) =>
     Object.values(state.channelMessages)
   );
+
+  const currentChannelMessages = allChannelMessages.filter(message => message.channel_id === channelId)
+
   //  setLoading(true)
 
   useEffect(async () => {
@@ -39,7 +42,7 @@ const Chat = ({ setLoading }) => {
       // when we recieve a chat, add it into our messages array in state
 
       // setMessages((messages) => [...messages, chat]);
-console.log(    dispatch(genChannelMessages(channelId)))
+// console.log(    dispatch(genChannelMessages(channelId)))
       dispatch(genChannelMessages(channelId));
     });
 
@@ -86,16 +89,18 @@ console.log(    dispatch(genChannelMessages(channelId)))
   // console.log(messages);
 
   useEffect(() => {
-    genChannelMessages(channelId);
-  }, []);
+    genChannelMessages();
+
+  }, [pathname]);
+  // console.log(allChannelMessages, "ALL MESSAGES")
 
 // console.log(channelId)
 
   return (
     <div className="channel-chat-container">
       <div className="channel-chat-messages">
-        {pathname.split("/")[2] !== "@me" &&
-          allChannelMessages.reverse().map((message, ind) => (
+        {pathname.split("/")[2] !== "@me" && 
+        currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage {...{ message }} />
             </div>

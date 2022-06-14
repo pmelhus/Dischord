@@ -24,7 +24,6 @@ function App() {
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
-      // await setLoading(true);
       await setLoaded(true);
     })();
   }, [dispatch]);
@@ -66,8 +65,10 @@ function App() {
           <LoadingScreen />
         </LoadingModal>
       )}
+
     </BrowserRouter>
   );
+
 }
 
 export default App;

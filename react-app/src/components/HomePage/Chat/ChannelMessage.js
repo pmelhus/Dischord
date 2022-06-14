@@ -15,6 +15,8 @@ const ChannelMessage = ({ isSent, user, message, setIsSent }) => {
 
 const users = useSelector(state=> state.users)
 const messageUser =users[message.owner_id]
+// console.log(messageUser)
+
 // console.log(users)
   return (
     <>

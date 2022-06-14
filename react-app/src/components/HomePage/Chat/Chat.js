@@ -43,7 +43,7 @@ const Chat = ({ setLoading }) => {
 
       // setMessages((messages) => [...messages, chat]);
 // console.log(    dispatch(genChannelMessages(channelId)))
-      dispatch(genChannelMessages(channelId));
+      dispatch(genChannelMessages());
     });
 
     setLoading(false);
@@ -99,7 +99,7 @@ const Chat = ({ setLoading }) => {
   return (
     <div className="channel-chat-container">
       <div className="channel-chat-messages">
-        {pathname.split("/")[2] !== "@me" && 
+        {pathname.split("/")[2] !== "@me" &&
         currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage {...{ message }} />

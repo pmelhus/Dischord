@@ -33,6 +33,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
       setImage(null);
       setChecked(false);
       setShowServerModal(false);
+      history.push(`/channels/${newServer.id}/${newServer.channel_ids[0]}`)
     }
     // hallo
   };

@@ -25,9 +25,9 @@ const removeChannelMessage = (channelMessage) => {
 
 export const genChannelMessages = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
+
   const [channelMessagesResponse] = await Promise.all([fetch(`/api/channel_messages/${id}`)]);
   const [channelMessages] = await Promise.all([channelMessagesResponse.json()]);
-
   if (channelMessagesResponse.ok) {
 
     dispatch(loadChannelMessages(channelMessages.channel_messages));
@@ -37,7 +37,7 @@ export const genChannelMessages = (id) => async (dispatch) => {
 
 export const createChannelMessage = (payload) => async (dispatch) => {
   const edited = false;
-  console.log(payload, 'PAYLOAD=========')
+  // console.log(payload, 'PAYLOAD=========')
   const { user_id, msg, channel_id} = payload;
 
   const f = new FormData();
@@ -160,11 +160,13 @@ const channelMessageReducer = (state = {}, action) => {
       return copyState;
     case LOAD_CHANNEL_MESSAGES:
       const channelMessageData = {};
-      console.log(action.payload)
+      // console.log(action.payload)
+      if (action.payload) {
         for (let channelMessage of action.payload) {
           channelMessageData[channelMessage.id] = channelMessage;
         }
         return { ...channelMessageData };
+      }
 
     default:
       return state;

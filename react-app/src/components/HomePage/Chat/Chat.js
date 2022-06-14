@@ -21,9 +21,7 @@ const Chat = ({ setLoading }) => {
   const channelId = parseInt(pathname.split("/")[3]);
   const [isSent, setIsSent] = useState(false);
   const currentChannel = useSelector((state) => state.channels[channelId]);
-  const allChannelMessages = useSelector((state) =>
-    Object.values(state.channelMessages)
-  );
+
 
   //  setLoading(true)
 
@@ -36,7 +34,8 @@ const Chat = ({ setLoading }) => {
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
       setMessages((messages) => [...messages, chat])
-      dispatch(genChannelMessages(channelId))
+      genChannelMessages(channelId)
+
     });
     setLoading(false);
     // when component unmounts, disconnect
@@ -84,12 +83,22 @@ const Chat = ({ setLoading }) => {
   //  setLoading(false)
   // additional code to be added
 
-  console.log(messages);
+  // console.log(messages);
+
+  useEffect(()=> {
+    genChannelMessages(channelId)
+  },[pathname, channelId])
+
+
+  const allChannelMessages = useSelector((state) =>
+  Object.values(state.channelMessages)
+);
+
   return (
  (
       <div className="channel-chat-container">
         <div className="channel-chat-messages">
-          {allChannelMessages.reverse().map((message, ind) => (
+          {pathname.split('/')[2] !== '@me' && allChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage {...{ message }} />
             </div>

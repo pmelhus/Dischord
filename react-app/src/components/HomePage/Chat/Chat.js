@@ -89,7 +89,7 @@ console.log(    dispatch(genChannelMessages(channelId)))
     genChannelMessages(channelId);
   }, []);
 
-
+// console.log(channelId)
 
   return (
     <div className="channel-chat-container">

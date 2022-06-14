@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { genServers } from "../../store/server";
 import { genChannels } from "../../store/channel";
+import {genUsers} from "../../store/user"
 import { genChannelMessages } from "../../store/channelMessage";
 import { LoadingModal } from "../../context/LoadingModal";
 import LoadingScreen from "../LoadingScreen";
@@ -32,14 +33,16 @@ const HomePage = ({ setLoading }) => {
   // }, []);
 
   useEffect(async () => {
+
     if (sessionUser) {
       await dispatch(genServers(sessionUser.id));
     }
-
     await dispatch(genChannels());
     if (channelId) {
       await dispatch(genChannelMessages(channelId));
     }
+    await dispatch(genUsers())
+
     await setLoaded(true);
   }, [dispatch, pathname]);
 

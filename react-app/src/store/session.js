@@ -23,6 +23,7 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
+
 const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
@@ -60,15 +61,12 @@ export const login = (email, password) => async (dispatch) => {
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-
       let errorObj = {};
       data.errors.forEach((error) => {
-
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-
       });
-      return {'errors':errorObj};
+      return { errors: errorObj };
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -112,15 +110,13 @@ export const signUp =
     } else if (response.status < 500) {
       const data = await response.json();
       if (data.errors) {
-
+        // console.log(data.errors)
         let errorObj = {};
         data.errors.forEach((error) => {
-
           let key = error.split(":")[0];
           errorObj[key] = error.split(":")[1];
-
         });
-        return {'errors':errorObj};
+        return { errors: errorObj };
       }
     } else {
       return ["An error occurred. Please try again."];
@@ -159,15 +155,12 @@ export const editUserProfile = (data) => async (dispatch) => {
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-
       let errorObj = {};
       data.errors.forEach((error) => {
-
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-
       });
-      return {'errors':errorObj};
+      return { errors: errorObj };
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -197,15 +190,12 @@ export const editUserPassword = (data) => async (dispatch) => {
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-
       let errorObj = {};
       data.errors.forEach((error) => {
-
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-
       });
-      return {'errors':errorObj};
+      return { errors: errorObj };
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -222,6 +212,7 @@ export default function reducer(state = initialState, action) {
       return { user: action.payload };
     case SET_USER_PASSWORD:
       return { user: action.payload };
+
     default:
       return state;
   }

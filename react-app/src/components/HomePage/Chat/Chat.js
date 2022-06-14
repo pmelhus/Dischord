@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { createChannelMessage } from "../../../store/channelMessage";
+import { createChannelMessage, genChannelMessages } from "../../../store/channelMessage";
 import ChannelMessage from "./ChannelMessage";
 import LoadingScreen from "../../LoadingScreen";
 import { LoadingModal } from "../../../context/LoadingModal";
@@ -20,9 +20,10 @@ const Chat = ({ setLoading }) => {
   const { pathname } = useLocation();
   const channelId = parseInt(pathname.split("/")[3]);
   const [isSent, setIsSent] = useState(false);
-  const currentChannel = useSelector(state=> state.channels[channelId])
-  const allChannelMessages = useSelector(state => Object.values(state.channelMessages))
-
+  const currentChannel = useSelector((state) => state.channels[channelId]);
+  const allChannelMessages = useSelector((state) =>
+    Object.values(state.channelMessages)
+  );
 
   //  setLoading(true)
 
@@ -32,11 +33,12 @@ const Chat = ({ setLoading }) => {
 
     // listen for chat events
 
-   socket.on("chat", (chat) => {
+    socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
-      setMessages((messages) => [...messages, chat]);
+      setMessages((messages) => [...messages, chat])
+      dispatch(genChannelMessages(channelId))
     });
- setLoading(false);
+    setLoading(false);
     // when component unmounts, disconnect
     return () => {
       socket.disconnect();
@@ -74,7 +76,7 @@ const Chat = ({ setLoading }) => {
         dispatch(createChannelMessage(messages[0]));
         setIsSent(false);
       } else {
-        dispatch(createChannelMessage(messages[messages.length - 1]));
+        dispatch(createChannelMessage(messages[messages.length - 1]))
         setIsSent(false);
       }
     }
@@ -82,17 +84,16 @@ const Chat = ({ setLoading }) => {
   //  setLoading(false)
   // additional code to be added
 
-  console.log(messages)
+  console.log(messages);
   return (
-    user && (
+ (
       <div className="channel-chat-container">
         <div className="channel-chat-messages">
-          {
-           allChannelMessages.reverse().map((message, ind) => (
-              <div className="channel-message-div" key={ind}>
-                <ChannelMessage {...{ user }} {...{ message }} />
-              </div>
-            ))}
+          {allChannelMessages.reverse().map((message, ind) => (
+            <div className="channel-message-div" key={ind}>
+              <ChannelMessage {...{ message }} />
+            </div>
+          ))}
         </div>
         <form className="channel-chat-form" onSubmit={sendChat}>
           <input

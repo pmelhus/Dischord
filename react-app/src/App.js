@@ -12,6 +12,7 @@ import { authenticate } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
 // import { genServers } from "./store/server";
 import { LoadingModal } from "./context/LoadingModal";
+import {genUsers} from "./store/session"
 // import LoadingScreen from "./components/LoadingScreen";
 
 function App() {

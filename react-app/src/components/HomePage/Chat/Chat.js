@@ -28,11 +28,13 @@ const Chat = ({ setLoading }) => {
     Object.values(state.channelMessages)
   );
 
-  const currentChannelMessages = allChannelMessages.filter(message => message.channel_id === channelId)
+  const currentChannelMessages = allChannelMessages.filter(
+    (message) => message.channel_id === channelId
+  );
 
   //  setLoading(true)
 
-  useEffect(async () => {
+  useEffect(() => {
     // create websocket/connect
     socket = io();
 
@@ -40,13 +42,11 @@ const Chat = ({ setLoading }) => {
 
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
-
       // setMessages((messages) => [...messages, chat]);
-// console.log(    dispatch(genChannelMessages(channelId)))
+      // console.log(    dispatch(genChannelMessages(channelId)))
       dispatch(genChannelMessages());
     });
 
-    setLoading(false);
     // when component unmounts, disconnect
     return () => {
       socket.disconnect();
@@ -57,17 +57,11 @@ const Chat = ({ setLoading }) => {
     setChatInput(e.target.value);
   };
 
-  const sendChat = (e) => {
+  const sendChat = async (e) => {
     e.preventDefault();
     // emit a message
 
-    socket.emit("chat", {
-      user_id: user.id,
-      msg: chatInput,
-      channel_id: channelId,
-    });
-
-    dispatch(
+    await dispatch(
       createChannelMessage({
         user_id: user.id,
         msg: chatInput,
@@ -75,13 +69,18 @@ const Chat = ({ setLoading }) => {
       })
     );
 
-    setIsSent(true);
+    await socket.emit("chat", {
+      user_id: user.id,
+      msg: chatInput,
+      channel_id: channelId,
+    });
+
+    await setIsSent(true);
 
     // clear the input field after the message is sent
-    setChatInput("");
+    await setChatInput("");
     // genChannelMessages(channelId)
   };
-
 
   //  setLoading(false)
   // additional code to be added
@@ -90,17 +89,16 @@ const Chat = ({ setLoading }) => {
 
   useEffect(() => {
     genChannelMessages();
-
   }, [pathname]);
   // console.log(allChannelMessages, "ALL MESSAGES")
 
-// console.log(channelId)
+  // console.log(channelId)
 
   return (
     <div className="channel-chat-container">
       <div className="channel-chat-messages">
         {pathname.split("/")[2] !== "@me" &&
-        currentChannelMessages.reverse().map((message, ind) => (
+          currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage {...{ message }} />
             </div>

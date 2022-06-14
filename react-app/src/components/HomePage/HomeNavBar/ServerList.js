@@ -23,7 +23,6 @@ const ServerList = () => {
   // console.log(channels, "============NAW");
   const handleClick = (server) => {
     // console.log(server.channel_ids)
-    const serverChannels = channels.filter(channel=> server.channel_ids.includes(channel.id))
 
     if (isLoaded && channels) {
       // if (localStorage.getItem(`${server.id}`)) {
@@ -33,7 +32,7 @@ const ServerList = () => {
       //     );
       //   } else {
           // console.log(channels, '===================')
-          history.push(`/channels/${server.id}/${serverChannels[0]?.id}`);
+          history.push(`/channels/${server?.id}/${channels[0]?.id}`);
       // }
     }
   };

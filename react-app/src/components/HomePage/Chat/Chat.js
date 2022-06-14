@@ -28,9 +28,10 @@ const Chat = ({ setLoading }) => {
     Object.values(state.channelMessages)
   );
 
-  const currentChannelMessages = allChannelMessages.filter(
-    (message) => message.channel_id === channelId
-  );
+  // const currentChannelMessages = allChannelMessages.filter(
+  //   (message) => message.channel_id === channelId
+  // );
+
 
   //  setLoading(true)
 
@@ -100,7 +101,7 @@ const Chat = ({ setLoading }) => {
     <div className="channel-chat-container">
       <div className="channel-chat-messages">
         {pathname.split("/")[2] !== "@me" &&
-          currentChannelMessages.reverse().map((message, ind) => (
+          allChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage {...{ message }} />
             </div>

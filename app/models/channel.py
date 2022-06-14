@@ -20,7 +20,8 @@ class Channel(db.Model, CrUpMixin):
           'id': self.id,
           'server_id': self.server_id,
           'name': self.name,
-          'description': self.description
+          'description': self.description,
+          'channel_messages': [channel_message.to_dict() for channel_message in self.channel_messages]
       }
 
   @staticmethod

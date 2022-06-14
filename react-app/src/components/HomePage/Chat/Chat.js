@@ -34,7 +34,7 @@ const Chat = ({ setLoading }) => {
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
       setMessages((messages) => [...messages, chat])
-      genChannelMessages(channelId)
+      dispatch(genChannelMessages(channelId))
 
     });
     setLoading(false);
@@ -67,6 +67,7 @@ const Chat = ({ setLoading }) => {
     setIsSent(true);
     // clear the input field after the message is sent
     setChatInput("");
+    // genChannelMessages(channelId)
   };
 
   useEffect(() => {

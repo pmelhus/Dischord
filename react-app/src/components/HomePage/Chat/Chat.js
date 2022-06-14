@@ -3,7 +3,10 @@ import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { createChannelMessage, genChannelMessages } from "../../../store/channelMessage";
+import {
+  createChannelMessage,
+  genChannelMessages,
+} from "../../../store/channelMessage";
 import ChannelMessage from "./ChannelMessage";
 import LoadingScreen from "../../LoadingScreen";
 import { LoadingModal } from "../../../context/LoadingModal";
@@ -21,8 +24,9 @@ const Chat = ({ setLoading }) => {
   const channelId = parseInt(pathname.split("/")[3]);
   const [isSent, setIsSent] = useState(false);
   const currentChannel = useSelector((state) => state.channels[channelId]);
-
-
+  const allChannelMessages = useSelector((state) =>
+    Object.values(state.channelMessages)
+  );
   //  setLoading(true)
 
   useEffect(async () => {
@@ -33,10 +37,12 @@ const Chat = ({ setLoading }) => {
 
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
-      setMessages((messages) => [...messages, chat])
-      dispatch(genChannelMessages(channelId))
 
+      // setMessages((messages) => [...messages, chat]);
+console.log(    dispatch(genChannelMessages(channelId)))
+      dispatch(genChannelMessages(channelId));
     });
+
     setLoading(false);
     // when component unmounts, disconnect
     return () => {
@@ -58,64 +64,53 @@ const Chat = ({ setLoading }) => {
       channel_id: channelId,
     });
 
-    // if (messages.length < 2) {
-    //   dispatch(createChannelMessage(messages[0]));
-    // } else {
-    //   dispatch(createChannelMessage(messages[messages.length - 1]));
-    // }
+    dispatch(
+      createChannelMessage({
+        user_id: user.id,
+        msg: chatInput,
+        channel_id: channelId,
+      })
+    );
 
     setIsSent(true);
+
     // clear the input field after the message is sent
     setChatInput("");
     // genChannelMessages(channelId)
   };
 
-  useEffect(() => {
-    if (isSent) {
-      if (messages.length < 2) {
-        dispatch(createChannelMessage(messages[0]));
-        setIsSent(false);
-      } else {
-        dispatch(createChannelMessage(messages[messages.length - 1]))
-        setIsSent(false);
-      }
-    }
-  }, [messages]);
+
   //  setLoading(false)
   // additional code to be added
 
   // console.log(messages);
 
-  useEffect(()=> {
-    genChannelMessages(channelId)
-  },[pathname, channelId])
+  useEffect(() => {
+    genChannelMessages(channelId);
+  }, []);
 
 
-  const allChannelMessages = useSelector((state) =>
-  Object.values(state.channelMessages)
-);
 
   return (
- (
-      <div className="channel-chat-container">
-        <div className="channel-chat-messages">
-          {pathname.split('/')[2] !== '@me' && allChannelMessages.reverse().map((message, ind) => (
+    <div className="channel-chat-container">
+      <div className="channel-chat-messages">
+        {pathname.split("/")[2] !== "@me" &&
+          allChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage {...{ message }} />
             </div>
           ))}
-        </div>
-        <form className="channel-chat-form" onSubmit={sendChat}>
-          <input
-            id="channel-chat-input"
-            value={chatInput}
-            placeholder={`Message ${currentChannel?.name}`}
-            onChange={updateChatInput}
-          />
-          {/* <button type="submit">Send</button> */}
-        </form>
       </div>
-    )
+      <form className="channel-chat-form" onSubmit={sendChat}>
+        <input
+          id="channel-chat-input"
+          value={chatInput}
+          placeholder={`Message ${currentChannel?.name}`}
+          onChange={updateChatInput}
+        />
+        {/* <button type="submit">Send</button> */}
+      </form>
+    </div>
   );
 };
 

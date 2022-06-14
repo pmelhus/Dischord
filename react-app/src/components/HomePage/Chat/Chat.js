@@ -44,7 +44,9 @@ const Chat = ({ setLoading }) => {
       // when we recieve a chat, add it into our messages array in state
       // setMessages((messages) => [...messages, chat]);
       // console.log(    dispatch(genChannelMessages(channelId)))
-      dispatch(genChannelMessages());
+
+        dispatch(genChannelMessages(channelId));
+
     });
 
     // when component unmounts, disconnect
@@ -88,7 +90,7 @@ const Chat = ({ setLoading }) => {
   // console.log(messages);
 
   useEffect(() => {
-    genChannelMessages();
+    genChannelMessages(channelId);
   }, [pathname]);
   // console.log(allChannelMessages, "ALL MESSAGES")
 

@@ -37,11 +37,11 @@ def channel_message_submit():
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-@channel_message_routes.route('/')
+@channel_message_routes.route('/<int:id>')
 @login_required
-def get_messages():
+def get_messages(id):
 
-    channel_messages = ChannelMessage.query.all()
+    channel_messages = ChannelMessage.query.filter(ChannelMessage.channel_id == id).all()
     # print(channel_messages, '==================')
     if not len(channel_messages):
         return {"errors": "No messages to be found"}

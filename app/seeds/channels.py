@@ -8,12 +8,12 @@ channels = [
         "description": "Matt Damon"
     },
     {
-        "server_id": 1,
+        "server_id": 2,
         "name": "In Hahvahd Yahd",
         "description": "Ben Affleck"
     },
     {
-        "server_id": 4,
+        "server_id": 3,
         "name": "Nezuko's Channel",
         "description": "NEZUKO CHAAAAN"
     },

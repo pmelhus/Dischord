@@ -21,7 +21,7 @@ def seed_users():
         username='Week6', email='week@6.com', password='password', bio='WEEK 6?!?! HELLO?!?', image_url=None)
     anthony = User(
         username="TheBroncaNator", email='bronca@bronca.com', password='password', bio="Ara ara...", image_url=None)
-
+    
     db.session.add(demo)
     db.session.add(vern)
     db.session.add(bon)

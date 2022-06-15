@@ -68,3 +68,15 @@ def message_update(id):
         return channel_message.to_dict()
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+@channel_message_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def server_delete(id):
+    channel_message = ChannelMessage.query.get(id)
+    if not channel_message:
+        return {"errors": f"No channel message with id {id} exists"}, 404
+    else:
+        db.session.delete(channel_message)
+        db.session.commit()
+        return channel_message.to_dict()

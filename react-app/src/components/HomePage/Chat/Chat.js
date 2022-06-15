@@ -41,13 +41,20 @@ const Chat = ({ setLoading }) => {
 
     // listen for chat events
 
-    socket.on("chat", "editedMessage", () => {
+    socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
       // setMessages((messages) => [...messages, chat]);
         dispatch(genChannelMessages(channelId));
 
     });
 
+    // socket.on('deletedMessage', (deletedMessage) => {
+    //   dispatch(genChannelMessages(channelId));
+    // })
+
+    // socket.on('editedMessage', (editedMessage) => {
+    //   dispatch(genChannelMessages(channelId));
+    // })
     // when component unmounts, disconnect
     return () => {
       socket.disconnect();

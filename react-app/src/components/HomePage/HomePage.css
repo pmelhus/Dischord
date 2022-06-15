@@ -544,6 +544,7 @@ width: 100%;
   min-height: 60px;
 flex-basis: auto;
   width: 100%;
+  margin: 6px;
 }
 
 
@@ -586,8 +587,9 @@ flex-basis: auto;
   margin: 0;
   color:rgba(204, 205, 206, 0.778);
   cursor: pointer;
-  padding-right: 4px;
+  padding-right: 8px;
   display: none;
+
 }
 
 .message-edit-button:hover {
@@ -608,7 +610,6 @@ display:block;
   width: 100%;
   position: relative;
   right: 10px;
-
 /* margin-bottom: 10px; */
 }
 
@@ -616,6 +617,8 @@ display:block;
 .message-content:hover {
   background-color:rgba(0, 0, 0, 0.189);
   border-radius: 8px;
+
+
   /* padding: 0 10px; */
 
 }
@@ -682,4 +685,20 @@ font-size: 16px;
 
 .channel-chat-user-msg h4 {
 margin: 0;
+}
+
+#message-edited {
+  font-size: 11px;
+  margin-left: 6px;
+  margin-top: 2px;
+  color:rgba(229, 230, 232, 0.968)
+}
+
+.message-content-edited {
+  display: flex;
+  align-items: center;
+}
+
+.message-edit-delete {
+  display: flex;
 }

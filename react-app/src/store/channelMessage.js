@@ -119,11 +119,8 @@ export const editChannelMessage = (payload) => async (dispatch) => {
 };
 
 export const deleteChannelMessage = (channelMessage) => async (dispatch) => {
+  // console.log(channelMessage, 'HIYA')
   const { id } = channelMessage;
-  // console.log('inside the thunk');
-  // console.log('estateowner', estate.owner_id);
-  // console.log("estateid", estate.id);
-  // console.log(channelMessage, "=============");
   const response = await fetch(`/api/channel_messages/${id}`, {
     method: "DELETE",
   });

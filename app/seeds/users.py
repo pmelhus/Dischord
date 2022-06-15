@@ -4,15 +4,15 @@ from app.models import db, User
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password', bio='How about demo apples?', image_url="s3://dischord-profile-images/apple.jpeg")
+        username='Demo', email='demo@aa.io', password='password', bio='How about demo apples?', image_url="https://dischord-profile-images.s3.amazonaws.com/app.png")
     vern = User(
         username='Coolycool510', email='cool@cool.com', password='password', bio="I'm too cooly cool for you!", image_url=None)
     bon = User(
-        username='BonJovi', email='bon@jovi.com', password='password', bio="It's my life!", image_url="s3://dischord-profile-images/bon.jpeg")
+        username='BonJovi', email='bon@jovi.com', password='password', bio="It's my life!", image_url="https://dischord-profile-images.s3.amazonaws.com/bon2.jpeg")
     darren = User(
         username='ComeEatChinaCity', email='china@city.com', password='password', bio="Ara smells!", image_url=None)
     ara = User(
-        username='Zensan', email='zen@san.com', password='password', bio="NEZUKO-CHAAAAN!!!", image_url="s3://dischord-profile-images/zen.jpeg")
+        username='Zensan', email='zen@san.com', password='password', bio="NEZUKO-CHAAAAN!!!", image_url="https://dischord-profile-images.s3.amazonaws.com/zen.jpeg")
     chris = User(
         username='Push2Main', email='chris@thegrepper.com', password='password', bio="Nothing will get in the way of me and my taco bell... HELLO?!", image_url=None)
     brianna = User(

@@ -77,19 +77,19 @@ export const createChannelMessage = (payload) => async (dispatch) => {
   }
 };
 
-export const editChannelMessage = (data) => async (dispatch) => {
-
-  const { id, name, description, server_id} = data;
+export const editChannelMessage = (payload) => async (dispatch) => {
 
 
+  const { id, content, channel_id, owner_id, edited} = payload;
+  // console.log(payload, 'HEEERE')
   const f = new FormData();
-
-  f.append("name", name);
-  f.append('description', description)
-  f.append('server_id', server_id)
+  f.append("content", content);
+  f.append("channel_id", channel_id);
+  f.append("owner_id", owner_id);
+  f.append('edited', edited)
 
   const [response] = await Promise.all([
-    fetch(`/api/channelMessages/${id}`, {
+    fetch(`/api/channel_messages/${id}`, {
       method: "PATCH",
       body: f,
     }),
@@ -103,7 +103,6 @@ export const editChannelMessage = (data) => async (dispatch) => {
     const data = await response.json();
 
     if (data.errors) {
-
       let errorObj = {};
       data.errors.forEach((error) => {
 
@@ -114,16 +113,14 @@ export const editChannelMessage = (data) => async (dispatch) => {
       return {'errors':errorObj};
     }
   } else {
+    console.log('ERRORS')
     return ["An error occurred. Please try again."];
   }
 };
 
 export const deleteChannelMessage = (channelMessage) => async (dispatch) => {
+  // console.log(channelMessage, 'HIYA')
   const { id } = channelMessage;
-  // console.log('inside the thunk');
-  // console.log('estateowner', estate.owner_id);
-  // console.log("estateid", estate.id);
-  // console.log(channelMessage, "=============");
   const response = await fetch(`/api/channel_messages/${id}`, {
     method: "DELETE",
   });

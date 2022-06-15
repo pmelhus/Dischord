@@ -17,11 +17,11 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@channel_routes.route('/')
+@channel_routes.route('/<int:id>')
 @login_required
-def channels():
+def channels(id):
 
-    channels = Channel.query.all()
+    channels = Channel.query.filter(Channel.server_id == id).all()
     return {'channels': [channel.to_dict() for channel in channels]}
 
 

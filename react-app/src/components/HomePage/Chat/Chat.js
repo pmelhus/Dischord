@@ -28,9 +28,10 @@ const Chat = ({ setLoading }) => {
     Object.values(state.channelMessages)
   );
 
-  const currentChannelMessages = allChannelMessages.filter(
-    (message) => message.channel_id === channelId
-  );
+  // const currentChannelMessages = allChannelMessages.filter(
+  //   (message) => message.channel_id === channelId
+  // );
+
 
   //  setLoading(true)
 
@@ -43,12 +44,17 @@ const Chat = ({ setLoading }) => {
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
       // setMessages((messages) => [...messages, chat]);
-      // console.log(    dispatch(genChannelMessages(channelId)))
-
         dispatch(genChannelMessages(channelId));
 
     });
 
+    // socket.on('deletedMessage', (deletedMessage) => {
+    //   dispatch(genChannelMessages(channelId));
+    // })
+
+    // socket.on('editedMessage', (editedMessage) => {
+    //   dispatch(genChannelMessages(channelId));
+    // })
     // when component unmounts, disconnect
     return () => {
       socket.disconnect();
@@ -81,28 +87,22 @@ const Chat = ({ setLoading }) => {
 
     // clear the input field after the message is sent
     await setChatInput("");
-    // genChannelMessages(channelId)
   };
 
-  //  setLoading(false)
-  // additional code to be added
 
-  // console.log(messages);
 
   useEffect(() => {
     genChannelMessages(channelId);
   }, [pathname]);
-  // console.log(allChannelMessages, "ALL MESSAGES")
 
-  // console.log(channelId)
 
   return (
     <div className="channel-chat-container">
       <div className="channel-chat-messages">
         {pathname.split("/")[2] !== "@me" &&
-          currentChannelMessages.reverse().map((message, ind) => (
+          allChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
-              <ChannelMessage {...{ message }} />
+              <ChannelMessage {...{channelId}} {...{socket}} {...{ message }} />
             </div>
           ))}
       </div>

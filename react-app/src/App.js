@@ -14,6 +14,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import { LoadingModal } from "./context/LoadingModal";
 import {genUsers} from "./store/session"
 // import LoadingScreen from "./components/LoadingScreen";
+import Splash from "./components/Splash"
 
 function App() {
   // const [loadingScreen, setLoadingScreen] = useState(false);
@@ -36,6 +37,7 @@ function App() {
     <BrowserRouter>
       <Route exact path="/">
         <NavBar />
+        <Splash />
       </Route>
       <Switch>
         <Route path="/login" exact={true}>

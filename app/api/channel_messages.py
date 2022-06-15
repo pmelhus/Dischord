@@ -47,3 +47,24 @@ def get_messages(id):
         return {"errors": "No messages to be found"}
     else:
         return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
+
+@channel_message_routes.route('/<int:id>', methods=["PATCH"])
+@login_required
+def message_update(id):
+
+    channel_message = ChannelMessage.query.get(id)
+    if not channel_message:
+      return {"errors": "No estate"}, 404
+    form = ChannelMessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        print(form.data, 'BETCH')
+        channel_message.channel_id = form.data['channel_id']
+        channel_message.owner_id = form.data['owner_id']
+        channel_message.content = form.data['content']
+        channel_message.edited = form.data['edited']
+        db.session.commit()
+        return channel_message.to_dict()
+    else:
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401

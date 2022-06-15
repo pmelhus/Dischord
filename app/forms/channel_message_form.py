@@ -7,5 +7,5 @@ from wtforms.validators import DataRequired, Length
 class ChannelMessageForm(FlaskForm):
     channel_id = IntegerField('channel_id', validators=[DataRequired()])
     owner_id = IntegerField('owner_id', validators=[DataRequired()])
-    content = StringField('content')
+    content = StringField('content', validators=[DataRequired()])
     edited = BooleanField('edited')

@@ -28,10 +28,9 @@ const Chat = ({ setLoading }) => {
     Object.values(state.channelMessages)
   );
 
-  // const currentChannelMessages = allChannelMessages.filter(
-  //   (message) => message.channel_id === channelId
-  // );
-
+  const currentChannelMessages = allChannelMessages.filter(
+    (message) => message.channel_id === channelId
+  );
 
   //  setLoading(true)
 
@@ -44,8 +43,7 @@ const Chat = ({ setLoading }) => {
     socket.on("chat", (chat) => {
       // when we recieve a chat, add it into our messages array in state
       // setMessages((messages) => [...messages, chat]);
-        dispatch(genChannelMessages(channelId));
-
+      dispatch(genChannelMessages());
     });
 
     // socket.on('deletedMessage', (deletedMessage) => {
@@ -89,20 +87,21 @@ const Chat = ({ setLoading }) => {
     await setChatInput("");
   };
 
-
-
   useEffect(() => {
-    genChannelMessages(channelId);
+    genChannelMessages();
   }, [pathname]);
-
 
   return (
     <div className="channel-chat-container">
       <div className="channel-chat-messages">
         {pathname.split("/")[2] !== "@me" &&
-          allChannelMessages.reverse().map((message, ind) => (
+          currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
-              <ChannelMessage {...{channelId}} {...{socket}} {...{ message }} />
+              <ChannelMessage
+                {...{ channelId }}
+                {...{ socket }}
+                {...{ message }}
+              />
             </div>
           ))}
       </div>

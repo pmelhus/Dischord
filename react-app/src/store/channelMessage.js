@@ -23,10 +23,10 @@ const removeChannelMessage = (channelMessage) => {
   };
 };
 
-export const genChannelMessages = (id) => async (dispatch) => {
+export const genChannelMessages = () => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
 
-  const [channelMessagesResponse] = await Promise.all([fetch(`/api/channel_messages/${id}`)]);
+  const [channelMessagesResponse] = await Promise.all([fetch(`/api/channel_messages/`)]);
   const [channelMessages] = await Promise.all([channelMessagesResponse.json()]);
   if (channelMessagesResponse.ok) {
 
@@ -53,7 +53,7 @@ export const createChannelMessage = (payload) => async (dispatch) => {
     }),
   ]);
 
-  console.log(response);
+  // console.log(response);
   if (response.ok) {
     const data = await response.json();
     dispatch(addChannelMessage(data));

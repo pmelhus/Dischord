@@ -7,24 +7,24 @@ const ServerList = () => {
   const history = useHistory();
 
   const servers = useSelector((state) => Object.values(state.servers));
-  const channels = useSelector((state) => Object.values(state.channels));
+  // const channels = useSelector((state) => Object.values(state.channels));
 
 
 
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (servers && channels) {
+    if (servers) {
       setIsLoaded(true);
     }
-  }, [servers, channels]);
+  }, [servers]);
 
 
   // console.log(channels, "============NAW");
   const handleClick = (server) => {
     // console.log(server.channel_ids)
 
-    if (isLoaded && channels) {
+    if (isLoaded) {
       // if (localStorage.getItem(`${server.id}`)) {
       //   // console.log('========== LOCAL')
       //   history.push(
@@ -32,7 +32,7 @@ const ServerList = () => {
       //     );
       //   } else {
           // console.log(channels, '===================')
-          history.push(`/channels/${server?.id}/${channels[0]?.id}`);
+          history.push(`/channels/${server?.id}/${server.channel_ids[0]}`);
       // }
     }
   };

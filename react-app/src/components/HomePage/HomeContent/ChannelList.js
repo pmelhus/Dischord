@@ -31,7 +31,7 @@ const ChannelList = () => {
   const selectedChannel = serverChannels.find(
     (channel) => channel.id === parseInt(localStorageChannel)
   );
-  // console.log(parseInt(localStorageChannel))
+  console.log(parseInt(localStorageChannel))
 
   const handleFirstChannel = () => {
     localStorage.setItem(

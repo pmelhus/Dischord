@@ -53,10 +53,14 @@ function App() {
 
     socket.on("logout", (data) => {
       // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
-      
+
         dispatch(genUsers());
 
     });
+
+    socket.on('sign-up', () => {
+      dispatch(genUsers());
+    })
 
     // socket.on("logout", (logout) => {
     //   setOnlineMembers((onlineMembers) =>

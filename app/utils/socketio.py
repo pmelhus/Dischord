@@ -37,3 +37,13 @@ def handle_logout(data):
     user.online = False
     db.session.commit()
     emit("logout", data, broadcast=True)
+
+@socketio.on("sign-up")
+def handle_sign_up(data):
+    # print(data['id'], 'USER HERE NOW BETCH')
+    user = User.query.get(data['id'])
+    # print('USER HERE')
+    print(user, 'USER HERE')
+    user.online = True
+    db.session.commit()
+    emit("sign-up", data, broadcast=True)

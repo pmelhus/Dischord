@@ -479,14 +479,17 @@ display:block;
 .channel-chat-form {
   position: absolute;
   margin: 18px;
-  bottom: 6px;;
-  width: 75%;
+  bottom: 6px;
+  width: 69%;
   height: 30px;
   padding: 5px;
   background-color:#62656a7c;
 display: flex;
 align-items: center;
+border-radius: 7px;
 }
+
+
 
 #channel-chat-input {
   width: 99.4%;
@@ -526,7 +529,7 @@ flex: 1 1 0;
 position: absolute;
 bottom: 69px;
 top: 0;
-width: 100%;
+min-width: 70%
 
 }
 
@@ -585,8 +588,8 @@ flex-basis: auto;
 }
 
 .channel-chat-user-msg {
-
-  width: 65%;
+  word-break: break-word;
+  max-width: 74%;
   align-items: center;
   /* margin-bottom: 8px; */
 }
@@ -628,6 +631,7 @@ display:block;
 .message-content:hover {
   background-color:rgba(0, 0, 0, 0.189);
   border-radius: 8px;
+  /* width:100%; */
 
 
   /* padding: 0 10px; */
@@ -708,6 +712,7 @@ margin: 0;
 .message-content-edited {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .message-edit-delete {
@@ -823,7 +828,9 @@ position: absolute;
   /*  SERVER MEMBERS */
 
   .server-members {
-
+    background-color:#2f3136;
+    min-width: 15%;
+    min-height: 2050px;
   }
 
   #invite-button-div {
@@ -956,4 +963,9 @@ position: absolute;
     border-radius: 100%;
     background-color: #950652;
     transition: border-radius .5s;
+  }
+
+  .online-card-container p {
+color:rgba(255, 255, 255, 0.432);
+margin: 20px;
   }

@@ -1,8 +1,12 @@
-const UserOnlineCard = ({ user }) => {
+const UserOnlineCard = ({ currentServerMemberIds, user }) => {
   return (
-    <>
-      <h3>{user.username}</h3>
-    </>
+    <div className="online-card-container">
+      <p>Online - {currentServerMemberIds.length}</p>
+      <div>
+        
+      </div>
+      <p>{user.username}</p>
+    </div>
   );
 };
 

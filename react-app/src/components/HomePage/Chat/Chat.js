@@ -97,7 +97,6 @@ const Chat = ({ socket, setLoading }) => {
         </div>
       </div>
       <div className="server-members">
-        <div className="server-members-header"></div>
         <div className="server-members-list">
           <div className="server-members-online">
             {users &&
@@ -108,7 +107,7 @@ const Chat = ({ socket, setLoading }) => {
                     <>
                       {user.online ? (
                         <>
-                          <UserOnlineCard {...{ user }} />
+                          <UserOnlineCard {...{currentServerMemberIds}} {...{ user }} />
                         </>
                       ) : (
                         <>

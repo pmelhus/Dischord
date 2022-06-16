@@ -47,11 +47,16 @@ function App() {
       dispatch(genChannelMessages());
     });
 
-    socket.on("login", "logout", (data) => {
+    socket.on("login", (data) => {
       // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
       dispatch(genUsers())
     });
 
+
+    socket.on("logout", (data) => {
+      // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
+      dispatch(genUsers())
+    });
 
 
     // socket.on("logout", (logout) => {

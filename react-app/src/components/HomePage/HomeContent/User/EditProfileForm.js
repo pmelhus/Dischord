@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editUserProfile } from "../../../../store/session";
 import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
-import LogoutButton from "../../../auth/LogoutButton";
+import LogoutButton from "./LogoutButton"
 
 const EditProfileForm = ({ setEditModal, socket }) => {
   const user = useSelector((state) => state.session.user);

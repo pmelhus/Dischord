@@ -87,6 +87,10 @@ const Chat = ({ socket, setLoading }) => {
     }
   });
 
+  useEffect(() => {
+    
+  })
+
   return (
     <div className="chat-container">
       <div className="channel-chat-container">

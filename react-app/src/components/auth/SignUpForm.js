@@ -140,7 +140,7 @@ const SignUpForm = () => {
           <input
              className='login-input'
             type="file"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/png, image/gif"
             name="image"
             onChange={updateImage}
           ></input>

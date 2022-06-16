@@ -67,7 +67,7 @@ def edit_user(id):
         upload = upload_file_to_s3(image)
         if "url" not in upload:
             # then the upload le failed, oh no!
-            return upload, 400
+            return {"errors": "file upload failed"}, 400
         url = upload["url"]
 
     if form.validate_on_submit():

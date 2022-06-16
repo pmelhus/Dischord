@@ -24,7 +24,7 @@ export const genUsers = () => async (dispatch) => {
       return { errors: errorObj };
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return  {errors: 'An error occurred. Please try again.'}
   }
 };
 

@@ -62,19 +62,21 @@ export const login = (email, password) => async (dispatch) => {
     const data = await response.json();
     if (data.errors) {
       let errorObj = {};
-      data.errors.forEach((error) => {
+      data?.errors.forEach((error) => {
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
       });
       return { errors: errorObj };
+    } else {
+      return { errors: "An error occurred. Please try again." };
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return { errors: "An error occurred. Please try again." };
   }
 };
 
 export const logout = (id) => async (dispatch) => {
-  console.log(id)
+  console.log(id);
   const response = await fetch(`/api/auth/logout/${id}`, {
     headers: {
       "Content-Type": "application/json",
@@ -176,9 +178,11 @@ export const editUserProfile = (data) => async (dispatch) => {
         errorObj[key] = error.split(":")[1];
       });
       return { errors: errorObj };
+    } else {
+      return { errors: "An error occurred. Please try again." };
     }
   } else {
-    return ["An error occurred. Please try again."];
+    return { errors: "An error occurred. Please try again." };
   }
 };
 

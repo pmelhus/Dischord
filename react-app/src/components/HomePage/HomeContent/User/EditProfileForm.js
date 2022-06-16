@@ -18,6 +18,8 @@ const EditProfileForm = ({ setEditModal, socket }) => {
   const [passwordModal, setPasswordModal] = useState(false);
   const dispatch = useDispatch();
 
+  const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
+
   const updateImage = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -74,6 +76,11 @@ const EditProfileForm = ({ setEditModal, socket }) => {
       <form className="profile-edit-form">
         <div className="login-email">
           <label>Username</label>
+          {errors && errors.username && (
+            <div className="error-msg">
+              <p>*{errors.username}*</p>
+            </div>
+          )}
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -81,12 +88,22 @@ const EditProfileForm = ({ setEditModal, socket }) => {
         </div>
         <div className="login-email">
           <label>Email</label>
+          {errors && errors.email && (
+            <div className="error-msg">
+              <p>*{errors.email}*</p>
+            </div>
+          )}
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
         <div className="login-email">
+        {errors && errors.bio && (
+            <div className="error-msg">
+              <p>*{errors.bio}*</p>
+            </div>
+          )}
           <label>Bio</label>
           <textarea
             value={bio}
@@ -99,18 +116,23 @@ const EditProfileForm = ({ setEditModal, socket }) => {
         </div>
         <div className="edit-profile-image-preview">
           <label class="custom-file-upload">
-            <input type="file" accept="image/*" onChange={updateImage}></input>
+          {errors && errors.image_file && (
+            <div className="error-msg">
+              <p>*{errors.image_file}*</p>
+            </div>
+          )}
+            <input type="file" accept="image/png, image/jpeg, image/png, image/gif" onChange={updateImage}></input>
             Profile image upload
           </label>
         </div>
-        {Object.keys(errors).length > 0 && (
+        {/* {Object.keys(errors).length > 0 && (
           <div className="form-errors">
             {Object.keys(errors).map(
               // (key) => `${errors[key]}`
               (key) => `${errors[key]}`
             )}
           </div>
-        )}
+        )} */}
         <div className="button-div-user">
           <button onClick={handleEditProfile}>Save Changes</button>
           <button onClick={handlePasswordModal}>Change your password</button>

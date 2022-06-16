@@ -7,7 +7,6 @@ from ..utils.s3utils import (
 
 
 user_routes = Blueprint('users', __name__)
-
 def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
@@ -20,10 +19,14 @@ def validation_errors_to_error_messages(validation_errors):
 
 
 @user_routes.route('/')
-@login_required
+# @login_required
 def users():
     users = User.query.all()
-    return {'users': [user.to_dict() for user in users]}
+    if users:
+
+        return {'users': [user.to_dict() for user in users]}
+    else:
+        return {'errors': 'No users'}
 
 
 @user_routes.route('/<int:id>')

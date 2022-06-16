@@ -13,7 +13,7 @@ export const genUsers = () => async (dispatch) => {
   if (response.ok) {
     dispatch(loadUsers(users.users));
     return users;
-  }else if (response.status < 500) {
+   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
       let errorObj = {};

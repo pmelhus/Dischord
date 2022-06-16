@@ -12,7 +12,7 @@ from app.models import db, User
 origins = "*"
 
 # initialize your socket instance
-socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
+socketio = SocketIO(cors_allowed_origins=origins, logger=True)
 
 
 # handle chat messages

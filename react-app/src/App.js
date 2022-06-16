@@ -53,9 +53,9 @@ function App() {
 
     socket.on("logout", (data) => {
       // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
-      if (user) {
+      
         dispatch(genUsers());
-      }
+
     });
 
     // socket.on("logout", (logout) => {

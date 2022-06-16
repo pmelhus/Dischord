@@ -453,6 +453,12 @@ display:block;
   align-items: center;
 }
 
+#channel-description {
+  /* margin-left: 10px; */
+  font-size: 14px;
+  color:rgba(229, 230, 232, 0.686)
+}
+
 #user-picture-preview img {
   box-sizing: border-box;
   width: 120px;
@@ -525,7 +531,7 @@ border-radius: 7px;
 }
 
 .server-chat-header p {
-  padding-left: 6px;
+  padding: 0 4px;
 }
 
 #server-chat-header-hash {

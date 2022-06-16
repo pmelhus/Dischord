@@ -10,8 +10,8 @@ const ServerList = () => {
   // const channels = useSelector((state) => Object.values(state.channels));
   const sessionUser = useSelector((state) => state.session.user)
 
-const myServers = servers.filter(server=> (server.owner_id ===sessionUser.id || server.members_ids.includes(sessionUser.id)))
-console.log(myServers)
+const myServers = servers.filter(server=> (server.owner_id === sessionUser.id || server.members_ids.includes(sessionUser.id)))
+// console.log(myServers)
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ console.log(myServers)
       //     );
       //   } else {
           // console.log(channels, '===================')
-          history.push(`/channels/${server?.id}/${server.channel_ids[0]}`);
+          history.push(`/channels/${server?.id}/${server?.channel_ids[0]}`);
       // }
     }
   };
@@ -52,7 +52,7 @@ console.log(myServers)
                   <img
                     alt="Server profile icon"
                     className="server-image-icon"
-                    src={server.image_url}
+                    src={server?.image_url}
                   ></img>
                 ) : (
                   <h2 className="server-image-icon">

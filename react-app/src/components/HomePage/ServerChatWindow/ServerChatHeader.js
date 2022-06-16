@@ -10,6 +10,8 @@ const ServerChatHeader = () => {
       <div className="server-chat-header">
         <i id='server-chat-header-hash' className="fa-solid fa-hashtag"></i>
         <p>{channels[channel_id]?.name}</p>
+        <p>-</p>
+        <p id="channel-description">{channels[channel_id]?.description}</p>
       </div>
     </>
   );

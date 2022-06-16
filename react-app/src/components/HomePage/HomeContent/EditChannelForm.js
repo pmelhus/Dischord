@@ -53,7 +53,7 @@ const EditChannelForm = ({ setShowEditForm }) => {
     }
     setNameError(true)
     setDescriptionError(true)
-    if (name.length > 1 && name.length < 33) {
+    if (name?.length > 1 && name?.length < 33) {
       setNameError(false)
     }
     if (description?.length < 255) {
@@ -91,7 +91,7 @@ const EditChannelForm = ({ setShowEditForm }) => {
         </div>
         <div>
           <button onClick={handleSubmit}>Save Changes</button>
-          <button onClick={handleDelete}>Delete Server</button>
+          <button onClick={handleDelete}>Delete Channels</button>
         </div>
       </form>
     </>

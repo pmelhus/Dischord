@@ -33,7 +33,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     };
 
     const editedMessage = await dispatch(editChannelMessage(payload));
-    setContent(editedMessage.content);
+    await setContent(editedMessage.content);
     if (editedMessage.errors) {
       setErrors(editedMessage.errors);
       console.log(editedMessage.errors);

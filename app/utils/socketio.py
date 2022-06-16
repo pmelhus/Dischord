@@ -25,12 +25,14 @@ def handle_login(data):
     # print(data['id'], 'USER HERE NOW BETCH')
     user = User.query.get(data['id'])
     # print('USER HERE')
+    print(user, 'USER HERE')
     user.online = True
     db.session.commit()
     emit("login", data, broadcast=True)
 
 @socketio.on("logout")
 def handle_logout(data):
+
     user = User.query.get(data['id'])
     user.online = False
     db.session.commit()

@@ -29,6 +29,21 @@ const LoginForm = ({ socket }) => {
     }
   };
 
+  const handleDemo = async (e) => {
+    if (socket) {
+      e.preventDefault();
+      const data = await dispatch(login("demo@aa.io",  "password"));
+      await socket.emit("login", data);
+      if (data?.errors) {
+        setErrors(data?.errors);
+      } else {
+        // console.log(data);
+        // const jsonData= JSON.stringify(data)
+        await history.push("/channels/@me");
+      }
+    }
+  };
+
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -86,6 +101,9 @@ const LoginForm = ({ socket }) => {
             onChange={updatePassword}
           />
           <button type="submit">Login</button>
+          <button onClick={handleDemo} type="button">
+            Demo Login
+          </button>
         </div>
         <div className="login-register">
           <p>Need an account?</p>

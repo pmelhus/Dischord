@@ -21,6 +21,7 @@ const Chat = ({ socket, setLoading }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const { pathname } = useLocation();
+  const url = pathname.split("/")[2];
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
   const [isSent, setIsSent] = useState(false);
@@ -78,7 +79,6 @@ const Chat = ({ socket, setLoading }) => {
 
   users.map((user) => {
     if (currentServerMemberIds?.includes(user.id)) {
-
       if (user.online) {
         online.push(user);
       } else {
@@ -87,9 +87,7 @@ const Chat = ({ socket, setLoading }) => {
     }
   });
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
 
   return (
     <div className="chat-container">
@@ -121,7 +119,9 @@ const Chat = ({ socket, setLoading }) => {
       <div className="server-members">
         <div className="server-members-list">
           <div className="server-members-online">
-            <p className="server-members-titles">Online - {online.length}</p>
+            {url !== "@me" && (
+              <p className="server-members-titles">Online - {online.length}</p>
+            )}
             {users &&
               users.map((user) => {
                 if (currentServerMemberIds?.includes(user.id)) {
@@ -141,8 +141,12 @@ const Chat = ({ socket, setLoading }) => {
                   );
                 }
               })}
-                     <p className="server-members-titles">Offline - {offline.length}</p>
-                  {users &&
+            {url !== "@me" && (
+              <p className="server-members-titles">
+                Offline - {offline.length}
+              </p>
+            )}
+            {users &&
               users.map((user) => {
                 if (currentServerMemberIds?.includes(user.id)) {
                   return (

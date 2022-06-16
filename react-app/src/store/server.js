@@ -63,7 +63,7 @@ export const genServerMembers = (server_id) => async (dispatch) => {
 export const genServers = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
   const [serversResponse] = await Promise.all([
-    fetch(`/api/servers/owner_id/${id}`),
+    fetch(`/api/servers/`),
   ]);
   const [servers] = await Promise.all([serversResponse.json()]);
 

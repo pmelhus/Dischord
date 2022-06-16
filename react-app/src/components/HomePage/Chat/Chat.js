@@ -22,16 +22,20 @@ const Chat = ({ setLoading }) => {
   const user = useSelector((state) => state.session.user);
   const { pathname } = useLocation();
   const channelId = parseInt(pathname.split("/")[3]);
+  const serverId = parseInt(pathname.split("/")[2]);
   const [isSent, setIsSent] = useState(false);
   const currentChannel = useSelector((state) => state.channels[channelId]);
   const allChannelMessages = useSelector((state) =>
     Object.values(state.channelMessages)
   );
+  const allServers = useSelector((state) => Object.values(state.servers));
+  const [onlineMembers, setOnlineMembers] = useState();
 
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
   );
 
+  // const serverMembersArray =
   //  setLoading(true)
 
   useEffect(() => {
@@ -44,6 +48,16 @@ const Chat = ({ setLoading }) => {
       // when we recieve a chat, add it into our messages array in state
       // setMessages((messages) => [...messages, chat]);
       dispatch(genChannelMessages());
+    });
+
+    socket.on("login", (login) => {
+      setOnlineMembers((onlineMembers) => [...onlineMembers, login]);
+    });
+
+    socket.on("logout", (logout) => {
+      setOnlineMembers((onlineMembers) =>
+        [...onlineMembers].filter((member) => member.id !== logout.id)
+      );
     });
 
     // socket.on('deletedMessage', (deletedMessage) => {
@@ -75,11 +89,7 @@ const Chat = ({ setLoading }) => {
       })
     );
 
-    await socket.emit("chat", {
-      user_id: user.id,
-      msg: chatInput,
-      channel_id: channelId,
-    });
+    await socket.emit("chat");
 
     await setIsSent(true);
 
@@ -123,9 +133,13 @@ const Chat = ({ setLoading }) => {
         <div className="server-members-list">
           <div className="server-members-online">
             <h4>ONLINE</h4>
-          </div>
-          <div className="server-members-offline">
-          <h4>OFFLINE</h4>
+            {onlineMembers &&onlineMembers?.map((member) => {
+              return (
+                <>
+                  <h3>{member.username}</h3>
+                </>
+              );
+            })}
           </div>
         </div>
       </div>

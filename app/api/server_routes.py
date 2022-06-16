@@ -20,10 +20,14 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@server_routes.route('/owner_id/<int:id>')
+@server_routes.route('/')
 @login_required
-def servers(id):
-    servers = Server.query.filter(Server.owner_id == id).all()
+def servers():
+    servers = Server.query.all()
+    # all_servers = Server.query.all()
+    # if not id:
+    #     return {"servers": [server.to_dict() for server in all_servers]}
+    # else:
     return {'servers': [server.to_dict() for server in servers]}
 
 
@@ -148,7 +152,7 @@ def create_server_member(server_id, user_id):
     server = Server.query.get(server_id)
     user = User.query.get(user_id)
     # server_member = Server.server_members.get(user.id)
-    
+
     if not server and user:
         return {"errors": "Either the server or user does not exist"}, 404
 

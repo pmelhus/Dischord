@@ -8,9 +8,10 @@ const ServerList = () => {
 
   const servers = useSelector((state) => Object.values(state.servers));
   // const channels = useSelector((state) => Object.values(state.channels));
+  const sessionUser = useSelector((state) => state.session.user)
 
-
-
+const myServers = servers.filter(server=> (server.owner_id ===sessionUser.id || server.members_ids.includes(sessionUser.id)))
+console.log(myServers)
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const ServerList = () => {
   return (
     <div>
       {isLoaded &&
-        servers.map((server) => {
+        myServers.map((server) => {
           return (
             <div key={server.id} className="server-list-div">
               <button

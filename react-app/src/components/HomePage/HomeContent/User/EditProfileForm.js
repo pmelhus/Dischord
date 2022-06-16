@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editUserProfile } from "../../../../store/session";
 import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
+import LogoutButton from "../../../auth/LogoutButton"
 
 const EditProfileForm = ({ setEditModal }) => {
   const user = useSelector((state) => state.session.user);
@@ -111,6 +112,7 @@ const EditProfileForm = ({ setEditModal }) => {
         )}
         <button onClick={handleEditProfile}>Save Changes</button>
         <button onClick={handlePasswordModal}>Change your password</button>
+        <LogoutButton/>
       </form>
       {passwordModal && (
         // <Modal onClose={setPasswordModal(false)}>

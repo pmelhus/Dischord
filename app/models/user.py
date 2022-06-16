@@ -47,7 +47,8 @@ class User(db.Model, UserMixin, CrUpMixin):
             'username': self.username,
             'email': self.email,
             'bio': self.bio,
-            'image_url': self.image_url
+            'image_url': self.image_url,
+            # 'memberships': [server.to_dict() for server in self.memberships]
         }
 
     @staticmethod

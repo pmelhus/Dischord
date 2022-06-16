@@ -99,7 +99,7 @@ const HomeContent = ({socket}) => {
                 </ul>
               </div>
             )}
-            {currentServer.owner_id === sessionUser.id && showInviteButton && (
+            {currentServer?.owner_id === sessionUser.id && showInviteButton && (
               <div id="invite-button-div">
                 <div className="invite-profile-icon-div">
                   <button

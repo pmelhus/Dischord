@@ -160,16 +160,34 @@ export const editServer = (data) => async (dispatch) => {
 
 export const deleteServer = (server) => async (dispatch) => {
   const { id } = server;
+  console.log(server)
   // console.log('inside the thunk');
   // console.log('estateowner', estate.owner_id);
   // console.log("estateid", estate.id);
   // console.log(server, "=============");
-  const response = await fetch(`/api/servers/${id}`, {
-    method: "DELETE",
-  });
+  const [response] = await Promise.all([
+    fetch(`/api/servers/${id}`, {
+      method: "DELETE",
+    }),
+  ]);
   if (response.ok) {
     dispatch(removeServer(server));
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+      let errorObj = {};
+      data.errors.forEach((error) => {
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+      });
+      return { errors: errorObj };
+    }
+  } else {
+    return ["An error occurred. Please try again."];
   }
+
+
 };
 
 export const createServerMember = (payload) => async (dispatch) => {

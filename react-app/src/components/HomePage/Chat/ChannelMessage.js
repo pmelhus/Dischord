@@ -32,7 +32,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     };
 
     const editedMessage = await dispatch(editChannelMessage(payload));
-
+setContent(editedMessage.content)
     if (editedMessage.errors) {
       setErrors(editedMessage.errors);
       console.log(editedMessage.errors);
@@ -69,7 +69,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
               {showEdit ? (
                 <>
                   <div className="message-edit-container">
-                    <form>
+                    <form onSubmit={editInputSubmit}>
                       <div className="message-edit-input-container">
                         <input
                           className="message-content-edit"
@@ -82,8 +82,8 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
                         <button onClick={() => setShowEdit(false)}>
                           <i className="fa-solid fa-xmark fa-xl"></i>
                         </button>
-                        to cancel. Press enter to{" "}
-                        <button onClick={editInputSubmit}>submit.</button>
+                        to cancel. Press enter to
+                        <button type='submit'>submit</button>
                       </p>
                     </form>
                   </div>

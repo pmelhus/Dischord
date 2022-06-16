@@ -1,11 +1,35 @@
 const ADD_SERVER = "servers/addServer";
+const ADD_SERVER_MEMBER = "servers/addServerMember";
 const LOAD_SERVERS = "servers/loadServers";
 const REMOVE_SERVER = "servers/removeServer";
+const LOAD_SERVER = "servers/loadServer";
+const REMOVE_SERVER_MEMBER = "serverMembers/removeServerMember";
 
 const loadServers = (servers) => {
   return {
     type: LOAD_SERVERS,
     payload: servers,
+  };
+};
+
+const loadServer = (serverMembers) => {
+  return {
+    type: LOAD_SERVER,
+    payload: serverMembers,
+  };
+};
+
+const addServerMember = (serverMember) => {
+  return {
+    type: ADD_SERVER_MEMBER,
+    payload: serverMember,
+  };
+};
+
+const removeServerMember = (serverMember) => {
+  return {
+    type: REMOVE_SERVER_MEMBER,
+    payload: serverMember,
   };
 };
 
@@ -23,9 +47,24 @@ const removeServer = (server) => {
   };
 };
 
+export const genServerMembers = (server_id) => async (dispatch) => {
+  // doing it this way in case we want more types of responses here later ...
+
+  const [serverMembersResponse] = await Promise.all([
+    fetch(`/api/servers/server_members/${server_id}`),
+  ]);
+  const [server] = await Promise.all([serverMembersResponse.json()]);
+  if (serverMembersResponse.ok) {
+    dispatch(loadServer(server));
+    return server.members;
+  }
+};
+
 export const genServers = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  const [serversResponse] = await Promise.all([fetch(`/api/servers/owner_id/${id}`)]);
+  const [serversResponse] = await Promise.all([
+    fetch(`/api/servers/owner_id/${id}`),
+  ]);
   const [servers] = await Promise.all([serversResponse.json()]);
 
   if (serversResponse.ok) {
@@ -61,15 +100,13 @@ export const createServer = (payload) => async (dispatch) => {
     const data = await response.json();
 
     if (data.errors) {
-      console.log(data.errors)
+      console.log(data.errors);
       let errorObj = {};
       data.errors.forEach((error) => {
-
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-
       });
-      return {'errors':errorObj};
+      return { errors: errorObj };
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -108,15 +145,12 @@ export const editServer = (data) => async (dispatch) => {
     const data = await response.json();
 
     if (data.errors) {
-
       let errorObj = {};
       data.errors.forEach((error) => {
-
         let key = error.split(":")[0];
         errorObj[key] = error.split(":")[1];
-
       });
-      return {'errors':errorObj};
+      return { errors: errorObj };
     }
   } else {
     return ["An error occurred. Please try again."];
@@ -137,6 +171,63 @@ export const deleteServer = (server) => async (dispatch) => {
   }
 };
 
+export const createServerMember = (payload) => async (dispatch) => {
+  const { user_id, server_id } = payload;
+
+  // console.log(payload, 'PAYLOAD=========')
+  const [response] = await Promise.all([
+    fetch(`/api/servers/server_members/${server_id}/${user_id}`, {
+      method: "POST",
+    }),
+  ]);
+
+  // console.log(response);
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addServerMember(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+      let errorObj = {};
+      data.errors.forEach((error) => {
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+      });
+      return { errors: errorObj };
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+export const deleteServerMember = (serverMember) => async (dispatch) => {
+  // console.log(serverMember, 'HIYA')
+  const { id } = serverMember;
+  const response = await fetch(`/api/server_members/${id}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(removeServerMember(data));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+      let errorObj = {};
+      data.errors.forEach((error) => {
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+      });
+      return { errors: errorObj };
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
 const serverReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_SERVER:
@@ -151,6 +242,23 @@ const serverReducer = (state = {}, action) => {
         serverData[server.id] = server;
       }
       return { ...serverData };
+
+    case REMOVE_SERVER_MEMBER:
+      const newState = { ...state };
+      delete newState[action.payload.id];
+      return newState;
+    case LOAD_SERVER:
+      const serverMemberData = {};
+      // console.log(action.payload)
+      if (action.payload) {
+        for (let serverMember of action.payload) {
+          serverMemberData[serverMember.id] = serverMember;
+        }
+        return { ...serverMemberData };
+      }
+    case ADD_SERVER_MEMBER:
+      console.log(action.payload)
+      return {...state, [action.payload.server.id]: action.payload.server}
     default:
       return state;
   }

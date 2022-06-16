@@ -71,8 +71,8 @@ const EditProfileForm = ({ setEditModal }) => {
 
   return (
     <div>
-      <form>
-        <div>
+      <form className="login-form">
+        <div className="login-email">
           <label>Username</label>
           <input
             value={username}

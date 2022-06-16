@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { Modal } from "../../../context/Modal";
 import { useLocation } from "react-router-dom";
 import CreateChannelForm from "./CreateChannelForm";
 import EditChannelForm from "./EditChannelForm";
 import ChannelListDiv from "./ChannelListDiv";
+
 
 const ChannelList = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -22,8 +23,6 @@ const ChannelList = () => {
     )
   );
 
-
-
   const serverChannels = channels.filter(
     (channel) => channel.server_id === parseInt(pathname.split("/")[2])
   );
@@ -31,7 +30,7 @@ const ChannelList = () => {
   const selectedChannel = serverChannels.find(
     (channel) => channel.id === parseInt(localStorageChannel)
   );
-  console.log(parseInt(localStorageChannel))
+  // console.log(parseInt(localStorageChannel))
 
   const handleFirstChannel = () => {
     localStorage.setItem(
@@ -72,6 +71,11 @@ const ChannelList = () => {
     };
   }, [showDropdown]);
 
+  // Invite users section
+
+
+
+
   return (
     <>
       {isLoaded && (
@@ -88,6 +92,7 @@ const ChannelList = () => {
                     <i className="fa-solid fa-angle-right fa-sm"></i>
                   </>
                 )}
+
                 <p>Text Channels</p>
               </div>
             </button>
@@ -150,15 +155,15 @@ const ChannelList = () => {
           {showDropdown && serverChannels.length > 1 && (
             <>
               {serverChannels.map((channel) => {
-                if (selectedChannel?.id === channel.id) return
+                if (selectedChannel?.id === channel.id) return;
                 return (
                   <ChannelListDiv
                     {...{ channel }}
                     {...{ setLocalStorageChannel }}
                     // {...{ currChannel }}
-                    {...{setShowEditForm}}
+                    {...{ setShowEditForm }}
                     {...{ handleEditChannel }}
-                    {...{ setShowDropdown}}
+                    {...{ setShowDropdown }}
                     key={channel.id}
                   />
                 );

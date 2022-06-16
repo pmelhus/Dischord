@@ -92,28 +92,43 @@ const Chat = ({ setLoading }) => {
   }, [pathname]);
 
   return (
-    <div className="channel-chat-container">
-      <div className="channel-chat-messages">
-        {pathname.split("/")[2] !== "@me" &&
-          currentChannelMessages.reverse().map((message, ind) => (
-            <div className="channel-message-div" key={ind}>
-              <ChannelMessage
-                {...{ channelId }}
-                {...{ socket }}
-                {...{ message }}
-              />
-            </div>
-          ))}
+    <div className="chat-container">
+      <div className="channel-chat-container">
+        <div className="channel-chat-and-send-form">
+          <div className="channel-chat-messages">
+            {pathname.split("/")[2] !== "@me" &&
+              currentChannelMessages.reverse().map((message, ind) => (
+                <div className="channel-message-div" key={ind}>
+                  <ChannelMessage
+                    {...{ channelId }}
+                    {...{ socket }}
+                    {...{ message }}
+                  />
+                </div>
+              ))}
+          </div>
+          <form className="channel-chat-form" onSubmit={sendChat}>
+            <input
+              id="channel-chat-input"
+              value={chatInput}
+              placeholder={`Message ${currentChannel?.name}`}
+              onChange={updateChatInput}
+            />
+            {/* <button type="submit">Send</button> */}
+          </form>
+        </div>
       </div>
-      <form className="channel-chat-form" onSubmit={sendChat}>
-        <input
-          id="channel-chat-input"
-          value={chatInput}
-          placeholder={`Message ${currentChannel?.name}`}
-          onChange={updateChatInput}
-        />
-        {/* <button type="submit">Send</button> */}
-      </form>
+      <div className="server-members">
+        <div className="server-members-header"></div>
+        <div className="server-members-list">
+          <div className="server-members-online">
+            <h4>ONLINE</h4>
+          </div>
+          <div className="server-members-offline">
+          <h4>OFFLINE</h4>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

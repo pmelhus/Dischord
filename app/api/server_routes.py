@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, Server, Channel
+from app.models import db, Server, Channel, User, server_members
 from app.forms import ServerForm
+
 from ..utils.s3utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -127,3 +128,33 @@ def server_delete(id):
         db.session.delete(server)
         db.session.commit()
         return server.to_dict()
+
+
+@server_routes.route('/server_members/<int:server_id>')
+@login_required
+def get_server_members(server_id):
+    # server_members = server_member.query.filter(server_member.server_id == server_id)
+    server = Server.query.get(server_id)
+    if not server:
+        return {"errors": "Server doesn't exist"}, 404
+    else:
+        return server.to_dict()
+
+
+@server_routes.route('/server_members/<int:server_id>/<int:user_id>', methods=["POST"])
+@login_required
+def create_server_member(server_id, user_id):
+    print('HERE ===============')
+    server = Server.query.get(server_id)
+    user = User.query.get(user_id)
+    # server_member = Server.server_members.get(user.id)
+    
+    if not server and user:
+        return {"errors": "Either the server or user does not exist"}, 404
+
+    else:
+        server.members.append(user)
+        db.session.add(server)
+        db.session.commit()
+
+        return {"user": user.to_dict(), "server": server.to_dict()}

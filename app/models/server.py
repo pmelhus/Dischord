@@ -30,7 +30,8 @@ class Server(db.Model, CrUpMixin):
             'name': self.name,
             'image_url': self.image_url,
             'public': self.public,
-            'channel_ids': [channel.id for channel in self.channels]
+            'channel_ids': [channel.id for channel in self.channels],
+            'members': [member.to_dict() for member in self.members]
         }
 
     @staticmethod

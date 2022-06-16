@@ -12,6 +12,7 @@ from .api.server_routes import server_routes
 from .api.channel_routes import channel_routes
 from .api.channel_messages import channel_message_routes
 
+
 from .seeds import seed_commands
 
 from .config import Config

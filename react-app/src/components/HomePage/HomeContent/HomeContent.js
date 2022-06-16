@@ -5,20 +5,24 @@ import { Modal } from "../../../context/Modal";
 import ServerEditModal from "./ServerEditModal";
 import ChannelList from "./ChannelList";
 import UserTab from "./User/UserTab";
+import InviteUser from "./InviteUser";
 
 const HomeContent = () => {
   //react
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { pathname } = useLocation();
+  const [inviteModal, setInviteModal] = useState(false);
 
   // redux
   const servers = useSelector((state) => Object.values(state.servers));
-
+  const sessionUser = useSelector((state) => state.session.user);
+  const [showInviteButton, setShowInviteButton] = useState(true);
   // finds server based on url params id
-  const currServer = servers?.find(
-    (server) => server.id === parseInt(pathname.split("/")[2])
-  );
+
+  const currentServer = useSelector((state) => state.servers)[
+    parseInt(pathname.split("/")[2])
+  ];
 
   const openMenu = () => {
     if (showDropdown) return;
@@ -37,14 +41,17 @@ const HomeContent = () => {
     return () => document.removeEventListener("click", closeMenu);
   }, [showDropdown]);
 
+  useEffect(() => {
+    setShowInviteButton(true);
+  }, [pathname]);
+
   return (
     <div className="home-content-container">
       {pathname === "/channels/@me" ? (
         <div className="server-sidebar-container">
           <nav></nav>
 
-            <UserTab />
-
+          <UserTab />
         </div>
       ) : (
         <div className="server-sidebar-container">
@@ -54,7 +61,7 @@ const HomeContent = () => {
               onClick={() => setShowDropdown(true)}
             >
               <div className="server-name-div">
-                <h3>{currServer?.name}</h3>
+                <h3>{currentServer?.name}</h3>
                 {showDropdown ? (
                   <>
                     <i className="fa-solid fa-xmark"></i>
@@ -83,9 +90,41 @@ const HomeContent = () => {
                       <i className="fa-solid fa-gear"></i>
                     </button>
                   </li>
+                  <li>
+                    <button onClick={() => setInviteModal(true)}>
+                      <p>Invite people</p>
+                      <i className="fa-solid fa-person-circle-plus"></i>
+                    </button>
+                  </li>
                 </ul>
               </div>
             )}
+            {currentServer.owner_id === sessionUser.id && showInviteButton && (
+              <div id="invite-button-div">
+                <div className="invite-profile-icon-div">
+                  <button
+                    id="invite-cancel-button"
+                    onClick={() => setShowInviteButton(false)}
+                  >
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                  <img
+                    id="invite-profile"
+                    alt="profile-default"
+                    src="https://cdn0.iconfinder.com/data/icons/audio-25/24/person-profile-listen-headphones-music-head-512.png"
+                  ></img>
+                </div>
+                <div>
+                  <button
+                    id="invite-button"
+                    onClick={() => setInviteModal(true)}
+                  >
+                    Invite People
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="channel-list-container">
               <ChannelList />
             </div>
@@ -94,6 +133,11 @@ const HomeContent = () => {
             </div>
           </nav>
         </div>
+      )}
+      {inviteModal && (
+        <Modal onClose={() => setInviteModal(false)}>
+          <InviteUser {...{currentServer}} {...{setInviteModal}} />
+        </Modal>
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import {deleteChannelMessage} from "../../../store/channelMessage"
 import { useState } from "react";
 
-const DeleteConfirmModalMessage = ({ socket, message, messageUser, setDeleteModal }) => {
+const DeleteConfirmModalMessage = ({ setDeleteEvent, socket, message, messageUser, setDeleteModal }) => {
 
 const dispatch = useDispatch()
 const [errors, setErrors] = useState({});
@@ -10,13 +10,14 @@ const [errors, setErrors] = useState({});
   const handleDelete = async (e) => {
     e.preventDefault();
     const deletedMessage = await dispatch(deleteChannelMessage(message));
+    await setDeleteEvent(true)
     if (deletedMessage && deletedMessage.errors) {
       // console.log(newEstate.errors)
       setErrors(deletedMessage.errors);
       return;
     }
    await socket.emit('chat', {deletedMessage})
-    
+
     setDeleteModal(false)
   };
   return (

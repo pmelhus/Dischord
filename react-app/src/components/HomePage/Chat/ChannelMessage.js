@@ -15,6 +15,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteEvent, setDeleteEvent] = useState(false)
 
   const handleEditModal = () => {
     setShowEdit(true);
@@ -46,6 +47,13 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
   const handleDeleteModal = () => {
     setDeleteModal(true);
   };
+
+  useEffect(() => {
+    if (deleteEvent) {
+      setContent(message.content)
+      setDeleteEvent(false)
+    }
+  }, [deleteEvent])
 
 
   // console.log(message);
@@ -120,6 +128,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
         <Modal onClose={() => setDeleteModal(false)}>
           <DeleteConfirmModalMessage
             {...{ socket }}
+            {...{setDeleteEvent}}
             {...{ message }}
             {...{ messageUser }}
             {...{ setDeleteModal }}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
@@ -13,19 +13,19 @@ import LoadingScreen from "./components/LoadingScreen";
 import { genChannelMessages } from "./store/channelMessage";
 // import { genServers } from "./store/server";
 import { LoadingModal } from "./context/LoadingModal";
-import { genUsers } from "./store/user"
+import { genUsers } from "./store/user";
 // import LoadingScreen from "./components/LoadingScreen";
 import Splash from "./components/Splash";
 import { io } from "socket.io-client";
 
-let socket
+let socket;
 function App() {
   // const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [onlineMembers, setOnlineMembers] = useState();
+  const user = useSelector((state) => state.session.user);
+  // const [onlineMembers, setOnlineMembers] = useState();
 
   useEffect(() => {
     (async () => {
@@ -38,7 +38,6 @@ function App() {
     // create websocket/connect
     socket = io();
 
-
     // listen for chat events
 
     socket.on("chat", (chat) => {
@@ -49,15 +48,15 @@ function App() {
 
     socket.on("login", (data) => {
       // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
-      dispatch(genUsers())
+      dispatch(genUsers());
     });
-
 
     socket.on("logout", (data) => {
       // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
-      dispatch(genUsers())
+      if (user) {
+        dispatch(genUsers());
+      }
     });
-
 
     // socket.on("logout", (logout) => {
     //   setOnlineMembers((onlineMembers) =>
@@ -91,16 +90,14 @@ function App() {
         <Splash />
       </Route>
       <Switch>
-
-          <>
-            <Route path="/login" exact={true}>
-              <LoginForm {...{ socket }} />
-            </Route>
-            <Route path="/register" exact={true}>
-              <SignUpForm {...{ socket }} />
-            </Route>
-          </>
-
+        <>
+          <Route path="/login" exact={true}>
+            <LoginForm {...{ socket }} />
+          </Route>
+          <Route path="/register" exact={true}>
+            <SignUpForm {...{ socket }} />
+          </Route>
+        </>
       </Switch>
       {loaded && (
         <>
@@ -113,8 +110,6 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute path="/channels">
               <HomePage
-                {...{ onlineMembers }}
-                {...{ setOnlineMembers }}
                 {...{ socket }}
                 {...{ setLoading }}
               />

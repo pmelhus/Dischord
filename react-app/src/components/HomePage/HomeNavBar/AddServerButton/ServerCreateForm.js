@@ -33,7 +33,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
       setImage(null);
       setChecked(false);
       setShowServerModal(false);
-      history.push(`/channels/${newServer.id}/${newServer.channel_ids[0]}`)
+      history.push(`/channels/${newServer.id}/${newServer.channel_ids[0]}`);
     }
     // hallo
   };
@@ -52,7 +52,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
 
   return (
     <>
-      <form className="server-create-form">
+      <form className="profile-edit-form">
         <div className="server-create-form-msg">
           <h2>Customize your server</h2>
           <p>
@@ -77,7 +77,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
           )}
           <input onChange={(e) => setName(e.target.value)}></input>
         </div>
-        <div>
+        <div className="login-email">
           <label>
             <input
               type="checkbox"

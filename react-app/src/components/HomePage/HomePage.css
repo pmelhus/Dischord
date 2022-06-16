@@ -455,10 +455,23 @@ display:block;
 
 #user-picture-preview img {
   box-sizing: border-box;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 100%;
+}
+
+#user-picture-preview {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-picture-preview h4 {
+  font-size: 20px;
+  margin: 0;
+  margin-top: 10px;
 }
 
 /* CHAT */
@@ -1021,3 +1034,91 @@ margin: 20px;
     color:rgba(102, 110, 123, 0.799);
     padding-left: 20px;
   }
+
+  .edit-profile-image-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .edit-profile-image-preview label {
+    padding: 10px;
+  }
+
+  .edit-profile-image-preview input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.profile-edit-form {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+}
+
+.profile-edit-form button {
+cursor: pointer;
+
+    background-color:#950652;
+
+}
+
+.profile-edit-form-password {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+}
+
+.profile-edit-form-password2 {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+
+}
+
+
+
+.button-div-password {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button-div-password button {
+  margin-top: 10px;
+  width: 125px;
+  border-radius: 10px;
+  background-color:#950652;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.button-div-user {
+  cursor: pointer;
+
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button-div-user button {
+  width: 125px;
+  border-radius: 10px;
+  background-color:#950652;
+  border: none;
+  color: white;
+}

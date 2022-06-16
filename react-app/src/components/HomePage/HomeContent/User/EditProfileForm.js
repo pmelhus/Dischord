@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editUserProfile } from "../../../../store/session";
 import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
-import LogoutButton from "../../../auth/LogoutButton"
+import LogoutButton from "../../../auth/LogoutButton";
 
 const EditProfileForm = ({ setEditModal, socket }) => {
   const user = useSelector((state) => state.session.user);
@@ -44,7 +44,6 @@ const EditProfileForm = ({ setEditModal, socket }) => {
   };
 
   const handlePasswordModal = (e) => {
-
     e.preventDefault();
     // setEditModal(false)
     setPasswordModal(!passwordModal);
@@ -72,7 +71,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
 
   return (
     <div>
-      <form className="login-form">
+      <form className="profile-edit-form">
         <div className="login-email">
           <label>Username</label>
           <input
@@ -80,14 +79,14 @@ const EditProfileForm = ({ setEditModal, socket }) => {
             onChange={(e) => setUsername(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className="login-email">
           <label>Email</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className="login-email">
           <label>Bio</label>
           <textarea
             value={bio}
@@ -98,9 +97,11 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           <h4>Profile picture preview</h4>
           <img alt="current profile" src={preview} />
         </div>
-        <div>
-          <label>Profile image upload</label>
-          <input type="file" accept="image/*" onChange={updateImage}></input>
+        <div className="edit-profile-image-preview">
+          <label class="custom-file-upload">
+            <input type="file" accept="image/*" onChange={updateImage}></input>
+            Profile image upload
+          </label>
         </div>
         {Object.keys(errors).length > 0 && (
           <div className="form-errors">
@@ -110,13 +111,19 @@ const EditProfileForm = ({ setEditModal, socket }) => {
             )}
           </div>
         )}
-        <button onClick={handleEditProfile}>Save Changes</button>
-        <button onClick={handlePasswordModal}>Change your password</button>
-        <LogoutButton {...{socket}} />
+        <div className="button-div-user">
+          <button onClick={handleEditProfile}>Save Changes</button>
+          <button onClick={handlePasswordModal}>Change your password</button>
+          <LogoutButton {...{ socket }} />
+        </div>
       </form>
       {passwordModal && (
         // <Modal onClose={setPasswordModal(false)}>
-          <PasswordModal {...{ user }} {...{ setPasswordModal }} {...{setEditModal}} />
+        <PasswordModal
+          {...{ user }}
+          {...{ setPasswordModal }}
+          {...{ setEditModal }}
+        />
         // </Modal>
       )}
     </div>

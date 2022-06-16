@@ -23,7 +23,6 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
-
 const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
@@ -73,15 +72,30 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const logout = () => async (dispatch) => {
-  const response = await fetch("/api/auth/logout", {
+export const logout = (id) => async (dispatch) => {
+  console.log(id)
+  const response = await fetch(`/api/auth/logout/${id}`, {
     headers: {
       "Content-Type": "application/json",
     },
   });
 
   if (response.ok) {
+    const data = await response.json();
     dispatch(removeUser());
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      let errorObj = {};
+      data.errors.forEach((error) => {
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+      });
+      return { errors: errorObj };
+    }
+  } else {
+    return ["An error occurred. Please try again."];
   }
 };
 

@@ -40,8 +40,8 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
   };
 
   return (
-    <>
-      <div>
+    <div className="profile-edit-form-password2">
+      <div className="login-email">
         <h4>Please enter your current password to set a new password.</h4>
         <label>Current password</label>
         <input
@@ -50,7 +50,7 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
           onChange={(e) => setCurrentPassword(e.target.value)}
         ></input>
       </div>
-      <div>
+      <div className="login-email" >
         <label>New password</label>
         <input
           type={showPassword}
@@ -58,7 +58,7 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
           onChange={(e) => setNewPassword(e.target.value)}
         ></input>
       </div>
-      <div>
+      <div className="login-email">
         <label>Confirm new password</label>
         <input
           type={showPassword}
@@ -73,10 +73,14 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
             )}
           </div>
         )}
+        <div className="button-div-password">
+
+
         <button onClick={showHideButton}>Show/Hide password</button>
         <button onClick={handleEditPassword}>Save changes</button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

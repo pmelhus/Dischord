@@ -47,13 +47,16 @@ def login():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
-@auth_routes.route('/logout')
-def logout():
+@auth_routes.route('/logout/<int:id>')
+def logout(id):
     """
     Logs a user out
     """
+
+    print('USER HERE')
+    user = User.query.get(id)
     logout_user()
-    return {'message': 'User logged out'}
+    return user.to_dict()
 
 
 @auth_routes.route('/signup', methods=['POST'])

@@ -73,7 +73,10 @@ def server_form_submit():
 
     if form.validate_on_submit():
         server = Server(**params)
+        print(params)
+        user = User.query.get(params['owner_id'])
         db.session.add(server)
+        server.members.append(user)
         db.session.commit()
 
 

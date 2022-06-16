@@ -112,7 +112,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
         )}
         <button onClick={handleEditProfile}>Save Changes</button>
         <button onClick={handlePasswordModal}>Change your password</button>
-        <LogoutButton/>
+        <LogoutButton {...{socket}} />
       </form>
       {passwordModal && (
         // <Modal onClose={setPasswordModal(false)}>

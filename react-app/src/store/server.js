@@ -75,6 +75,7 @@ export const genServers = (id) => async (dispatch) => {
 
 export const createServer = (payload) => async (dispatch) => {
   const { name, image, publicValue, owner_id } = payload;
+  // console.log(payload)
   const f = new FormData();
   f.append("name", name);
   f.append("public", publicValue);

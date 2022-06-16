@@ -10,10 +10,11 @@ import {
 import ChannelMessage from "./ChannelMessage";
 import LoadingScreen from "../../LoadingScreen";
 import { LoadingModal } from "../../../context/LoadingModal";
-
+import UserOnlineCard from "./UserOnlineCard"
+import UserOfflineCard from "./UserOfflineCard"
 // outside of your component, initialize the socket variable
 
-const Chat = ({ onlineMembers, setOnlineMembers, socket, setLoading }) => {
+const Chat = ({ socket, setLoading }) => {
   const [messages, setMessages] = useState([]);
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
@@ -28,10 +29,14 @@ const Chat = ({ onlineMembers, setOnlineMembers, socket, setLoading }) => {
     Object.values(state.channelMessages)
   );
   const allServers = useSelector((state) => Object.values(state.servers));
-
+  const users = useSelector((state) => Object.values(state.users));
+ const currentServerMemberIds = useSelector((state) => state.servers[serverId])?.members_ids
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
   );
+  // console.log(currentServerMemberIds.members_ids, 'hello')
+
+  // console.log(onlineMembers, 'ONLINE MEMBERS')
 
   // const serverMembersArray =
   //  setLoading(true)
@@ -95,14 +100,28 @@ const Chat = ({ onlineMembers, setOnlineMembers, socket, setLoading }) => {
         <div className="server-members-header"></div>
         <div className="server-members-list">
           <div className="server-members-online">
-            <h4>ONLINE</h4>
-            {onlineMembers &&
-              onlineMembers?.map((member) => {
-                return (
-                  <>
-                    <h3>{member?.username}</h3>
-                  </>
-                );
+            {users &&
+              users.map((user) => {
+                if (currentServerMemberIds?.includes(user.id)) {
+
+                  return (
+                    <>
+                      {user.online ? (
+                        <>
+                          <UserOnlineCard {...{ user }} />
+                        </>
+                      ) : (
+                        <>
+                          <UserOfflineCard {...{ user }} />
+                        </>
+                      )}
+                    </>
+                  );
+                } else {
+                  return (
+                    <></>
+                  )
+                }
               })}
           </div>
         </div>

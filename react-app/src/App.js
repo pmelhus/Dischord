@@ -13,7 +13,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import { genChannelMessages } from "./store/channelMessage";
 // import { genServers } from "./store/server";
 import { LoadingModal } from "./context/LoadingModal";
-import { genUsers } from "./store/session";
+import { genUsers } from "./store/user"
 // import LoadingScreen from "./components/LoadingScreen";
 import Splash from "./components/Splash";
 import { io } from "socket.io-client";
@@ -47,10 +47,12 @@ function App() {
       dispatch(genChannelMessages());
     });
 
-    socket.on("login", (data) => {
-      console.log(data, "HEREERERE");
-      setOnlineMembers((onlineMembers) => [onlineMembers, data]);
+    socket.on("login", "logout", (data) => {
+      // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
+      dispatch(genUsers())
     });
+
+
 
     // socket.on("logout", (logout) => {
     //   setOnlineMembers((onlineMembers) =>

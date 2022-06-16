@@ -1,6 +1,6 @@
 from flask_socketio import SocketIO, emit, send
 import os
-
+from app.models import db, User
 
 # configure cors_allowed_origins
 # if os.environ.get('FLASK_ENV') == 'production':
@@ -22,4 +22,16 @@ def handle_chat(data):
 
 @socketio.on("login")
 def handle_login(data):
+    # print(data['id'], 'USER HERE NOW BETCH')
+    user = User.query.get(data['id'])
+    # print('USER HERE')
+    user.online = True
+    db.session.commit()
     emit("login", data, broadcast=True)
+
+@socketio.on("logout")
+def handle_logout(data):
+    user = User.query.get(data['id'])
+    user.online = False
+    db.session.commit()
+    emit("logout", data, broadcast=True)

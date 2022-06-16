@@ -15,18 +15,18 @@ const LoginForm = ({ socket }) => {
   const history = useHistory();
 
   const onLogin = async (e) => {
-
+    if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
+      await socket.emit("login", data);
       if (data?.errors) {
         setErrors(data?.errors);
       } else {
-        console.log(data);
+        // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await socket.emit("login", data);
         await history.push("/channels/@me");
       }
-
+    }
   };
 
   const updateEmail = (e) => {

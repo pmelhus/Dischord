@@ -10,8 +10,8 @@ import {
 import ChannelMessage from "./ChannelMessage";
 import LoadingScreen from "../../LoadingScreen";
 import { LoadingModal } from "../../../context/LoadingModal";
-import UserOnlineCard from "./UserOnlineCard"
-import UserOfflineCard from "./UserOfflineCard"
+import UserOnlineCard from "./UserOnlineCard";
+import UserOfflineCard from "./UserOfflineCard";
 // outside of your component, initialize the socket variable
 
 const Chat = ({ socket, setLoading }) => {
@@ -30,10 +30,14 @@ const Chat = ({ socket, setLoading }) => {
   );
   const allServers = useSelector((state) => Object.values(state.servers));
   const users = useSelector((state) => Object.values(state.users));
- const currentServerMemberIds = useSelector((state) => state.servers[serverId])?.members_ids
+  const currentServerMemberIds = useSelector(
+    (state) => state.servers[serverId]
+  )?.members_ids;
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
   );
+
+  const currentServer = useSelector((state) => state.servers[serverId]);
   // console.log(currentServerMemberIds.members_ids, 'hello')
 
   // console.log(onlineMembers, 'ONLINE MEMBERS')
@@ -69,6 +73,20 @@ const Chat = ({ socket, setLoading }) => {
     genChannelMessages();
   }, [pathname]);
 
+  let online = [];
+  let offline = [];
+
+  users.map((user) => {
+    if (currentServerMemberIds?.includes(user.id)) {
+
+      if (user.online) {
+        online.push(user);
+      } else {
+        offline.push(user);
+      }
+    }
+  });
+
   return (
     <div className="chat-container">
       <div className="channel-chat-container">
@@ -99,27 +117,43 @@ const Chat = ({ socket, setLoading }) => {
       <div className="server-members">
         <div className="server-members-list">
           <div className="server-members-online">
+            <p className="server-members-titles">Online - {online.length}</p>
             {users &&
               users.map((user) => {
                 if (currentServerMemberIds?.includes(user.id)) {
-
                   return (
                     <>
-                      {user.online ? (
+                      {user.online && (
                         <>
-                          <UserOnlineCard {...{currentServerMemberIds}} {...{ user }} />
-                        </>
-                      ) : (
-                        <>
-                          <UserOfflineCard {...{ user }} />
+                          <UserOnlineCard
+                            {...{ online }}
+                            {...{ currentServer }}
+                            {...{ currentServerMemberIds }}
+                            {...{ user }}
+                          />
                         </>
                       )}
                     </>
                   );
-                } else {
+                }
+              })}
+                     <p className="server-members-titles">Offline - {offline.length}</p>
+                  {users &&
+              users.map((user) => {
+                if (currentServerMemberIds?.includes(user.id)) {
                   return (
-                    <></>
-                  )
+                    <>
+                      {!user.online && (
+                        <>
+                          <UserOfflineCard
+                            {...{ currentServer }}
+                            {...{ currentServerMemberIds }}
+                            {...{ user }}
+                          />
+                        </>
+                      )}
+                    </>
+                  );
                 }
               })}
           </div>

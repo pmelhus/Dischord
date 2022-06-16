@@ -589,7 +589,7 @@ flex-basis: auto;
 
 .channel-chat-user-msg {
   word-break: break-word;
-  max-width: 74%;
+  width:  90%;
   align-items: center;
   /* margin-bottom: 8px; */
 }
@@ -608,10 +608,14 @@ flex-basis: auto;
 
 .message-edit-button:hover {
   color: white;
+  padding: 20px;
 }
 
 .message-content:hover .message-edit-button {
 display:block;
+width: 100%;
+
+
 
 }
 
@@ -621,9 +625,11 @@ display:block;
   /* padding: 6px; */
   padding: 6px;
   margin: 5px;
-  width: 100%;
+  /* width: 100%; */
   position: relative;
   right: 10px;
+  /* padding-right: 50px; */
+  width: 100%;
 /* margin-bottom: 10px; */
 }
 
@@ -631,9 +637,7 @@ display:block;
 .message-content:hover {
   background-color:rgba(0, 0, 0, 0.189);
   border-radius: 8px;
-  /* width:100%; */
-
-
+  width:100%;
   /* padding: 0 10px; */
 
 }
@@ -659,6 +663,12 @@ height: 20px;
 height: 20px;
   margin: 0 4px;
   cursor:pointer;
+}
+
+.message-content-edited p {
+  width: 1200px;
+  padding-right: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .message-edit-input-container {
@@ -700,6 +710,7 @@ font-size: 16px;
 
 .channel-chat-user-msg h4 {
 margin: 0;
+padding: 0;
 }
 
 #message-edited {
@@ -712,11 +723,14 @@ margin: 0;
 .message-content-edited {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 1150px;
 }
 
 .message-edit-delete {
   display: flex;
+  margin-left: 20px;
+  position:absolute;
+  right: 0;
 }
 
 .chat-container {
@@ -968,4 +982,42 @@ position: absolute;
   .online-card-container p {
 color:rgba(255, 255, 255, 0.432);
 margin: 20px;
+  }
+
+  #crown {
+    color: rgb(209, 116, 16);
+  }
+
+  .server-members-titles {
+    padding: 10px;
+    margin-top: 10px;
+    padding-left: 16px;
+    color:rgba(255, 255, 255, 0.432)
+  }
+
+  .offline-card-container img {
+    filter: blur(8px);
+    -webkit-filter: blur(1px);
+    margin-top: 2px;
+  }
+
+  .user-offline-image-nourl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 100%;
+    background-color: #950652;
+    transition: border-radius .5s;
+    margin-left: 2px;
+    filter: blur(8px);
+    -webkit-filter: blur(3px);
+  }
+
+  #offline-user {
+    color:rgba(102, 110, 123, 0.799);
+    padding-left: 20px;
   }

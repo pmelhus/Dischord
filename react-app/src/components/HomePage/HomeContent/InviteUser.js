@@ -6,7 +6,7 @@ const InviteUser = ({currentServer, setInviteModal}) => {
   const users = useSelector((state) => Object.values(state.users));
   const serverMembers = useSelector(state => state.servers)[currentServer.id].members
 const serverMemberIds = []
-serverMembers.forEach(member => {
+serverMembers?.forEach(member => {
   serverMemberIds.push(member.id)
 })
 console.log(serverMemberIds)

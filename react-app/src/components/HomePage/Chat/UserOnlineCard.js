@@ -1,11 +1,14 @@
-const UserOnlineCard = ({ currentServerMemberIds, user }) => {
+const UserOnlineCard = ({ currentServer, currentServerMemberIds, user }) => {
   return (
     <div className="online-card-container">
-      <p>Online - {currentServerMemberIds.length}</p>
-      <div>
-        
-      </div>
+     
+      <div className="invite-image-username">
+        <img className="server-image-icon" src={user.image_url}/>
       <p>{user.username}</p>
+      {currentServer.owner_id === user.id && (
+        <i id="crown" className="fa-solid fa-crown"></i>
+      )}
+      </div>
     </div>
   );
 };

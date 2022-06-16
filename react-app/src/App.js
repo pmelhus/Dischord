@@ -10,17 +10,22 @@ import User from "./components/User";
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
+import { genChannelMessages } from "./store/channelMessage";
 // import { genServers } from "./store/server";
 import { LoadingModal } from "./context/LoadingModal";
-import {genUsers} from "./store/session"
+import { genUsers } from "./store/session";
 // import LoadingScreen from "./components/LoadingScreen";
-import Splash from "./components/Splash"
+import Splash from "./components/Splash";
+import { io } from "socket.io-client";
 
+let socket
 function App() {
   // const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [onlineMembers, setOnlineMembers] = useState();
 
   useEffect(() => {
     (async () => {
@@ -28,6 +33,45 @@ function App() {
       await setLoaded(true);
     })();
   }, [dispatch]);
+
+  useEffect(() => {
+    // create websocket/connect
+    socket = io();
+
+
+    // listen for chat events
+
+    socket.on("chat", (chat) => {
+      // when we recieve a chat, add it into our messages array in state
+      // setMessages((messages) => [...messages, chat]);
+      dispatch(genChannelMessages());
+    });
+
+    socket.on("login", (data) => {
+      console.log(data, "HEREERERE");
+      setOnlineMembers((onlineMembers) => [onlineMembers, data]);
+    });
+
+    // socket.on("logout", (logout) => {
+    //   setOnlineMembers((onlineMembers) =>
+    //     [...onlineMembers].filter((member) => member.id !== logout.id)
+    //   );
+    // });
+
+    // socket.on('deletedMessage', (deletedMessage) => {
+    //   dispatch(genChannelMessages(channelId));
+    // })
+
+    // socket.on('editedMessage', (editedMessage) => {
+    //   dispatch(genChannelMessages(channelId));
+    // })
+    // when component unmounts, disconnect
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  // console.log(onlineMembers, "ONLINE MEMBERS");
 
   if (!loaded) {
     return null;
@@ -40,12 +84,16 @@ function App() {
         <Splash />
       </Route>
       <Switch>
-        <Route path="/login" exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path="/register" exact={true}>
-          <SignUpForm />
-        </Route>
+
+          <>
+            <Route path="/login" exact={true}>
+              <LoginForm {...{ socket }} />
+            </Route>
+            <Route path="/register" exact={true}>
+              <SignUpForm {...{ socket }} />
+            </Route>
+          </>
+
       </Switch>
       {loaded && (
         <>
@@ -57,7 +105,12 @@ function App() {
               <User />
             </ProtectedRoute>
             <ProtectedRoute path="/channels">
-              <HomePage {...{setLoading}} />
+              <HomePage
+                {...{ onlineMembers }}
+                {...{ setOnlineMembers }}
+                {...{ socket }}
+                {...{ setLoading }}
+              />
             </ProtectedRoute>
           </Switch>
         </>
@@ -67,10 +120,8 @@ function App() {
           <LoadingScreen />
         </LoadingModal>
       )}
-
     </BrowserRouter>
   );
-
 }
 
 export default App;

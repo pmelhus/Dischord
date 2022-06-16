@@ -1,24 +1,32 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link, useHistory } from "react-router-dom";
 import { login } from "../../store/session";
 import "./LoginForm.css";
 
-const LoginForm = () => {
+const LoginForm = ({ socket }) => {
   const [errors, setErrors] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const [emailError, setEmailError] = useState(true)
-  const [passwordError, setPasswordError] = useState(true)
+  const [emailError, setEmailError] = useState(true);
+  const [passwordError, setPasswordError] = useState(true);
+  const history = useHistory();
 
   const onLogin = async (e) => {
-    e.preventDefault();
-    const data = await dispatch(login(email, password));
-    if (data?.errors) {
-      setErrors(data?.errors);
-    }
+
+      e.preventDefault();
+      const data = await dispatch(login(email, password));
+      if (data?.errors) {
+        setErrors(data?.errors);
+      } else {
+        console.log(data);
+        // const jsonData= JSON.stringify(data)
+        await socket.emit("login", data);
+        await history.push("/channels/@me");
+      }
+
   };
 
   const updateEmail = (e) => {
@@ -29,11 +37,10 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-
-  if (user) {
-    return <Redirect to="/channels/@me"/>;
-  }
-console.log(errors)
+  // if (user) {
+  //   return <Redirect to="/channels/@me" />;
+  // }
+  console.log(errors);
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={onLogin}>
@@ -43,14 +50,16 @@ console.log(errors)
         </div>
 
         <div className="login-email">
-          <label className='login-label' htmlFor="email">Email</label>
+          <label className="login-label" htmlFor="email">
+            Email
+          </label>
           {errors && errors.email && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.email}*</p>
             </div>
           )}
           <input
-          className='login-input'
+            className="login-input"
             name="email"
             type="text"
             placeholder="Email"
@@ -59,22 +68,24 @@ console.log(errors)
           />
         </div>
         <div className="login-password">
-          <label className='login-label' htmlFor="password">Password</label>
+          <label className="login-label" htmlFor="password">
+            Password
+          </label>
           {errors && errors.password && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.password}*</p>
             </div>
           )}
           <input
-          className="login-input"
-          id="login-input-password"
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={updatePassword}
+            className="login-input"
+            id="login-input-password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={updatePassword}
           />
-        <button type="submit">Login</button>
+          <button type="submit">Login</button>
         </div>
         <div className="login-register">
           <p>Need an account?</p>
@@ -82,7 +93,6 @@ console.log(errors)
             <p id="login-register">Register</p>
           </Link>
         </div>
-
       </form>
     </div>
   );

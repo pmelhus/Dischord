@@ -12,7 +12,7 @@ import LoadingScreen from "../LoadingScreen";
 import "./HomePage.css";
 import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
 
-const HomePage = ({ setLoading }) => {
+const HomePage = ({ onlineMembers, setOnlineMembers, socket, setLoading }) => {
   const [loadingScreen, setLoadingScreen] = useState(false);
 
   const { pathname } = useLocation();
@@ -55,8 +55,8 @@ const HomePage = ({ setLoading }) => {
       {loaded && (
         <>
           <HomeNavBar />
-          <HomeContent />
-          <ServerChatWindow {...{ setLoading }} />
+          <HomeContent {...{socket}}/>
+          <ServerChatWindow {...{onlineMembers}} {...{setOnlineMembers}} {...{socket}} {...{ setLoading }} />
         </>
       )}
       {loadingScreen && (

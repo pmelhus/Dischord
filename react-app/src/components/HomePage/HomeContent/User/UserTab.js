@@ -4,7 +4,7 @@ import { Modal } from "../../../../context/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { useState } from "react";
 
-const UserTab = () => {
+const UserTab = ({socket}) => {
   const user = useSelector((state) => state.session.user);
   const [editModal, setEditModal] = useState(false);
 
@@ -33,7 +33,7 @@ const UserTab = () => {
       </div>
       {editModal && (
         <Modal onClose={() => setEditModal(false)}>
-          <EditProfileForm {...{ setEditModal }} />
+          <EditProfileForm {...{socket}} {...{ setEditModal }} />
         </Modal>
       )}
     </>

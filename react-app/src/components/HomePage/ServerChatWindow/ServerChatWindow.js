@@ -1,12 +1,12 @@
 import Chat from "../Chat/Chat"
 import ServerChatHeader from "./ServerChatHeader"
 
-const ServerChatWindow = ({setLoading}) => {
+const ServerChatWindow = ({setOnlineMembers, onlineMembers, socket, setLoading}) => {
 
   return (
     <div className="server-chat-container">
       <ServerChatHeader/>
-      <Chat {...{setLoading}}/>
+      <Chat {...{onlineMembers}} {...{setOnlineMembers}} {...{socket}} {...{setLoading}}/>
     </div>
   )
 }

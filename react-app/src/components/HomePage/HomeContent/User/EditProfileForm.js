@@ -5,7 +5,7 @@ import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
 import LogoutButton from "../../../auth/LogoutButton"
 
-const EditProfileForm = ({ setEditModal }) => {
+const EditProfileForm = ({ setEditModal, socket }) => {
   const user = useSelector((state) => state.session.user);
 
   const [username, setUsername] = useState(user.username);

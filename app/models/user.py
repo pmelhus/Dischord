@@ -15,6 +15,7 @@ class User(db.Model, UserMixin, CrUpMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     bio = db.Column(db.String(190), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
+    online = db.Column(db.Boolean(), default=False)
 
     # has many
 
@@ -48,6 +49,7 @@ class User(db.Model, UserMixin, CrUpMixin):
             'email': self.email,
             'bio': self.bio,
             'image_url': self.image_url,
+            'online': self.online
             # 'memberships': [server.to_dict() for server in self.memberships]
         }
 
@@ -58,4 +60,5 @@ class User(db.Model, UserMixin, CrUpMixin):
         user.email = user_data.get("email")
         user.bio = user_data.get("bio")
         user.image_url = user_data.get("image_url")
+        user.online = user_data.get('online')
         return user

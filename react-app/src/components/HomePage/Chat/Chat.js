@@ -1,5 +1,5 @@
 // import the socket
-import { io } from "socket.io-client";
+
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -12,9 +12,8 @@ import LoadingScreen from "../../LoadingScreen";
 import { LoadingModal } from "../../../context/LoadingModal";
 
 // outside of your component, initialize the socket variable
-let socket;
 
-const Chat = ({ setLoading }) => {
+const Chat = ({ onlineMembers, setOnlineMembers, socket, setLoading }) => {
   const [messages, setMessages] = useState([]);
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
@@ -29,7 +28,6 @@ const Chat = ({ setLoading }) => {
     Object.values(state.channelMessages)
   );
   const allServers = useSelector((state) => Object.values(state.servers));
-  const [onlineMembers, setOnlineMembers] = useState();
 
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
@@ -37,41 +35,6 @@ const Chat = ({ setLoading }) => {
 
   // const serverMembersArray =
   //  setLoading(true)
-
-  useEffect(() => {
-    // create websocket/connect
-    socket = io();
-
-    // listen for chat events
-
-    socket.on("chat", (chat) => {
-      // when we recieve a chat, add it into our messages array in state
-      // setMessages((messages) => [...messages, chat]);
-      dispatch(genChannelMessages());
-    });
-
-    socket.on("login", (login) => {
-      setOnlineMembers((onlineMembers) => [...onlineMembers, login]);
-    });
-
-    socket.on("logout", (logout) => {
-      setOnlineMembers((onlineMembers) =>
-        [...onlineMembers].filter((member) => member.id !== logout.id)
-      );
-    });
-
-    // socket.on('deletedMessage', (deletedMessage) => {
-    //   dispatch(genChannelMessages(channelId));
-    // })
-
-    // socket.on('editedMessage', (editedMessage) => {
-    //   dispatch(genChannelMessages(channelId));
-    // })
-    // when component unmounts, disconnect
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
@@ -89,7 +52,7 @@ const Chat = ({ setLoading }) => {
       })
     );
 
-    await socket.emit("chat");
+    await socket?.emit("chat");
 
     await setIsSent(true);
 
@@ -133,13 +96,14 @@ const Chat = ({ setLoading }) => {
         <div className="server-members-list">
           <div className="server-members-online">
             <h4>ONLINE</h4>
-            {onlineMembers &&onlineMembers?.map((member) => {
-              return (
-                <>
-                  <h3>{member.username}</h3>
-                </>
-              );
-            })}
+            {onlineMembers &&
+              onlineMembers?.map((member) => {
+                return (
+                  <>
+                    <h3>{member?.username}</h3>
+                  </>
+                );
+              })}
           </div>
         </div>
       </div>

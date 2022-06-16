@@ -5,7 +5,7 @@ import { editServer, deleteServer } from "../../../store/server";
 import { Modal } from "../../../context/Modal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 
-const ServerEditModal = ({ setShowEditModal }) => {
+const ServerEditModal = ({ setShowEditModal}) => {
   const { pathname } = useLocation();
   const servers = useSelector((state) => Object.values(state.servers));
   const currServer = servers?.find(

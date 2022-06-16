@@ -1,9 +1,9 @@
 import { editChannelMessage } from "../../../store/channelMessage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../../../context/Modal";
 // import EditMessageModal from "./DeleteConfirmModalMessage ";
-import DeleteConfirmModalMessage from "./DeleteConfirmModalMessage"
+import DeleteConfirmModalMessage from "./DeleteConfirmModalMessage";
 
 const ChannelMessage = ({ user, message, socket, channelId }) => {
   const users = useSelector((state) => state.users);
@@ -14,7 +14,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
   const [content, setContent] = useState(message.content);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const [deleteModal, setDeleteModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const handleEditModal = () => {
     setShowEdit(true);
@@ -32,20 +32,21 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     };
 
     const editedMessage = await dispatch(editChannelMessage(payload));
-setContent(editedMessage.content)
+    setContent(editedMessage.content);
     if (editedMessage.errors) {
       setErrors(editedMessage.errors);
       console.log(editedMessage.errors);
       return;
     } else {
-    await socket.emit("chat", {editedMessage});
+      await socket.emit("chat", { editedMessage });
       setShowEdit(false);
     }
   };
 
   const handleDeleteModal = () => {
-    setDeleteModal(true)
-  }
+    setDeleteModal(true);
+  };
+
 
   // console.log(message);
   return (
@@ -79,11 +80,10 @@ setContent(editedMessage.content)
                       </div>
                       <p id="message-edit-instructions">
                         Press
-                        <button onClick={() => setShowEdit(false)}>
+                        <button type='button' onClick={() => setShowEdit(false)}>
                           <i className="fa-solid fa-xmark fa-xl"></i>
                         </button>
-                        to cancel. Press enter to
-                        <button type='submit'>submit</button>
+                        to cancel. Press enter to submit.
                       </p>
                     </form>
                   </div>
@@ -102,7 +102,10 @@ setContent(editedMessage.content)
                   >
                     <i className="fa-solid fa-pencil"></i>
                   </button>
-                  <button  className="message-edit-button" onClick={handleDeleteModal}>
+                  <button
+                    className="message-edit-button"
+                    onClick={handleDeleteModal}
+                  >
                     <i className="fa-solid fa-trash-can"></i>
                   </button>
                 </div>
@@ -115,7 +118,12 @@ setContent(editedMessage.content)
       </div>
       {deleteModal && (
         <Modal onClose={() => setDeleteModal(false)}>
-          <DeleteConfirmModalMessage {...{socket}} {...{message}} {...{messageUser}} {...{setDeleteModal}}/>
+          <DeleteConfirmModalMessage
+            {...{ socket }}
+            {...{ message }}
+            {...{ messageUser }}
+            {...{ setDeleteModal }}
+          />
         </Modal>
       )}
     </>

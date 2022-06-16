@@ -16,6 +16,7 @@ const [errors, setErrors] = useState({});
       return;
     }
    await socket.emit('chat', {deletedMessage})
+    
     setDeleteModal(false)
   };
   return (

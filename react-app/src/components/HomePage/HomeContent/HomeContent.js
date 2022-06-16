@@ -7,7 +7,7 @@ import ChannelList from "./ChannelList";
 import UserTab from "./User/UserTab";
 import InviteUser from "./InviteUser";
 
-const HomeContent = ({socket}) => {
+const HomeContent = ({ socket }) => {
   //react
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -51,7 +51,7 @@ const HomeContent = ({socket}) => {
         <div className="server-sidebar-container">
           <nav></nav>
 
-          <UserTab {...{socket}}/>
+          <UserTab {...{ socket }} />
         </div>
       ) : (
         <div className="server-sidebar-container">
@@ -62,6 +62,7 @@ const HomeContent = ({socket}) => {
             >
               <div className="server-name-div">
                 <h3>{currentServer?.name}</h3>
+
                 {showDropdown ? (
                   <>
                     <i className="fa-solid fa-xmark"></i>
@@ -81,19 +82,20 @@ const HomeContent = ({socket}) => {
                 </Modal>
               </div>
             )}
-            {showDropdown && (
+
+            {showDropdown && currentServer.owner_id === sessionUser.id && (
               <div className="dropdown-container">
                 <ul id="profile-dropdown-nav">
-                  <li>
-                    <button onClick={() => setShowEditModal(true)}>
-                      <p>Server Settings</p>
-                      <i className="fa-solid fa-gear"></i>
-                    </button>
-                  </li>
                   <li>
                     <button onClick={() => setInviteModal(true)}>
                       <p>Invite people</p>
                       <i className="fa-solid fa-person-circle-plus"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => setShowEditModal(true)}>
+                      <p>Server Settings</p>
+                      <i className="fa-solid fa-gear"></i>
                     </button>
                   </li>
                 </ul>
@@ -129,14 +131,18 @@ const HomeContent = ({socket}) => {
               <ChannelList />
             </div>
             <div className="server-nav-bottom">
-              <UserTab {...{socket}}/>
+              <UserTab {...{ socket }} />
             </div>
           </nav>
         </div>
       )}
       {inviteModal && (
         <Modal onClose={() => setInviteModal(false)}>
-          <InviteUser {...{currentServer}} {...{setInviteModal}} />
+          <InviteUser
+            {...{ socket }}
+            {...{ currentServer }}
+            {...{ setInviteModal }}
+          />
         </Modal>
       )}
     </div>

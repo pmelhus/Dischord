@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import InviteUserItem from './InviteUserItem.js'
 
-const InviteUser = ({currentServer, setInviteModal}) => {
+const InviteUser = ({socket, currentServer, setInviteModal}) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => Object.values(state.users));
   const serverMembers = useSelector(state => state.servers)[currentServer.id].members
@@ -26,7 +26,7 @@ console.log(serverMemberIds)
             }
             return (
               <div className="invite-user-item-div">
-                <InviteUserItem {...{setInviteModal}} {...{currentServer}} {...{user}}/>
+                <InviteUserItem {...{socket}} {...{setInviteModal}} {...{currentServer}} {...{user}}/>
               </div>
             );
           })}

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {createServerMember} from "../../../store/server"
 
 
-const InviteUserItem = ({ currentServer, user, setInviteModal }) => {
+const InviteUserItem = ({ socket, currentServer, user, setInviteModal }) => {
 const dispatch = useDispatch()
 const [errors, setErrors] = useState({})
 
@@ -13,7 +13,7 @@ e.preventDefault()
 const payload = {user_id: user.id, server_id: currentServer.id}
 
 const serverMember = await dispatch(createServerMember(payload))
-
+await socket.emit('chat')
 if (serverMember.errors) {
   console.log(serverMember.errors);
   setErrors(serverMember.errors);

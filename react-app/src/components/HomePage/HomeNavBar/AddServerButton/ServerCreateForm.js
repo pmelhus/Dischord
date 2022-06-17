@@ -44,10 +44,10 @@ const ServerCreateForm = ({ setShowServerModal }) => {
     setImage(file);
   };
 
-  const objectUrl = URL.createObjectURL(image);
-  setPreview(objectUrl);
+  // const objectUrl = URL.createObjectURL(image);
+  // setPreview(objectUrl);
 
-  return () => URL.revokeObjectURL(objectUrl);
+  // return () => URL.revokeObjectURL(objectUrl);
 
   useEffect(() => {
     setNameError(true);

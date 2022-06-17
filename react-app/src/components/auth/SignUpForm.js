@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, Link } from "react-router-dom";
 import { signUp } from "../../store/session";
 
 const SignUpForm = ({ socket }) => {
@@ -159,6 +159,12 @@ const SignUpForm = ({ socket }) => {
         </div>
         <div className="login-password">
           <button type="submit">Sign Up</button>
+        </div>
+        <div className="login-register">
+          <p>Already have an account?</p>
+          <Link to="/login">
+            <p id="login-register">Login</p>
+          </Link>
         </div>
       </form>
     </div>

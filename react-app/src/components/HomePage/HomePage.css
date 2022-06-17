@@ -1256,7 +1256,23 @@ cursor: pointer;
   display: flex;
   justify-content: center;
   margin: 10px 0;
-
   flex-direction: column;
   align-items: center;
+}
+
+#home-image {
+  width: 450px;
+  height: 420px;
+  margin-top: 30px;
+  margin-right: 175px;
+}
+
+.home-page-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.welcome-message {
+  color:rgba(255, 255, 255, 0.836);
+  margin-left: 20px;
 }

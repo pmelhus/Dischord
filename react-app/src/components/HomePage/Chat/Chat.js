@@ -12,6 +12,8 @@ import LoadingScreen from "../../LoadingScreen";
 import { LoadingModal } from "../../../context/LoadingModal";
 import UserOnlineCard from "./UserOnlineCard";
 import UserOfflineCard from "./UserOfflineCard";
+
+import MePage from './MePage/MePage'
 // outside of your component, initialize the socket variable
 
 const Chat = ({ socket, setLoading }) => {
@@ -37,6 +39,7 @@ const Chat = ({ socket, setLoading }) => {
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
   );
+  const myServers = allServers.filter((server) => server.owner_id === user.id);
 
   const currentServer = useSelector((state) => state.servers[serverId]);
   // console.log(currentServerMemberIds.members_ids, 'hello')
@@ -45,6 +48,9 @@ const Chat = ({ socket, setLoading }) => {
 
   // const serverMembersArray =
   //  setLoading(true)
+
+  // const imageUrl = URL.createObjectURL(homeImage)
+
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
@@ -94,6 +100,9 @@ const Chat = ({ socket, setLoading }) => {
       <div className="channel-chat-container">
         <div className="channel-chat-and-send-form">
           <div className="channel-chat-messages">
+            {pathname.split("/")[2] === "@me" && !myServers.length && (
+              <MePage/>
+            )}
             {pathname.split("/")[2] !== "@me" &&
               currentChannelMessages.reverse().map((message, ind) => (
                 <div className="channel-message-div" key={ind}>

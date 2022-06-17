@@ -1,5 +1,6 @@
 import Chat from "../Chat/Chat"
 import ServerChatHeader from "./ServerChatHeader"
+import {useSelector} from "react-redux"
 
 const ServerChatWindow = ({setOnlineMembers, onlineMembers, socket, setLoading}) => {
 
@@ -7,6 +8,7 @@ const ServerChatWindow = ({setOnlineMembers, onlineMembers, socket, setLoading})
     <div className="server-chat-container">
       <ServerChatHeader/>
       <Chat {...{onlineMembers}} {...{setOnlineMembers}} {...{socket}} {...{setLoading}}/>
+
     </div>
   )
 }

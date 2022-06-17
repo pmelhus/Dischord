@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, Route} from "react-router-dom";
 import {
   createChannelMessage,
   genChannelMessages,
@@ -95,14 +95,27 @@ const Chat = ({ socket, setLoading }) => {
 
   return (
     <div className="chat-container">
-      {currentServer.channel_ids.length ? (
-        <>
+
           <div className="channel-chat-container">
             <div className="channel-chat-and-send-form">
               <div className="channel-chat-messages">
-                {pathname.split("/")[2] === "@me" && <MePage />}
-
-                {pathname.split("/")[2] !== "@me" &&
+              <Route exact path="/channels/@me">
+                <MePage />
+               </Route>
+               <Route exact path={`/channels/${serverId}/noChannels`}>
+                  <div className='no-channels-div'>
+                  <h1>
+                    Wow, such empty...
+                  </h1>
+                  <h3>
+                    Looks like this server has no channels!
+                  </h3>
+                  <h3>
+                    If you're the creator of this server, you can add channels by clicking the " <i className="fa-solid fa-plus fa-lg"></i> " next to " Text Channels "
+                  </h3>
+                  </div>
+               </Route>
+                {
                   currentChannelMessages.reverse().map((message, ind) => (
                     <div className="channel-message-div" key={ind}>
                       <ChannelMessage
@@ -179,13 +192,8 @@ const Chat = ({ socket, setLoading }) => {
               </div>
             </div>
           </div>
-        </>
-      ) : (
-        <div className="empty-channel-div">
-          <h1>Such empty...</h1>
-          <h2>This server has no channels!</h2>
-        </div>
-      )}
+
+
     </div>
   );
 };

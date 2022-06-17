@@ -27,11 +27,13 @@ const ServerList = () => {
 
   const handleClick = (server) => {
 
-    if (isLoaded) {
+    if (isLoaded && server.channel_ids.length) {
 
         history.push(`/channels/${server?.id}/${server?.channel_ids[0]}`);
 
       // }
+    } else {
+      history.push(`/channels/${server?.id}/noChannels`);
     }
   };
 

@@ -1332,3 +1332,11 @@ color:rgba(229, 230, 232, 0.968)
   padding: 10px;
   color:rgba(204, 205, 206, 0.778);
 }
+
+.no-channels-div {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  color:rgba(255, 255, 255, 0.778);
+}

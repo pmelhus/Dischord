@@ -40,18 +40,28 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
   };
 
   return (
-    <div className="profile-edit-form-password2">
+    <div className="password-modal">
       <div className="login-email">
-        <h4>Please enter your current password to set a new password.</h4>
+        <h4>Please enter your current password to set a new password</h4>
         <label>Current password</label>
+        {errors && errors.current_password && (
+              <div className="error-msg">
+                <p>*{errors.current_password}*</p>
+              </div>
+            )}
         <input
-          type="text"
+             type={showPassword}
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
         ></input>
       </div>
       <div className="login-email" >
         <label>New password</label>
+        {errors && errors.password && (
+              <div className="error-msg">
+                <p>*{errors.password}*</p>
+              </div>
+            )}
         <input
           type={showPassword}
           value={newPassword}
@@ -60,19 +70,17 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
       </div>
       <div className="login-email">
         <label>Confirm new password</label>
+        {errors && errors.confirm_password && (
+              <div className="error-msg">
+                <p>*{errors.confirm_password}*</p>
+              </div>
+            )}
         <input
           type={showPassword}
           value={newPasswordConfirm}
           onChange={(e) => setNewPasswordConfirm(e.target.value)}
         ></input>
-        {Object.keys(errors).length > 0 && (
-          <div className="form-errors">
-            {Object.keys(errors).map(
-              // (key) => `${errors[key]}`
-              (key) => `${errors[key]}`
-            )}
-          </div>
-        )}
+
         <div className="button-div-password">
 
 

@@ -6,44 +6,26 @@ import CreateChannelForm from "./CreateChannelForm";
 import EditChannelForm from "./EditChannelForm";
 import ChannelListDiv from "./ChannelListDiv";
 
-
 const ChannelList = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
   const { pathname } = useLocation();
   const channels = useSelector((state) => Object.values(state.channels));
-
+  const user = useSelector((state) => state.session.user);
   const [showChannelForm, setShowChannelForm] = useState(false);
-
+  const servers = useSelector((state) => Object.values(state.servers));
   const [isLoaded, setIsLoaded] = useState(false);
   const [showEditForm, setShowEditForm] = useState();
-  const [localStorageChannel, setLocalStorageChannel] = useState(
-    localStorage.getItem(
-      `${parseInt(pathname.split("/")[2])}`,
-      `${parseInt(pathname.split("/")[3])}`
-    )
+  const currentServer = servers.find(
+    (server) => server.id === parseInt(pathname.split("/")[2])
   );
 
-  const serverChannels = channels.filter(
+  const serverChannelsFiltered = channels.filter(
     (channel) => channel.server_id === parseInt(pathname.split("/")[2])
   );
 
-  const selectedChannel = serverChannels.find(
-    (channel) => channel.id === parseInt(localStorageChannel)
+  const [selectedChannel, setSelectedChannel] = useState(
+    serverChannelsFiltered[0]
   );
-  // console.log(parseInt(localStorageChannel))
-
-  const handleFirstChannel = () => {
-    localStorage.setItem(
-      `${parseInt(pathname.split("/")[2])}`,
-      `${parseInt(pathname.split("/")[3])}`
-    );
-    setLocalStorageChannel(
-      localStorage.getItem(
-        `${parseInt(pathname.split("/")[2])}`,
-        `${parseInt(pathname.split("/")[3])}`
-      )
-    );
-  };
 
   const handleClick = () => {
     setShowDropdown(!showDropdown);
@@ -73,103 +55,40 @@ const ChannelList = () => {
 
   // Invite users section
 
-
-
-
   return (
     <>
       {isLoaded && (
         <div>
           <div className="channel-text-channel-div">
-            <button id="channel-dropdown-button" onClick={handleClick}>
-              <div className="channel-list-text-channel">
-                {showDropdown ? (
-                  <>
-                    <i className="fa-solid fa-angle-down fa-sm"></i>
-                  </>
-                ) : (
-                  <>
-                    <i className="fa-solid fa-angle-right fa-sm"></i>
-                  </>
-                )}
+            <div className="channel-list-text-channel">
+              <>
+                <i className="fa-solid fa-angle-right fa-sm"></i>
+              </>
 
-                <p>Text Channels</p>
-              </div>
-            </button>
-            <button id="channel-add" onClick={handleCreateChannel}>
-              <i className="fa-solid fa-plus fa-lg"></i>
-            </button>
+              <p>Text Channels</p>
+            </div>
+            {user.id === currentServer.owner_id && (
+              <button id="channel-add" onClick={handleCreateChannel}>
+                <i className="fa-solid fa-plus fa-lg"></i>
+              </button>
+            )}
           </div>
 
-          {serverChannels.length === 1 && (
-            <div className="channel-general-container">
-              <button
-                onClick={handleFirstChannel}
-                className="channel-general-button"
-              >
-                <i className="fa-solid fa-hashtag"></i>
-                <p>{serverChannels[0]?.name}</p>
-              </button>
-              <button onClick={handleEditChannel} className="channel-settings">
-                <i className="fa-solid fa-gear"></i>
-              </button>
-            </div>
-          )}
-
-          {!showDropdown && serverChannels.length > 1 && !selectedChannel && (
-            <div className="channel-general-container">
-              <button className="channel-general-button">
-                <i className="fa-solid fa-hashtag"></i>
-                <p>{serverChannels[0]?.name}</p>
-              </button>
-              <button onClick={handleEditChannel} className="channel-settings">
-                <i className="fa-solid fa-gear"></i>
-              </button>
-            </div>
-          )}
-
-          {!showDropdown && serverChannels.length > 1 && selectedChannel && (
-            <div className="channel-general-container">
-              <button className="channel-general-button">
-                <i className="fa-solid fa-hashtag"></i>
-                <p>{selectedChannel?.name}</p>
-              </button>
-              <button onClick={handleEditChannel} className="channel-settings">
-                <i className="fa-solid fa-gear"></i>
-              </button>
-            </div>
-          )}
-
-          {showDropdown && serverChannels.length > 1 && selectedChannel && (
-            <div className="channel-general-container">
-              <button className="channel-general-button">
-                <i className="fa-solid fa-hashtag"></i>
-                <p>{selectedChannel?.name}</p>
-              </button>
-              <button onClick={handleEditChannel} className="channel-settings">
-                <i className="fa-solid fa-gear"></i>
-              </button>
-            </div>
-          )}
-
-          {showDropdown && serverChannels.length > 1 && (
-            <>
-              {serverChannels.map((channel) => {
-                if (selectedChannel?.id === channel.id) return;
-                return (
-                  <ChannelListDiv
-                    {...{ channel }}
-                    {...{ setLocalStorageChannel }}
-                    // {...{ currChannel }}
-                    {...{ setShowEditForm }}
-                    {...{ handleEditChannel }}
-                    {...{ setShowDropdown }}
-                    key={channel.id}
-                  />
-                );
-              })}
-            </>
-          )}
+          <>
+            {serverChannelsFiltered.map((channel) => {
+              return (
+                <ChannelListDiv
+                  {...{ channel }}
+                  {...{ setSelectedChannel }}
+                  // {...{ currChannel }}
+                  {...{ setShowEditForm }}
+                  {...{ handleEditChannel }}
+                  {...{ setShowDropdown }}
+                  key={channel.id}
+                />
+              );
+            })}
+          </>
 
           {showChannelForm && (
             <Modal onClose={() => setShowChannelForm(false)}>

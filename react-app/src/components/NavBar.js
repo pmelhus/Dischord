@@ -13,7 +13,7 @@ const NavBar = () => {
       <ul className="splash-nav-ul">
         <li>Paul Melhus</li>
         <li>
-          <a href="https://www.linkedin.com/feed/">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/paulmelhus/">LinkedIn</a>
         </li>
         <li>
         <a href="https://github.com/pmelhus">GitHub</a>

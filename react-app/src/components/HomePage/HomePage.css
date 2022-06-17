@@ -279,6 +279,7 @@ display: flex;
  margin-left: 5px;
  color:rgba(204, 205, 206, 0.778);
  height: 20px;
+ cursor:default;
 }
 
 .channel-list-text-channel  p {
@@ -303,10 +304,7 @@ align-items: center;
   margin: 0;
 }
 
-.channel-list-text-channel:hover {
-  color: rgba(229, 230, 232, 0.968);
-  cursor: pointer;
-}
+
 
 #channel-add {
   padding: 0;
@@ -676,7 +674,7 @@ width: 100%;
 .message-content:hover {
   background-color:rgba(0, 0, 0, 0.189);
   border-radius: 8px;
-  width:100%;
+  width:103%;
   /* padding: 0 10px; */
 
 }
@@ -756,7 +754,20 @@ padding: 0;
   font-size: 11px;
   margin-left: 6px;
   margin-top: 2px;
-  color:rgba(229, 230, 232, 0.968)
+  color:rgba(229, 230, 232, 0.968);
+  top: 8px;
+  position: absolute;
+}
+
+.message-content-div {
+  overflow-y: scroll;
+  height: fit-content;
+  max-height: 115px;
+  word-wrap: break-word;
+  background-color:#62656a43;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 .message-content-edited {
@@ -1107,8 +1118,11 @@ margin: 20px;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
-  height: 425px;
+  height: fit-content;
+
   border-radius: 10px;
+
+
 }
 
 .profile-edit-form button {
@@ -1155,7 +1169,6 @@ cursor: pointer;
 }
 
 .button-div-user {
-  cursor: pointer;
 
   margin-top: 16px;
   display: flex;
@@ -1168,6 +1181,7 @@ cursor: pointer;
   background-color:#950652;
   border: none;
   color: white;
+  cursor: pointer;
   /* height: 20px; */
 }
 
@@ -1184,6 +1198,28 @@ cursor: pointer;
   width: 500px;
   height: 300px;
   border-radius: 10px;
+}
+
+.delete-message-form {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+  height: 330px;
+  border-radius: 10px;
+}
+
+.delete-message-card {
+  display: flex;
+  align-items: start;
+  margin-bottom: 20px;
+}
+.delete-message-card h4 {
+  padding: 0;
+  margin:0;
+  margin-top: 10px;
 }
 
 .server-edit-form {
@@ -1275,4 +1311,19 @@ cursor: pointer;
 .welcome-message {
   color:rgba(255, 255, 255, 0.836);
   margin-left: 20px;
+}
+
+.password-modal input {
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.password-modal label {
+  margin-bottom: 5px;
+}
+.profile-edit-form label {
+  margin-bottom: 5px;
+}
+
+#channel-gear:hover {
+color:rgba(229, 230, 232, 0.968)
 }

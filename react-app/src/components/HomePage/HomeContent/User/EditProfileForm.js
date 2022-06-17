@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editUserProfile } from "../../../../store/session";
 import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
-import LogoutButton from "./LogoutButton"
+import LogoutButton from "./LogoutButton";
 
 const EditProfileForm = ({ setEditModal, socket }) => {
   const user = useSelector((state) => state.session.user);
@@ -72,8 +72,8 @@ const EditProfileForm = ({ setEditModal, socket }) => {
   }, [image, user]);
 
   return (
-    <div>
-      <form className="profile-edit-form">
+    <div className="profile-edit-form">
+      <form>
         <div className="login-email">
           <label>Username</label>
           {errors && errors.username && (
@@ -99,7 +99,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           ></input>
         </div>
         <div className="login-email">
-        {errors && errors.bio && (
+          {errors && errors.bio && (
             <div className="error-msg">
               <p>*{errors.bio}*</p>
             </div>
@@ -115,12 +115,16 @@ const EditProfileForm = ({ setEditModal, socket }) => {
         </div>
         <div className="edit-profile-image-preview">
           <label className="custom-file-upload">
-          {errors && errors.image_file && (
-            <div className="error-msg">
-              <p>*{errors.image_file}*</p>
-            </div>
-          )}
-            <input type="file" accept="image/png, image/jpeg, image/png, image/gif" onChange={updateImage}></input>
+            {errors && errors.image_file && (
+              <div className="error-msg">
+                <p>*{errors.image_file}*</p>
+              </div>
+            )}
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/png, image/gif"
+              onChange={updateImage}
+            ></input>
             Upload your profile pic!
           </label>
         </div>
@@ -138,15 +142,17 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           <LogoutButton {...{ socket }} />
         </div>
       </form>
-      {passwordModal && (
-        // <Modal onClose={setPasswordModal(false)}>
-        <PasswordModal
-          {...{ user }}
-          {...{ setPasswordModal }}
-          {...{ setEditModal }}
-        />
-        // </Modal>
-      )}
+      <div>
+        {passwordModal && (
+          // <Modal onClose={setPasswordModal(false)}>
+          <PasswordModal
+            {...{ user }}
+            {...{ setPasswordModal }}
+            {...{ setEditModal }}
+          />
+          // </Modal>
+        )}
+      </div>
     </div>
   );
 };

@@ -7,7 +7,7 @@ const NavBar = () => {
     <nav className="splash-nav">
       <div>
         <NavLink to="/" exact={true} activeClassName="active">
-          <h3>Logo</h3>
+          <h3>Dischord</h3>
         </NavLink>
       </div>
       <ul className="splash-nav-ul">

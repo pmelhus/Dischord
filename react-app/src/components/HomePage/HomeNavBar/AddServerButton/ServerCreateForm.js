@@ -14,6 +14,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
   const owner_id = useSelector((state) => state.session.user.id);
   const [imageError, setImageError] = useState(true);
   const [nameError, setNameError] = useState(true);
+  const [preview, setPreview] = useState(null)
 
   const handleChange = () => {
     setChecked(!checked);
@@ -43,16 +44,25 @@ const ServerCreateForm = ({ setShowServerModal }) => {
     setImage(file);
   };
 
+  const objectUrl = URL.createObjectURL(image);
+  setPreview(objectUrl);
+
+  return () => URL.revokeObjectURL(objectUrl);
+
   useEffect(() => {
     setNameError(true);
     if (name.length > 1 && name.length < 33) {
       setNameError(false);
     }
+
+
+
+
   }, [name]);
 
   return (
     <>
-      <form className="profile-edit-form">
+      <form className="server-create-form">
         <div className="server-create-form-msg">
           <h2>Customize your server</h2>
           <p>

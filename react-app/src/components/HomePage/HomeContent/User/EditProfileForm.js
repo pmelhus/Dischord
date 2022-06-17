@@ -111,18 +111,17 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           ></textarea>
         </div>
         <div id="user-picture-preview">
-          <h4>Profile picture preview</h4>
           <img alt="current profile" src={preview} />
         </div>
         <div className="edit-profile-image-preview">
-          <label class="custom-file-upload">
+          <label className="custom-file-upload">
           {errors && errors.image_file && (
             <div className="error-msg">
               <p>*{errors.image_file}*</p>
             </div>
           )}
             <input type="file" accept="image/png, image/jpeg, image/png, image/gif" onChange={updateImage}></input>
-            Profile image upload
+            Upload your profile pic!
           </label>
         </div>
         {/* {Object.keys(errors).length > 0 && (

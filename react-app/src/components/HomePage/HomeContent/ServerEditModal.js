@@ -76,11 +76,11 @@ const ServerEditModal = ({ setShowEditModal}) => {
   }, [name]);
 
   return (
-    <form>
+    <form className="server-edit-form-real">
       <div className="server-edit-form-msg">
         <h2>Server Overview</h2>
       </div>
-      <div>
+      <div className="server-edit-image">
         {currServer?.image_url ? (
           <img
             alt="profile preview"
@@ -92,15 +92,17 @@ const ServerEditModal = ({ setShowEditModal}) => {
             {currServer?.name.split("")[0]}
           </h2>
         )}
-        <label>Upload image</label>
+        <label id="profile-pic-label" className="custom-file-upload">Upload image
+        <input type="file" accept="image/*" onChange={updateImage}></input>
+        </label>
         {imageError && errors && errors.image_url && (
           <div className="error-msg">
             <p>*{errors?.image_url}*</p>
           </div>
         )}
-        <input type="file" accept="image/*" onChange={updateImage}></input>
+
       </div>
-      <div>
+      <div className="channel-input">
         <label>Server name</label>
         {nameError && errors && errors.name && (
             <div className="error-msg">
@@ -109,11 +111,11 @@ const ServerEditModal = ({ setShowEditModal}) => {
           )}
         <input value={name} onChange={(e) => setName(e.target.value)}></input>
       </div>
-      <div>
-        <label>
+      <div className="private-input">
+
           {currServer?.public ? (
             <>
-              <p>Server is currently</p>
+              <p>Server is currently:</p>
               <h4>Public</h4>
             </>
           ) : (
@@ -123,6 +125,7 @@ const ServerEditModal = ({ setShowEditModal}) => {
               <h4>Private</h4>
             </>
           )}
+
           <select value={privacy} onChange={handleChange}>
             {privacy ? (
               <>
@@ -140,6 +143,8 @@ const ServerEditModal = ({ setShowEditModal}) => {
               </>
             )}
           </select>
+          <br/>
+          <label>
           Select your server's privacy. (Public servers can be seen by other
           users)
         </label>

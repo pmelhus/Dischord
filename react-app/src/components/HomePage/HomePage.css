@@ -249,14 +249,27 @@ border-radius: 35%;
   align-items: center;
   font-size: 40px;
   padding: 0;
-  margin: 0;
+  margin: 10px 0;
   color: white;
+  margin-bottom: 14px;
 }
 
 .server-overview-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.server-overview-buttons button {
+  margin-top: 10px;
+  width: 125px;
+  height: 25px;
+  border-radius: 10px;
+  background-color:#950652;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 .channel-list-text-channel {
@@ -464,6 +477,7 @@ display:block;
   width: 120px;
   height: 120px;
   object-fit: cover;
+  margin: 20px 0;
   border-radius: 100%;
 }
 
@@ -480,6 +494,12 @@ display:block;
   margin-top: 10px;
 }
 
+#profile-pic-label {
+  width: 100px;
+}
+#profile-pic-label > input{
+  display: none;
+}
 /* CHAT */
 
 .server-chat-container {
@@ -1083,6 +1103,8 @@ margin: 20px;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
+  height: 425px;
+  border-radius: 10px;
 }
 
 .profile-edit-form button {
@@ -1159,6 +1181,28 @@ cursor: pointer;
   border-radius: 10px;
 }
 
+.server-edit-form {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+  height: 550px;
+  border-radius: 10px;
+}
+
+.server-edit-form-real {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+  height: 510px;
+  border-radius: 10px;
+}
+
 .channel-input{
   display: flex;
   flex-direction: column;
@@ -1170,3 +1214,36 @@ cursor: pointer;
   margin-top: 20px;
   width: 100px;
 }
+
+.server-edit-image {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.private-input h4 {
+  padding: 0;
+  margin: 10px 0;
+}
+
+.private-input {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.privacy-option {
+  display: flex;
+}
+
+.server-create-form {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+  height: 400px;
+  border-radius: 10px;
+}
+

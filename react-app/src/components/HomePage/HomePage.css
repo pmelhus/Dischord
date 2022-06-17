@@ -1327,3 +1327,8 @@ cursor: pointer;
 #channel-gear:hover {
 color:rgba(229, 230, 232, 0.968)
 }
+
+.empty-channel-div {
+  padding: 10px;
+  color:rgba(204, 205, 206, 0.778);
+}

@@ -95,86 +95,97 @@ const Chat = ({ socket, setLoading }) => {
 
   return (
     <div className="chat-container">
-      <div className="channel-chat-container">
-        <div className="channel-chat-and-send-form">
-          <div className="channel-chat-messages">
-            {pathname.split("/")[2] === "@me" && <MePage />}
+      {currentServer.channel_ids.length ? (
+        <>
+          <div className="channel-chat-container">
+            <div className="channel-chat-and-send-form">
+              <div className="channel-chat-messages">
+                {pathname.split("/")[2] === "@me" && <MePage />}
 
-            {pathname.split("/")[2] !== "@me" &&
-              currentChannelMessages.reverse().map((message, ind) => (
-                <div className="channel-message-div" key={ind}>
-                  <ChannelMessage
-                    {...{ channelId }}
-                    {...{ socket }}
-                    {...{ message }}
+                {pathname.split("/")[2] !== "@me" &&
+                  currentChannelMessages.reverse().map((message, ind) => (
+                    <div className="channel-message-div" key={ind}>
+                      <ChannelMessage
+                        {...{ channelId }}
+                        {...{ socket }}
+                        {...{ message }}
+                      />
+                    </div>
+                  ))}
+              </div>
+              {pathname.split("/")[2] !== "@me" && (
+                <form className="channel-chat-form" onSubmit={sendChat}>
+                  <input
+                    id="channel-chat-input"
+                    value={chatInput}
+                    placeholder={`Message ${currentChannel?.name}`}
+                    onChange={updateChatInput}
                   />
-                </div>
-              ))}
+                  {/* <button type="submit">Send</button> */}
+                </form>
+              )}
+            </div>
           </div>
-          {pathname.split("/")[2] !== "@me" && (
-            <form className="channel-chat-form" onSubmit={sendChat}>
-              <input
-                id="channel-chat-input"
-                value={chatInput}
-                placeholder={`Message ${currentChannel?.name}`}
-                onChange={updateChatInput}
-              />
-              {/* <button type="submit">Send</button> */}
-            </form>
-          )}
-        </div>
-      </div>
-      <div className="server-members">
-        <div className="server-members-list">
-          <div className="server-members-online">
-            {url !== "@me" && (
-              <p className="server-members-titles">Online - {online.length}</p>
-            )}
-            {users &&
-              users.map((user) => {
-                if (currentServerMemberIds?.includes(user.id)) {
-                  return (
-                    <>
-                      {user.online && (
+          <div className="server-members">
+            <div className="server-members-list">
+              <div className="server-members-online">
+                {url !== "@me" && (
+                  <p className="server-members-titles">
+                    Online - {online.length}
+                  </p>
+                )}
+                {users &&
+                  users.map((user) => {
+                    if (currentServerMemberIds?.includes(user.id)) {
+                      return (
                         <>
-                          <UserOnlineCard
-                            {...{ online }}
-                            {...{ currentServer }}
-                            {...{ currentServerMemberIds }}
-                            {...{ user }}
-                          />
+                          {user.online && (
+                            <>
+                              <UserOnlineCard
+                                {...{ online }}
+                                {...{ currentServer }}
+                                {...{ currentServerMemberIds }}
+                                {...{ user }}
+                              />
+                            </>
+                          )}
                         </>
-                      )}
-                    </>
-                  );
-                }
-              })}
-            {url !== "@me" && (
-              <p className="server-members-titles">
-                Offline - {offline.length}
-              </p>
-            )}
-            {users &&
-              users.map((user) => {
-                if (currentServerMemberIds?.includes(user.id)) {
-                  return (
-                    <>
-                      {!user.online && (
+                      );
+                    }
+                  })}
+                {url !== "@me" && (
+                  <p className="server-members-titles">
+                    Offline - {offline.length}
+                  </p>
+                )}
+                {users &&
+                  users.map((user) => {
+                    if (currentServerMemberIds?.includes(user.id)) {
+                      return (
                         <>
-                          <UserOfflineCard
-                            {...{ currentServer }}
-                            {...{ currentServerMemberIds }}
-                            {...{ user }}
-                          />
+                          {!user.online && (
+                            <>
+                              <UserOfflineCard
+                                {...{ currentServer }}
+                                {...{ currentServerMemberIds }}
+                                {...{ user }}
+                              />
+                            </>
+                          )}
                         </>
-                      )}
-                    </>
-                  );
-                }
-              })}
+                      );
+                    }
+                  })}
+              </div>
+            </div>
           </div>
+        </>
+      ) : (
+        <div className="empty-channel-div">
+          <h1>Such empty...</h1>
+          <h2>This server has no channels!</h2>
         </div>
-      </div>
+      )}
     </div>
   );
 };

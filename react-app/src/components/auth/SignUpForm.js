@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 
-const SignUpForm = ({socket}) => {
+const SignUpForm = ({ socket }) => {
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ const SignUpForm = ({socket}) => {
   const [bio, setBio] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -21,10 +21,11 @@ const SignUpForm = ({socket}) => {
     const data = await dispatch(
       signUp(username, email, password, repeatPassword, image, bio)
     );
-    await socket.emit('sign-up', data)
-    await history.push("/channels/@me")
     if (data.errors) {
       setErrors(data.errors);
+    } else {
+      await socket.emit("sign-up", data);
+      await history.push("/channels/@me");
     }
   };
 
@@ -60,19 +61,19 @@ const SignUpForm = ({socket}) => {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={onSignUp}>
-      <div className="login-welcome-message">
+        <div className="login-welcome-message">
           <h2>Join our community!</h2>
           <p>Please provide your information below</p>
         </div>
-        <div className="login-email" >
-          <label className='login-label'>Username</label>
+        <div className="login-email">
+          <label className="login-label">Username</label>
           {errors && errors.username && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.username}*</p>
             </div>
           )}
           <input
-                 className='login-input'
+            className="login-input"
             type="text"
             name="username"
             onChange={updateUsername}
@@ -80,14 +81,14 @@ const SignUpForm = ({socket}) => {
           ></input>
         </div>
         <div className="login-password">
-          <label className='login-label'>Email</label>
+          <label className="login-label">Email</label>
           {errors && errors.email && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.email}*</p>
             </div>
           )}
           <input
-             className='login-input'
+            className="login-input"
             type="text"
             name="email"
             onChange={updateEmail}
@@ -95,28 +96,29 @@ const SignUpForm = ({socket}) => {
           ></input>
         </div>
         <div className="login-email">
-          <label className='login-label'>Password</label>
+          <label className="login-label">Password</label>
           {errors && errors.password && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.password}*</p>
             </div>
           )}
-          <input   className='login-input'
+          <input
+            className="login-input"
             type="password"
             name="password"
             onChange={updatePassword}
             value={password}
           ></input>
-        </div >
+        </div>
         <div className="login-email">
-          <label className='login-label'>Repeat Password</label>
+          <label className="login-label">Repeat Password</label>
           {errors && errors.repeatPassword && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.repeatPassword}*</p>
             </div>
           )}
           <input
-             className='login-input'
+            className="login-input"
             type="password"
             name="repeat_password"
             onChange={updateRepeatPassword}
@@ -125,23 +127,30 @@ const SignUpForm = ({socket}) => {
           ></input>
         </div>
         <div className="login-email">
-          <label className='login-label'>Bio</label>
+          <label className="login-label">Bio</label>
           {errors && errors.bio && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.bio}*</p>
             </div>
           )}
-          <textarea    className='login-input' name="bio" onChange={updateBio} value={bio}></textarea>
+          <textarea
+            className="login-input"
+            name="bio"
+            onChange={updateBio}
+            value={bio}
+          ></textarea>
         </div>
-        <label className='login-label'>Upload a profile picture so other's can see you!</label>
+        <label className="login-label">
+          Upload a profile picture so other's can see you!
+        </label>
         <div className="login-email">
-        {errors && errors.image_file && (
-            <div className='error-msg'>
+          {errors && errors.image_file && (
+            <div className="error-msg">
               <p>*{errors.image_file}*</p>
             </div>
           )}
           <input
-             className='login-input'
+            className="login-input"
             type="file"
             accept="image/png, image/jpeg, image/png, image/gif"
             name="image"
@@ -149,8 +158,7 @@ const SignUpForm = ({socket}) => {
           ></input>
         </div>
         <div className="login-password">
-
-        <button type="submit">Sign Up</button>
+          <button type="submit">Sign Up</button>
         </div>
       </form>
     </div>

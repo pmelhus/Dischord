@@ -14,7 +14,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
   const owner_id = useSelector((state) => state.session.user.id);
   const [imageError, setImageError] = useState(true);
   const [nameError, setNameError] = useState(true);
-  const [preview, setPreview] = useState(null)
+  const [preview, setPreview] = useState(null);
 
   const handleChange = () => {
     setChecked(!checked);
@@ -44,21 +44,19 @@ const ServerCreateForm = ({ setShowServerModal }) => {
     setImage(file);
   };
 
-  // const objectUrl = URL.createObjectURL(image);
-  // setPreview(objectUrl);
-
-  // return () => URL.revokeObjectURL(objectUrl);
-
   useEffect(() => {
     setNameError(true);
     if (name.length > 1 && name.length < 33) {
       setNameError(false);
     }
 
+    if (image) {
+      const objectUrl = URL.createObjectURL(image);
+      setPreview(objectUrl);
 
-
-
-  }, [name]);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [image, name]);
 
   return (
     <>
@@ -75,10 +73,23 @@ const ServerCreateForm = ({ setShowServerModal }) => {
             <p>*{errors?.image_url}*</p>
           </div>
         )}
-        <div>
-          <input type="file" accept="image/*" onChange={updateImage}></input>
+        <div className="server-file-upload">
+          {preview && (
+            <>
+              <img
+                className="server-image-icon-edit"
+                src={preview}
+                alt="profile preview"
+              ></img>
+            </>
+          )}
+          <label className="custom-file-upload">
+            {" "}
+            Upload your picture here!{" "}
+            <input type="file" accept="image/*" onChange={updateImage}></input>
+          </label>
         </div>
-        <div>
+        <div className="private-input">
           <label>Server name</label>
           {nameError && errors && errors.name && (
             <div className="error-msg">
@@ -97,7 +108,9 @@ const ServerCreateForm = ({ setShowServerModal }) => {
             Select to make this a public server that others can see!
           </label>
         </div>
-        <button onClick={handleSubmit}>Create Server</button>
+        <div className="button-div-user">
+          <button onClick={handleSubmit}>Create Server</button>
+        </div>
       </form>
     </>
   );

@@ -1096,6 +1096,10 @@ margin: 20px;
   cursor: pointer;
 }
 
+.custom-file-upload > input{
+  display: none;
+}
+
 .profile-edit-form {
   color: white;
   padding: 32px;
@@ -1164,6 +1168,7 @@ cursor: pointer;
   background-color:#950652;
   border: none;
   color: white;
+  height: 20px;
 }
 
 .home-button-div button:hover {
@@ -1243,7 +1248,15 @@ cursor: pointer;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
-  height: 400px;
+  height: 325px;
   border-radius: 10px;
 }
 
+.server-file-upload {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+
+  flex-direction: column;
+  align-items: center;
+}

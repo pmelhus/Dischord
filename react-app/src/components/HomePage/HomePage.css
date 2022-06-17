@@ -1147,3 +1147,26 @@ cursor: pointer;
 .home-button-div button:hover {
 cursor: pointer;
 }
+
+.channel-edit-form {
+  color: white;
+  padding: 32px;
+  background-color: #36393f;
+  z-index: 2;
+  /* border-radius: 5px; */
+  width: 500px;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.channel-input{
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#channel-submit {
+  margin-top: 20px;
+  width: 100px;
+}

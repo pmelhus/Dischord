@@ -11,8 +11,8 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
-  const [nameError, setNameError] = useState(true)
-  const [descriptionError, setDescriptionError] = useState(true)
+  const [nameError, setNameError] = useState(true);
+  const [descriptionError, setDescriptionError] = useState(true);
 
   const [errors, setErrors] = useState({});
 
@@ -35,36 +35,36 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
     }
   };
 
-useEffect(()=> {
-  setNameError(true)
-  setDescriptionError(true)
-  if (name.length > 1 && name.length < 33) {
-    setNameError(false)
-  }
-  if (description.length < 255) {
-    setDescriptionError(false)
-  }
-},[name, description])
+  useEffect(() => {
+    setNameError(true);
+    setDescriptionError(true);
+    if (name.length > 1 && name.length < 33) {
+      setNameError(false);
+    }
+    if (description.length < 255) {
+      setDescriptionError(false);
+    }
+  }, [name, description]);
 
   return (
     <>
-      <form className="server-create-form">
+      <form className="channel-edit-form">
         <div className="server-create-form-msg">
           <h2>Create Channel</h2>
         </div>
-        <div>
+        <div className="channel-input">
           <label>Channel name</label>
           {nameError && errors && errors.name && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.name}*</p>
             </div>
           )}
           <input onChange={(e) => setName(e.target.value)}></input>
         </div>
-        <div>
+        <div className="channel-input">
           <label>Description</label>
           {descriptionError && errors && errors.description && (
-            <div className='error-msg'>
+            <div className="error-msg">
               <p>*{errors.description}*</p>
             </div>
           )}
@@ -78,7 +78,9 @@ useEffect(()=> {
 					)}
 				</div>
 			)} */}
-        <button onClick={handleSubmit}>Create Channel</button>
+        <div className="button-div-user">
+          <button id="channel-submit" onClick={handleSubmit}>Create Channel</button>
+        </div>
       </form>
     </>
   );

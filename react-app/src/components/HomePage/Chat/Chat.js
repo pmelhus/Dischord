@@ -126,7 +126,7 @@ const Chat = ({ socket, setLoading }) => {
                     </div>
                   ))}
               </div>
-              {pathname.split("/")[2] !== "@me" && (
+              {pathname.split("/")[2] !== "@me" && pathname.split('/')[3] !== "noChannels" && (
                 <form className="channel-chat-form" onSubmit={sendChat}>
                   <input
                     id="channel-chat-input"

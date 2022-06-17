@@ -5,7 +5,7 @@ import { editServer, deleteServer } from "../../../store/server";
 import { Modal } from "../../../context/Modal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 
-const ServerEditModal = ({ setShowEditModal}) => {
+const ServerEditModal = ({ setShowEditModal }) => {
   const { pathname } = useLocation();
   const servers = useSelector((state) => Object.values(state.servers));
   const currServer = servers?.find(
@@ -23,6 +23,7 @@ const ServerEditModal = ({ setShowEditModal}) => {
   const [changed, setChanged] = useState(false);
   const [imageError, setImageError] = useState(true);
   const [nameError, setNameError] = useState(true);
+  const [preview, setPreview] = useState(currServer?.image_url);
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -73,7 +74,14 @@ const ServerEditModal = ({ setShowEditModal}) => {
     if (name.length > 1 && name.length < 33) {
       setNameError(false);
     }
-  }, [name]);
+
+    if (image) {
+      const objectUrl = URL.createObjectURL(image);
+      setPreview(objectUrl);
+
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [name, image]);
 
   return (
     <form className="server-edit-form-real">
@@ -81,70 +89,81 @@ const ServerEditModal = ({ setShowEditModal}) => {
         <h2>Server Overview</h2>
       </div>
       <div className="server-edit-image">
-        {currServer?.image_url ? (
-          <img
-            alt="profile preview"
-            className="server-image-icon-edit"
-            src={currServer?.image_url}
-          />
+        {preview ? (
+          <>
+            <div id="user-picture-preview">
+              <img alt="current profile" src={preview} />
+            </div>
+          </>
         ) : (
-          <h2 className="server-image-icon-edit">
-            {currServer?.name.split("")[0]}
-          </h2>
+          <>
+            {currServer?.image_url ? (
+              <img
+                alt="profile preview"
+                className="server-image-icon-edit"
+                src={currServer?.image_url}
+              />
+            ) : (
+              <h2 className="server-image-icon-edit">
+                {currServer?.name.split("")[0]}
+              </h2>
+            )}
+          </>
         )}
-        <label id="profile-pic-label" className="custom-file-upload">Upload image
-        <input type="file" accept="image/*" onChange={updateImage}></input>
-        </label>
+        <div className="upload-image-server">
+          <label id="profile-pic-label" className="custom-file-upload">
+            Upload image
+            <input type="file" accept="image/*" onChange={updateImage}></input>
+          </label>
+        </div>
         {imageError && errors && errors.image_url && (
           <div className="error-msg">
             <p>*{errors?.image_url}*</p>
           </div>
         )}
-
       </div>
       <div className="channel-input">
         <label>Server name</label>
         {nameError && errors && errors.name && (
-            <div className="error-msg">
-              <p>*{errors.name}*</p>
-            </div>
-          )}
+          <div className="error-msg">
+            <p>*{errors.name}*</p>
+          </div>
+        )}
         <input value={name} onChange={(e) => setName(e.target.value)}></input>
       </div>
       <div className="private-input">
+        {currServer?.public ? (
+          <>
+            <p>Server is currently:</p>
+            <h4>Public</h4>
+          </>
+        ) : (
+          <>
+            <p>Server is currently:</p>
 
-          {currServer?.public ? (
+            <h4>Private</h4>
+          </>
+        )}
+
+        <select value={privacy} onChange={handleChange}>
+          {privacy ? (
             <>
-              <p>Server is currently:</p>
-              <h4>Public</h4>
+              <option selected value={true}>
+                Public
+              </option>
+              <option value={false}>Private</option>
             </>
           ) : (
             <>
-              <p>Server is currently:</p>
-
-              <h4>Private</h4>
+              <option selected value={false}>
+                Private
+              </option>
+              <option value={true}>Public</option>
             </>
           )}
-
-          <select value={privacy} onChange={handleChange}>
-            {privacy ? (
-              <>
-                <option selected value={true}>
-                  Public
-                </option>
-                <option value={false}>Private</option>
-              </>
-            ) : (
-              <>
-                <option selected value={false}>
-                  Private
-                </option>
-                <option value={true}>Public</option>
-              </>
-            )}
-          </select>
-          <br/>
-          <label>
+        </select>
+        <br />
+        <label>
           Select your server's privacy. (Public servers can be seen by other
           users)
         </label>

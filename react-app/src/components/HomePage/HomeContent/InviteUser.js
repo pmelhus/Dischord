@@ -4,12 +4,14 @@ import InviteUserItem from './InviteUserItem.js'
 const InviteUser = ({socket, currentServer, setInviteModal}) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => Object.values(state.users));
-  const serverMembers = useSelector(state => state.servers)[currentServer.id].members
+  const serverMembers = useSelector(state => state.servers)[currentServer.id].members_ids
+
 const serverMemberIds = []
-serverMembers?.forEach(member => {
-  serverMemberIds.push(member.id)
-})
-console.log(serverMemberIds)
+
+// serverMembers?.forEach(member => {
+//   serverMemberIds.push(member.id)
+// })
+console.log(serverMembers)
   return (
     <div className='invite-user-container'>
       {/* <div className='user-search'>
@@ -21,7 +23,7 @@ console.log(serverMemberIds)
       <div className="invite-user-list">
         <ul>
           {users?.map((user) => {
-            if (serverMemberIds.includes(user.id)) {
+            if (serverMembers.includes(user.id)) {
               return
             }
             return (

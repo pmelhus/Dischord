@@ -15,10 +15,10 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteEvent, setDeleteEvent] = useState(false)
+  const [deleteEvent, setDeleteEvent] = useState(false);
 
   const handleEditModal = () => {
-    setContent(message.content)
+    setContent(message.content);
     setShowEdit(true);
   };
 
@@ -39,7 +39,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
       setErrors(editedMessage.errors);
       console.log(editedMessage.errors);
       setShowEdit(false);
-      setContent(message.content)
+      setContent(message.content);
       setDeleteModal(true);
       return;
     } else {
@@ -54,11 +54,10 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
 
   useEffect(() => {
     if (deleteEvent) {
-      setContent(message.content)
-      setDeleteEvent(false)
+      setContent(message.content);
+      setDeleteEvent(false);
     }
-  }, [deleteEvent])
-
+  }, [deleteEvent]);
 
   // console.log(message);
   return (
@@ -92,7 +91,10 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
                       </div>
                       <p id="message-edit-instructions">
                         Press
-                        <button type='button' onClick={() => setShowEdit(false)}>
+                        <button
+                          type="button"
+                          onClick={() => setShowEdit(false)}
+                        >
                           <i className="fa-solid fa-xmark fa-xl"></i>
                         </button>
                         to cancel. Press enter to submit.
@@ -103,7 +105,9 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
               ) : (
                 <div className="message-content-edited">
                   <p>{`${message?.content}`}</p>
-                  {message.edited && <p id="message-edited">(edited)</p>}
+                  <div>
+                    {message.edited && <p id="message-edited">(edited)</p>}
+                  </div>
                 </div>
               )}
               {sessionUser.id === messageUser.id && !showEdit ? (
@@ -132,7 +136,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
         <Modal onClose={() => setDeleteModal(false)}>
           <DeleteConfirmModalMessage
             {...{ socket }}
-            {...{setDeleteEvent}}
+            {...{ setDeleteEvent }}
             {...{ message }}
             {...{ messageUser }}
             {...{ setDeleteModal }}

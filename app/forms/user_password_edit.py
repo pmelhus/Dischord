@@ -20,7 +20,7 @@ def password_matches(form, field):
 class UserEditPassword(FlaskForm):
     id = IntegerField('user_id')
     password = StringField('password', validators=[DataRequired(), Length(
-        min=6, max=20), EqualTo('confirm_password', message="Passwords must match")])
+        min=6, max=20), EqualTo('confirm_password', message="New passwords must match")])
     confirm_password = StringField('confirm_password', validators=[
         DataRequired(), Length(min=6, max=20)])
     current_password = StringField(

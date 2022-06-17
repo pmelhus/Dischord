@@ -46,7 +46,7 @@ const ChannelListDiv = ({
         </button>
         {user.id === currentServer.owner_id && (
           <button onClick={handleEditChannel} className="channel-settings">
-            {<i className="fa-solid fa-gear"></i>}
+            {<i id="channel-gear" className="fa-solid fa-gear"></i>}
           </button>
         )}
       </div>

@@ -1,17 +1,21 @@
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ServerList = () => {
   // const dispatch = useDispatch();
   const history = useHistory();
-
+  const { pathname } = useLocation();
   const servers = useSelector((state) => Object.values(state.servers));
   // const channels = useSelector((state) => Object.values(state.channels));
-  const sessionUser = useSelector((state) => state.session.user)
+  const sessionUser = useSelector((state) => state.session.user);
 
-const myServers = servers.filter(server=> (server.owner_id === sessionUser.id || server.members_ids.includes(sessionUser.id)))
-// console.log(myServers)
+  const myServers = servers.filter(
+    (server) =>
+      server.owner_id === sessionUser.id ||
+      server.members_ids.includes(sessionUser.id)
+  );
+  // console.log(myServers)
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -21,19 +25,12 @@ const myServers = servers.filter(server=> (server.owner_id === sessionUser.id ||
   }, [servers]);
 
 
-  // console.log(channels, "============NAW");
   const handleClick = (server) => {
-    // console.log(server.channel_ids)
 
     if (isLoaded) {
-      // if (localStorage.getItem(`${server.id}`)) {
-      //   // console.log('========== LOCAL')
-      //   history.push(
-      //     `/channels/${server.id}/${localStorage.getItem(`${server.id}`)}`
-      //     );
-      //   } else {
-          // console.log(channels, '===================')
-          history.push(`/channels/${server?.id}/${server?.channel_ids[0]}`);
+
+        history.push(`/channels/${server?.id}/${server?.channel_ids[0]}`);
+
       // }
     }
   };

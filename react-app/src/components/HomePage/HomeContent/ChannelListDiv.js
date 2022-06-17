@@ -6,18 +6,20 @@ import {Modal} from "../../../context/Modal"
 const ChannelListDiv = ({
   setShowDropdown,
   channel,
-  setLocalStorageChannel
+  setLocalStorageChannel,
+  setSelectedChannel
 }) => {
   const history = useHistory();
 
   const [showEditForm2, setShowEditForm2] = useState(false)
 
   const handleSelectChannel = () => {
-    localStorage.setItem(`${channel.server_id}`, `${channel.id}`);
+    localStorage.setItem(`${channel.server_id}`, `${channel.server_id}:${channel.id}`);
     setLocalStorageChannel(
-      localStorage.getItem(`${channel.server_id}`, `${channel.id}`)
+      localStorage.getItem(`${channel.server_id}`)
     );
     setShowDropdown(false);
+    setSelectedChannel(channel)
     history.push(`/channels/${channel.server_id}/${channel.id}`);
   };
 
@@ -27,7 +29,7 @@ const ChannelListDiv = ({
 
   useEffect(() => {
     setLocalStorageChannel(
-      localStorage.getItem(`${channel.server_id}`, `${channel.id}`)
+      localStorage.getItem(`${channel.server_id}`)
     );
   }, []);
 

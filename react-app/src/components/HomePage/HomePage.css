@@ -279,6 +279,7 @@ display: flex;
  margin-left: 5px;
  color:rgba(204, 205, 206, 0.778);
  height: 20px;
+ cursor:default;
 }
 
 .channel-list-text-channel  p {
@@ -303,10 +304,7 @@ align-items: center;
   margin: 0;
 }
 
-.channel-list-text-channel:hover {
-  color: rgba(229, 230, 232, 0.968);
-  cursor: pointer;
-}
+
 
 #channel-add {
   padding: 0;

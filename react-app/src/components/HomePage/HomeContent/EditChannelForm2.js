@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editChannel, deleteChannel} from "../../../store/channel";
 import { useLocation } from "react-router-dom";
@@ -12,6 +12,9 @@ const EditChannelForm2 = ({ setShowEditForm2, channel }) => {
   const [description, setDescription] = useState(channel.description);
 
   const [errors, setErrors] = useState({});
+  const [descriptionError, setDescriptionError] = useState(true)
+  const [nameError, setNameError] = useState(true)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,34 +45,52 @@ const EditChannelForm2 = ({ setShowEditForm2, channel }) => {
     }
   };
 
+  useEffect(()=> {
+    if (description === null) {
+      setDescription('')
+    }
+    setNameError(true)
+    setDescriptionError(true)
+    if (name?.length > 1 && name?.length < 33) {
+      setNameError(false)
+    }
+    if (description?.length < 255) {
+      setDescriptionError(false)
+    }
+
+  },[name, description, dispatch])
+
   return (
     <>
-      <form className="server-create-form">
+      <form className="channel-edit-form">
         <div className="server-create-form-msg">
           <h2>Edit Channel</h2>
         </div>
-        <div>
+        <div className="channel-input">
           <label>Channel name</label>
+          {nameError && errors && errors.name && (
+            <div className='error-msg'>
+              <p>*{errors.name}*</p>
+            </div>
+          )}
           <input value={name} onChange={(e) => setName(e.target.value)}></input>
         </div>
-        <div>
+        <div className="channel-input">
           <label>Description</label>
+          {descriptionError && errors && errors.description && (
+            <div className='error-msg'>
+              <p>*{errors.description}*</p>
+            </div>
+          )}
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></input>
         </div>
-        {Object.keys(errors).length > 0 && (
-          <div className="form-errors">
-            {Object.keys(errors).map(
-              // (key) => `${errors[key]}`
-              (key) => `${errors[key]}`
-            )}
-          </div>
-        )}
-        <div>
-          <button onClick={handleSubmit}>Save Changes</button>
-          <button onClick={handleDelete}>Delete Server</button>
+
+        <div className="button-div-user">
+          <button id="channel-submit" onClick={handleSubmit}>Save Changes</button>
+          <button id="channel-submit" onClick={handleDelete}>Delete Channel</button>
         </div>
       </form>
     </>

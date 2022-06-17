@@ -53,16 +53,17 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
           <h2>Create Channel</h2>
         </div>
         <div className="channel-input">
-          <label>Channel name</label>
+          <label>Channel name *</label>
           {nameError && errors && errors.name && (
             <div className="error-msg">
               <p>*{errors.name}*</p>
             </div>
           )}
-          <input onChange={(e) => setName(e.target.value)}></input>
+          <input required onChange={(e) => setName(e.target.value)}></input>
         </div>
         <div className="channel-input">
-          <label>Description</label>
+
+          <label>Describe your channel</label>
           {descriptionError && errors && errors.description && (
             <div className="error-msg">
               <p>*{errors.description}*</p>

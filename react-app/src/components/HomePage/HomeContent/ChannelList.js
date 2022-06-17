@@ -8,7 +8,7 @@ import ChannelListDiv from "./ChannelListDiv";
 
 
 const ChannelList = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
   const { pathname } = useLocation();
   const channels = useSelector((state) => Object.values(state.channels));
 

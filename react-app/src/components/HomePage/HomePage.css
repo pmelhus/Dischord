@@ -1155,7 +1155,6 @@ cursor: pointer;
 }
 
 .button-div-user {
-  cursor: pointer;
 
   margin-top: 16px;
   display: flex;
@@ -1168,6 +1167,7 @@ cursor: pointer;
   background-color:#950652;
   border: none;
   color: white;
+  cursor: pointer;
   /* height: 20px; */
 }
 

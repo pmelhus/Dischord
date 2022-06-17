@@ -25,10 +25,16 @@ const DeleteConfirmModal = ({currServer, setShowDeleteModal, setShowEditModal, s
   };
 
   return (
+    <>
+
     <div className="delete-form-container">
-      <form>
+      <form className="channel-edit-form">
         <h3>Are you sure you want to delete your server?</h3>
-        <div className="button-delete-form">
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div className="button-div-user">
           <button className="btn" onClick={handleDelete}>
             Yes
           </button>
@@ -38,6 +44,7 @@ const DeleteConfirmModal = ({currServer, setShowDeleteModal, setShowEditModal, s
         </div>
       </form>
     </div>
+    </>
   )
 }
 

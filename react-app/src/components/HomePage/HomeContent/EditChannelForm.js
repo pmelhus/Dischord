@@ -64,11 +64,11 @@ const EditChannelForm = ({ setShowEditForm }) => {
 
   return (
     <>
-      <form className="server-create-form">
+      <form className="channel-edit-form">
         <div className="server-create-form-msg">
           <h2>Edit Channel</h2>
         </div>
-        <div>
+        <div className="channel-input">
           <label>Channel name</label>
           {nameError && errors && errors.name && (
             <div className='error-msg'>
@@ -77,7 +77,7 @@ const EditChannelForm = ({ setShowEditForm }) => {
           )}
           <input value={name} onChange={(e) => setName(e.target.value)}></input>
         </div>
-        <div>
+        <div  className="channel-input">
           <label>Description</label>
           {descriptionError && errors && errors.description && (
             <div className='error-msg'>
@@ -89,9 +89,9 @@ const EditChannelForm = ({ setShowEditForm }) => {
             onChange={(e) => setDescription(e.target.value)}
           ></input>
         </div>
-        <div>
-          <button onClick={handleSubmit}>Save Changes</button>
-          <button onClick={handleDelete}>Delete Channels</button>
+        <div className="button-div-user">
+          <button id="channel-submit"  onClick={handleSubmit}>Save Changes</button>
+          <button id="channel-submit"  onClick={handleDelete}>Delete Channel</button>
         </div>
       </form>
     </>

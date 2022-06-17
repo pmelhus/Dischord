@@ -18,6 +18,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
   const [deleteEvent, setDeleteEvent] = useState(false)
 
   const handleEditModal = () => {
+    setContent(message.content)
     setShowEdit(true);
   };
 
@@ -37,6 +38,9 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     if (editedMessage.errors) {
       setErrors(editedMessage.errors);
       console.log(editedMessage.errors);
+      setShowEdit(false);
+      setContent(message.content)
+      setDeleteModal(true);
       return;
     } else {
       await socket.emit("chat", { editedMessage });

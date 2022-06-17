@@ -9,7 +9,8 @@ const DeleteConfirmModal = ({currServer, setShowDeleteModal, setShowEditModal, s
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    console.log(currServer, 'CURRSERVER')
+    // console.log(currServer, 'CURRSERVER')
+    console.log(currServer)
     const deletedServer = await dispatch(deleteServer(currServer));
     if (deletedServer && deletedServer.errors) {
       // console.log(newEstate.errors)

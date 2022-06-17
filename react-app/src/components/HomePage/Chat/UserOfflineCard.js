@@ -14,7 +14,7 @@ const UserOfflineCard = ({ offline, user, currentServer }) => {
           </>
         )}
         <p id="offline-user">{user.username}</p>
-        {currentServer.owner_id === user.id && (
+        {currentServer?.owner_id === user.id && (
           <i id="crown" className="fa-solid fa-crown"></i>
         )}
       </div>

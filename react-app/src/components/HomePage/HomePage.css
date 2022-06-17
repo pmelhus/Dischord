@@ -1113,7 +1113,7 @@ margin: 20px;
 
 .profile-edit-form button {
 cursor: pointer;
-
+/* height: 200px; */
     background-color:#950652;
 
 }
@@ -1168,7 +1168,7 @@ cursor: pointer;
   background-color:#950652;
   border: none;
   color: white;
-  height: 20px;
+  /* height: 20px; */
 }
 
 .home-button-div button:hover {
@@ -1248,7 +1248,7 @@ cursor: pointer;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
-  height: 325px;
+  /* height: 325px; */
   border-radius: 10px;
 }
 

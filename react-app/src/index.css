@@ -6,10 +6,10 @@ body {
   width:100vmax;
   height: 100vh;
   max-height: 100%;
-  overflow-y: scroll;
+
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
-  overflow-x: none;
+  overflow: hidden;
 }
 
 

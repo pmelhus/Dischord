@@ -58,7 +58,7 @@ const ChannelList = () => {
   return (
     <>
       {isLoaded && (
-        <div>
+        <>
           <div className="channel-text-channel-div">
             <div className="channel-list-text-channel">
               <>
@@ -73,34 +73,36 @@ const ChannelList = () => {
               </button>
             )}
           </div>
+<div className='channel-list-div-scroll'>
+
+          {serverChannelsFiltered.map((channel) => {
+            return (
+              <ChannelListDiv
+                {...{ channel }}
+                {...{ setSelectedChannel }}
+                // {...{ currChannel }}
+                {...{ setShowEditForm }}
+                {...{ handleEditChannel }}
+                {...{ setShowDropdown }}
+                key={channel.id}
+              />
+            );
+          })}
+</div>
 
           <>
-            {serverChannelsFiltered.map((channel) => {
-              return (
-                <ChannelListDiv
-                  {...{ channel }}
-                  {...{ setSelectedChannel }}
-                  // {...{ currChannel }}
-                  {...{ setShowEditForm }}
-                  {...{ handleEditChannel }}
-                  {...{ setShowDropdown }}
-                  key={channel.id}
-                />
-              );
-            })}
+            {showChannelForm && (
+              <Modal onClose={() => setShowChannelForm(false)}>
+                <CreateChannelForm {...{ setShowChannelForm }} />
+              </Modal>
+            )}
+            {showEditForm && (
+              <Modal onClose={() => setShowEditForm(false)}>
+                <EditChannelForm {...{ setShowEditForm }} />
+              </Modal>
+            )}
           </>
-
-          {showChannelForm && (
-            <Modal onClose={() => setShowChannelForm(false)}>
-              <CreateChannelForm {...{ setShowChannelForm }} />
-            </Modal>
-          )}
-          {showEditForm && (
-            <Modal onClose={() => setShowEditForm(false)}>
-              <EditChannelForm {...{ setShowEditForm }} />
-            </Modal>
-          )}
-        </div>
+        </>
       )}
     </>
   );

@@ -4,13 +4,14 @@ const ServerChatHeader = () => {
   const { pathname } = useLocation();
   const channel_id = parseInt(pathname.split("/")[3]);
   const url = pathname.split('/')[2]
+  const urlChannels = pathname.split('/')[3]
   console.log(url)
   const channels = useSelector((state) => state.channels);
 
   return (
     <>
       <div className="server-chat-header">
-        { url !== '@me' && (
+        { url !== '@me' && urlChannels !== 'noChannels' && (
 
         <i id="server-chat-header-hash" className="fa-solid fa-hashtag"></i>
         )}

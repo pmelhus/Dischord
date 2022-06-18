@@ -2,7 +2,7 @@ from email.message import EmailMessage
 from flask_wtf import FlaskForm
 from wtforms import StringField, FileField, TextAreaField, IntegerField
 from flask_wtf.file import FileAllowed
-from wtforms.validators import DataRequired, ValidationError, Length, EqualTo, Email
+from wtforms.validators import DataRequired, ValidationError, Length, EqualTo
 from app.models import User
 
 
@@ -34,6 +34,6 @@ class UserEdit(FlaskForm):
     username = StringField(
         'username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[
-                        DataRequired(), user_exists, Length(min=6, max=40), Email(message="Must be a valid email address")])
+                        DataRequired(), user_exists, Length(min=6, max=40)])
     image = FileField('image_file', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
     bio = TextAreaField('bio', validators=[Length(min=0 ,max=190)])

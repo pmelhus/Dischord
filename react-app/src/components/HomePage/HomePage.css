@@ -1091,6 +1091,7 @@ position: absolute;
     display: flex;
     align-items: center;
     margin: 8px;
+    height: 58px;
   }
 
   .usertab-default-profile-image-invite {
@@ -1120,6 +1121,10 @@ margin: 20px;
     margin-top: 10px;
     padding-left: 16px;
     color:rgba(255, 255, 255, 0.432)
+  }
+
+  .offline-card-container {
+    height: 58px;
   }
 
   .offline-card-container img {
@@ -1284,8 +1289,12 @@ cursor: pointer;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
-  height: 330px;
+  height: 280px;
   border-radius: 10px;
+}
+
+.delete-modal-content {
+  margin-bottom: 40px;
 }
 
 .delete-message-card {

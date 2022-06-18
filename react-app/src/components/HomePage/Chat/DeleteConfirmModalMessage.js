@@ -30,7 +30,7 @@ const DeleteConfirmModalMessage = ({
       <form className="delete-message-form">
         <h3>Are you sure you want to delete this message?</h3>
         <div className="button-delete-form">
-          <div>
+          <div className="delete-modal-content">
             <div className="delete-message-card">
               <img
                 alt="profile"

@@ -51,7 +51,7 @@ const EditChannelForm2 = ({ setShowEditForm2, channel }) => {
     }
     setNameError(true)
     setDescriptionError(true)
-    if (name?.length > 1 && name?.length < 33) {
+    if (name?.length > 1 && name?.length < 27) {
       setNameError(false)
     }
     if (description?.length < 255) {

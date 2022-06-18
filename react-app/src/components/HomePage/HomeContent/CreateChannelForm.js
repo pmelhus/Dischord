@@ -38,7 +38,7 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
   useEffect(() => {
     setNameError(true);
     setDescriptionError(true);
-    if (name.length > 1 && name.length < 33) {
+    if (name.length > 1 && name.length < 29) {
       setNameError(false);
     }
     if (description.length < 255) {

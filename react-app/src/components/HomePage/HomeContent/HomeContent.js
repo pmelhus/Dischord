@@ -127,9 +127,8 @@ const HomeContent = ({ socket }) => {
               </div>
             )}
 
-            <div className="channel-list-container">
               <ChannelList />
-            </div>
+        
             <div className="server-nav-bottom">
               <UserTab {...{ socket }} />
             </div>

@@ -18,7 +18,7 @@ def validation_errors_to_error_messages(validation_errors):
 @channel_message_routes.route('/', methods=["POST"])
 @login_required
 def channel_message_submit():
-    print('hello')
+
     form = ChannelMessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -30,6 +30,7 @@ def channel_message_submit():
     }
 
     if form.validate_on_submit():
+        print('hello')
         channel_message = ChannelMessage(**params)
         db.session.add(channel_message)
         db.session.commit()
@@ -60,7 +61,7 @@ def message_update(id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        print(form.data, 'BETCH')
+        # print(form.data, 'BETCH')
         channel_message.channel_id = form.data['channel_id']
         channel_message.owner_id = form.data['owner_id']
         channel_message.content = form.data['content']

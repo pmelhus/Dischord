@@ -1,6 +1,8 @@
 const Splash = () => {
   return (
     <div>
+      <div className="splash-text-rel">
+
       <div className="splash-text-div">
         <h1>Imagine a place...</h1>
         <p>
@@ -8,6 +10,7 @@ const Splash = () => {
           musical concepts or ideas with multiple peers at once, and have a
           space to play music together, remotely.
         </p>
+      </div>
       </div>
       <video id="video-dj" autoPlay muted loop>
         <source src="https://res.cloudinary.com/dmtap2h65/video/upload/v1655278059/mixkit-dj-mixing-acetate-discs-4127_pz6tdg.mp4"></source>

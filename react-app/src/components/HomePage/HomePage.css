@@ -566,8 +566,14 @@ flex: 1 1 0;
 position: absolute;
 bottom: 69px;
 top: 0;
-min-width: 70%
+min-width: 70%;
+-ms-overflow-style: none;
+scrollbar-width: none;  /* Firefox */
 
+}
+
+.channel-chat-messages::-webkit-scrollbar {
+  display: none;
 }
 
 .channel-chat-profile-image {
@@ -895,7 +901,25 @@ position: absolute;
     background-color:#2f3136;
     min-width: 15%;
     min-height: 2050px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
   }
+
+  .server-members::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+.channel-list-container {
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+}
+
+.channel-list-container::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
 
   #invite-button-div {
     display: flex;
@@ -1339,4 +1363,9 @@ color:rgba(229, 230, 232, 0.968)
   position: absolute;
   top: 0;
   color:rgba(255, 255, 255, 0.778);
+}
+
+.upload-image-server {
+  display: flex;
+  justify-content: center;
 }

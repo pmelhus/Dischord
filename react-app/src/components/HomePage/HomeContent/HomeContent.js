@@ -83,7 +83,7 @@ const HomeContent = ({ socket }) => {
               </div>
             )}
 
-            {showDropdown && currentServer.owner_id === sessionUser.id && (
+            {showDropdown && currentServer?.owner_id === sessionUser.id && (
               <div className="dropdown-container">
                 <ul id="profile-dropdown-nav">
                   <li>

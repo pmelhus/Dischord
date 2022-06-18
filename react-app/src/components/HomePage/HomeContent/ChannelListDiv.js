@@ -44,7 +44,7 @@ const ChannelListDiv = ({
           <i className="fa-solid fa-hashtag"></i>
           <p>{channel.name}</p>
         </button>
-        {user.id === currentServer.owner_id && (
+        {user.id === currentServer?.owner_id && (
           <button onClick={handleEditChannel} className="channel-settings">
             {<i id="channel-gear" className="fa-solid fa-gear"></i>}
           </button>

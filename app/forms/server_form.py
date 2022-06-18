@@ -8,6 +8,6 @@ from .custom_validators import check_public_boolean
 
 class ServerForm(FlaskForm):
   owner_id = IntegerField('owner_id', validators=[DataRequired(message="Owner Id is required")])
-  name = StringField('server_name', validators=[Length(min=2, max=32, message='Server name must be between 2 and 32 characters long')])
+  name = StringField('server_name', validators=[Length(min=2, max=26, message='Server name must be between 2 and 27 characters long')])
   image_url = FileField('image_url', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
   public = BooleanField('privacy', validators=[check_public_boolean])

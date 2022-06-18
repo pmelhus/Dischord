@@ -67,7 +67,7 @@ const ChannelList = () => {
 
               <p>Text Channels</p>
             </div>
-            {user.id === currentServer.owner_id && (
+            {user.id === currentServer?.owner_id && (
               <button id="channel-add" onClick={handleCreateChannel}>
                 <i className="fa-solid fa-plus fa-lg"></i>
               </button>

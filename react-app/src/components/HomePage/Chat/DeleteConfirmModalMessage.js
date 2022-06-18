@@ -21,7 +21,7 @@ const DeleteConfirmModalMessage = ({
       setErrors(deletedMessage.errors);
       return;
     }
-    await socket.emit("chat", { deletedMessage });
+    await socket.emit("chat");
 
     setDeleteModal(false);
   };

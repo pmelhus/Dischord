@@ -43,7 +43,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
       setDeleteModal(true);
       return;
     } else {
-      await socket.emit("chat", { editedMessage });
+      await socket.emit("chat");
       setShowEdit(false);
     }
   };

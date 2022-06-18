@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation, Route} from "react-router-dom";
+import { useLocation, Route } from "react-router-dom";
 import {
   createChannelMessage,
   genChannelMessages,
@@ -95,38 +95,36 @@ const Chat = ({ socket, setLoading }) => {
 
   return (
     <div className="chat-container">
-
-          <div className="channel-chat-container">
-            <div className="channel-chat-and-send-form">
-              <div className="channel-chat-messages">
-              <Route exact path="/channels/@me">
-                <MePage />
-               </Route>
-               <Route exact path={`/channels/${serverId}/noChannels`}>
-                  <div className='no-channels-div'>
-                  <h1>
-                    Wow, such empty...
-                  </h1>
-                  <h3>
-                    Looks like this server has no channels!
-                  </h3>
-                  <h3>
-                    If you're the creator of this server, you can add channels by clicking the " <i className="fa-solid fa-plus fa-lg"></i> " next to " Text Channels "
-                  </h3>
-                  </div>
-               </Route>
-                {
-                  currentChannelMessages.reverse().map((message, ind) => (
-                    <div className="channel-message-div" key={ind}>
-                      <ChannelMessage
-                        {...{ channelId }}
-                        {...{ socket }}
-                        {...{ message }}
-                      />
-                    </div>
-                  ))}
+      <div className="channel-chat-container">
+        {/* <div className="channel-chat-and-send-form"> */}
+          <div className="channel-chat-messages">
+            <Route exact path="/channels/@me">
+              <MePage />
+            </Route>
+            <Route exact path={`/channels/${serverId}/noChannels`}>
+              <div className="no-channels-div">
+                <h1>Wow, such empty...</h1>
+                <h3>Looks like this server has no channels!</h3>
+                <h3>
+                  If you're the creator of this server, you can add channels by
+                  clicking the " <i className="fa-solid fa-plus fa-lg"></i> "
+                  next to " Text Channels "
+                </h3>
               </div>
-              {pathname.split("/")[2] !== "@me" && pathname.split('/')[3] !== "noChannels" && (
+            </Route>
+            {currentChannelMessages.reverse().map((message, ind) => (
+              <div className="channel-message-div" key={ind}>
+                <ChannelMessage
+                  {...{ channelId }}
+                  {...{ socket }}
+                  {...{ message }}
+                />
+              </div>
+            ))}
+          </div>
+          <div className='channel-chat-form-div'>
+            {pathname.split("/")[2] !== "@me" &&
+              pathname.split("/")[3] !== "noChannels" && (
                 <form className="channel-chat-form" onSubmit={sendChat}>
                   <input
                     id="channel-chat-input"
@@ -137,63 +135,60 @@ const Chat = ({ socket, setLoading }) => {
                   {/* <button type="submit">Send</button> */}
                 </form>
               )}
-            </div>
           </div>
-          <div className="server-members">
-            <div className="server-members-list">
-              <div className="server-members-online">
-                {url !== "@me" && (
-                  <p className="server-members-titles">
-                    Online - {online.length}
-                  </p>
-                )}
-                {users &&
-                  users.map((user) => {
-                    if (currentServerMemberIds?.includes(user.id)) {
-                      return (
+        {/* </div> */}
+      </div>
+      <div className="server-members">
+        {/* <div className="server-members-list"> */}
+          <div className="server-members-online">
+            {url !== "@me" && (
+              <p className="server-members-titles">Online - {online.length}</p>
+            )}
+            {users &&
+              users.map((user) => {
+                if (currentServerMemberIds?.includes(user.id)) {
+                  return (
+                    <>
+                      {user.online && (
                         <>
-                          {user.online && (
-                            <>
-                              <UserOnlineCard
-                                {...{ online }}
-                                {...{ currentServer }}
-                                {...{ currentServerMemberIds }}
-                                {...{ user }}
-                              />
-                            </>
-                          )}
+                          <UserOnlineCard
+                            {...{ online }}
+                            {...{ currentServer }}
+                            {...{ currentServerMemberIds }}
+                            {...{ user }}
+                          />
                         </>
-                      );
-                    }
-                  })}
-                {url !== "@me" && (
-                  <p className="server-members-titles">
-                    Offline - {offline.length}
-                  </p>
-                )}
-                {users &&
-                  users.map((user) => {
-                    if (currentServerMemberIds?.includes(user.id)) {
-                      return (
+                      )}
+                    </>
+                  );
+                }
+              })}
+            {url !== "@me" && (
+              <p className="server-members-titles">
+                Offline - {offline.length}
+              </p>
+            )}
+            {users &&
+              users.map((user) => {
+                if (currentServerMemberIds?.includes(user.id)) {
+                  return (
+                    <>
+                      {!user.online && (
                         <>
-                          {!user.online && (
-                            <>
-                              <UserOfflineCard
-                                {...{ currentServer }}
-                                {...{ currentServerMemberIds }}
-                                {...{ user }}
-                              />
-                            </>
-                          )}
+                          <UserOfflineCard
+                            {...{ currentServer }}
+                            {...{ currentServerMemberIds }}
+                            {...{ user }}
+                          />
                         </>
-                      );
-                    }
-                  })}
-              </div>
-            </div>
+                      )}
+                    </>
+                  );
+                }
+              })}
           </div>
-
-
+        {/* </div> */}
+      </div>
     </div>
   );
 };

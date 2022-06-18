@@ -1,15 +1,18 @@
 /* TODO Add site wide styles */
-html, body {
-  position:fixed;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
+body {
   margin: 0;
+  /* min-width: 100%; */
+  min-width: 850px;
+  width:100vmax;
+  height: 100vh;
+  max-height: 100%;
   overflow-y: scroll;
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
+  overflow-x: none;
 }
+
+
 
 #loading-icon {
   box-sizing: border-box;

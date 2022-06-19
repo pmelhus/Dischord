@@ -46,7 +46,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
 
   useEffect(() => {
     setNameError(true);
-    if (name.length > 1 && name.length < 33) {
+    if (name.length > 1 && name.length < 27) {
       setNameError(false);
     }
 

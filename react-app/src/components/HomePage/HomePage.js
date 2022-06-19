@@ -35,19 +35,21 @@ const HomePage = ({ onlineMembers, setOnlineMembers, socket, setLoading }) => {
 
   useEffect(async () => {
     if (sessionUser) {
-      await setLoading(true);
+
       await dispatch(genServers(sessionUser.id));
     }
     if (serverId) {
+
       await dispatch(genChannels(serverId));
     }
+
     if (channelId) {
       await dispatch(genChannelMessages(channelId));
     }
     await dispatch(genUsers());
 
     await setLoaded(true);
-    await setLoading(false);
+
   }, [dispatch, pathname]);
 
   return (

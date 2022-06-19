@@ -9,7 +9,8 @@ const ServerList = () => {
   const servers = useSelector((state) => Object.values(state.servers));
   // const channels = useSelector((state) => Object.values(state.channels));
   const sessionUser = useSelector((state) => state.session.user);
-
+  const serverId = parseInt(pathname.split('/')[2])
+  console.log(serverId, "SERVER ID HERE")
   const myServers = servers.filter(
     (server) =>
       server.owner_id === sessionUser.id ||
@@ -42,7 +43,7 @@ const ServerList = () => {
       {isLoaded &&
         myServers.map((server) => {
           return (
-            <div key={server.id} className="server-list-div">
+            <div key={server.id} className={ "server-list-div"}>
               <button
                 className="server-image-icon-button"
                 onClick={() => handleClick(server)}
@@ -50,11 +51,11 @@ const ServerList = () => {
                 {server?.image_url ? (
                   <img
                     alt="Server profile icon"
-                    className="server-image-icon"
+                    className={server.id === serverId ? 'server-image-icon-selected' : "server-image-icon"}
                     src={server?.image_url}
                   ></img>
                 ) : (
-                  <h2 className="server-image-icon">
+                  <h2 className={server.id === serverId ? 'server-image-icon-selected' : "server-image-icon"}>
                     {server?.name?.split("")[0]}
                   </h2>
                 )}

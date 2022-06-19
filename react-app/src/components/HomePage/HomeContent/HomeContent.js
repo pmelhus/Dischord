@@ -7,7 +7,7 @@ import ChannelList from "./ChannelList";
 import UserTab from "./User/UserTab";
 import InviteUser from "./InviteUser";
 
-const HomeContent = ({ socket }) => {
+const HomeContent = ({ socket, setLoading, loading }) => {
   //react
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -127,8 +127,8 @@ const HomeContent = ({ socket }) => {
               </div>
             )}
 
-              <ChannelList />
-        
+              <ChannelList {...{setLoading}} {...{loading}} />
+
             <div className="server-nav-bottom">
               <UserTab {...{ socket }} />
             </div>

@@ -377,11 +377,21 @@ justify-content: space-between;
 }
 
 .channel-general-container:hover {
-  background-color: rgba(229, 230, 232, 0.214);
+  background-color: rgba(229, 230, 232, 0.129);
   cursor: pointer;
+  border-radius: 5px;
 }
 
-
+.channel-general-container-selected {
+  height: 32px;
+  margin: 0 7px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(229, 230, 232, 0.129);
+  border-radius: 5px;
+  }
 
 .channel-settings {
   padding: 0;
@@ -397,6 +407,10 @@ justify-content: space-between;
 .channel-general-container:hover .channel-settings {
 display:block;
 }
+
+.channel-general-container-selected:hover .channel-settings {
+  display:block;
+  }
 
 .usertab-container img {
   box-sizing: border-box;

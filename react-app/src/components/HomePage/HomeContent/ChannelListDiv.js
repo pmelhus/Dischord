@@ -17,7 +17,7 @@ const ChannelListDiv = ({
     (server) => server.id === parseInt(pathname.split("/")[2])
   );
   const [showEditForm2, setShowEditForm2] = useState(false);
-
+const channelId = parseInt(pathname.split('/')[3])
   const handleSelectChannel = () => {
     localStorage.setItem(
       `${channel.server_id}`,
@@ -36,9 +36,9 @@ const ChannelListDiv = ({
 
   return (
     <>
-      <div key={channel.id} className="channel-general-container">
+      <div  onClick={handleSelectChannel} key={channel.id} className={channel.id === channelId ? "channel-general-container-selected" :"channel-general-container"}>
         <button
-          onClick={handleSelectChannel}
+
           className="channel-general-button"
         >
           <i className="fa-solid fa-hashtag"></i>

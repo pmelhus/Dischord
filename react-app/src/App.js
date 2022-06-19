@@ -114,6 +114,8 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute path="/channels">
               <HomePage
+              {...{loading}}
+              {...{setLoading}}
                 {...{ socket }}
                 {...{ setLoading }}
               />

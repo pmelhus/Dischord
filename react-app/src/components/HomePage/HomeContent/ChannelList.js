@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../../../context/Modal";
 import { useLocation } from "react-router-dom";
 import CreateChannelForm from "./CreateChannelForm";
 import EditChannelForm from "./EditChannelForm";
 import ChannelListDiv from "./ChannelListDiv";
+import {genChannels} from '../../../store/channel'
 
-const ChannelList = () => {
+const ChannelList = ({setLoading, loading}) => {
+  const dispatch = useDispatch()
   const [showDropdown, setShowDropdown] = useState(true);
   const { pathname } = useLocation();
   const channels = useSelector((state) => Object.values(state.channels));
@@ -15,9 +17,11 @@ const ChannelList = () => {
   const servers = useSelector((state) => Object.values(state.servers));
   const [isLoaded, setIsLoaded] = useState(false);
   const [showEditForm, setShowEditForm] = useState();
+  // const channelId = parseInt(pathname.split('/')[3])
   const currentServer = servers.find(
     (server) => server.id === parseInt(pathname.split("/")[2])
   );
+
 
   const serverChannelsFiltered = channels.filter(
     (channel) => channel.server_id === parseInt(pathname.split("/")[2])
@@ -52,6 +56,8 @@ const ChannelList = () => {
       setShowDropdown(false);
     };
   }, [showDropdown]);
+
+
 
   // Invite users section
 

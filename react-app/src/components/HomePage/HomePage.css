@@ -896,7 +896,7 @@ height: 100%;
   /* color: white; */
 }
 
-.splash-text-div h1, p {
+.splash-text-div {
   -webkit-text-stroke: 1px black;
 }
 

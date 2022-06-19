@@ -12,7 +12,13 @@ import LoadingScreen from "../LoadingScreen";
 import "./HomePage.css";
 import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
 
-const HomePage = ({ onlineMembers, setOnlineMembers, socket, setLoading, loading}) => {
+const HomePage = ({
+  onlineMembers,
+  setOnlineMembers,
+  socket,
+  setLoading,
+  loading,
+}) => {
   const [loadingScreen, setLoadingScreen] = useState(false);
 
   const { pathname } = useLocation();
@@ -35,11 +41,9 @@ const HomePage = ({ onlineMembers, setOnlineMembers, socket, setLoading, loading
 
   useEffect(async () => {
     if (sessionUser) {
-
       await dispatch(genServers(sessionUser.id));
     }
     if (serverId) {
-
       await dispatch(genChannels(serverId));
     }
 
@@ -49,7 +53,6 @@ const HomePage = ({ onlineMembers, setOnlineMembers, socket, setLoading, loading
     await dispatch(genUsers());
 
     await setLoaded(true);
-
   }, [dispatch, pathname]);
 
   return (
@@ -57,8 +60,13 @@ const HomePage = ({ onlineMembers, setOnlineMembers, socket, setLoading, loading
       {loaded && (
         <>
           <HomeNavBar />
-          <HomeContent {...{setLoading}} {...{loading}} {...{socket}}/>
-          <ServerChatWindow {...{onlineMembers}} {...{setOnlineMembers}} {...{socket}} {...{ setLoading }} />
+          <HomeContent {...{ setLoading }} {...{ loading }} {...{ socket }} />
+          <ServerChatWindow
+            {...{ onlineMembers }}
+            {...{ setOnlineMembers }}
+            {...{ socket }}
+            {...{ setLoading }}
+          />
         </>
       )}
       {loadingScreen && (

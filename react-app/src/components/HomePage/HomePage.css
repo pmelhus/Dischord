@@ -263,8 +263,8 @@ border-radius: 35%;
 
 .server-image-icon-edit {
   box-sizing: border-box;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 100%;
   background-color: rgba(91, 87, 228, 0.985);
@@ -1480,4 +1480,9 @@ color:rgba(229, 230, 232, 0.968)
   color: red;
   position: absolute;
   bottom: 20px;
+}
+
+.user-image-preview {
+  display: flex;
+  justify-content: center;
 }

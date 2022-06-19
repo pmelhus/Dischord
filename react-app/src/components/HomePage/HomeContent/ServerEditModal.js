@@ -96,7 +96,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
             </div>
           </>
         ) : (
-          <>
+          <div className="user-image-preview">
             {currServer?.image_url ? (
               <img
                 alt="profile preview"
@@ -108,7 +108,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
                 {currServer?.name.split("")[0]}
               </h2>
             )}
-          </>
+          </div>
         )}
         <div className="upload-image-server">
           <label id="profile-pic-label" className="custom-file-upload">

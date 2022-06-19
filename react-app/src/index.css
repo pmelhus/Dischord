@@ -9,9 +9,8 @@ body {
 
   font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x : hidden;
 }
-
 
 
 #loading-icon {

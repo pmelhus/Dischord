@@ -61,7 +61,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
       setPreview(user.image_url);
     }
 
-    if (user.image_url && image) {
+    if (!user.image_url && image) {
       const objectUrl = URL.createObjectURL(image);
       setPreview(objectUrl);
 
@@ -110,9 +110,26 @@ const EditProfileForm = ({ setEditModal, socket }) => {
             onChange={(e) => setBio(e.target.value)}
           ></textarea>
         </div>
+        {preview ? (
         <div id="user-picture-preview">
           <img alt="current profile" src={preview} />
         </div>
+
+        ):  (
+          <div className="user-image-preview">
+            {user?.image_url ? (
+              <img
+                alt="profile preview"
+                className="server-image-icon-edit"
+                src={user?.image_url}
+              />
+            ) : (
+              <h2 className="server-image-icon-edit">
+                {user?.username.split("")[0]}
+              </h2>
+            )}
+          </div>
+        )}
         <div className="edit-profile-image-preview">
           <label className="custom-file-upload">
             {errors && errors.image_file && (
@@ -137,7 +154,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           </div>
         )} */}
         <div className="button-div-user">
-    
+
           <button onClick={handleEditProfile}>Save Changes</button>
           <button onClick={handlePasswordModal}>Change your password</button>
           <button onClick={() => setEditModal(false)}>Cancel</button>

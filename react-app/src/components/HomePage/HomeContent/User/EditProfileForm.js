@@ -61,7 +61,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
       setPreview(user.image_url);
     }
 
-    if (!user.image_url && image) {
+    if (image) {
       const objectUrl = URL.createObjectURL(image);
       setPreview(objectUrl);
 

@@ -706,7 +706,7 @@ width: 100%;
   position: relative;
   right: 10px;
   /* padding-right: 50px; */
-  width: 100%;
+  width: 105%;
 /* margin-bottom: 10px; */
 }
 
@@ -714,8 +714,14 @@ width: 100%;
 .message-content:hover {
   background-color:rgba(0, 0, 0, 0.189);
   border-radius: 8px;
-  width:103%;
+  /* width:110%; */
   /* padding: 0 10px; */
+
+}
+#message-actual-content {
+  /* width: 100%; */
+  /* margin-right: 30px; */
+  max-width: 1035px;
 
 }
 
@@ -796,7 +802,7 @@ padding: 0;
   margin-top: 2px;
   color:rgba(229, 230, 232, 0.968);
   top: 8px;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .message-content-div {
@@ -1436,4 +1442,10 @@ color:rgba(229, 230, 232, 0.968)
   position: relative;
   height: 100%;
   margin-left: 20px;
+}
+
+.error-msg-message {
+  color: red;
+  position: absolute;
+  bottom: 20px;
 }

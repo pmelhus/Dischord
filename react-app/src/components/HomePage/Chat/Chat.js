@@ -32,6 +32,7 @@ const Chat = ({ socket, setLoading }) => {
     Object.values(state.channelMessages)
   );
   const allServers = useSelector((state) => Object.values(state.servers));
+  const [errors, setErrors] = useState({});
   const users = useSelector((state) => Object.values(state.users));
   const currentServerMemberIds = useSelector(
     (state) => state.servers[serverId]
@@ -58,13 +59,17 @@ const Chat = ({ socket, setLoading }) => {
     e.preventDefault();
     // emit a message
 
-    await dispatch(
+    const sentMessage = await dispatch(
       createChannelMessage({
         user_id: user.id,
         msg: chatInput,
         channel_id: channelId,
       })
     );
+    if (sentMessage && sentMessage.errors) {
+      await setErrors(sentMessage.errors);
+      return;
+    }
 
     await socket?.emit("chat");
 
@@ -102,7 +107,7 @@ const Chat = ({ socket, setLoading }) => {
             <MePage />
           </Route>
           <Route exact path={`/channels/${serverId}/noChannels`}>
-            <div className='no-channels-container'>
+            <div className="no-channels-container">
               <div className="no-channels-div">
                 <h1>Wow, such empty...</h1>
                 <h3>Looks like this server has no channels!</h3>
@@ -127,15 +132,22 @@ const Chat = ({ socket, setLoading }) => {
         <div className="channel-chat-form-div">
           {pathname.split("/")[2] !== "@me" &&
             pathname.split("/")[3] !== "noChannels" && (
-              <form className="channel-chat-form" onSubmit={sendChat}>
-                <input
-                  id="channel-chat-input"
-                  value={chatInput}
-                  placeholder={`Message ${currentChannel?.name}`}
-                  onChange={updateChatInput}
-                />
-                {/* <button type="submit">Send</button> */}
-              </form>
+              <>
+                {errors && errors.content && (
+                  <div className="error-msg-message">
+                    <p>*{errors.content}*</p>
+                  </div>
+                )}
+                <form className="channel-chat-form" onSubmit={sendChat}>
+                  <input
+                    id="channel-chat-input"
+                    value={chatInput}
+                    placeholder={`Message ${currentChannel?.name}`}
+                    onChange={updateChatInput}
+                  />
+                  {/* <button type="submit">Send</button> */}
+                </form>
+              </>
             )}
         </div>
         {/* </div> */}

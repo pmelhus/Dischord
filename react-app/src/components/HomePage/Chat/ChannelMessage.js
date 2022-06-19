@@ -104,10 +104,10 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
                 </>
               ) : (
                 <div className="message-content-edited">
-                  <p>{`${message?.content}`}</p>
-                  <div>
+                  <p id='message-actual-content'>{`${message?.content}`}</p>
+                  {/* <div> */}
                     {message.edited && <p id="message-edited">(edited)</p>}
-                  </div>
+                  {/* </div> */}
                 </div>
               )}
               {sessionUser.id === messageUser.id && !showEdit ? (

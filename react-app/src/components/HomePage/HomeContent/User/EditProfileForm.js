@@ -4,6 +4,7 @@ import { editUserProfile } from "../../../../store/session";
 import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
 import LogoutButton from "./LogoutButton";
+import {LoadingModal} from "../../../../context/LoadingModal"
 
 const EditProfileForm = ({ setEditModal, socket }) => {
   const user = useSelector((state) => state.session.user);
@@ -17,6 +18,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
   const [errors, setErrors] = useState({});
   const [passwordModal, setPasswordModal] = useState(false);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false)
 
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
 
@@ -35,13 +37,15 @@ const EditProfileForm = ({ setEditModal, socket }) => {
       bio,
       image,
     };
-
+    await setLoading(true)
     const editedUser = await dispatch(editUserProfile(payload));
     if (editedUser.errors) {
+      await setLoading(false)
       setErrors(editedUser.errors);
       return;
     } else {
-      setEditModal(false);
+      await setEditModal(false);
+      await setLoading(false)
     }
   };
 
@@ -73,6 +77,11 @@ const EditProfileForm = ({ setEditModal, socket }) => {
 
   return (
     <div className="profile-edit-form">
+    {loading && (
+      <LoadingModal>
+        <img id='loading-image' src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"/>
+       </LoadingModal>
+    )}
       <form>
         <div className="login-email">
           <label>Username</label>

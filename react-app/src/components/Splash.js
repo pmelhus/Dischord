@@ -1,4 +1,7 @@
+// import  from "../images/DISCHORD.png"
+
 const Splash = () => {
+
   return (
     <div>
       <div className="splash-text-rel">

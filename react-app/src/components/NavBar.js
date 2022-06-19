@@ -6,9 +6,9 @@ const NavBar = () => {
   const user = useSelector((state) => state.session.user);
   return (
     <nav className="splash-nav">
-      <div>
+      <div id='logo-div'>
         <NavLink to="/" exact={true} activeClassName="active">
-          <h3>Dischord</h3>
+          <img id="logo" alt="logo" src="https://res.cloudinary.com/dmtap2h65/image/upload/v1655674014/DISCHORD-cropped_aekkb4.png"/>
         </NavLink>
       </div>
       <ul className="splash-nav-ul">

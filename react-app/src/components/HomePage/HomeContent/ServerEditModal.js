@@ -4,6 +4,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import { editServer, deleteServer } from "../../../store/server";
 import { Modal } from "../../../context/Modal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
+import {LoadingModal} from "../../../context/LoadingModal"
 
 const ServerEditModal = ({ setShowEditModal }) => {
   const { pathname } = useLocation();
@@ -24,6 +25,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
   const [imageError, setImageError] = useState(true);
   const [nameError, setNameError] = useState(true);
   const [preview, setPreview] = useState(currServer?.image_url);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -43,6 +45,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await setLoading(true);
     const owner_id = currServer?.owner_id;
     const id = currServer?.id;
     if (!changed) {
@@ -55,12 +58,14 @@ const ServerEditModal = ({ setShowEditModal }) => {
 
     if (editedServer.errors) {
       // console.log(newEstate.errors)
-      setErrors(editedServer.errors);
+      await setErrors(editedServer.errors);
+      await setLoading(false);
       return;
     } else {
       setName("");
       setImage(null);
-      setShowEditModal(false);
+      await setShowEditModal(false);
+      await setLoading(false);
     }
   };
 
@@ -85,6 +90,11 @@ const ServerEditModal = ({ setShowEditModal }) => {
 
   return (
     <form className="server-edit-form-real">
+          {loading && (
+      <LoadingModal>
+        <img id='loading-image' src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"/>
+       </LoadingModal>
+    )}
       <div className="server-edit-form-msg">
         <h2>Server Overview</h2>
       </div>

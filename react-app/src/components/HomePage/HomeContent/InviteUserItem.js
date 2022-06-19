@@ -7,6 +7,7 @@ const InviteUserItem = ({ socket, currentServer, user, setInviteModal }) => {
 const dispatch = useDispatch()
 const [errors, setErrors] = useState({})
 
+
 const handleInvite = async(e) => {
 e.preventDefault()
 
@@ -16,10 +17,11 @@ const serverMember = await dispatch(createServerMember(payload))
 await socket.emit('chat')
 if (serverMember.errors) {
   console.log(serverMember.errors);
-  setErrors(serverMember.errors);
+
+  await setErrors(serverMember.errors);
   return
 } else {
-  setInviteModal(false)
+ setInviteModal(false)
 }
 
 }

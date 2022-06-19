@@ -879,7 +879,7 @@ height: 100%;
 
 .splash-nav {
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-around;
   font-size: 18px;
   font-weight:bold;
@@ -896,10 +896,26 @@ height: 100%;
   /* color: white; */
 }
 
+.splash-text-div h1, p {
+  -webkit-text-stroke: 1px black;
+}
+
+#logo {
+  width: 150px;
+  height: 150px;
+  object-fit:scale-down;
+  /* object-position: 100% 100%; */
+  /* position: absolute; */
+  /* top: 0; */
+
+  margin-top: -25px;
+}
+
 .splash-sign-in {
 display: flex;
 justify-content: space-evenly;
 width: 180px;
+margin-top: 18px;
 }
 
 .splash-text-div h1{
@@ -1485,4 +1501,9 @@ color:rgba(229, 230, 232, 0.968)
 .user-image-preview {
   display: flex;
   justify-content: center;
+}
+
+#loading-image {
+  /* background-color:rgb(209, 116, 16); */
+
 }

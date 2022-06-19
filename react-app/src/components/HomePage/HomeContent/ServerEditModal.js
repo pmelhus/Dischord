@@ -170,6 +170,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
       </div>
       <div className="server-overview-buttons">
         <button onClick={handleSubmit}>Save Changes</button>
+        <button onClick={() => setShowEditModal(false)}>Cancel</button>
         <button onClick={handleDelete}>Delete Server</button>
       </div>
       {showDeleteModal && (

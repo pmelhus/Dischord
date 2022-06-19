@@ -10,6 +10,8 @@
   /* min-width:  */
   height: 100vh;
   max-height: 100%;
+
+  justify-content: space-between;
   /* position: absolute; */
 }
 
@@ -1264,12 +1266,13 @@ cursor: pointer;
 }
 
 .button-div-user button {
-  width: 125px;
+  width: 110px;
   border-radius: 10px;
   background-color:#950652;
   border: none;
   color: white;
   cursor: pointer;
+
   /* height: 20px; */
 }
 
@@ -1332,7 +1335,7 @@ cursor: pointer;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
-  height: 510px;
+  height: auto;
   border-radius: 10px;
 }
 
@@ -1392,10 +1395,11 @@ cursor: pointer;
   width: 450px;
   height: 420px;
   margin-top: 30px;
-  margin-right: 175px;
+  margin-right: 125px;
 }
 
 .welcome-message {
+
   color:rgba(255, 255, 255, 0.836);
   margin-left: 20px;
 }

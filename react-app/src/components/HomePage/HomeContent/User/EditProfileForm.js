@@ -137,8 +137,10 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           </div>
         )} */}
         <div className="button-div-user">
+    
           <button onClick={handleEditProfile}>Save Changes</button>
           <button onClick={handlePasswordModal}>Change your password</button>
+          <button onClick={() => setEditModal(false)}>Cancel</button>
           <LogoutButton {...{ socket }} />
         </div>
       </form>

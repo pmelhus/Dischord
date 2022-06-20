@@ -96,7 +96,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
           <label className="custom-file-upload">
             {" "}
             Upload your picture here!{" "}
-            <input type="file" accept="image/*" onChange={updateImage}></input>
+            <input type="file" accept="image/png, image/jpeg, image/png, image/gif" onChange={updateImage}></input>
           </label>
         </div>
         <div className="private-input">

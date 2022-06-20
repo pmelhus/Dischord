@@ -6,7 +6,8 @@ Dischord is a full stack application intended for musicians and other creatives 
 
 
 
-## <a href='https://debonairbnb.herokuapp.com/'>Debonairbnb Live Demo </a>
+
+## <a href='https://my-dischord.herokuapp.com/'>Dischord Live Demo </a>
 
 ### <a href='https://github.com/brianmay2014/debonairbnb/wiki'>Git Wiki</a>
 <br>
@@ -43,10 +44,9 @@ Dischord is a full stack application intended for musicians and other creatives 
 <br>
 
 ## Features
-- Sign up / login with email.
-- Logged in patrons can: 
-  - Create servers, channels, and live messanges
-  - Edit/delte those servers, channels and live messages
+- Logged in users can:
+  - Sign up / login with email.
+  - Users can create, edit, and delete their servers, channels, and live messages
   - Update their profile and servers with a personal avatar
 
 ## Getting Development Environment Up And Running
@@ -55,7 +55,7 @@ Dischord is a full stack application intended for musicians and other creatives 
   - While inside `/app` Run:
 
          pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-  
+
   - While inside `/react-app` Run
 
          npm install
@@ -64,11 +64,12 @@ Dischord is a full stack application intended for musicians and other creatives 
 - Create a user in your local postgreSQL database according to the .env file
 - Get into the virtual environment, migrate and seed your data base
 
-         
+
+
          pipenv shell
          flask db upgrade
          flask seed all
-         
+
 
 - Start servers:
   - While inside `/app` Run `pipenv shell` to get inside the virtual environment then run `flask run` to get the backend server running.
@@ -81,7 +82,7 @@ Dischord is a full stack application intended for musicians and other creatives 
 3. Under the "Resources" tab, click "Find More add-ons", and add "Heroku Postgres"
 4. Install <a href='https://devcenter.heroku.com/articles/heroku-cli'>Heroku CLI</a>
 5. Login to Heroku by running this in the terminal `heroku login`
-6. When you're logged in, run `heroku authorizations:create`, and copy the GUID value for the Token key. 
+6. When you're logged in, run `heroku authorizations:create`, and copy the GUID value for the Token key.
 7. The repo is set up with Github Actions, you'll need to set up two environment variables set up in your repo settings -> secrets -> actions. Click "New repository secret" to create these two variables:
    - `HEROKU_API_KEY` => set equal to the auth token from step 6.
    - `HEROKU_APP_NAME` => set equal to the Heroku app name you gave in step 2.
@@ -122,11 +123,12 @@ Javascript is used on the frontend with React and Redux to create a responsive a
 
 ### Backend Overview
 
-Dischord uses a Flask back-end server with PostgreSQL database. Debonairbnb also implemented features to protect user's password and information.
-
 #### Flask
 
-The back-end server of Debonairbnb is set up using Flask with Python.
+The back-end server of Dischord is set up using Flask with Python.
+
+Dischord uses a Flask back-end server with PostgreSQL database. Dischord also implemented features to protect user's password and information.
+
 
 #### WTForms
 

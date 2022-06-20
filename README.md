@@ -6,7 +6,8 @@ Dischord is a full stack application intended for musicians and other creatives 
 
 
 
-## <a href='https://debonairbnb.herokuapp.com/'>Dischord Live Demo </a>
+
+## <a href='https://my-dischord.herokuapp.com/'>Dischord Live Demo </a>
 
 ### <a href='https://github.com/brianmay2014/debonairbnb/wiki'>Git Wiki</a>
 <br>
@@ -43,10 +44,9 @@ Dischord is a full stack application intended for musicians and other creatives 
 <br>
 
 ## Features
-- Sign up / login with email.
-- Logged in patrons can:
-  - Create servers, channels, and live messages
-  - Edit/delete those servers, channels and live messages
+- Logged in users can:
+  - Sign up / login with email.
+  - Users can create, edit, and delete their servers, channels, and live messages
   - Update their profile and servers with a personal avatar
 
 ## Getting Development Environment Up And Running
@@ -63,6 +63,7 @@ Dischord is a full stack application intended for musicians and other creatives 
 - Create a '.env' file that mirrors the '.env.example' file
 - Create a user in your local postgreSQL database according to the .env file
 - Get into the virtual environment, migrate and seed your data base
+
 
 
          pipenv shell
@@ -122,11 +123,12 @@ Javascript is used on the frontend with React and Redux to create a responsive a
 
 ### Backend Overview
 
-Dischord uses a Flask back-end server with PostgreSQL database. Dischord also implemented features to protect user's password and information.
-
 #### Flask
 
 The back-end server of Dischord is set up using Flask with Python.
+
+Dischord uses a Flask back-end server with PostgreSQL database. Dischord also implemented features to protect user's password and information.
+
 
 #### WTForms
 

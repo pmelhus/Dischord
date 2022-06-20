@@ -37,16 +37,28 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     await setContent(editedMessage.content);
     if (editedMessage.errors) {
       setErrors(editedMessage.errors);
-      console.log(editedMessage.errors);
-      setShowEdit(false);
+      // console.log(editedMessage.errors);
+      // setShowEdit(false);
       setContent(message.content);
-      setDeleteModal(true);
+      // console.log(content.length, "CONTENT");
+      if (content.length > 1000) {
+        setContent(content)
+      }
+      if (content.length === 0) {
+        setDeleteModal(true);
+      }
       return;
     } else {
       await socket.emit("chat");
       setShowEdit(false);
+      setErrors({})
     }
   };
+
+  const handleCancel = () => {
+    setShowEdit(false)
+    setErrors({})
+  }
 
   const handleDeleteModal = () => {
     setDeleteModal(true);
@@ -81,6 +93,11 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
               {showEdit ? (
                 <>
                   <div className="message-edit-container">
+                      {errors && errors.content && (
+                        <div className="error-msg-message-message">
+                          <p>*{errors.content}*</p>
+                        </div>
+                      )}
                     <form onSubmit={editInputSubmit}>
                       <div className="message-edit-input-container">
                         <input
@@ -93,7 +110,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
                         Press
                         <button
                           type="button"
-                          onClick={() => setShowEdit(false)}
+                          onClick={handleCancel}
                         >
                           <i className="fa-solid fa-xmark fa-xl"></i>
                         </button>
@@ -104,9 +121,9 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
                 </>
               ) : (
                 <div className="message-content-edited">
-                  <p id='message-actual-content'>{`${message?.content}`}</p>
+                  <p id="message-actual-content">{`${message?.content}`}</p>
                   {/* <div> */}
-                    {message.edited && <p id="message-edited">(edited)</p>}
+                  {message.edited && <p id="message-edited">(edited)</p>}
                   {/* </div> */}
                 </div>
               )}

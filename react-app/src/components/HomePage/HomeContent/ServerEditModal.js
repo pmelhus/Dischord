@@ -123,7 +123,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
         <div className="upload-image-server">
           <label id="profile-pic-label" className="custom-file-upload">
             Upload image
-            <input type="file" accept="image/*" onChange={updateImage}></input>
+            <input type="file" accept="image/png, image/jpeg, image/png, image/gif" onChange={updateImage}></input>
           </label>
         </div>
         {imageError && errors && errors.image_url && (

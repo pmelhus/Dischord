@@ -12,7 +12,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
   // console.log(sessionUser)
   const [showEdit, setShowEdit] = useState(false);
   const [content, setContent] = useState(message.content);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrorsEdit] = useState({});
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState(false);
@@ -36,7 +36,7 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     const editedMessage = await dispatch(editChannelMessage(payload));
     await setContent(editedMessage.content);
     if (editedMessage.errors) {
-      setErrors(editedMessage.errors);
+      setErrorsEdit(editedMessage.errors);
       // console.log(editedMessage.errors);
       // setShowEdit(false);
       setContent(message.content);
@@ -51,13 +51,13 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
     } else {
       await socket.emit("chat");
       setShowEdit(false);
-      setErrors({})
+      setErrorsEdit({})
     }
   };
 
   const handleCancel = () => {
     setShowEdit(false)
-    setErrors({})
+    setErrorsEdit({})
   }
 
   const handleDeleteModal = () => {
@@ -157,6 +157,8 @@ const ChannelMessage = ({ user, message, socket, channelId }) => {
             {...{ message }}
             {...{ messageUser }}
             {...{ setDeleteModal }}
+            {...{ setShowEdit}}
+            {...{setErrorsEdit}}
           />
         </Modal>
       )}

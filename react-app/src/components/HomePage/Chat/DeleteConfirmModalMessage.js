@@ -8,6 +8,8 @@ const DeleteConfirmModalMessage = ({
   message,
   messageUser,
   setDeleteModal,
+  setShowEdit,
+  setErrorsEdit
 }) => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
@@ -22,8 +24,9 @@ const DeleteConfirmModalMessage = ({
       return;
     }
     await socket.emit("chat");
-
+    setShowEdit(false)
     setDeleteModal(false);
+    setErrorsEdit({})
   };
   return (
     <div className="delete-form-container">

@@ -961,7 +961,63 @@ position: absolute;
     display: flex;
     align-items: center;
     font-size: 20px;
+    margin-top: 5%;
 
+  }
+
+  .splash-band-div {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 5%;
+    /* justify-content: right; */
+    /* margin-bottom: 200px; */
+    /* padding-bottom: 300px; */
+    margin-left: 100px;
+  }
+
+  .splash-band2-div {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 5%;
+    /* justify-content: right; */
+    /* margin-bottom: 200px; */
+    padding-bottom: 300px;
+    margin-left: 100px;
+  }
+
+  .splash-band-div h2 {
+    position: relative;
+    margin-left: 8%;
+    font-size: 50px;
+    margin-right: 4%;
+    width: 600px;
+    margin-top: 2%;
+  }
+
+  .splash-band2-div h2 {
+    position: relative;
+    margin-left: 8%;
+    font-size: 50px;
+    margin-right: 4%;
+    width: 600px;
+    margin-top: 2%;
+  }
+
+
+
+  #video-band {
+    margin-top: 100px;
+    width: 800px;
+    /* margin-left: 200px; */
+  }
+
+  #video-band2 {
+    margin-top: 100px;
+    width: 800px;
+    margin-left: 100px;
+    /* margin-left: 200px; */
   }
 
   .splash-violin-div h2 {

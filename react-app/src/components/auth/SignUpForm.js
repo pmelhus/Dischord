@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import { signUp } from "../../store/session";
+import {LoadingModal} from "../../context/LoadingModal"
 
 const SignUpForm = ({ socket }) => {
   const [errors, setErrors] = useState([]);
@@ -14,18 +15,21 @@ const SignUpForm = ({ socket }) => {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   const onSignUp = async (e) => {
     e.preventDefault();
-
+    await setLoading(true)
     const data = await dispatch(
       signUp(username, email, password, repeatPassword, image, bio)
     );
     if (data.errors) {
+      await setLoading(false)
       setErrors(data.errors);
     } else {
       await socket.emit("sign-up", data);
       await history.push("/channels/@me");
+      await setLoading(false)
     }
   };
 
@@ -60,6 +64,14 @@ const SignUpForm = ({ socket }) => {
 
   return (
     <div className="login-container">
+            {loading && (
+      <LoadingModal>
+        <img
+          id="loading-image"
+          src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
+        />
+      </LoadingModal>
+          )}
       <form className="login-form" onSubmit={onSignUp}>
         <div className="login-welcome-message">
           <h2>Join our community!</h2>

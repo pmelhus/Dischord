@@ -602,7 +602,7 @@ margin: 0;
   color: white;
   display: flex;
   height: 48px;
-  border-bottom: rgba(26, 24, 24, 0.607) solid .2px;
+  /* border-bottom: rgba(26, 24, 24, 0.607) solid .2px; */
   align-items: center;
   padding-left: 8px;
 }
@@ -1506,4 +1506,21 @@ color:rgba(229, 230, 232, 0.968)
 #loading-image {
   /* background-color:rgb(209, 116, 16); */
 
+}
+
+.server-chat-header-container {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  height: 48px;
+  border-bottom: rgba(26, 24, 24, 0.607) solid .2px;
+  align-items: center;
+  padding-left: 8px;
+}
+
+#logo-chat {
+  height: 84px;
+  width: 84px;
+  object-fit:scale-down;
+  padding-right: 10px;
 }

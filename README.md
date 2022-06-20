@@ -149,7 +149,7 @@ Dischord relies on PostgreSQL to maintain its relational database.
 - The long term goal of Dischord is to implement low-latency server voice chats so that musicians can play together in real time.
 <br>
 <br>
-For any questions about any instructions, features, or any requested features, send us an e-mail at <a href='mailto:pmelhus@gmail.com'>pmelhus@gmail.com</a>, and we'll get back to you as quick as we can!
+For any questions about any instructions, features, or any requested features, send me an e-mail at <a href='mailto:pmelhus@gmail.com'>pmelhus@gmail.com</a>, and I'll get back to you as quick as I can!
 
 Thanks,
 Paul Melhus

@@ -142,7 +142,7 @@ const Chat = ({ socket, setLoading }) => {
                   <input
                     id="channel-chat-input"
                     value={chatInput}
-                    placeholder={`Message ${currentChannel?.name}`}
+                    placeholder={currentChannel?.name ? `Message ${currentChannel?.name}`: ''}
                     onChange={updateChatInput}
                   />
                   {/* <button type="submit">Send</button> */}

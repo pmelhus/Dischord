@@ -151,6 +151,7 @@ const SignUpForm = ({ socket }) => {
           )}
           <input
             className="login-input"
+            draggable="false"
             type="file"
             accept="image/png, image/jpeg, image/png, image/gif"
             name="image"

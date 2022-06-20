@@ -72,12 +72,12 @@ def sign_up():
     if "image" in request.files:
         image = request.files["image"]
         if not allowed_file(image.filename):
-            return {"errors": "file type not permitted"}, 400
+            return {"errors": ["image_file:file type not permitted"]}, 400
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
         if "url" not in upload:
             # then the upload le failed, oh no!
-            return upload, 400
+            return {"errors": ["image_file:Upload failed"]}, 400
         url = upload["url"]
 
         params = {
@@ -101,7 +101,8 @@ def sign_up():
         db.session.commit()
         login_user(user)
         return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    else:
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 @auth_routes.route('/unauthorized')

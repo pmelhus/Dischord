@@ -127,6 +127,7 @@ export const signUp =
     } else if (response.status < 500) {
       const data = await response.json();
       if (data.errors) {
+        console.log(data.errors, "HERE");
         // console.log(data.errors)
         let errorObj = {};
         data.errors.forEach((error) => {
@@ -134,9 +135,9 @@ export const signUp =
           errorObj[key] = error.split(":")[1];
         });
         return { errors: errorObj };
+      } else {
+        return {errors: "An error occurred. Please try again."}
       }
-    } else {
-      return ["An error occurred. Please try again."];
     }
   };
 

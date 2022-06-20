@@ -46,7 +46,7 @@ def get_messages():
 
     # print(channel_messages, '==================')
     if not len(channel_messages):
-        return {"errors": "No messages to be found"}
+        return {"errors": ["No messages to be found"]}
     else:
         return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
 

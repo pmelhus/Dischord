@@ -1554,6 +1554,9 @@ color:rgba(229, 230, 232, 0.968)
   position: absolute;
   bottom: 20px;
 }
+.error-msg-message-message p {
+  color: red;
+}
 
 .user-image-preview {
   display: flex;

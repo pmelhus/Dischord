@@ -631,18 +631,13 @@ flex: 1 1 0;
 /* min-width: 70%; */
 -ms-overflow-style: none;
 scrollbar-width: none;  /* Firefox */
+
 }
 
 
 
 .channel-chat-messages::-webkit-scrollbar {
   display: none;
-}
-
-.chat-container {
-  display: flex;
-  height: 100%;
-  min-width: 100%;
 }
 
 .channel-chat-profile-image {
@@ -671,32 +666,6 @@ scrollbar-width: none;  /* Firefox */
 flex-basis: auto;
   /* width: 100%; */
   margin: 6px;
-}
-
-.channel-chat-form {
-  /* position: absolute; */
-  margin: 18px;
-  bottom: 6px;
-  /* width: 69%; */
-  width: fit-content;
-  height: 30px;
-  padding: 5px;
-  background-color:#62656a7c;
-display: flex;
-align-items: center;
-border-radius: 7px;
-}
-
-#channel-chat-input {
-  /* width: 99.4%; */
-  margin-right: 10px;
-  min-width: auto;
-  width: 100%;
-  border: none;
-  background-color: transparent;
-  resize: none;
-  outline: none;
-  color: rgba(255, 255, 255, 0.791);
 }
 
 

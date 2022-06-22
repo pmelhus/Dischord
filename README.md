@@ -143,7 +143,7 @@ Dischord relies on PostgreSQL to maintain its relational database.
 ## Challenges and Solutions
 
 - Socket IO
-  - Understanding the dataflow of Socket IO took some time and effort. After getting a better grasp of how the data flows from the front to backend let me successfully implement the live chat feature in the application.
+  - Understanding the dataflow of Socket IO took some time and effort. After getting a better grasp of how the data flows from the front to the backend, I was able to successfully implement the live chat feature in the application.
 
 ## Conclusion and Next Steps
 

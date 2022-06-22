@@ -42,6 +42,7 @@ const Chat = ({ socket, setLoading }) => {
   );
 
   const currentServer = useSelector((state) => state.servers[serverId]);
+  const [messageError, setMessageError] = useState(true)
   // console.log(currentServerMemberIds.members_ids, 'hello')
 
   // console.log(onlineMembers, 'ONLINE MEMBERS')
@@ -76,6 +77,7 @@ await setErrors({})
     await setIsSent(true);
 
     // clear the input field after the message is sent
+    await setErrors({})
     await setChatInput("");
   };
 
@@ -96,7 +98,12 @@ await setErrors({})
     }
   });
 
-  useEffect(() => {});
+  useEffect(() => {
+    setMessageError(true)
+    if (chatInput.length < 1001) {
+      setMessageError(false)
+    }
+  }, [chatInput]);
 
   return (
     <div className="chat-container">
@@ -133,7 +140,7 @@ await setErrors({})
           {pathname.split("/")[2] !== "@me" &&
             pathname.split("/")[3] !== "noChannels" && (
               <>
-                {errors && errors.content && (
+                {errors && messageError && errors.content && (
                   <div className="error-msg-message">
                     <p>*{errors.content}*</p>
                   </div>

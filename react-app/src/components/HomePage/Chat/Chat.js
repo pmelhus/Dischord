@@ -72,7 +72,7 @@ const Chat = ({ socket, setLoading }) => {
     }
 
     await socket?.emit("chat");
-
+await setErrors({})
     await setIsSent(true);
 
     // clear the input field after the message is sent

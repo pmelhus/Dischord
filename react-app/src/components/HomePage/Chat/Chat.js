@@ -132,6 +132,7 @@ await setErrors({})
                 {...{ channelId }}
                 {...{ socket }}
                 {...{ message }}
+                {...{ind}}
               />
             </div>
           ))}

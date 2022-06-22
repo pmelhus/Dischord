@@ -5,7 +5,7 @@ import { Modal } from "../../../context/Modal";
 // import EditMessageModal from "./DeleteConfirmModalMessage ";
 import DeleteConfirmModalMessage from "./DeleteConfirmModalMessage";
 
-const ChannelMessage = ({ user, message, socket, channelId }) => {
+const ChannelMessage = ({ind, user, message, socket, channelId }) => {
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
   const sessionUser = useSelector((state) => state.session.user);

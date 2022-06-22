@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createServer } from "../../../../store/server";
-import {LoadingModal} from "../../../../context/LoadingModal"
+import { LoadingModal } from "../../../../context/LoadingModal";
 
 const ServerCreateForm = ({ setShowServerModal }) => {
   const history = useHistory(); // so that we can redirect after the image upload is successful
@@ -16,7 +16,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
   const [imageError, setImageError] = useState(true);
   const [nameError, setNameError] = useState(true);
   const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleChange = () => {
     setChecked(!checked);
@@ -26,11 +26,11 @@ const ServerCreateForm = ({ setShowServerModal }) => {
     e.preventDefault();
     const publicVal = checked;
     const payload = { name, owner_id, publicVal, image };
-    await setLoading(true)
+    await setLoading(true);
     const newServer = await dispatch(createServer(payload));
     if (newServer.errors) {
       // console.log(newEstate.errors)
-      await setLoading(false)
+      await setLoading(false);
       setErrors(newServer.errors);
       return;
     } else {
@@ -38,7 +38,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
       setImage(null);
       setChecked(false);
       setShowServerModal(false);
-      await setLoading(false)
+      await setLoading(false);
       history.push(`/channels/${newServer.id}/${newServer.channel_ids[0]}`);
     }
     // hallo
@@ -65,11 +65,14 @@ const ServerCreateForm = ({ setShowServerModal }) => {
 
   return (
     <>
-    {loading && (
-      <LoadingModal>
-        <img id='loading-image' src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"/>
-       </LoadingModal>
-    )}
+      {loading && (
+        <LoadingModal>
+          <img
+            id="loading-image"
+            src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
+          />
+        </LoadingModal>
+      )}
       <form className="server-create-form">
         <div className="server-create-form-msg">
           <h2>Customize your server</h2>
@@ -96,7 +99,11 @@ const ServerCreateForm = ({ setShowServerModal }) => {
           <label className="custom-file-upload">
             {" "}
             Upload your picture here!{" "}
-            <input type="file" accept="image/png, image/jpeg, image/png, image/gif" onChange={updateImage}></input>
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/png, image/gif"
+              onChange={updateImage}
+            ></input>
           </label>
         </div>
         <div className="private-input">
@@ -119,8 +126,12 @@ const ServerCreateForm = ({ setShowServerModal }) => {
           </label>
         </div>
         <div className="button-div-user">
-          <button id='channel-submit' onClick={handleSubmit}>Create Server</button>
-          <button id='channel-submit' onClick={() => setShowServerModal(false)}>Cancel</button>
+          <button id="channel-submit" onClick={handleSubmit}>
+            Create Server
+          </button>
+          <button id="channel-submit" onClick={() => setShowServerModal(false)}>
+            Cancel
+          </button>
         </div>
       </form>
     </>

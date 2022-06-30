@@ -5,7 +5,13 @@ import { Modal } from "../../../context/Modal";
 // import EditMessageModal from "./DeleteConfirmModalMessage ";
 import DeleteConfirmModalMessage from "./DeleteConfirmModalMessage";
 
-const ChannelMessage = ({ind, user, message, socket, channelId }) => {
+const ChannelMessage = ({
+  setMessageEditId,
+  message,
+  socket,
+  ind,
+  messageEditId,
+}) => {
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
   const sessionUser = useSelector((state) => state.session.user);
@@ -20,6 +26,7 @@ const ChannelMessage = ({ind, user, message, socket, channelId }) => {
   const handleEditModal = () => {
     setContent(message.content);
     setShowEdit(true);
+    setMessageEditId(message.id);
   };
 
   const editInputSubmit = async (e) => {
@@ -42,23 +49,23 @@ const ChannelMessage = ({ind, user, message, socket, channelId }) => {
       setContent(message.content);
       // console.log(content.length, "CONTENT");
       if (content.length > 1000) {
-        setContent(content)
+        setContent(content);
       }
       if (content.length === 0) {
         setDeleteModal(true);
       }
       return;
     } else {
-      await socket.emit("chat");
+      await socket.emit("edit");
       setShowEdit(false);
-      setErrorsEdit({})
+      setErrorsEdit({});
     }
   };
 
   const handleCancel = () => {
-    setShowEdit(false)
-    setErrorsEdit({})
-  }
+    setShowEdit(false);
+    setErrorsEdit({});
+  };
 
   const handleDeleteModal = () => {
     setDeleteModal(true);
@@ -71,7 +78,13 @@ const ChannelMessage = ({ind, user, message, socket, channelId }) => {
     }
   }, [deleteEvent]);
 
-  // console.log(message);
+  useEffect(() => {
+    setShowEdit(false);
+    if (message.id === messageEditId) {
+      setShowEdit(true);
+    }
+  }, [socket]);
+
   return (
     <>
       <div className="message-chat-container-hover">
@@ -93,11 +106,11 @@ const ChannelMessage = ({ind, user, message, socket, channelId }) => {
               {showEdit ? (
                 <>
                   <div className="message-edit-container">
-                      {errors && errors.content && (
-                        <div className="error-msg-message-message">
-                          <p>*{errors.content}*</p>
-                        </div>
-                      )}
+                    {errors && errors.content && (
+                      <div className="error-msg-message-message">
+                        <p>*{errors.content}*</p>
+                      </div>
+                    )}
                     <form onSubmit={editInputSubmit}>
                       <div className="message-edit-input-container">
                         <input
@@ -108,10 +121,7 @@ const ChannelMessage = ({ind, user, message, socket, channelId }) => {
                       </div>
                       <p id="message-edit-instructions">
                         Press
-                        <button
-                          type="button"
-                          onClick={handleCancel}
-                        >
+                        <button type="button" onClick={handleCancel}>
                           <i className="fa-solid fa-xmark fa-xl"></i>
                         </button>
                         to cancel. Press enter to submit.
@@ -157,8 +167,8 @@ const ChannelMessage = ({ind, user, message, socket, channelId }) => {
             {...{ message }}
             {...{ messageUser }}
             {...{ setDeleteModal }}
-            {...{ setShowEdit}}
-            {...{setErrorsEdit}}
+            {...{ setShowEdit }}
+            {...{ setErrorsEdit }}
           />
         </Modal>
       )}

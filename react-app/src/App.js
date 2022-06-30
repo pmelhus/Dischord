@@ -46,6 +46,12 @@ function App() {
       dispatch(genChannelMessages());
     });
 
+    socket.on("edit", (chat) => {
+      // when we recieve a chat, add it into our messages array in state
+      // setMessages((messages) => [...messages, chat]);
+      dispatch(genChannelMessages());
+    });
+
     socket.on("login", (data) => {
       // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
       dispatch(genUsers());

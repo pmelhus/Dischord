@@ -16,8 +16,8 @@ import UserOfflineCard from "./UserOfflineCard";
 import MePage from "./MePage/MePage";
 // outside of your component, initialize the socket variable
 
-const Chat = ({ socket, setLoading }) => {
-  const [messages, setMessages] = useState([]);
+const Chat = ({ socket}) => {
+
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const Chat = ({ socket, setLoading }) => {
   const allChannelMessages = useSelector((state) =>
     Object.values(state.channelMessages)
   );
-  const allServers = useSelector((state) => Object.values(state.servers));
+
   const [errors, setErrors] = useState({});
   const users = useSelector((state) => Object.values(state.users));
   const currentServerMemberIds = useSelector(
@@ -42,7 +42,10 @@ const Chat = ({ socket, setLoading }) => {
   );
 
   const currentServer = useSelector((state) => state.servers[serverId]);
-  const [messageError, setMessageError] = useState(true)
+  const [messageError, setMessageError] = useState(true);
+
+  const [messageEditId, setMessageEditId] = useState(null);
+
   // console.log(currentServerMemberIds.members_ids, 'hello')
 
   // console.log(onlineMembers, 'ONLINE MEMBERS')
@@ -73,11 +76,11 @@ const Chat = ({ socket, setLoading }) => {
     }
 
     await socket?.emit("chat");
-await setErrors({})
+    // await setErrors({})
     await setIsSent(true);
 
     // clear the input field after the message is sent
-    await setErrors({})
+    await setErrors({});
     await setChatInput("");
   };
 
@@ -99,9 +102,9 @@ await setErrors({})
   });
 
   useEffect(() => {
-    setMessageError(true)
+    setMessageError(true);
     if (chatInput.length < 1001) {
-      setMessageError(false)
+      setMessageError(false);
     }
   }, [chatInput]);
 
@@ -129,10 +132,12 @@ await setErrors({})
           {currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage
+              {...{setMessageEditId}}
+                {...{messageEditId}}
                 {...{ channelId }}
                 {...{ socket }}
                 {...{ message }}
-                {...{ind}}
+                {...{ ind }}
               />
             </div>
           ))}
@@ -150,7 +155,11 @@ await setErrors({})
                   <input
                     id="channel-chat-input"
                     value={chatInput}
-                    placeholder={currentChannel?.name ? `Message ${currentChannel?.name}`: ''}
+                    placeholder={
+                      currentChannel?.name
+                        ? `Message ${currentChannel?.name}`
+                        : ""
+                    }
                     onChange={updateChatInput}
                   />
                   {/* <button type="submit">Send</button> */}

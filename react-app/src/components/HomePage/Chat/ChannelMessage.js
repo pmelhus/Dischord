@@ -10,7 +10,7 @@ const ChannelMessage = ({
   message,
   socket,
   ind,
-  messageEditId,
+  messageEditId
 }) => {
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
@@ -56,7 +56,7 @@ const ChannelMessage = ({
       }
       return;
     } else {
-      await socket.emit("edit");
+      await socket.emit("chat");
       setShowEdit(false);
       setErrorsEdit({});
     }
@@ -78,12 +78,13 @@ const ChannelMessage = ({
     }
   }, [deleteEvent]);
 
-  useEffect(() => {
-    setShowEdit(false);
-    if (message.id === messageEditId) {
-      setShowEdit(true);
-    }
-  }, [socket]);
+  // useEffect(() => {
+  //   setShowEdit(false);
+  //   if (message.id === messageEditId) {
+  //     setShowEdit(true);
+  //   }
+  // }, [ind]);
+
 
   return (
     <>

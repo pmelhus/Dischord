@@ -31,7 +31,6 @@ const Chat = ({ socket}) => {
   const allChannelMessages = useSelector((state) =>
     Object.values(state.channelMessages)
   );
-
   const [errors, setErrors] = useState({});
   const users = useSelector((state) => Object.values(state.users));
   const currentServerMemberIds = useSelector(
@@ -40,20 +39,10 @@ const Chat = ({ socket}) => {
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
   );
-
   const currentServer = useSelector((state) => state.servers[serverId]);
   const [messageError, setMessageError] = useState(true);
-
   const [messageEditId, setMessageEditId] = useState(null);
 
-  // console.log(currentServerMemberIds.members_ids, 'hello')
-
-  // console.log(onlineMembers, 'ONLINE MEMBERS')
-
-  // const serverMembersArray =
-  //  setLoading(true)
-
-  // const imageUrl = URL.createObjectURL(homeImage)
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
@@ -61,7 +50,6 @@ const Chat = ({ socket}) => {
 
   const sendChat = async (e) => {
     e.preventDefault();
-    // emit a message
 
     const sentMessage = await dispatch(
       createChannelMessage({

@@ -10,7 +10,7 @@ const ChannelMessage = ({
   message,
   socket,
   ind,
-  messageEditId
+  messageEditId,
 }) => {
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
@@ -22,11 +22,16 @@ const ChannelMessage = ({
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState(false);
+  // const [messageEditId, setMessageEditId] = useState(null);
 
   const handleEditModal = () => {
-    setContent(message.content);
+
+    // console.log(messageEditId, "MESSAGE EDIT ID");
+    // console.log(message.id, "MESSAGE ID")
     setShowEdit(true);
+    setContent(message.content);
     setMessageEditId(message.id);
+    // console.log(messageEditId, "MESSAGE EDIT ID ");
   };
 
   const editInputSubmit = async (e) => {
@@ -37,7 +42,7 @@ const ChannelMessage = ({
       content: content,
       edited: true,
       owner_id: message.owner_id,
-      id: message.id,
+      id: message.id
     };
 
     const editedMessage = await dispatch(editChannelMessage(payload));
@@ -65,6 +70,8 @@ const ChannelMessage = ({
   const handleCancel = () => {
     setShowEdit(false);
     setErrorsEdit({});
+    // setMessageEditId(message.id);
+    // console.log(messageEditId, "MESSAGE EDIT ID ");
   };
 
   const handleDeleteModal = () => {
@@ -78,13 +85,18 @@ const ChannelMessage = ({
     }
   }, [deleteEvent]);
 
-  // useEffect(() => {
-  //   setShowEdit(false);
-  //   if (message.id === messageEditId) {
-  //     setShowEdit(true);
-  //   }
-  // }, [ind]);
+  useEffect(() => {
+    setShowEdit(false);
+    if (message.id === messageEditId) {
+      setContent(message.content)
+      setShowEdit(true);
+    }
+  }, [message]);
 
+  // useEffect(() => {
+  //   setMessageEditId(message.id)
+  //   console.log(messageEditId, "mESSAGE EDIT")
+  // }, [showEdit])
 
   return (
     <>

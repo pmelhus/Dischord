@@ -885,7 +885,7 @@ height: 100%;
 .splash-nav {
   display: flex;
   align-items: top;
-  justify-content: space-around;
+  justify-content:space-between;
   font-size: 1vw;
   font-weight:bold;
   color: white;
@@ -893,7 +893,8 @@ height: 100%;
   left: 0;
   right: 0;
   z-index: 10;
-  margin: 0 80px;
+  margin: 0 .75vw;
+  margin-top: .75vw;
 }
 
 .splash-nav a {
@@ -910,14 +911,16 @@ height: 100%;
 }
 
 #logo {
-  width: 8vw;
-  height: 14vh;
+  width: 6.5vw;
+  height: 6.5vw;
   object-fit:scale-down;
   /* object-position: 100% 100%; */
   /* position: absolute; */
   /* top: 0; */
-
-  margin-top: -25px;
+  background: rgba(0, 0, 0, 0.681);
+  border-radius: 100%;
+  padding: .5vw;
+  /* margin-top: -25px; */
 }
 
 .splash-sign-in {

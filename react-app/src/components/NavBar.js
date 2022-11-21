@@ -26,10 +26,10 @@ const NavBar = () => {
         ) : (
           <>
             <NavLink to="/register" exact={true} activeClassName="active">
-              Sign Up
+              Sign-up
             </NavLink>
             <NavLink to="/login" exact={true} activeClassName="active">
-              Login
+              Sign-in
             </NavLink>
           </>
         )}

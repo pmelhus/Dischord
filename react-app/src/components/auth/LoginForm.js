@@ -100,15 +100,15 @@ const LoginForm = ({ socket }) => {
             value={password}
             onChange={updatePassword}
           />
-          <button type="submit">Login</button>
-          <button onClick={handleDemo} type="button">
+          <button className="signup-login-button" type="submit">Login</button>
+          <button className="signup-login-button" onClick={handleDemo} type="button">
             Demo Login
           </button>
         </div>
         <div className="login-register">
           <p>Need an account?</p>
           <Link to="/register">
-            <p id="login-register">Register</p>
+            <p id="login-register">Sign-up</p>
           </Link>
         </div>
       </form>

@@ -40,6 +40,9 @@ const Splash = () => {
         <h2>Network and meet new musicians</h2>
         </div>
       </div>
+      <div id="splash-footer">
+        
+      </div>
     </div>
   );
 };

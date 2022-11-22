@@ -152,7 +152,7 @@ const SignUpForm = ({ socket }) => {
             value={bio}
           ></textarea>
         </div>
-        <label className="login-label">
+        {/* <label className="login-label">
           Upload a profile picture so other's can see you!
         </label>
         <div className="login-email">
@@ -169,14 +169,14 @@ const SignUpForm = ({ socket }) => {
             name="image"
             onChange={updateImage}
           ></input>
-        </div>
+        </div> */}
         <div className="login-password">
-          <button type="submit">Sign Up</button>
+          <button className="signup-login-button" type="submit">Sign-up!</button>
         </div>
         <div className="login-register">
           <p>Already have an account?</p>
           <Link to="/login">
-            <p id="login-register">Login</p>
+            <p id="login-register">Sign-in</p>
           </Link>
         </div>
       </form>

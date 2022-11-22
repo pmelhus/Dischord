@@ -873,6 +873,7 @@ height: 100%;
 
 .splash-nav-ul {
   display: flex;
+  flex-shrink: 0;
   justify-content: space-evenly;
   width: 18vw;
   list-style: none;
@@ -880,9 +881,11 @@ height: 100%;
 
 .splash-nav-ul li {
   font-size: 1vw;
+  flex-shrink: 0;
 }
 
 .splash-nav {
+  min-width: 1980px;
   display: flex;
   align-items: top;
   justify-content:space-between;
@@ -989,7 +992,8 @@ width: 50%;
   .splash-video-div h2 {
     position: relative;
     /* margin-left: 8%; */
-    font-size: 2.5vh;
+    font-size: 2.5vw;
+    padding: 20px;
     /* margin-right: 4%; */
     /* width: 40vw; */
 

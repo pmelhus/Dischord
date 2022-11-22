@@ -57,8 +57,15 @@
   color: white;
   font-size: .75vw;
   margin-top: 1vw;
+  border: none;
+  cursor: pointer;
 }
-/* 
+
+.signup-login-button:hover {
+  background-color: rgb(144, 73, 93);
+}
+
+/*
 #login-input-password {
   margin-bottom: 2vw;
 } */

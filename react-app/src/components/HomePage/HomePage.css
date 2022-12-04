@@ -1051,11 +1051,11 @@ width: 50%;
 
   .login-form {
     color: white;
-    padding: 2vw;
+    padding: 35px;
     background-color: #36393f;
     z-index: 2;
     border-radius: 5px;
-    width: 15vw;
+    width: 250px;
     min-width: 200px;
   }
 

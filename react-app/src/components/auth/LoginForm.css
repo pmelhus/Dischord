@@ -16,20 +16,20 @@
 
 
 .login-welcome-message {
-  margin-bottom: 2vw;
+  margin-bottom: 30px;
 }
 
 
 .login-welcome-message h2 {
   font-weight: 600;
   text-align: center;
-  font-size: 1.4vw;
+  font-size: 25px;
 }
 
 .login-welcome-message p {
   text-align: center;
   color: #b9bbbe;
-  font-size: .85vw;
+  font-size: 14px;
 }
 
 #login-register {
@@ -52,13 +52,13 @@
 }
 
 .signup-login-button {
-  height: 2.5vw;
+  height: 20px;
   min-width: 130px;
   min-height: 44px;
   background-color: rgb(116, 56, 73);
   color: white;
-  font-size: .75vw;
-  margin-top: 1vw;
+  font-size: 15px;
+  margin-top: 20px;
   border: none;
   cursor: pointer;
 }
@@ -74,8 +74,8 @@
 
 .login-register {
   display: flex;
-  margin-top: 1vw;
-  font-size: .75vw;
+  margin-top: 20px;
+  font-size: 15px;
 }
 
 #login-register {
@@ -83,11 +83,11 @@ margin-left: 4px;
 }
 
 .login-input {
-  height: 1.5vw;
-  margin: .5vw 0;
-  padding-left: .5vw;
+  height: 22px;
+  margin: 10px 0;
+  padding-left: 5px;
   /* size: 15px; */
-  font-size: .8vw;
+  font-size: 14px;
 }
 
 .login-label {

@@ -17,6 +17,7 @@ class User(db.Model, UserMixin, CrUpMixin):
     image_url = db.Column(db.String(255), nullable=True)
     online = db.Column(db.Boolean(), default=False)
 
+
     # has many
 
     servers = db.relationship("Server", back_populates="owner", cascade="all, delete-orphan", lazy="joined")
@@ -28,6 +29,11 @@ class User(db.Model, UserMixin, CrUpMixin):
 
     memberships = db.relationship("Server", back_populates="members", secondary=server_members)
     dm_members = db.relationship("Inbox", back_populates="inbox_members", secondary=inbox_users)
+
+    # belongs to one
+
+    friend_sender = db.relationship("Friend", back_populates="user_id_self", uselist=False)
+    friend_receiver = db.relationship("Friend", back_populates="user_id_friend", uselist=False)
 
 
 

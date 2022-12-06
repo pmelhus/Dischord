@@ -7,4 +7,5 @@ from .server_member import server_members
 from .inbox_user import inbox_users
 from .direct_message import DirectMessage
 from .inbox import Inbox
-from .friend import Friend
+from .friendship import Friendship
+

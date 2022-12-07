@@ -27,9 +27,9 @@ export function LoadingModal({ onClose, children }) {
   if (!modalNode) return null;
 
   return ReactDOM.createPortal(
-    <div id="loading-modal">
-      <div id="loading-modal-background" onClick={onClose} />
-      <div id="loading-modal-content">{children}</div>
+    <div  id="loading-modal">
+      <div onClick={onClose} />
+      <div onMouseLeave={onClose} id="loading-modal-content">{children}</div>
     </div>,
     modalNode
   );

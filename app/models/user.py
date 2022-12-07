@@ -32,8 +32,8 @@ class User(db.Model, UserMixin, CrUpMixin):
 
     # belongs to one
 
-    friend_sender = db.relationship("Friend", back_populates="user_id_self", uselist=False)
-    friend_receiver = db.relationship("Friend", back_populates="user_id_friend", uselist=False)
+    # friend_sender = db.relationship("Friendship", back_populates="user_id_self", uselist=False)
+    # friend_receiver = db.relationship("Friendship", back_populates="user_id_friend", uselist=False)
 
 
 

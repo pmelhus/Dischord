@@ -37,7 +37,7 @@ const DeleteConfirmModalMessage = ({
             <div className="delete-message-card">
               <img
                 alt="profile"
-                className="server-image-icon"
+                className="channel-chat-profile-image"
                 src={messageUser.image_url}
               ></img>
               <h4>{messageUser.username}</h4>

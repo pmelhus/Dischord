@@ -5,7 +5,8 @@ import "./index.css";
 import App from "./App";
 import configureStore from "./store";
 import { ModalProvider } from "./context/Modal";
-import {LoadingModalProvider} from "./context/LoadingModal"
+import { LoadingModalProvider } from "./context/LoadingModal";
+import { UserModalProvider } from "./context/UserModal"
 
 const store = configureStore();
 
@@ -14,7 +15,9 @@ ReactDOM.render(
     <Provider store={store}>
       <ModalProvider>
         <LoadingModalProvider>
-          <App />
+          <UserModalProvider>
+            <App />
+          </UserModalProvider>
         </LoadingModalProvider>
       </ModalProvider>
     </Provider>

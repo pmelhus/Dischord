@@ -41,8 +41,8 @@ function App() {
     // listen for chat events
 
     socket.on("chat", (chat) => {
-      // when we recieve a chat, add it into our messages array in state
-      // setMessages((messages) => [...messages, chat]);
+      // when we receive a chat, add it into our messages array in state
+
       dispatch(genChannelMessages());
     });
 
@@ -53,20 +53,16 @@ function App() {
     // });
 
     socket.on("login", (data) => {
-      // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
       dispatch(genUsers());
     });
 
     socket.on("logout", (data) => {
-      // console.log("HEREEREREereasraesfasdfdasfadsfdasfdasfcxz");
-
-        dispatch(genUsers());
-
+      dispatch(genUsers());
     });
 
     socket.on('sign-up', () => {
       dispatch(genUsers());
-    })
+    });
 
     // socket.on("logout", (logout) => {
     //   setOnlineMembers((onlineMembers) =>
@@ -86,8 +82,6 @@ function App() {
       socket.disconnect();
     };
   }, []);
-
-  // console.log(onlineMembers, "ONLINE MEMBERS");
 
   if (!loaded) {
     return null;

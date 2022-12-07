@@ -14,7 +14,11 @@ const hoverFunction = () => {
 
   return (
     <>
-
+    {userModal && (
+      <UserModal onClose={() => setUserModal(false)}>
+        <UserModalWindow/>
+      </UserModal>
+    )}
     <div className="online-card-container">
 
       <div className="invite-image-username" onClick={hoverFunction}>
@@ -35,11 +39,7 @@ const hoverFunction = () => {
       )}
       </div>
     </div>
-    {userModal && (
-      <UserModal onClose={() => setUserModal(false)}>
-        <UserModalWindow/>
-      </UserModal>
-    )}
+
     </>
   );
 };

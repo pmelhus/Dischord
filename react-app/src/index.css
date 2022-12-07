@@ -52,6 +52,7 @@ body {
 p {
   padding: 0;
   margin: 0;
+  font-size: 12px;
 }
 
 
@@ -69,3 +70,27 @@ form textarea {
   border-radius: 5px;
   padding: 5px;
 }
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+h4 {
+  font-size: 14px;
+}
+
+/* Code for google maps/search problems with bootstrap
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+*/

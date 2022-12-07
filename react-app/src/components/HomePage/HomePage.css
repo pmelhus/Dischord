@@ -984,7 +984,7 @@ justify-content: center;
 font-size: 30px;
 
     margin-top: 400px;
-    height: 100px;
+    height: fit-content;
     text-shadow:0 20px 20px transparent;
     background: rgba(3, 6, 3, 0.6);
     padding: 30px;
@@ -1055,8 +1055,8 @@ width: 50%;
     background-color: #36393f;
     z-index: 2;
     border-radius: 5px;
-    width: 250px;
-    min-width: 200px;
+    width: fit-content;
+    /* min-width: 300px; */
   }
 
 

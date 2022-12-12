@@ -18,6 +18,7 @@ import { genUsers } from "./store/user";
 import Splash from "./components/Splash";
 import { io } from "socket.io-client";
 
+
 let socket;
 function App() {
   // const [loadingScreen, setLoadingScreen] = useState(false);

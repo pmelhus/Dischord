@@ -161,7 +161,7 @@ const Chat = ({ socket}) => {
         {/* <div className="server-members-list"> */}
         <div className="server-members-online">
           {url !== "@me" && (
-            <p className="server-members-titles">Online - {online.length}</p>
+            <h4 className="server-members-titles">Online - {online.length}</h4>
           )}
           {users &&
             users.map((user) => {

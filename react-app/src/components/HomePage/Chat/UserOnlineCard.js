@@ -1,47 +1,46 @@
-
-import {useState} from "react"
-import {UserModal} from "../../../context/UserModal"
-import UserModalWindow from "../../Modals/UserModalWindow"
+import { useState } from "react";
+import { UserModal } from "../../../context/UserModal";
+import UserModalWindow from "../../Modals/UserModalWindow";
+import Alert from "react-bootstrap/Alert";
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from"react-bootstrap/OverlayTrigger";
+import "./UserOnlineCard.css"
 
 const UserOnlineCard = ({ currentServer, currentServerMemberIds, user }) => {
+  const [userModal, setUserModal] = useState(false);
 
-const [userModal, setUserModal] = useState(false)
 
-const hoverFunction = () => {
-  setUserModal(true)
-  console.log('HALLO')
-}
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">{user.username}</Popover.Header>
+      <Popover.Body></Popover.Body>
+    </Popover>
+  );
 
   return (
     <>
-    {userModal && (
-      <UserModal onClose={() => setUserModal(false)}>
-        <UserModalWindow/>
-      </UserModal>
-    )}
-    <div className="online-card-container">
-
-      <div className="invite-image-username" onClick={hoverFunction}>
-        {user.image_url ? (
-          <img className="server-online-image" src={user.image_url}/>
-        ): (
-          <>
-          <div className="user-online-image-nourl">
-            <i className="fa-solid fa-user-music"></i>
+      <OverlayTrigger rootClose={true} trigger="click" placement="left" overlay={popover}>
+        <div className="online-card-container">
+          <div className="invite-image-username">
+            {user.image_url ? (
+              <img className="server-online-image" src={user.image_url} />
+            ) : (
+              <>
+                <div className="user-online-image-nourl">
+                  <i className="fa-solid fa-user-music"></i>
+                </div>
+              </>
+            )}
+            <span>{user.username}</span>
+            {currentServer.owner_id === user.id && (
+              <i id="crown" className="fa-solid fa-crown"></i>
+            )}
           </div>
-        </>
-        )
-
-        }
-      <p>{user.username}</p>
-      {currentServer.owner_id === user.id && (
-        <i id="crown" className="fa-solid fa-crown"></i>
-      )}
-      </div>
-    </div>
-
+        </div>
+      </OverlayTrigger>
     </>
   );
 };
 
-export default UserOnlineCard
+export default UserOnlineCard;

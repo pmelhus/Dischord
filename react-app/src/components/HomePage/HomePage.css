@@ -1,3 +1,6 @@
+
+
+
 .home-page-container {
   display: flex;
   position: relative;
@@ -1246,51 +1249,22 @@ margin: 20px;
     padding: 20px 0 2px 15px;
     color:rgba(255, 255, 255, 0.432)
   }
-
+/*
   .offline-card-container {
     height: 58px;
-  }
+  } */
 
   .offline-card-container img {
     filter: blur(8px);
     -webkit-filter: blur(1px);
-    margin-top: 2px;
+    /* margin-top: 2px; */
   }
 
-  .user-offline-image-nourl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 100%;
-    background-color: #950652;
-    transition: border-radius .5s;
-    margin-left: 2px;
-    filter: blur(8px);
-    -webkit-filter: blur(3px);
-  }
 
-  .user-online-image-nourl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 100%;
-    background-color: #950652;
-    transition: border-radius .5s;
-    margin-left: 2px;
-
-  }
 
   #offline-user {
     color:rgba(102, 110, 123, 0.799);
-    padding-left: 20px;
+    /* padding-left: 20px; */
   }
 
   .edit-profile-image-preview {

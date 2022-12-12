@@ -4,7 +4,7 @@ const UserOfflineCard = ({ offline, user, currentServer }) => {
       <div className="invite-image-username">
         {user.image_url ? (
           <>
-            <img className="server-image-icon" src={user.image_url} />
+            <img className="server-online-image" src={user.image_url} />
           </>
         ) : (
           <>
@@ -13,7 +13,7 @@ const UserOfflineCard = ({ offline, user, currentServer }) => {
             </div>
           </>
         )}
-        <p id="offline-user">{user.username}</p>
+        <span id="offline-user">{user.username}</span>
         {currentServer?.owner_id === user.id && (
           <i id="crown" className="fa-solid fa-crown"></i>
         )}

@@ -3,26 +3,35 @@ import { UserModal } from "../../../context/UserModal";
 import UserModalWindow from "../../Modals/UserModalWindow";
 import Alert from "react-bootstrap/Alert";
 import Popover from "react-bootstrap/Popover";
-import OverlayTrigger from"react-bootstrap/OverlayTrigger";
-import "./UserOnlineCard.css"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import "./UserOnlineCard.css";
+import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
 
 const UserOnlineCard = ({ currentServer, currentServerMemberIds, user }) => {
   const [userModal, setUserModal] = useState(false);
 
-
-
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header as="h3">{user.username}</Popover.Header>
-      <Popover.Body></Popover.Body>
+      {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
+      <Popover.Body>
+        <UserProfilePopover user={user} />
+      </Popover.Body>
     </Popover>
   );
 
   return (
     <>
-      <OverlayTrigger rootClose={true} trigger="click" placement="left" overlay={popover}>
-        <div className="online-card-container">
-          <div className="invite-image-username">
+      <OverlayTrigger
+        rootClose={true}
+        trigger={'click'}
+        placement="left-start"
+        overlay={popover}
+        onToggle={() => setUserModal(!userModal)}
+        // onHide={() => setUserModal(false)}
+        show={userModal}
+      >
+        <div className='online-card-container'>
+          <div className={userModal ? ("invite-image-username-selected") :("invite-image-username")}>
             {user.image_url ? (
               <img className="server-online-image" src={user.image_url} />
             ) : (

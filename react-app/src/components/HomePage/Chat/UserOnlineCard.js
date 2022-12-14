@@ -11,11 +11,11 @@ const UserOnlineCard = ({ currentServer, currentServerMemberIds, user }) => {
   const [userModal, setUserModal] = useState(false);
 
   const popover = (
-    <Popover id="popover-basic">
+    <Popover placement="left-start"id="popover-basic">
       {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
-      <Popover.Body>
+
         <UserProfilePopover user={user} />
-      </Popover.Body>
+
     </Popover>
   );
 

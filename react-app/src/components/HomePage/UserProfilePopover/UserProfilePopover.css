@@ -1,0 +1,92 @@
+
+.pro-pop-background {
+  background-image: linear-gradient(#000000c9, #464545e6, #8382828e );
+  padding: 6px;
+  border-radius: 6px;
+  width: 340px;
+  box-sizing: border-box;
+}
+
+.pro-pop-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  /* background-color:rgb(48, 44, 37); */
+  /* z-index: 1; */
+  border-radius: 4px;
+  width: 100%;
+}
+
+.popover-arrow {
+  visibility:hidden;
+}
+
+
+.pro-pop-banner {
+  width: 100%;
+  height: 90px;
+}
+
+.pro-pop-icon-container {
+  width: 100%;
+  height: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.pro-pop-icon-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: fixed; */
+  position: absolute;
+  bottom: -6px;
+  left: 10px;
+  width: 92px;
+  height: 92px;
+  background-color:rgb(26, 24, 20);
+  border-radius: 100%;
+}
+
+.pro-pop-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.pro-pop-content-background {
+  width: 100%;
+  height: auto;
+  background-image: linear-gradient(rgb(26, 24, 20), #00000073, #00000073)
+}
+
+.pro-pop-content {
+  width: auto;
+  height: auto;
+  background-color:rgb(26, 24, 20);
+  color: white;
+  margin: 28px 16px 16px 16px;
+  z-index: 1;
+  border-radius: 4px;
+}
+
+.pro-pop-username {
+  padding: 12px 12px 0;
+
+}
+
+
+
+.pro-pop-info {
+
+}
+
+.divider {
+  /* border-bottom:rgba(238, 238, 234, 0.51); */
+  margin: 12px 12px 0;
+  /* width: 100%; */
+  height: 1px;
+  z-index: 10;
+  background-color: hsla(0, 0%, 100%, 0.24);
+}

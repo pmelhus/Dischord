@@ -73,18 +73,26 @@ p {
 
 h1 {
   font-size: 30px;
+  margin: 0;
+  padding: 0;
 }
 
 h2 {
   font-size: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 h3 {
   font-size: 16px;
+  margin: 0;
+  padding: 0;
 }
 
 h4 {
   font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 
 /* Code for google maps/search problems with bootstrap

@@ -52,12 +52,13 @@ export const login = (email, password) => async (dispatch) => {
       password,
     }),
   });
+  console.log(response, 'RESPONSE HERE')
 
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
     // console.log(data, 'DATA HERE')
-    return data;
+    return null;
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
@@ -67,7 +68,8 @@ export const login = (email, password) => async (dispatch) => {
         errorObj[key] = error.split(":")[1];
       });
       return { errors: errorObj };
-    } else {
+    }
+    else {
       return { errors: "An error occurred. Please try again." };
     }
   } else {

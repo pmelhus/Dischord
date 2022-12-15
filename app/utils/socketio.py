@@ -22,7 +22,7 @@ def handle_chat():
 
 @socketio.on("login")
 def handle_login(data):
-    # print(data['id'], 'USER HERE NOW BETCH')
+    print(data, 'USER HERE NOW BETCH ==========================================================')
     user = User.query.get(data['id'])
     # print('USER HERE')
     print(user, 'USER HERE')

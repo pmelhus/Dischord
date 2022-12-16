@@ -18,9 +18,10 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
+      console.log(data, 'DATA')
       await socket.emit("login", data);
-      if (data?.errors) {
-        setErrors(data?.errors);
+      if (data.errors) {
+        setErrors(data.errors);
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
@@ -32,8 +33,10 @@ const LoginForm = ({ socket }) => {
   const handleDemo = async (e) => {
     if (socket) {
       e.preventDefault();
-      const data = await dispatch(login("demo@aa.io",  "password"));
+      const data = await dispatch(login("demo@aa.io", "password"));
+      console.log(data, "DATA HERER")
       await socket.emit("login", data);
+      // console.log('I MADE IT')
       if (data?.errors) {
         setErrors(data?.errors);
       } else {

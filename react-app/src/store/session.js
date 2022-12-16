@@ -52,13 +52,13 @@ export const login = (email, password) => async (dispatch) => {
       password,
     }),
   });
-  console.log(response, 'RESPONSE HERE')
+  // console.log(response, 'RESPONSE HERE')
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(setUser(data));
     // console.log(data, 'DATA HERE')
-    return null;
+    dispatch(setUser(data));
+    return data;
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
@@ -68,8 +68,7 @@ export const login = (email, password) => async (dispatch) => {
         errorObj[key] = error.split(":")[1];
       });
       return { errors: errorObj };
-    }
-    else {
+    } else {
       return { errors: "An error occurred. Please try again." };
     }
   } else {
@@ -138,7 +137,7 @@ export const signUp =
         });
         return { errors: errorObj };
       } else {
-        return {errors: "An error occurred. Please try again."}
+        return { errors: "An error occurred. Please try again." };
       }
     }
   };
@@ -227,6 +226,7 @@ export const editUserPassword = (data) => async (dispatch) => {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
+      console.log(action.payload, "PAYLOAD");
       return { user: action.payload };
     case REMOVE_USER:
       return { user: null };

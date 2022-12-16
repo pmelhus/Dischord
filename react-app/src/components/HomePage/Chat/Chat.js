@@ -70,6 +70,7 @@ const Chat = ({ socket}) => {
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
+
   };
 
   useEffect(() => {

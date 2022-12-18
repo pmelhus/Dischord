@@ -43,6 +43,7 @@ function App() {
 
     socket.on("chat", (chat) => {
       // when we receive a chat, add it into our messages array in state
+      // socket.emit('timeout_check')
 
       dispatch(genChannelMessages());
     });
@@ -54,14 +55,17 @@ function App() {
     // });
 
     socket.on("login", (data) => {
+      socket.emit('timeout_check')
       dispatch(genUsers());
     });
 
     socket.on("logout", (data) => {
+      socket.emit('timeout_check')
       dispatch(genUsers());
     });
 
     socket.on('sign-up', () => {
+      socket.emit('timeout_check')
       dispatch(genUsers());
     });
 

@@ -18,6 +18,7 @@ from .seeds import seed_commands
 from .config import Config
 
 from .utils.socketio import socketio
+# from .utils.timeout_function import timeout_function
 
 app = Flask(__name__)
 
@@ -44,6 +45,7 @@ app.register_blueprint(friendship_routes, url_prefixes='/api/friendships')
 db.init_app(app)
 
 socketio.init_app(app)
+
 
 Migrate(app, db)
 

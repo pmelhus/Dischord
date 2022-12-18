@@ -16,6 +16,8 @@ class User(db.Model, UserMixin, CrUpMixin):
     bio = db.Column(db.String(190), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
     online = db.Column(db.Boolean(), default=False)
+    inactive = db.Column(db.Boolean(), default=True)
+
 
 
     # has many

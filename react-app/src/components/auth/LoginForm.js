@@ -14,6 +14,12 @@ const LoginForm = ({ socket }) => {
   const [passwordError, setPasswordError] = useState(true);
   const history = useHistory();
 
+  const inactiveTimer = (socket, id) => {
+    setTimeout(() => {
+      socket?.emit('change_inactive', id)
+    }, "3600000")
+  }
+
   const onLogin = async (e) => {
     if (socket) {
       e.preventDefault();
@@ -27,6 +33,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
+      await inactiveTimer(socket, data.id)
     }
   };
 
@@ -44,6 +51,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
+      await inactiveTimer(socket, data.id)
     }
   };
 

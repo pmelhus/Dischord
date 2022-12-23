@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import HomePage from "./components/HomePage/HomePage";
-import { authenticate } from "./store/session";
+import { authenticate, logout } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
 import { genChannelMessages } from "./store/channelMessage";
 // import { genServers } from "./store/server";
@@ -55,17 +55,18 @@ function App() {
     // });
 
     socket.on("login", (data) => {
-      socket.emit('timeout_check')
+      socket.emit('timeout_user')
       dispatch(genUsers());
     });
 
     socket.on("logout", (data) => {
-      socket.emit('timeout_check')
+      socket.emit('timeout_user')
+      dispatch(logout(data.id))
       dispatch(genUsers());
     });
 
     socket.on('sign-up', () => {
-      socket.emit('timeout_check')
+      socket.emit('timeout_user')
       dispatch(genUsers());
     });
 

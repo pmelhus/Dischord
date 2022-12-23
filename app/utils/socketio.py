@@ -1,16 +1,16 @@
-import os, sched, time
+import os
+import sched
+import time
 from flask_socketio import SocketIO, emit, send
 from app.models import db, User
 
 from threading import Timer
 
 
-
-#arguments:
-#how long to wait (in seconds),
-#what function to call,
-#what gets passed in
-
+# arguments:
+# how long to wait (in seconds),
+# what function to call,
+# what gets passed in
 
 
 # configure cors_allowed_origins
@@ -30,8 +30,9 @@ socketio = SocketIO(cors_allowed_origins=origins, logger=True)
 
 # changes user activity to inactive
 
+
 def change_inactive(user):
-    print(user, 'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================' )
+    print(user, 'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================')
     user.inactive = True
     db.session.commit()
 
@@ -39,9 +40,6 @@ def change_inactive(user):
 
 
 #
-
-
-
 
 
 # def timeout_scheduler(sc):
@@ -64,6 +62,7 @@ def handle_chat(id):
     db.session.commit()
     emit("chat", broadcast=True)
 
+
 @socketio.on('change_inactive')
 def change_inactive(id):
     user = User.query.get(id)
@@ -76,7 +75,7 @@ def change_inactive(id):
 def timeout_user():
     users = User.query.all()
     for user in users:
-        if user.online and user.inactive:
+        if not user.online and user.inactive:
             user.online = False
             db.session.commit()
             emit("logout", user, broadcast=True)
@@ -92,8 +91,6 @@ def handle_login(data):
     db.session.commit()
     emit("login", data, broadcast=True)
     # inactive_timer(user)
-
-
 
 
 @socketio.on("logout")
@@ -119,11 +116,6 @@ def handle_sign_up(data):
     # inactive_timer(user)
 
 
-
 # socketio.on("connection", (socket) => {
 #   socket.emit("hello", "world");
 # });
-
-@socketio.on("timeout_check")
-def timeout_func():
-    timeout_user()

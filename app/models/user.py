@@ -16,6 +16,8 @@ class User(db.Model, UserMixin, CrUpMixin):
     bio = db.Column(db.String(190), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
     online = db.Column(db.Boolean(), default=False)
+    inactive = db.Column(db.Boolean(), default=True)
+
 
 
     # has many
@@ -55,7 +57,8 @@ class User(db.Model, UserMixin, CrUpMixin):
             'email': self.email,
             'bio': self.bio,
             'image_url': self.image_url,
-            'online': self.online
+            'online': self.online,
+            'created_at': self.created_at
             # 'memberships': [server.to_dict() for server in self.memberships]
         }
 

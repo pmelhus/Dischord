@@ -52,12 +52,12 @@
 }
 
 .signup-login-button {
-  height: 20px;
+  /* height: 18px; */
   min-width: 130px;
-  min-height: 44px;
+  min-height: 30px;
   background-color: rgb(116, 56, 73);
   color: white;
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 20px;
   border: none;
   cursor: pointer;
@@ -83,7 +83,7 @@ margin-left: 4px;
 }
 
 .login-input {
-  height: 22px;
+  height: 30px;
   margin: 10px 0;
   padding-left: 5px;
   /* size: 15px; */

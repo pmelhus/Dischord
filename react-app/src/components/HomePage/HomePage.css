@@ -1,3 +1,6 @@
+
+
+
 .home-page-container {
   display: flex;
   position: relative;
@@ -984,7 +987,7 @@ justify-content: center;
 font-size: 30px;
 
     margin-top: 400px;
-    height: 100px;
+    height: fit-content;
     text-shadow:0 20px 20px transparent;
     background: rgba(3, 6, 3, 0.6);
     padding: 30px;
@@ -1055,8 +1058,8 @@ width: 50%;
     background-color: #36393f;
     z-index: 2;
     border-radius: 5px;
-    width: 250px;
-    min-width: 200px;
+    width: fit-content;
+    /* min-width: 300px; */
   }
 
 
@@ -1214,33 +1217,8 @@ width: 50%;
     color:rgb(255, 255, 255);
   }
 
-  .invite-image-username {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    margin-left: 8px;
-    height: 30px;
-    cursor:pointer;
-    padding: 10px;
-    border-radius: 10px;
-  }
-  .invite-image-username:hover {
-    background-color:#454649
-  }
-.server-online-image {
 
-  box-sizing: border-box;
-  width: 38px;
-  height: 38px;
-  object-fit: cover;
-  border-radius: 100%;
-  transition: border-radius .5s;
-  background-color: #36393f;
-  color: rgba(255, 255, 255, 0.849);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
   .usertab-default-profile-image-invite {
     display: flex;
@@ -1265,56 +1243,28 @@ margin: 20px;
   }
 
   .server-members-titles {
-    padding: 10px;
-    margin-top: 10px;
-    padding-left: 16px;
+    /* padding: 10px; */
+    font-size: 13px;
+    margin: 0;
+    padding: 20px 0 2px 15px;
     color:rgba(255, 255, 255, 0.432)
   }
-
+/*
   .offline-card-container {
     height: 58px;
-  }
+  } */
 
   .offline-card-container img {
     filter: blur(8px);
     -webkit-filter: blur(1px);
-    margin-top: 2px;
+    /* margin-top: 2px; */
   }
 
-  .user-offline-image-nourl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 100%;
-    background-color: #950652;
-    transition: border-radius .5s;
-    margin-left: 2px;
-    filter: blur(8px);
-    -webkit-filter: blur(3px);
-  }
 
-  .user-online-image-nourl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 100%;
-    background-color: #950652;
-    transition: border-radius .5s;
-    margin-left: 2px;
-
-  }
 
   #offline-user {
     color:rgba(102, 110, 123, 0.799);
-    padding-left: 20px;
+    /* padding-left: 20px; */
   }
 
   .edit-profile-image-preview {

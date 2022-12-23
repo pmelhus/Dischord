@@ -48,6 +48,12 @@ const Chat = ({ socket}) => {
     setChatInput(e.target.value);
   };
 
+  const inactiveTimer = (socket, id) => {
+    setTimeout(() => {
+      socket?.emit('change_inactive', id)
+    }, "3600000")
+  }
+
   const sendChat = async (e) => {
     e.preventDefault();
 
@@ -62,14 +68,17 @@ const Chat = ({ socket}) => {
       await setErrors(sentMessage.errors);
       return;
     }
-
-    await socket?.emit("chat");
+    console.log(sentMessage, 'SENT MESSAGE')
+    await socket?.emit("chat", sentMessage.owner_id) ;
+    // await socket?.emit('change_inactive', sentMessage.owner_id)
+    await socket?.emit('timeout_user')
     // await setErrors({})
     await setIsSent(true);
 
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
+    await inactiveTimer(socket, sentMessage.owner_id)
   };
 
   useEffect(() => {
@@ -161,7 +170,7 @@ const Chat = ({ socket}) => {
         {/* <div className="server-members-list"> */}
         <div className="server-members-online">
           {url !== "@me" && (
-            <p className="server-members-titles">Online - {online.length}</p>
+            <h4 className="server-members-titles">Online - {online.length}</h4>
           )}
           {users &&
             users.map((user) => {

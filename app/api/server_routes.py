@@ -152,7 +152,7 @@ def get_server_members(server_id):
 @server_routes.route('/server_members/<int:server_id>/<int:user_id>', methods=["POST"])
 @login_required
 def create_server_member(server_id, user_id):
-    print('HERE ===============')
+    # print('HERE ===============')
     server = Server.query.get(server_id)
     user = User.query.get(user_id)
     # server_member = Server.server_members.get(user.id)

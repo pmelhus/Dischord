@@ -14,26 +14,36 @@ const LoginForm = ({ socket }) => {
   const [passwordError, setPasswordError] = useState(true);
   const history = useHistory();
 
+  const inactiveTimer = (socket, id) => {
+    setTimeout(() => {
+      socket?.emit('change_inactive', id)
+    }, "3600000")
+  }
+
   const onLogin = async (e) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
+      console.log(data, 'DATA')
       await socket.emit("login", data);
-      if (data?.errors) {
-        setErrors(data?.errors);
+      if (data.errors) {
+        setErrors(data.errors);
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
+      await inactiveTimer(socket, data.id)
     }
   };
 
   const handleDemo = async (e) => {
     if (socket) {
       e.preventDefault();
-      const data = await dispatch(login("demo@aa.io",  "password"));
+      const data = await dispatch(login("demo@aa.io", "password"));
+      console.log(data, "DATA HERER")
       await socket.emit("login", data);
+      // console.log('I MADE IT')
       if (data?.errors) {
         setErrors(data?.errors);
       } else {
@@ -41,6 +51,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
+      await inactiveTimer(socket, data.id)
     }
   };
 

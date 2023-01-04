@@ -4,6 +4,7 @@ const LOAD_SERVERS = "servers/loadServers";
 const REMOVE_SERVER = "servers/removeServer";
 const LOAD_SERVER = "servers/loadServer";
 const REMOVE_SERVER_MEMBER = "serverMembers/removeServerMember";
+const LOAD_SERVER_MEMBER = "servers/getServerMember"
 
 const loadServers = (servers) => {
   return {
@@ -32,6 +33,13 @@ const removeServerMember = (serverMember) => {
     payload: serverMember,
   };
 };
+
+const getServerMember = (user) => {
+  return {
+    type: LOAD_SERVER_MEMBER,
+    payload: user,
+    }
+}
 
 const addServer = (server) => {
   return {
@@ -246,6 +254,18 @@ export const deleteServerMember = (serverMember) => async (dispatch) => {
     return ["An error occurred. Please try again."];
   }
 };
+
+export const getOneServerMember = (userId, serverId) => async (dispatch) => {
+  console.log('HERE !!!')
+  const response = await fetch(`/api/servers/server_members/${userId}/${serverId}`)
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(getServerMember(user))
+    return user
+  } else {
+    return ["Your fetch request failed."]
+  }
+}
 
 const serverReducer = (state = {}, action) => {
   switch (action.type) {

@@ -14,7 +14,7 @@ const UserOnlineCard = ({ currentServer, currentServerMemberIds, user }) => {
     <Popover placement="left-start"id="popover-basic">
       {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
 
-        <UserProfilePopover user={user} memberIds={currentServerMemberIds} />
+        <UserProfilePopover currentServer={currentServer} user={user} memberIds={currentServerMemberIds} />
 
     </Popover>
   );

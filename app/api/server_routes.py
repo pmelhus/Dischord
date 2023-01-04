@@ -149,6 +149,19 @@ def get_server_members(server_id):
         return server.to_dict()
 
 
+@server_routes.route('/server_members/<int:user_id>/<int:server_id>')
+@login_required
+def get_one_server_member(server_id, user_id):
+    print('=====================================================================================', db.session.query())
+
+    # user = User.query.get(user_id)
+    # if not one_member:
+    #     return {"errors": "Server member does not exist"}, 404
+    # else:
+    #     return one_member
+
+
+
 @server_routes.route('/server_members/<int:server_id>/<int:user_id>', methods=["POST"])
 @login_required
 def create_server_member(server_id, user_id):

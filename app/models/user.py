@@ -20,6 +20,7 @@ class User(db.Model, UserMixin, CrUpMixin):
 
 
 
+
     # has many
 
     servers = db.relationship("Server", back_populates="owner", cascade="all, delete-orphan", lazy="joined")

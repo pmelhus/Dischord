@@ -1,10 +1,11 @@
 import "./UserProfilePopover.css";
-
+import { ReactComponent as DischordIcon } from "../../../images/dischord-svg.svg";
 // Profile Popover component takes in the prop of user to display user information
 
 const UserProfilePopover = ({ user }) => {
-
-  console.log(user)
+  const userDate = new Date(user.created_at)
+  const options = {year: 'numeric', month: 'long', day: 'numeric' };
+  console.log(userDate.getDate())
   const bannerStyle = { backgroundColor: "rgb(42, 39, 33)" };
   return (
     <>
@@ -21,16 +22,18 @@ const UserProfilePopover = ({ user }) => {
               <div className="pro-pop-username">
                 <h3>{user.username}</h3>
               </div>
-              <div className='divider'>
-
-              </div>
+              <div className="divider"></div>
               <div className="pro-pop-info">
-
                 <div className="pro-pop-membersince">
                   <h4>MEMBER SINCE</h4>
-
-                  {user.created_at}
+                  <div className="dischord-member-since">
+                    <div className="dischord-member-svg">
+                      <DischordIcon />
+                    {userDate.toLocaleDateString(undefined, options)}
+                    </div>
                   </div>
+                  <div className="server-member-since"></div>
+                </div>
                 {user?.bio && (
                   <div className="pro-pop-aboutme">{user?.bio}</div>
                 )}

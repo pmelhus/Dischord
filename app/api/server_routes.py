@@ -2,9 +2,10 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import db, Server, Channel, User, server_members
 from app.forms import ServerForm
-
+from flask import session
 from ..utils.s3utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
+from ..utils.row2dict import (row2dict)
 
 server_routes = Blueprint('servers', __name__)
 
@@ -151,9 +152,23 @@ def get_server_members(server_id):
 
 @server_routes.route('/server_members/<int:user_id>/<int:server_id>')
 @login_required
-def get_one_server_member(server_id, user_id):
-    print('=====================================================================================', db.session.query())
+# def row2dict(row):
+#     d = {}
+#     for column in row.__table__.columns:
+#         d[column.name] = str(getattr(row, column.name))
 
+#     return d
+
+def get_one_server_member(server_id, user_id):
+    members = db.session.query(server_members).all()
+    for member in members:
+        if member.user_id == user_id and member.server_id == server_id:
+            print((member), row2dict(member), '====================================================================================')
+            return row2dict(member)
+
+    # for server_member in server_members:
+    # print('=====================================================================================', members.__table__.columns)
+        # print(server_member.)
     # user = User.query.get(user_id)
     # if not one_member:
     #     return {"errors": "Server member does not exist"}, 404

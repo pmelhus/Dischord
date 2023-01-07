@@ -1,7 +1,7 @@
 import "./UserProfilePopover.css";
 import { ReactComponent as DischordIcon } from "../../../images/dischord-svg.svg";
 import {useDispatch} from "react-redux"
-import {getOneServerMember} from "../../../store/server"
+import {getOneServerMember} from "../../../store/serverMember"
 import {useEffect} from "react"
 // Profile Popover component takes in the prop of user to display user information
 

@@ -34,10 +34,10 @@ const removeServerMember = (serverMember) => {
   };
 };
 
-const getServerMember = (user) => {
+const getServerMember = (serverMember) => {
   return {
     type: LOAD_SERVER_MEMBER,
-    payload: user,
+    payload: serverMember,
     }
 }
 
@@ -259,9 +259,10 @@ export const getOneServerMember = (userId, serverId) => async (dispatch) => {
   console.log('HERE !!!')
   const response = await fetch(`/api/servers/server_members/${userId}/${serverId}`)
   if (response.ok) {
-    const user = await response.json();
-    dispatch(getServerMember(user))
-    return user
+    const serverMember = await response.json();
+    console.log(serverMember, "RESPONSE")
+    dispatch(getServerMember(serverMember))
+    return serverMember
   } else {
     return ["Your fetch request failed."]
   }
@@ -296,8 +297,11 @@ const serverReducer = (state = {}, action) => {
         return { ...serverMemberData };
       }
     case ADD_SERVER_MEMBER:
-      console.log(action.payload)
+      // console.log(action.payload)
       return {...state, [action.payload.server.id]: action.payload.server}
+
+    case LOAD_SERVER_MEMBER:
+      return {...state, loadedServerMember: action.payload}
     default:
       return state;
   }

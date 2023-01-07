@@ -14,7 +14,7 @@ const ServerList = () => {
   const myServers = servers.filter(
     (server) =>
       server.owner_id === sessionUser.id ||
-      server.members_ids.includes(sessionUser.id)
+      server.members_ids?.includes(sessionUser.id)
   );
   // console.log(myServers)
   const [isLoaded, setIsLoaded] = useState(false);

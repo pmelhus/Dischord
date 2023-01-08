@@ -4,7 +4,7 @@ const LOAD_SERVERS = "servers/loadServers";
 const REMOVE_SERVER = "servers/removeServer";
 const LOAD_SERVER = "servers/loadServer";
 const REMOVE_SERVER_MEMBER = "serverMembers/removeServerMember";
-const LOAD_SERVER_MEMBER = "servers/getServerMember"
+
 
 const loadServers = (servers) => {
   return {
@@ -34,12 +34,7 @@ const removeServerMember = (serverMember) => {
   };
 };
 
-const getServerMember = (serverMember) => {
-  return {
-    type: LOAD_SERVER_MEMBER,
-    payload: serverMember,
-    }
-}
+
 
 const addServer = (server) => {
   return {
@@ -68,10 +63,10 @@ export const genServerMembers = (server_id) => async (dispatch) => {
   }
 };
 
-export const genServers = (id) => async (dispatch) => {
+export const genServers = () => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
   const [serversResponse] = await Promise.all([
-    fetch(`/api/servers/`),
+    fetch(`/api/servers`),
   ]);
   const [servers] = await Promise.all([serversResponse.json()]);
 
@@ -255,18 +250,7 @@ export const deleteServerMember = (serverMember) => async (dispatch) => {
   }
 };
 
-export const getOneServerMember = (userId, serverId) => async (dispatch) => {
-  console.log('HERE !!!')
-  const response = await fetch(`/api/servers/server_members/${userId}/${serverId}`)
-  if (response.ok) {
-    const serverMember = await response.json();
-    console.log(serverMember, "RESPONSE")
-    dispatch(getServerMember(serverMember))
-    return serverMember
-  } else {
-    return ["Your fetch request failed."]
-  }
-}
+
 
 const serverReducer = (state = {}, action) => {
   switch (action.type) {
@@ -299,9 +283,6 @@ const serverReducer = (state = {}, action) => {
     case ADD_SERVER_MEMBER:
       // console.log(action.payload)
       return {...state, [action.payload.server.id]: action.payload.server}
-
-    case LOAD_SERVER_MEMBER:
-      return {...state, loadedServerMember: action.payload}
     default:
       return state;
   }

@@ -25,18 +25,20 @@ def validation_errors_to_error_messages(validation_errors):
 @login_required
 def servers():
     servers = Server.query.all()
+
+    return {'servers': [server.to_dict() for server in servers]}
+
     # all_servers = Server.query.all()
     # if not id:
     #     return {"servers": [server.to_dict() for server in all_servers]}
     # else:
-    return {'servers': [server.to_dict() for server in servers]}
 
 
-@server_routes.route('/<int:id>')
-@login_required
-def server(id):
-    server = Server.query.get(id)
-    return server.to_dict()
+# @server_routes.route('/loadServer/<int:id>')
+# @login_required
+# def server(id):
+#     server = Server.query.get(id)
+#     return server.to_dict()
 
 
 @server_routes.route('/', methods=["POST"])
@@ -152,12 +154,6 @@ def get_server_members(server_id):
 
 @server_routes.route('/server_members/<int:user_id>/<int:server_id>')
 @login_required
-# def row2dict(row):
-#     d = {}
-#     for column in row.__table__.columns:
-#         d[column.name] = str(getattr(row, column.name))
-
-#     return d
 
 def get_one_server_member(server_id, user_id):
     members = db.session.query(server_members).all()
@@ -166,14 +162,6 @@ def get_one_server_member(server_id, user_id):
             print((member), row2dict(member), '====================================================================================')
             return row2dict(member)
 
-    # for server_member in server_members:
-    # print('=====================================================================================', members.__table__.columns)
-        # print(server_member.)
-    # user = User.query.get(user_id)
-    # if not one_member:
-    #     return {"errors": "Server member does not exist"}, 404
-    # else:
-    #     return one_member
 
 
 

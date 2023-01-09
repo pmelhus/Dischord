@@ -68,7 +68,7 @@ export const genServers = () => async (dispatch) => {
   const [serversResponse] = await Promise.all([
     fetch(`/api/servers/`),
   ]);
-  console.log(serversResponse, 'SERVER RESPONSE HERE')
+  // console.log(serversResponse, 'SERVER RESPONSE HERE')
   const [servers] = await Promise.all([serversResponse.json()]);
 
   if (serversResponse.ok) {

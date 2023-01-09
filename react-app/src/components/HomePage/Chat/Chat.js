@@ -33,9 +33,7 @@ const Chat = ({ socket}) => {
   );
   const [errors, setErrors] = useState({});
   const users = useSelector((state) => Object.values(state.users));
-  const currentServerMemberIds = useSelector(
-    (state) => state.servers[serverId]
-  )?.members_ids;
+
   const currentChannelMessages = allChannelMessages.filter(
     (message) => message.channel_id === channelId
   );
@@ -53,6 +51,7 @@ const Chat = ({ socket}) => {
       socket?.emit('change_inactive', id)
     }, "3600000")
   }
+
 
   const sendChat = async (e) => {
     e.preventDefault();
@@ -88,8 +87,16 @@ const Chat = ({ socket}) => {
   let online = [];
   let offline = [];
 
+  // Places all server member ids in an array
+  let serverMembersArr = []
+
+  currentServer.members_ids.forEach(member => {
+    // console.log(member, "member")
+    serverMembersArr.push(member.user_id)
+  })
+
   users.map((user) => {
-    if (currentServerMemberIds?.includes(user.id)) {
+    if (serverMembersArr?.includes(user.id)) {
       if (user.online) {
         online.push(user);
       } else {
@@ -97,6 +104,11 @@ const Chat = ({ socket}) => {
       }
     }
   });
+
+
+// const onlineServerMembers = users.filter()
+
+// console.log(serverMembersArr, 'CURRENT SERVER HERE')
 
   useEffect(() => {
     setMessageError(true);
@@ -174,7 +186,7 @@ const Chat = ({ socket}) => {
           )}
           {users &&
             users.map((user) => {
-              if (currentServerMemberIds?.includes(user.id)) {
+              if (serverMembersArr?.includes(user.id)) {
                 return (
                   <>
                     {user.online && (
@@ -182,7 +194,7 @@ const Chat = ({ socket}) => {
                         <UserOnlineCard
                           {...{ online }}
                           {...{ currentServer }}
-                          {...{ currentServerMemberIds }}
+                          {...{ serverMembersArr }}
                           {...{ user }}
                         />
                       </>
@@ -196,14 +208,14 @@ const Chat = ({ socket}) => {
           )}
           {users &&
             users.map((user) => {
-              if (currentServerMemberIds?.includes(user.id)) {
+              if (serverMembersArr?.includes(user.id)) {
                 return (
                   <>
                     {!user.online && (
                       <>
                         <UserOfflineCard
                           {...{ currentServer }}
-                          {...{ currentServerMemberIds }}
+                          {...{ serverMembersArr }}
                           {...{ user }}
                         />
                       </>

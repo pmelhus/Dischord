@@ -7,14 +7,14 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import "./UserOnlineCard.css";
 import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
 
-const UserOnlineCard = ({ currentServer, currentServerMemberIds, user }) => {
+const UserOnlineCard = ({ currentServer, user }) => {
   const [userModal, setUserModal] = useState(false);
 
   const popover = (
     <Popover placement="left-start"id="popover-basic">
       {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
 
-        <UserProfilePopover currentServer={currentServer} user={user} memberIds={currentServerMemberIds} />
+        <UserProfilePopover currentServer={currentServer} user={user} />
 
     </Popover>
   );

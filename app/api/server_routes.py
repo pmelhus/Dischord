@@ -36,15 +36,8 @@ def servers(id):
             # print (relevant_servers)
     # write a function that iterates through the relevant members and returns the server if the server id is in the list
 
-    # servers = Server.query.all()
-    servers = Server.query.all()
-    all_server_ids = []
-    for server in servers:
-        all_server_ids.append(server.id)
-    print(all_server_ids, "bam")
-    print(relevant_server_ids)
-    serversTest = Server.query.where(Server.id.in_(relevant_server_ids))
-    print(serversTest, 'BOYA')
+    serversTest = Server.query.where(Server.id.in_(relevant_server_ids)).all()
+
     return {'servers': [server.to_dict() for server in serversTest]}
 
     # all_servers = Server.query.all()

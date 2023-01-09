@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, Channel
+from app.models import db, Channel, Server, server_members
 from app.forms import ChannelForm
+
 
 channel_routes = Blueprint('channels', __name__)
 
@@ -20,8 +21,18 @@ def validation_errors_to_error_messages(validation_errors):
 @channel_routes.route('/<int:id>')
 @login_required
 def channels(id):
+    # query all server members
+    members = db.session.query(server_members).all()
+    # iterate through members and if user is in server then push server id to list
+    relevant_server_ids = []
+    for member in members:
+        if member.user_id == id:
+            relevant_server_ids.append(member.server_id)
+            # print (relevant_servers)
+    # write a function that iterates through the relevant members and returns the server if the server id is in the list
 
-    channels = Channel.query.filter(Channel.server_id == id).all()
+    channels = Channel.query.filter(Channel.server_id.in_(relevant_server_ids)).all()
+    # channels = Channel.query.all()
     return {'channels': [channel.to_dict() for channel in channels]}
 
 

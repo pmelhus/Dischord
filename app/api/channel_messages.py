@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, ChannelMessage
+from app.models import db, ChannelMessage, Channel, server_members
 from app.forms import ChannelMessageForm
 
 channel_message_routes = Blueprint('channel_messages', __name__)
@@ -38,13 +38,24 @@ def channel_message_submit():
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-@channel_message_routes.route('/')
+@channel_message_routes.route('/<int:id>')
 @login_required
-def get_messages():
+def get_messages(id):
+    members = db.session.query(server_members).all()
+    # iterate through members and if user is in server then push server id to list
+    relevant_server_ids = []
+    for member in members:
+        if member.user_id == id:
+            relevant_server_ids.append(member.server_id)
 
-    channel_messages = ChannelMessage.query.all()
+    relevant_channel_ids = []
+    channels = Channel.query.where(Channel.server_id.in_(relevant_server_ids))
+    for channel in channels:
+        relevant_channel_ids.append(channel.id)
+    print(relevant_channel_ids, 'idsnow')
+    channel_messages = ChannelMessage.query.where(ChannelMessage.channel_id.in_(relevant_channel_ids)).all()
 
-    # print(channel_messages, '==================')
+    print(channel_messages, 'MESAGE')
     if not len(channel_messages):
         return {"errors": ["No messages to be found"]}
     else:

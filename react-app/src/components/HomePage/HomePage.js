@@ -43,19 +43,19 @@ const HomePage = ({
 
       await dispatch(genServers(sessionUser.id));
 
-    if (serverId) {
-      await dispatch(genChannels(serverId));
-    }
 
-    if (channelId) {
-      await dispatch(genChannelMessages(channelId));
-    }
+      await dispatch(genChannels(sessionUser.id));
+
+
+
+      await dispatch(genChannelMessages(sessionUser.id));
+
     await dispatch(genUsers());
 
     await setLoaded(true);
   }, [dispatch]);
 
-  
+
 
   return (
     <div className="home-page-container">

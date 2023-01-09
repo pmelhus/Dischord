@@ -6,20 +6,24 @@ import { useEffect } from "react";
 // Profile Popover component takes in the prop of user to display user information
 
 const UserProfilePopover = ({ user, currentServer, memberIds }) => {
+  const memberSinceDate = currentServer.members_ids.find(member => member.user_id === user.id).member_since
   const userDate = new Date(user.created_at);
-  const memberDate = new Date();
+  const memberDate = new Date(memberSinceDate);
   const options = { year: "numeric", month: "long", day: "numeric" };
-  console.log(userDate.getDate());
+  // console.log(userDate.getDate());
   const bannerStyle = { backgroundColor: "rgb(42, 39, 33)" };
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  // console.log(typeof userDate)
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    dispatch(getAllServerMembers(user.id, currentServer.id));
-  }, [dispatch]);
+  //   dispatch(getAllServerMembers(user.id, currentServer.id));
+  // }, [dispatch]);
 
-  const currentServerMember = useSelector((state) => state.serverMembers.loadedServerMembers);
+  // const currentServerMember = useSelector((state) => state.serverMembers.loadedServerMembers);
   // console.log(currentServerMember)
+
+
   return (
     <>
       <div className="pro-pop-background">
@@ -47,7 +51,7 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
                         className="server-icon"
                         src={currentServer.image_url}
                       ></img>
-                      <p>{currentServerMember?.member_since}</p>
+                      <p>{memberDate.toLocaleDateString(undefined, options)}</p>
                     </div>
                   </div>
                   <div className="server-member-since"></div>

@@ -24,6 +24,7 @@ def validation_errors_to_error_messages(validation_errors):
 @server_routes.route('/')
 @login_required
 def servers():
+    print('HERE')
     servers = Server.query.all()
 
     return {'servers': [server.to_dict() for server in servers]}

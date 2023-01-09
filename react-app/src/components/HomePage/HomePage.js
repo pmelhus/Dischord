@@ -41,7 +41,7 @@ const HomePage = ({
 
   useEffect(async () => {
     if (sessionUser) {
-      await dispatch(genServers(sessionUser.id));
+      await dispatch(genServers());
     }
     if (serverId) {
       await dispatch(genChannels(serverId));

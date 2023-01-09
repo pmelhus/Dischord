@@ -59,8 +59,8 @@ class User(db.Model, UserMixin, CrUpMixin):
             'bio': self.bio,
             'image_url': self.image_url,
             'online': self.online,
-            'created_at': self.created_at
-            # 'memberships': [server.to_dict() for server in self.memberships]
+            'created_at': self.created_at,
+            'memberships': [server.to_dict() for server in self.memberships]
         }
 
     @staticmethod

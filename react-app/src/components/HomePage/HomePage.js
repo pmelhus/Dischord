@@ -40,9 +40,9 @@ const HomePage = ({
   // }, []);
 
   useEffect(async () => {
-    if (sessionUser) {
-      await dispatch(genServers());
-    }
+
+      await dispatch(genServers(sessionUser.id));
+
     if (serverId) {
       await dispatch(genChannels(serverId));
     }
@@ -53,7 +53,9 @@ const HomePage = ({
     await dispatch(genUsers());
 
     await setLoaded(true);
-  }, [dispatch, pathname]);
+  }, [dispatch]);
+
+  
 
   return (
     <div className="home-page-container">

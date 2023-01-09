@@ -16,8 +16,7 @@ import UserOfflineCard from "./UserOfflineCard";
 import MePage from "./MePage/MePage";
 // outside of your component, initialize the socket variable
 
-const Chat = ({ socket}) => {
-
+const Chat = ({ socket }) => {
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
   const dispatch = useDispatch();
@@ -41,17 +40,15 @@ const Chat = ({ socket}) => {
   const [messageError, setMessageError] = useState(true);
   const [messageEditId, setMessageEditId] = useState(null);
 
-
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
   };
 
   const inactiveTimer = (socket, id) => {
     setTimeout(() => {
-      socket?.emit('change_inactive', id)
-    }, "3600000")
-  }
-
+      socket?.emit("change_inactive", id);
+    }, "3600000");
+  };
 
   const sendChat = async (e) => {
     e.preventDefault();
@@ -67,17 +64,17 @@ const Chat = ({ socket}) => {
       await setErrors(sentMessage.errors);
       return;
     }
-    console.log(sentMessage, 'SENT MESSAGE')
-    await socket?.emit("chat", sentMessage.owner_id) ;
+    console.log(sentMessage, "SENT MESSAGE");
+    await socket?.emit("chat", sentMessage.owner_id);
     // await socket?.emit('change_inactive', sentMessage.owner_id)
-    await socket?.emit('timeout_user')
+    await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
 
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
-    await inactiveTimer(socket, sentMessage.owner_id)
+    await inactiveTimer(socket, sentMessage.owner_id);
   };
 
   useEffect(() => {
@@ -88,12 +85,13 @@ const Chat = ({ socket}) => {
   let offline = [];
 
   // Places all server member ids in an array
-  let serverMembersArr = []
-
-  currentServer.members_ids.forEach(member => {
-    // console.log(member, "member")
-    serverMembersArr.push(member.user_id)
-  })
+  let serverMembersArr = [];
+  if (currentServer) {
+    currentServer.members_ids?.forEach((member) => {
+      // console.log(member, "member")
+      serverMembersArr.push(member.user_id);
+    });
+  }
 
   users.map((user) => {
     if (serverMembersArr?.includes(user.id)) {
@@ -105,10 +103,9 @@ const Chat = ({ socket}) => {
     }
   });
 
+  // const onlineServerMembers = users.filter()
 
-// const onlineServerMembers = users.filter()
-
-// console.log(serverMembersArr, 'CURRENT SERVER HERE')
+  // console.log(serverMembersArr, 'CURRENT SERVER HERE')
 
   useEffect(() => {
     setMessageError(true);
@@ -141,8 +138,8 @@ const Chat = ({ socket}) => {
           {currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
               <ChannelMessage
-              {...{setMessageEditId}}
-                {...{messageEditId}}
+                {...{ setMessageEditId }}
+                {...{ messageEditId }}
                 {...{ channelId }}
                 {...{ socket }}
                 {...{ message }}

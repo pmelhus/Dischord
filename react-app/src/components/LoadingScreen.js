@@ -1,4 +1,4 @@
-
+import "./LoadingScreen.css"
 const LoadingScreen = () => {
   return (
     <div className='loading-icon-div'>

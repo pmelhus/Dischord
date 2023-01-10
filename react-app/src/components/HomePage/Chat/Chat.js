@@ -15,9 +15,10 @@ import UserOfflineCard from "./UserOfflineCard";
 
 import MePage from "./MePage/MePage";
 // outside of your component, initialize the socket variabl
-import ChannelMessagePlaceholder from "../../Placeholders/ChannelMessagePlaceholder"
+import Placeholder from "../../Placeholders/Placeholder";
+import FadeIn from "react-fade-in";
 
-const Chat = ({ socket }) => {
+const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
   const dispatch = useDispatch();
@@ -136,19 +137,32 @@ const Chat = ({ socket }) => {
               </div>
             </div>
           </Route>
-          {currentChannelMessages.reverse().map((message, ind) => (
-            <div className="channel-message-div" key={ind}>
-<ChannelMessagePlaceholder/>
-              <ChannelMessage
-                {...{ setMessageEditId }}
-                {...{ messageEditId }}
-                {...{ channelId }}
-                {...{ socket }}
-                {...{ message }}
-                {...{ ind }}
-              />
-            </div>
-          ))}
+          <div>
+            {loadingMessages ? (
+              <div className="channel-message-div-loader">
+                <Placeholder />
+                <Placeholder />
+                <Placeholder />
+              </div>
+            ) : (
+              <>
+                {currentChannelMessages.reverse().map((message, ind) => (
+                  <FadeIn>
+                    <div className="channel-message-div" key={ind}>
+                      <ChannelMessage
+                        {...{ setMessageEditId }}
+                        {...{ messageEditId }}
+                        {...{ channelId }}
+                        {...{ socket }}
+                        {...{ message }}
+                        {...{ ind }}
+                      />
+                    </div>
+                  </FadeIn>
+                ))}
+              </>
+            )}
+          </div>
         </div>
         <div className="channel-chat-form-div">
           {pathname.split("/")[2] !== "@me" &&

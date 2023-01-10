@@ -25,6 +25,7 @@ const HomePage = ({
 
   const [loaded, setLoaded] = useState(false);
   const [loadingScreen, setLoadingScreen] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(true);
 
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
@@ -38,20 +39,31 @@ const HomePage = ({
 
   // }, []);
 
-  useEffect(async () => {
+  const componentMounted = async()=> {
+    await setLoadingMessages(true)
+    await dispatch(genChannelMessages(channelId));
+    // await setLoadingMessages(false)
+  }
 
+  useEffect(async () => {
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
-    await setLoadingScreen(false);
     await setLoaded(true);
+    await setLoadingScreen(false);
   }, [dispatch, loadingScreen]);
 
+
   useEffect(async () => {
-    if (channelId && loaded) {
-      await dispatch(genChannelMessages(channelId));
-    }
-  }, [pathname, dispatch, loaded]);
+if (channelId && loaded) {
+
+  await componentMounted()
+  await setLoadingMessages(false);
+}
+
+  }, [channelId, dispatch, loaded]);
+
+
 
   return (
     <div className="home-page-container">
@@ -64,6 +76,8 @@ const HomePage = ({
             {...{ setOnlineMembers }}
             {...{ socket }}
             {...{ setLoading }}
+            {...{ setLoadingMessages }}
+            {...{ loadingMessages }}
           />
         </>
       )}

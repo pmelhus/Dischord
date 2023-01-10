@@ -40,22 +40,17 @@ const HomePage = ({
   // }, []);
 
   useEffect(async () => {
-
-      await dispatch(genServers(sessionUser.id));
-
-
-      await dispatch(genChannels(sessionUser.id));
-
-
-
-      await dispatch(genChannelMessages(sessionUser.id));
-
+    await dispatch(genServers(sessionUser.id));
+    await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
-
     await setLoaded(true);
   }, [dispatch]);
 
-
+  useEffect(async () => {
+    if (channelId && loaded) {
+      await dispatch(genChannelMessages(channelId));
+    }
+  }, [pathname, dispatch, loaded]);
 
   return (
     <div className="home-page-container">

@@ -19,13 +19,12 @@ const HomePage = ({
   setLoading,
   loading,
 }) => {
-  const [loadingScreen, setLoadingScreen] = useState(false);
-
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
   const [loaded, setLoaded] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(true);
 
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
@@ -40,11 +39,13 @@ const HomePage = ({
   // }, []);
 
   useEffect(async () => {
+
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
+    await setLoadingScreen(false);
     await setLoaded(true);
-  }, [dispatch]);
+  }, [dispatch, loadingScreen]);
 
   useEffect(async () => {
     if (channelId && loaded) {

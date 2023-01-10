@@ -22,22 +22,30 @@ body {
   /* min-width: 1980px;
   min-height: 1080px; */
   min-width: 100%;
+  background-color: #36393f;
 }
 
 
 #loading-icon {
   box-sizing: border-box;
-  animation: spin-animation 1s infinite;
-  border-radius: 50%;
-  width: 500px;
-  height: 500px;
-  position: fixed;
+  animation: spin-animation 1.5s infinite;
+  border-radius: 100%;
+  z-index: 1;
+  object-fit:contain;
+width: 160px;
+height: 160px;
 }
 
 .loading-icon-div {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+color:rgba(255, 255, 255, 0.678);
+}
+
+.loading-icon-div h3 {
+  margin-top: 10px;
 }
 
 @keyframes spin-animation {

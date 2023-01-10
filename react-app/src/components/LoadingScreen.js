@@ -1,3 +1,4 @@
+
 const LoadingScreen = () => {
   return (
     <div className='loading-icon-div'>
@@ -5,8 +6,9 @@ const LoadingScreen = () => {
        */}
       <img
         id="loading-icon"
-        src="https://c.tenor.com/VFFJ8Ei3C2IAAAAM/rickroll-rick.gif"
+        src="https://res.cloudinary.com/dmtap2h65/image/upload/v1655674014/DISCHORD-cropped_aekkb4.png"
       ></img>
+      <h3>Hang tight while we get your page loaded!</h3>
     </div>
   );
 };

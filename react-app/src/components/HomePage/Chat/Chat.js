@@ -14,7 +14,8 @@ import UserOnlineCard from "./UserOnlineCard";
 import UserOfflineCard from "./UserOfflineCard";
 
 import MePage from "./MePage/MePage";
-// outside of your component, initialize the socket variable
+// outside of your component, initialize the socket variabl
+import ChannelMessagePlaceholder from "../../Placeholders/ChannelMessagePlaceholder"
 
 const Chat = ({ socket }) => {
   // use state for controlled form input
@@ -137,6 +138,7 @@ const Chat = ({ socket }) => {
           </Route>
           {currentChannelMessages.reverse().map((message, ind) => (
             <div className="channel-message-div" key={ind}>
+<ChannelMessagePlaceholder/>
               <ChannelMessage
                 {...{ setMessageEditId }}
                 {...{ messageEditId }}

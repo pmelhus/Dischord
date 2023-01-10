@@ -21,13 +21,24 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@server_routes.route('/')
+@server_routes.route('/usersServers/<int:id>')
 @login_required
-def servers():
+def servers(id):
     print('HERE')
-    servers = Server.query.all()
 
-    return {'servers': [server.to_dict() for server in servers]}
+    # query all server members
+    members = db.session.query(server_members).all()
+    # iterate through members and if user is in server then push server id to list
+    relevant_server_ids = []
+    for member in members:
+        if member.user_id == id:
+            relevant_server_ids.append(member.server_id)
+            # print (relevant_servers)
+    # write a function that iterates through the relevant members and returns the server if the server id is in the list
+
+    serversTest = Server.query.where(Server.id.in_(relevant_server_ids)).all()
+
+    return {'servers': [server.to_dict() for server in serversTest]}
 
     # all_servers = Server.query.all()
     # if not id:

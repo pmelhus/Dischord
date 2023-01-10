@@ -49,6 +49,7 @@
 }
 
 .pro-pop-icon {
+  /* position: absolute; */
   width: 80px;
   height: 80px;
   border-radius: 100%;
@@ -104,9 +105,19 @@ font-size: 12px;
 /* width: 90px; */
 white-space: nowrap;
 }
-.pro-pop-membersince h4 {
-  margin-bottom: 5px;
+
+.pro-pop-info h4 {
+  margin-bottom: 10px;
   font-size: 12px;
+}
+
+.pro-pop-aboutme p {
+  font-size: 12px;
+}
+
+
+.pro-pop-aboutme {
+  margin-bottom: 15px;
 }
 
 .server-icon {
@@ -114,4 +125,71 @@ white-space: nowrap;
   width: 30px;
   height: 30px;
   object-fit:cover;
+}
+
+
+
+.green-circle-popover {
+  position: relative;
+
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background-color: rgb(48, 133, 57);
+  z-index: 2;
+}
+
+.green-circle-popover-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color:rgb(26, 24, 20);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: 100%;
+  z-index: 1;
+}
+
+.online-image-with-circle-popover {
+  position: relative;
+
+}
+
+.idle-circle-popover {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background-color: rgb(232, 163, 67);
+  z-index: 2;
+}
+
+.idle-mini-circle-popover {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color:rgb(26, 24, 20);
+  z-index: 2;
+}
+
+.idle-circle-background-popover {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  background-color:rgb(26, 24, 20);
+  border-radius: 100%;
+z-index: 1;
+}
+
+.idle-circle-container-popover {
+  position: relative;
 }

@@ -16,7 +16,7 @@ class User(db.Model, UserMixin, CrUpMixin):
     bio = db.Column(db.String(190), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
     online = db.Column(db.Boolean(), default=False)
-    inactive = db.Column(db.Boolean(), default=True)
+    idle = db.Column(db.Boolean(), default=True)
 
 
 
@@ -59,6 +59,7 @@ class User(db.Model, UserMixin, CrUpMixin):
             'bio': self.bio,
             'image_url': self.image_url,
             'online': self.online,
+            'idle': self.idle,
             'created_at': self.created_at,
             'memberships': [server.to_dict() for server in self.memberships]
         }
@@ -71,4 +72,5 @@ class User(db.Model, UserMixin, CrUpMixin):
         user.bio = user_data.get("bio")
         user.image_url = user_data.get("image_url")
         user.online = user_data.get('online')
+        user.idle = user_data.get('idle')
         return user

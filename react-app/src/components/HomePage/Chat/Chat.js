@@ -44,9 +44,9 @@ const Chat = ({ socket }) => {
     setChatInput(e.target.value);
   };
 
-  const inactiveTimer = (socket, id) => {
+  const idleTimer = (socket, id) => {
     setTimeout(() => {
-      socket?.emit("change_inactive", id);
+      socket?.emit("change_idle", id);
     }, "3600000");
   };
 
@@ -66,7 +66,7 @@ const Chat = ({ socket }) => {
     }
     console.log(sentMessage, "SENT MESSAGE");
     await socket?.emit("chat", sentMessage.owner_id);
-    // await socket?.emit('change_inactive', sentMessage.owner_id)
+
     await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
@@ -74,7 +74,7 @@ const Chat = ({ socket }) => {
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
-    await inactiveTimer(socket, sentMessage.owner_id);
+    await idleTimer(socket, sentMessage.owner_id);
   };
 
   useEffect(() => {

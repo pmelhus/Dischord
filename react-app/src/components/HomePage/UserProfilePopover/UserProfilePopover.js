@@ -35,7 +35,7 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
               <div className="pro-pop-icon-background">
                 {user.image_url ? (
                   <div className="online-image-with-circle-popover">
-                    {user.inactive ? (
+                    {user.idle ? (
                       <div className="idle-circle-container-popover">
                         <img
                           className="pro-pop-icon"

@@ -39,7 +39,7 @@ const UserOnlineCard = ({ currentServer, user }) => {
           >
             {user.image_url ? (
               <div className="online-image-with-circle">
-                {user.inactive ? (
+                {user.idle ? (
                   <div className="idle-circle-background">
                     <div className="idle-circle">
                       <div className="idle-mini-circle"></div>
@@ -56,7 +56,7 @@ const UserOnlineCard = ({ currentServer, user }) => {
             ) : (
               <>
                 <div className="user-online-image-nourl">
-                {user.inactive ? (
+                {user.idle ? (
                   <div className="idle-circle-background">
                   <div className="idle-circle">
                     <div className="idle-mini-circle"></div>

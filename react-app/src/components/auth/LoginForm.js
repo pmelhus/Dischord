@@ -14,9 +14,9 @@ const LoginForm = ({ socket }) => {
   const [passwordError, setPasswordError] = useState(true);
   const history = useHistory();
 
-  const inactiveTimer = (socket, id) => {
+  const idleTimer = (socket, id) => {
     setTimeout(() => {
-      socket?.emit('change_inactive', id)
+      socket?.emit('change_idle', id)
     }, "3600000")
   }
 
@@ -33,7 +33,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
-      await inactiveTimer(socket, data.id)
+      await idleTimer(socket, data.id)
     }
   };
 
@@ -51,7 +51,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
-      await inactiveTimer(socket, data.id)
+      await idleTimer(socket, data.id)
     }
   };
 

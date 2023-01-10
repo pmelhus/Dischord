@@ -28,12 +28,12 @@ socketio = SocketIO(cors_allowed_origins=origins, logger=True)
 
 # timer(10.0)
 
-# changes user activity to inactive
+# changes user activity to idle
 
 
-def change_inactive(user):
+def change_idle(user):
     print(user, 'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================')
-    user.inactive = True
+    user.idle = True
     db.session.commit()
 
 # a timer to change the activity of user
@@ -56,17 +56,17 @@ def change_inactive(user):
 def handle_chat(id):
     # print(id,'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================')
     user = User.query.get(id)
-    # inactive_timer(user)
+
     # print(user, 'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================' )
-    user.inactive = False
+    user.idle = False
     db.session.commit()
     emit("chat", broadcast=True)
 
 
-@socketio.on('change_inactive')
-def change_inactive(id):
+@socketio.on('change_idle')
+def change_idle(id):
     user = User.query.get(id)
-    user.inactive = True
+    user.idle = True
     db.session.commit()
     # print(user, 'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================' )
 
@@ -75,7 +75,7 @@ def change_inactive(id):
 def timeout_user():
     users = User.query.all()
     for user in users:
-        if not user.online and user.inactive:
+        if not user.online and user.idle:
             user.online = False
             db.session.commit()
             emit("logout", user, broadcast=True)
@@ -86,18 +86,18 @@ def handle_login(data):
     # print(data, 'USER HERE NOW BETCH ==========================================================')
     user = User.query.get(data['id'])
     # print(user, 'USER HERE ==================================================================================================================================================================================================================')
-    user.inactive = False
+    user.idle = False
     user.online = True
     db.session.commit()
     emit("login", data, broadcast=True)
-    # inactive_timer(user)
+    # idle_timer(user)
 
 
 @socketio.on("logout")
 def handle_logout(data):
     user = User.query.get(data['id'])
     user.online = False
-    user.inactive = True
+    user.idle = True
     db.session.commit()
     emit("logout", data, broadcast=True)
 
@@ -109,11 +109,11 @@ def handle_sign_up(data):
     # print('USER HERE')
     # print(user, 'USER HERE')
     user.online = True
-    user.inactive = False
+    user.idle = False
     db.session.commit()
     emit("sign-up", data, broadcast=True)
     emit("login", data, broadcast=True)
-    # inactive_timer(user)
+    # idle_timer(user)
 
 
 # socketio.on("connection", (socket) => {

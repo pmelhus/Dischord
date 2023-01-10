@@ -6,7 +6,9 @@ import { useEffect } from "react";
 // Profile Popover component takes in the prop of user to display user information
 
 const UserProfilePopover = ({ user, currentServer, memberIds }) => {
-  const memberSinceDate = currentServer.members_ids.find(member => member.user_id === user.id).member_since
+  const memberSinceDate = currentServer.members_ids.find(
+    (member) => member.user_id === user.id
+  ).member_since;
   const userDate = new Date(user.created_at);
   const memberDate = new Date(memberSinceDate);
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -23,7 +25,6 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
   // const currentServerMember = useSelector((state) => state.serverMembers.loadedServerMembers);
   // console.log(currentServerMember)
 
-
   return (
     <>
       <div className="pro-pop-background">
@@ -32,7 +33,53 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
           <div className="pro-pop-content-background">
             <div className="pro-pop-icon-container">
               <div className="pro-pop-icon-background">
-                <img className="pro-pop-icon" src={user.image_url}></img>
+                {user.image_url ? (
+                  <div className="online-image-with-circle-popover">
+                    {user.inactive ? (
+                      <div className="idle-circle-container-popover">
+                        <img
+                          className="pro-pop-icon"
+                          src={user.image_url}
+                        ></img>
+                        {user.online && (
+                          <>
+                            <div className="idle-circle-background-popover">
+                              <div className="idle-circle-popover">
+                                <div className="idle-mini-circle-popover"></div>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ) : (
+                      <>
+                        <img
+                          className="pro-pop-icon"
+                          src={user.image_url}
+                        ></img>
+                        {user.online && (
+                          <>
+                            <div className="green-circle-popover-background">
+                              <div className="green-circle-popover"> </div>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <div className="pro-pop-icon-nourl">
+                    <i className="fa-solid fa-user-music fa-2xl"></i>
+                    {user.online && (
+                          <>
+
+                    <div className="green-circle-popover-background">
+                      <div className="green-circle-popover"> </div>
+                    </div>
+                          </>
+                        )}
+                  </div>
+                )}
               </div>
             </div>
             <div className="pro-pop-content">
@@ -41,6 +88,12 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
               </div>
               <div className="divider"></div>
               <div className="pro-pop-info">
+                {user?.bio && (
+                  <div className="pro-pop-aboutme">
+                    <h4>ABOUT ME</h4>
+                    <p>{user?.bio}</p>
+                  </div>
+                )}
                 <div className="pro-pop-membersince">
                   <h4>MEMBER SINCE</h4>
                   <div className="dischord-member-since">
@@ -56,9 +109,6 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
                   </div>
                   <div className="server-member-since"></div>
                 </div>
-                {user?.bio && (
-                  <div className="pro-pop-aboutme">{user?.bio}</div>
-                )}
               </div>
             </div>
           </div>

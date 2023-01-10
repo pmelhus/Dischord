@@ -11,11 +11,10 @@ const UserOnlineCard = ({ currentServer, user }) => {
   const [userModal, setUserModal] = useState(false);
 
   const popover = (
-    <Popover placement="left-start"id="popover-basic">
+    <Popover placement="left-start" id="popover-basic">
       {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
 
-        <UserProfilePopover currentServer={currentServer} user={user} />
-
+      <UserProfilePopover currentServer={currentServer} user={user} />
     </Popover>
   );
 
@@ -23,21 +22,53 @@ const UserOnlineCard = ({ currentServer, user }) => {
     <>
       <OverlayTrigger
         rootClose={true}
-        trigger={'click'}
+        trigger={"click"}
         placement="left-start"
         overlay={popover}
         onToggle={() => setUserModal(!userModal)}
         // onHide={() => setUserModal(false)}
         show={userModal}
       >
-        <div className='online-card-container'>
-          <div className={userModal ? ("invite-image-username-selected") :("invite-image-username")}>
+        <div className="online-card-container">
+          <div
+            className={
+              userModal
+                ? "invite-image-username-selected"
+                : "invite-image-username"
+            }
+          >
             {user.image_url ? (
-              <img className="server-online-image" src={user.image_url} />
+              <div className="online-image-with-circle">
+                {user.inactive ? (
+                  <div className="idle-circle-background">
+                    <div className="idle-circle">
+                      <div className="idle-mini-circle"></div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="green-circle-background">
+                    <div className="green-circle"> </div>
+                  </div>
+                )}
+
+                <img className="server-online-image" src={user.image_url} />
+              </div>
             ) : (
               <>
                 <div className="user-online-image-nourl">
-                  <i className="fa-solid fa-user-music"></i>
+                {user.inactive ? (
+                  <div className="idle-circle-background">
+                  <div className="idle-circle">
+                    <div className="idle-mini-circle"></div>
+                  </div>
+                </div>
+                ) : (
+                  <div className="green-circle-background">
+                    <div className="green-circle"> </div>
+                  </div>
+
+                )}
+                <i className="fa-solid fa-user-music"></i>
                 </div>
               </>
             )}

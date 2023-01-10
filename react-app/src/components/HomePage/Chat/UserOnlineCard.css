@@ -73,6 +73,7 @@
 }
 
 .user-online-image-nourl {
+    position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,4 +86,82 @@
   transition: border-radius .5s;
   /* margin-left: 2px; */
 
+}
+
+
+
+.green-circle {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: rgb(48, 133, 57);
+  z-index: 2;
+}
+
+.green-circle-background {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  background-color:#454649;
+  border-radius: 100%;
+z-index: 1;
+}
+
+.online-image-with-circle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.idle-circle {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: rgb(232, 163, 67);
+  z-index: 2;
+}
+
+.idle-mini-circle {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background-color:#454649;
+  z-index: 2;
+}
+
+.idle-circle-background {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  background-color:#454649;
+  border-radius: 100%;
+z-index: 1;
+}
+
+
+
+
+.pro-pop-icon-nourl {
+  background-color: #950652;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 90%;
+  height: 90%;
+  border-radius: 100%;
 }

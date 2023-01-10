@@ -1,5 +1,32 @@
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import "./UserOnlineCard.css";
+import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
+import { useState } from "react";
+
 const UserOfflineCard = ({ offline, user, currentServer }) => {
+  const [userModal, setUserModal] = useState(false);
+  const popover = (
+    <Popover placement="left-start" id="popover-basic">
+      {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
+
+      <UserProfilePopover currentServer={currentServer} user={user} />
+    </Popover>
+  );
+
   return (
+
+    <>
+      <OverlayTrigger
+        rootClose={true}
+        trigger={"click"}
+        placement="left-start"
+        overlay={popover}
+        onToggle={() => setUserModal(!userModal)}
+        // onHide={() => setUserModal(false)}
+        show={userModal}
+      >
+
     <div className="offline-card-container">
       <div className="invite-image-username">
         {user.image_url ? (
@@ -19,6 +46,8 @@ const UserOfflineCard = ({ offline, user, currentServer }) => {
         )}
       </div>
     </div>
+      </OverlayTrigger>
+    </>
   );
 };
 

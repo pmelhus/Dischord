@@ -1,10 +1,18 @@
 const ADD_CHANNEL = "channels/addChannel";
 const LOAD_CHANNELS = "channels/loadChannels";
 const REMOVE_CHANNEL = "channels/removeChannel";
+const LOAD_ALL_CHANNELS = 'channels/loadAllChannels'
 
 const loadChannels = (channels) => {
   return {
     type: LOAD_CHANNELS,
+    payload: channels
+  };
+};
+
+const loadAllChannels = (channels) => {
+  return {
+    type: LOAD_ALL_CHANNELS,
     payload: channels
   };
 };
@@ -30,6 +38,17 @@ export const genChannels = (id) => async (dispatch) => {
 
   if (channelsResponse.ok) {
     dispatch(loadChannels(channels.channels));
+    return channels;
+  }
+};
+
+export const genAllChannels = () => async (dispatch) => {
+  // doing it this way in case we want more types of responses here later ...
+  const [channelsResponse] = await Promise.all([fetch(`/api/channels/`)]);
+  const [channels] = await Promise.all([channelsResponse.json()]);
+
+  if (channelsResponse.ok) {
+    dispatch(loadAllChannels(channels.channels));
     return channels;
   }
 };
@@ -160,6 +179,12 @@ const channelReducer = (state = {}, action) => {
         channelData[channel.id] = channel;
       }
       return { ...channelData };
+    case LOAD_ALL_CHANNELS:
+      const allChannels = {}
+      for (let channel of action.payload) {
+        allChannels[channel.id] = channel;
+      }
+      return { ...allChannels};
     default:
       return state;
   }

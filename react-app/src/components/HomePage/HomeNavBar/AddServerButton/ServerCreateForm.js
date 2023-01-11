@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createServer } from "../../../../store/server";
 import { LoadingModal } from "../../../../context/LoadingModal";
+import {genAllChannels} from "../../../../store/channel"
 
 const ServerCreateForm = ({ setShowServerModal }) => {
   const history = useHistory(); // so that we can redirect after the image upload is successful
@@ -38,8 +39,10 @@ const ServerCreateForm = ({ setShowServerModal }) => {
       setImage(null);
       setChecked(false);
       setShowServerModal(false);
+
       await setLoading(false);
-      history.push(`/channels/${newServer.id}/${newServer.channel_ids[0]}`);
+      await dispatch(genAllChannels())
+      await history.push(`/channels/${newServer.id}/${newServer.channel_ids[0]}`);
     }
     // hallo
   };

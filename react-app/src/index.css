@@ -12,20 +12,19 @@ body {
    */
    /* min-height: 100%; */
    /* min-width: 100%; */
-  font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
   box-sizing: border-box;
 
 }
 
-:root{
-  --primary-font: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
+
 
 #root {
   /* position: absolute; */
   /* min-width: 1980px;
   min-height: 1080px; */
   min-width: 100%;
+  font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 
 }
 

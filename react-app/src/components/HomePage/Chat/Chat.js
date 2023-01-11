@@ -146,7 +146,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
               </div>
             ) : (
               <>
-                {currentChannelMessages.reverse().map((message, ind) => (
+                {currentChannelMessages.map((message, ind) => (
                   <FadeIn>
                     <div className="channel-message-div" key={ind}>
                       <ChannelMessage

@@ -25,7 +25,7 @@ const HomePage = ({
 
   const [loaded, setLoaded] = useState(false);
   const [loadingScreen, setLoadingScreen] = useState(true);
-  const [loadingMessages, setLoadingMessages] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(false);
 
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
@@ -39,11 +39,12 @@ const HomePage = ({
 
   // }, []);
 
-  const componentMounted = async()=> {
-    await setLoadingMessages(true)
+  const componentMounted = async () => {
+    await setLoadingMessages(true);
     await dispatch(genChannelMessages(channelId));
-    // await setLoadingMessages(false)
-  }
+    await setLoadingMessages(false);
+  };
+
 
   useEffect(async () => {
     await dispatch(genServers(sessionUser.id));
@@ -53,16 +54,12 @@ const HomePage = ({
     await setLoadingScreen(false);
   }, [dispatch, loadingScreen]);
 
-
   useEffect(async () => {
-if (channelId && loaded) {
-
-  await componentMounted()
-  await setLoadingMessages(false);
-}
-
+    if (channelId && loaded) {
+      await componentMounted();
+      await setLoadingMessages(false);
+    }
   }, [channelId, dispatch, loaded]);
-
 
 
   return (

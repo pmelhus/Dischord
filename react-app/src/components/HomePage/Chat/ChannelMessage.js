@@ -26,8 +26,9 @@ const ChannelMessage = ({
   // const [messageEditId, setMessageEditId] = useState(null);
 
   const handleEditModal = () => {
-    // console.log(messageEditId, "MESSAGE EDIT ID");
-    // console.log(message.id, "MESSAGE ID")
+    console.log(messageEditId, "MESSAGE EDIT ID");
+    console.log(message.id, "MESSAGE ID")
+
     setShowEdit(true);
     setContent(message.content);
     setMessageEditId(message.id);
@@ -36,7 +37,7 @@ const ChannelMessage = ({
 
   const editInputSubmit = async (e) => {
     // channel_id, content, edited, owner_id, id
-    e.preventDefault();
+   await e.preventDefault();
     const payload = {
       channel_id: message.channel_id,
       content: content,
@@ -47,6 +48,7 @@ const ChannelMessage = ({
 
     const editedMessage = await dispatch(editChannelMessage(payload));
     await setContent(editedMessage.content);
+
     if (editedMessage.errors) {
       setErrorsEdit(editedMessage.errors);
       // console.log(editedMessage.errors);
@@ -60,10 +62,12 @@ const ChannelMessage = ({
         setDeleteModal(true);
       }
       return;
+
     } else {
+      await setShowEdit(false)
+   await console.log(showEdit,'HERRAA')
       await socket.emit("chat");
-      setShowEdit(false);
-      setErrorsEdit({});
+      await setErrorsEdit({});
     }
   };
 
@@ -85,15 +89,15 @@ const ChannelMessage = ({
     }
   }, [deleteEvent]);
 
-  useEffect(() => {
-    setShowEdit(false);
-    if (message.id === messageEditId) {
-      setContent(message.content);
-      setShowEdit(true);
-    }
-  }, [message]);
+  // useEffect(() => {
+  //   setShowEdit(false);
+  //   if (message.id === messageEditId) {
+  //     setContent(message.content);
+  //     setShowEdit(true);
+  //   }
+  // }, [message]);
   // check the preceding message
-  console.log(currentChannelMessages[ind - 1], "MESSAGE!");
+
 
   const checkAdjacentMessages = (message, currentChannelMessages, ind) => {
     if (!currentChannelMessages[ind - 1]) return true;
@@ -121,81 +125,83 @@ const ChannelMessage = ({
         {messageUser?.image_url ? (
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
-              <img
-                className="channel-chat-profile-image"
-                alt="profile"
-                src={messageUser?.image_url}
-              />
+              <>
+                <h4>{messageUser?.username}</h4>
+                <img
+                  className="channel-chat-profile-image"
+                  alt="profile"
+                  src={messageUser?.image_url}
+                />
+              </>
             )}
           </>
         ) : (
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
-              <div className="channel-chat-profile-image">
-                <i className="fa-solid fa-user-music"></i>
-              </div>
+              <>git 
+                <h4>{messageUser?.username}</h4>
+                <div className="channel-chat-profile-image">
+                  <i className="fa-solid fa-user-music"></i>
+                </div>
+              </>
             )}
           </>
         )}
         <div className="channel-chat-user-msg">
-          <div>
-            {checkAdjacentMessages(message, currentChannelMessages, ind) && (
-              <h4>{messageUser?.username}</h4>
+          <div className="message-content">
+            {showEdit ? (
+              <>
+                <div className="message-edit-container">
+                  {errors && errors.content && (
+                    <div className="error-msg-message-message">
+                      <p>*{errors.content}*</p>
+                    </div>
+                  )}
+                  <form onSubmit={editInputSubmit}>
+
+                    <div className="message-edit-input-container">
+                      <input
+                        className="message-content-edit"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                      ></input>
+                    </div>
+                    <p id="message-edit-instructions">
+                      Press
+                      <button type="button" onClick={handleCancel}>
+                        <i className="fa-solid fa-xmark fa-xl"></i>
+                      </button>
+                      to cancel. Press enter to submit.
+                    </p>
+                  </form>
+                </div>
+              </>
+            ) : (
+              <div className="message-content-edited">
+                <p id="message-actual-content">{`${message?.content}`}</p>
+                {/* <div> */}
+                {message.edited && <p id="message-edited">(edited)</p>}
+                {/* </div> */}
+              </div>
             )}
-            <div className="message-content">
-              {showEdit ? (
-                <>
-                  <div className="message-edit-container">
-                    {errors && errors.content && (
-                      <div className="error-msg-message-message">
-                        <p>*{errors.content}*</p>
-                      </div>
-                    )}
-                    <form onSubmit={editInputSubmit}>
-                      <div className="message-edit-input-container">
-                        <input
-                          className="message-content-edit"
-                          value={content}
-                          onChange={(e) => setContent(e.target.value)}
-                        ></input>
-                      </div>
-                      <p id="message-edit-instructions">
-                        Press
-                        <button type="button" onClick={handleCancel}>
-                          <i className="fa-solid fa-xmark fa-xl"></i>
-                        </button>
-                        to cancel. Press enter to submit.
-                      </p>
-                    </form>
-                  </div>
-                </>
-              ) : (
-                <div className="message-content-edited">
-                  <p id="message-actual-content">{`${message?.content}`}</p>
-                  {/* <div> */}
-                  {message.edited && <p id="message-edited">(edited)</p>}
-                  {/* </div> */}
-                </div>
-              )}
-              {sessionUser.id === messageUser.id && !showEdit ? (
-                <div className="message-edit-delete">
-                  <button
-                    onClick={handleEditModal}
-                    className="message-edit-button"
-                  >
-                    <i className="fa-solid fa-pencil"></i>
-                  </button>
-                  <button
-                    className="message-edit-button"
-                    onClick={handleDeleteModal}
-                  >
-                    <i className="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
+            {sessionUser.id === messageUser.id && !showEdit ? (
+              <div className="message-edit-delete">
+                <button
+                  onClick={handleEditModal}
+                  className="message-edit-button"
+                >
+                  <i className="fa-solid fa-pencil"></i>
+                </button>
+                <button
+                  className="message-edit-button"
+                  onClick={handleDeleteModal}
+                >
+                  <i className="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

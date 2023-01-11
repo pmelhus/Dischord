@@ -668,7 +668,7 @@ scrollbar-width: none;  /* Firefox */
   height: fit-content;
   min-height: 20px;
 flex-basis: auto;
-font-family: --primary-font;
+/* font-family: --primary-font; */
   /* width: 100%; */
   margin: 0 6px;
 }
@@ -739,7 +739,7 @@ width: 100%;
   justify-content: space-between;
   /* padding: 6px; */
   padding: 6px;
-  margin: 0 5px ;
+  margin: 0 ;
   /* width: 100%; */
   position: relative;
   right: 10px;

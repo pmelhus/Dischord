@@ -155,6 +155,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                         {...{ channelId }}
                         {...{ socket }}
                         {...{ message }}
+                        {...{currentChannelMessages}}
                         {...{ ind }}
                       />
                     </div>

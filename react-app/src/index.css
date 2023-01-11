@@ -17,6 +17,10 @@ body {
 
 }
 
+:root{
+  --primary-font: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 #root {
   /* position: absolute; */
   /* min-width: 1980px;

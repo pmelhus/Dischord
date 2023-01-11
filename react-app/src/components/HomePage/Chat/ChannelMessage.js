@@ -11,6 +11,7 @@ const ChannelMessage = ({
   socket,
   ind,
   messageEditId,
+  currentChannelMessages,
 }) => {
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
@@ -25,7 +26,6 @@ const ChannelMessage = ({
   // const [messageEditId, setMessageEditId] = useState(null);
 
   const handleEditModal = () => {
-
     // console.log(messageEditId, "MESSAGE EDIT ID");
     // console.log(message.id, "MESSAGE ID")
     setShowEdit(true);
@@ -42,7 +42,7 @@ const ChannelMessage = ({
       content: content,
       edited: true,
       owner_id: message.owner_id,
-      id: message.id
+      id: message.id,
     };
 
     const editedMessage = await dispatch(editChannelMessage(payload));
@@ -88,10 +88,27 @@ const ChannelMessage = ({
   useEffect(() => {
     setShowEdit(false);
     if (message.id === messageEditId) {
-      setContent(message.content)
+      setContent(message.content);
       setShowEdit(true);
     }
   }, [message]);
+  // check the preceding message
+  console.log(currentChannelMessages[ind - 1], "MESSAGE!");
+
+  const checkAdjacentMessages = (message, currentChannelMessages, ind) => {
+    if (!currentChannelMessages[ind - 1]) return true;
+    const previousMessage = currentChannelMessages[ind - 1];
+    if (
+      previousMessage.owner_id &&
+      previousMessage.owner_id !== message.owner_id
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  // if the preceding message is from the same user, then render message without username and profile image
 
   // useEffect(() => {
   //   setMessageEditId(message.id)
@@ -102,19 +119,29 @@ const ChannelMessage = ({
     <>
       <div className="message-chat-container-hover">
         {messageUser?.image_url ? (
-          <img
-            className="channel-chat-profile-image"
-            alt="profile"
-            src={messageUser?.image_url}
-          />
+          <>
+            {checkAdjacentMessages(message, currentChannelMessages, ind) && (
+              <img
+                className="channel-chat-profile-image"
+                alt="profile"
+                src={messageUser?.image_url}
+              />
+            )}
+          </>
         ) : (
-          <div className="channel-chat-profile-image">
-            <i className="fa-solid fa-user-music"></i>
-          </div>
+          <>
+            {checkAdjacentMessages(message, currentChannelMessages, ind) && (
+              <div className="channel-chat-profile-image">
+                <i className="fa-solid fa-user-music"></i>
+              </div>
+            )}
+          </>
         )}
         <div className="channel-chat-user-msg">
           <div>
-            <h4>{messageUser?.username}</h4>
+            {checkAdjacentMessages(message, currentChannelMessages, ind) && (
+              <h4>{messageUser?.username}</h4>
+            )}
             <div className="message-content">
               {showEdit ? (
                 <>

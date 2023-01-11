@@ -648,7 +648,7 @@ scrollbar-width: none;  /* Firefox */
   box-sizing: border-box;
   position: absolute;
   left: 0px;
-  top: 5px;
+  top: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -663,13 +663,14 @@ scrollbar-width: none;  /* Firefox */
 .channel-message-div {
   padding-left: 60px;
   position: relative;
-  height: 60px;
+  /* height: 60px; */
   flex-shrink: 0;
   height: fit-content;
-  min-height: 60px;
+  min-height: 20px;
 flex-basis: auto;
+font-family: --primary-font;
   /* width: 100%; */
-  margin: 6px;
+  margin: 0 6px;
 }
 
 
@@ -683,6 +684,9 @@ flex-basis: auto;
 
 .channel-chat-user-msg p {
   color: white;
+  white-space: break-spaces;
+  word-wrap: break-word;
+  margin: 0;
 }
 
 .home-nav-bar-item {
@@ -735,7 +739,7 @@ width: 100%;
   justify-content: space-between;
   /* padding: 6px; */
   padding: 6px;
-  margin: 5px;
+  margin: 0 5px ;
   /* width: 100%; */
   position: relative;
   right: 10px;

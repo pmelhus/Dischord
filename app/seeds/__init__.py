@@ -4,6 +4,7 @@ from .servers import seed_servers, undo_servers
 from .channels import seed_channels, undo_channels
 
 
+
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
 seed_commands = AppGroup('seed')

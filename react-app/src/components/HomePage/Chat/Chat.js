@@ -1,6 +1,6 @@
 // import the socket
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Route } from "react-router-dom";
 import {
@@ -41,6 +41,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   const currentServer = useSelector((state) => state.servers[serverId]);
   const [messageError, setMessageError] = useState(true);
   const [messageEditId, setMessageEditId] = useState(null);
+  const bottomRef = useRef(null)
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
@@ -55,6 +56,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   const sendChat = async (e) => {
     e.preventDefault();
 
+
     const sentMessage = await dispatch(
       createChannelMessage({
         user_id: user.id,
@@ -66,13 +68,13 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
       await setErrors(sentMessage.errors);
       return;
     }
-    console.log(sentMessage, "SENT MESSAGE");
+    // console.log(sentMessage, "SENT MESSAGE");
     await socket?.emit("chat", sentMessage.owner_id);
 
     await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
-
+    await bottomRef.current?.scrollIntoView({behavior: 'smooth'});
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
@@ -148,7 +150,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
               <>
                 {currentChannelMessages.map((message, ind) => (
                   <FadeIn>
-                    <div className="channel-message-div" key={ind}>
+                    <div ref={bottomRef} className="channel-message-div" key={ind}>
                       <ChannelMessage
                         {...{ setMessageEditId }}
                         {...{ messageEditId }}
@@ -157,6 +159,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                         {...{ message }}
                         {...{currentChannelMessages}}
                         {...{ ind }}
+
                       />
                     </div>
                   </FadeIn>

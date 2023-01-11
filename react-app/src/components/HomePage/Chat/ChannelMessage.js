@@ -138,7 +138,7 @@ const ChannelMessage = ({
         ) : (
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
-              <>git 
+              <>
                 <h4>{messageUser?.username}</h4>
                 <div className="channel-chat-profile-image">
                   <i className="fa-solid fa-user-music"></i>

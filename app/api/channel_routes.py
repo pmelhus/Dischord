@@ -24,6 +24,7 @@ def channels(id):
     # query all server members
     members = db.session.query(server_members).all()
     # iterate through members and if user is in server then push server id to list
+
     if members:
         relevant_server_ids = []
         for member in members:
@@ -36,7 +37,8 @@ def channels(id):
         # channels = Channel.query.all()
         return {'channels': [channel.to_dict() for channel in channels]}
     else:
-        channels = Channel.query.filter(Channel.query.where(Channel.server_id == id))
+        print('HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!')
+        channels = Channel.query.filter(Channel.server_id == id)
         return {'channels': [channel.to_dict() for channel in channels]}
 
 

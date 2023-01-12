@@ -21,7 +21,9 @@ class Channel(db.Model, CrUpMixin):
           'server_id': self.server_id,
           'name': self.name,
           'description': self.description,
-          'channel_messages': [channel_message.to_dict() for channel_message in self.channel_messages]
+          'channel_messages': [channel_message.to_dict() for channel_message in self.channel_messages],
+          "created_at": self.created_at,
+          "updated_at": self.updated_at
       }
 
   @staticmethod

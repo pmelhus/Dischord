@@ -89,7 +89,7 @@ export const createServer = (payload) => async (dispatch) => {
     // console.log(image);
     f.append("image", image);
   }
-  // console.log(f);
+  console.log(payload);
 
   const [response] = await Promise.all([
     fetch(`/api/servers/`, {
@@ -104,7 +104,7 @@ export const createServer = (payload) => async (dispatch) => {
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
-
+console.log(data)
     if (data.errors) {
       console.log(data.errors);
       let errorObj = {};

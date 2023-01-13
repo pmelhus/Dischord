@@ -1,6 +1,6 @@
 // import the socket
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Route } from "react-router-dom";
 import {
@@ -14,9 +14,11 @@ import UserOnlineCard from "./UserOnlineCard";
 import UserOfflineCard from "./UserOfflineCard";
 
 import MePage from "./MePage/MePage";
-// outside of your component, initialize the socket variable
+// outside of your component, initialize the socket variabl
+import Placeholder from "../../Placeholders/Placeholder";
+import FadeIn from "react-fade-in";
 
-const Chat = ({ socket }) => {
+const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ const Chat = ({ socket }) => {
   const currentServer = useSelector((state) => state.servers[serverId]);
   const [messageError, setMessageError] = useState(true);
   const [messageEditId, setMessageEditId] = useState(null);
+  const bottomRef = useRef(null)
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
@@ -53,6 +56,7 @@ const Chat = ({ socket }) => {
   const sendChat = async (e) => {
     e.preventDefault();
 
+
     const sentMessage = await dispatch(
       createChannelMessage({
         user_id: user.id,
@@ -64,13 +68,13 @@ const Chat = ({ socket }) => {
       await setErrors(sentMessage.errors);
       return;
     }
-    console.log(sentMessage, "SENT MESSAGE");
+    // console.log(sentMessage, "SENT MESSAGE");
     await socket?.emit("chat", sentMessage.owner_id);
 
     await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
-
+    await bottomRef.current?.scrollIntoView({behavior: 'smooth'});
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
@@ -135,18 +139,34 @@ const Chat = ({ socket }) => {
               </div>
             </div>
           </Route>
-          {currentChannelMessages.reverse().map((message, ind) => (
-            <div className="channel-message-div" key={ind}>
-              <ChannelMessage
-                {...{ setMessageEditId }}
-                {...{ messageEditId }}
-                {...{ channelId }}
-                {...{ socket }}
-                {...{ message }}
-                {...{ ind }}
-              />
-            </div>
-          ))}
+          <div>
+            {loadingMessages ? (
+              <div className="channel-message-div-loader">
+                <Placeholder />
+                <Placeholder />
+                <Placeholder />
+              </div>
+            ) : (
+              <>
+                {currentChannelMessages.map((message, ind) => (
+                  <FadeIn>
+                    <div ref={bottomRef} className="channel-message-div" key={ind}>
+                      <ChannelMessage
+                        {...{ setMessageEditId }}
+                        {...{ messageEditId }}
+                        {...{ channelId }}
+                        {...{ socket }}
+                        {...{ message }}
+                        {...{currentChannelMessages}}
+                        {...{ ind }}
+
+                      />
+                    </div>
+                  </FadeIn>
+                ))}
+              </>
+            )}
+          </div>
         </div>
         <div className="channel-chat-form-div">
           {pathname.split("/")[2] !== "@me" &&

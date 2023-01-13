@@ -19,13 +19,13 @@ const HomePage = ({
   setLoading,
   loading,
 }) => {
-  const [loadingScreen, setLoadingScreen] = useState(false);
-
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
   const [loaded, setLoaded] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(false);
 
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
@@ -39,18 +39,28 @@ const HomePage = ({
 
   // }, []);
 
+  const componentMounted = async () => {
+    await setLoadingMessages(true);
+    await dispatch(genChannelMessages(channelId));
+    await setLoadingMessages(false);
+  };
+
+
   useEffect(async () => {
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
     await setLoaded(true);
-  }, [dispatch]);
+    await setLoadingScreen(false);
+  }, [dispatch, loadingScreen]);
 
   useEffect(async () => {
     if (channelId && loaded) {
-      await dispatch(genChannelMessages(channelId));
+      await componentMounted();
+      await setLoadingMessages(false);
     }
-  }, [pathname, dispatch, loaded]);
+  }, [channelId, dispatch, loaded]);
+
 
   return (
     <div className="home-page-container">
@@ -63,6 +73,8 @@ const HomePage = ({
             {...{ setOnlineMembers }}
             {...{ socket }}
             {...{ setLoading }}
+            {...{ setLoadingMessages }}
+            {...{ loadingMessages }}
           />
         </>
       )}

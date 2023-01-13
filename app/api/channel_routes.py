@@ -24,14 +24,29 @@ def channels(id):
     # query all server members
     members = db.session.query(server_members).all()
     # iterate through members and if user is in server then push server id to list
-    relevant_server_ids = []
-    for member in members:
-        if member.user_id == id:
-            relevant_server_ids.append(member.server_id)
-            # print (relevant_servers)
-    # write a function that iterates through the relevant members and returns the server if the server id is in the list
 
-    channels = Channel.query.filter(Channel.server_id.in_(relevant_server_ids)).all()
+    if members:
+        relevant_server_ids = []
+        for member in members:
+            if member.user_id == id:
+                relevant_server_ids.append(member.server_id)
+                # print (relevant_servers)
+        # write a function that iterates through the relevant members and returns the server if the server id is in the list
+
+        channels = Channel.query.filter(Channel.server_id.in_(relevant_server_ids)).all()
+        # channels = Channel.query.all()
+        return {'channels': [channel.to_dict() for channel in channels]}
+    else:
+        print('HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!HERE!!!')
+        channels = Channel.query.filter(Channel.server_id == id)
+        return {'channels': [channel.to_dict() for channel in channels]}
+
+
+@channel_routes.route('/')
+@login_required
+def all_channels():
+
+    channels = Channel.query.all()
     # channels = Channel.query.all()
     return {'channels': [channel.to_dict() for channel in channels]}
 

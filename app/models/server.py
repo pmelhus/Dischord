@@ -25,6 +25,7 @@ class Server(db.Model, CrUpMixin):
     members = db.relationship("User", back_populates="memberships", secondary=server_members)
 
     def to_dict(self):
+
         members = db.session.query(server_members).all()
         def filter_members(member):
             return True if member.server_id == self.id else False
@@ -37,16 +38,27 @@ class Server(db.Model, CrUpMixin):
                 d = {"user_id": member.user_id, "server_id":member.server_id, "member_since": member.member_since}
                 memberListWithDate.append(d)
                 #  print(d, '===========HERE==============')you
-        insert_row_to_dict_list(this_server_members)
-        return {
-        'id': self.id,
-        'owner_id': self.owner_id,
-        'name': self.name,
-        'image_url': self.image_url,
-        'public': self.public,
-        'channel_ids': [channel.id for channel in self.channels],
-        'members_ids': memberListWithDate
-        }
+        if members:
+            insert_row_to_dict_list(this_server_members)
+            return {
+            'id': self.id,
+            'owner_id': self.owner_id,
+            'name': self.name,
+            'image_url': self.image_url,
+            'public': self.public,
+            'channel_ids': [channel.id for channel in self.channels],
+            'members_ids': memberListWithDate
+            }
+        else:
+            return {
+            'id': self.id,
+            'owner_id': self.owner_id,
+            'name': self.name,
+            'image_url': self.image_url,
+            'public': self.public,
+            'channel_ids': [channel.id for channel in self.channels],
+            'members_ids': self.members
+            }
 
     @staticmethod
     def seed(server_data):

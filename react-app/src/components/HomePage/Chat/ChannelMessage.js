@@ -112,6 +112,11 @@ const ChannelMessage = ({
     }
   };
 
+ const displayMessageDate = (message)=> {
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(message.created_at).toLocaleDateString(undefined, options)
+ }
+
   // if the preceding message is from the same user, then render message without username and profile image
 
   // useEffect(() => {
@@ -126,7 +131,11 @@ const ChannelMessage = ({
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
               <>
-                <h4>{messageUser?.username}</h4>
+              <div className='username-message-date-div'>
+
+                <h4 className="username-channel-message">{messageUser?.username}</h4>
+                <p className='message-date'>{displayMessageDate(message)}</p>
+              </div>
                 <img
                   className="channel-chat-profile-image"
                   alt="profile"
@@ -139,7 +148,11 @@ const ChannelMessage = ({
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
               <>
-                <h4>{messageUser?.username}</h4>
+              <div className='username-message-date-div'>
+
+                <h4 className="username-channel-message">{messageUser?.username}</h4>
+                <p className='message-date'>{displayMessageDate(message)}</p>
+              </div>
                 <div className="channel-chat-profile-image">
                   <i className="fa-solid fa-user-music"></i>
                 </div>

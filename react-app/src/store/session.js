@@ -106,6 +106,7 @@ export const logout = (id) => async (dispatch) => {
 export const signUp =
   (username, email, password, repeatPassword, image, bio, online, idle) =>
   async (dispatch) => {
+    console.log(username, email, password, repeatPassword, image, bio, online, idle)
     const f = new FormData();
     f.append("username", username);
     f.append("email", email);

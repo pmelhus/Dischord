@@ -11,7 +11,7 @@ const SignUpForm = ({ socket }) => {
   const [image, setImage] = useState(null);
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState('');
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();

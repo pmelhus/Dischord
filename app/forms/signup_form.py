@@ -31,6 +31,6 @@ class SignUpForm(FlaskForm):
     confirm_password = StringField('confirm_password', validators=[
                                    DataRequired(), Length(min=6, max=20)])
     image = FileField('image_file', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
-    bio = TextAreaField('bio', validators=[Length(min=0 ,max=190)]),
-    online = BooleanField('online'),
+    bio = TextAreaField('bio', validators=[Length(min=0, max=190)])
+    online = BooleanField('online')
     idle = BooleanField('idle')

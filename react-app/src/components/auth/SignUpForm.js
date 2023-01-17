@@ -16,12 +16,14 @@ const SignUpForm = ({ socket }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const [online, setOnline] = useState(true)
+  const [idle, setIdle] = useState(false)
 
   const onSignUp = async (e) => {
     e.preventDefault();
     await setLoading(true)
     const data = await dispatch(
-      signUp(username, email, password, repeatPassword, image, bio, online=true, idle=false)
+      signUp(username, email, password, repeatPassword, image, bio, online, idle)
     );
     console.log('SIGNUP DATA', data)
     if (data.errors) {

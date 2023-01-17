@@ -15,8 +15,8 @@ class User(db.Model, UserMixin, CrUpMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     bio = db.Column(db.String(190), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
-    online = db.Column(db.Boolean(), default=False)
-    idle = db.Column(db.Boolean(), default=True)
+    online = db.Column(db.Boolean(), default=False, nullable=True)
+    idle = db.Column(db.Boolean(), default=True, nullable=True)
 
 
 

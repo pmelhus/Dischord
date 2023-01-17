@@ -98,6 +98,12 @@ def sign_up():
 
     if form.validate_on_submit():
         user = User(**params)
+        print('VALIDATING!! ========')
+        print('VALIDATING!! ========')
+        print('VALIDATING!! ========')
+        print('VALIDATING!! ========')
+        print('VALIDATING!! ========')
+        print('VALIDATING!! ========')
         db.session.add(user)
         db.session.commit()
         login_user(user)

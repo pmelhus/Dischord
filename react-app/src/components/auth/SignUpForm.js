@@ -23,6 +23,7 @@ const SignUpForm = ({ socket }) => {
     const data = await dispatch(
       signUp(username, email, password, repeatPassword, image, bio)
     );
+    console.log('SIGNUP DATA', data)
     if (data.errors) {
       await setLoading(false)
       setErrors(data.errors);

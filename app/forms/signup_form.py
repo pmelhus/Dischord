@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FileField, TextAreaField
+from wtforms import StringField, FileField, TextAreaField, BooleanField
 from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, ValidationError, Length, EqualTo, Email
 from app.models import User
@@ -31,5 +31,6 @@ class SignUpForm(FlaskForm):
     confirm_password = StringField('confirm_password', validators=[
                                    DataRequired(), Length(min=6, max=20)])
     image = FileField('image_file', validators=[FileAllowed(['jpeg', 'jpg', 'png', 'gif', 'tiff', 'img'])])
-    bio = TextAreaField('bio', validators=[Length(min=0 ,max=190)])
-    
+    bio = TextAreaField('bio', validators=[Length(min=0 ,max=190)]),
+    online = BooleanField('online'),
+    idle = BooleanField('idle')

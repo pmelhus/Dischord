@@ -21,7 +21,7 @@ const SignUpForm = ({ socket }) => {
     e.preventDefault();
     await setLoading(true)
     const data = await dispatch(
-      signUp(username, email, password, repeatPassword, image, bio)
+      signUp(username, email, password, repeatPassword, image, bio, online=true, idle=false)
     );
     console.log('SIGNUP DATA', data)
     if (data.errors) {

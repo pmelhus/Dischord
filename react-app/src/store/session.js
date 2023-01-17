@@ -104,7 +104,7 @@ export const logout = (id) => async (dispatch) => {
 };
 
 export const signUp =
-  (username, email, password, repeatPassword, image, bio) =>
+  (username, email, password, repeatPassword, image, bio, online, idle) =>
   async (dispatch) => {
     const f = new FormData();
     f.append("username", username);
@@ -112,6 +112,8 @@ export const signUp =
     f.append("password", password);
     f.append("confirm_password", repeatPassword);
     f.append("bio", bio);
+    f.append('online', online)
+    f.append('idle', idle)
     if (image) {
       // console.log(image);
       f.append("image", image);

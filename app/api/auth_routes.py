@@ -86,24 +86,21 @@ def sign_up():
             'email': form.data['email'],
             'password': form.data['password'],
             'bio': form.data['bio'],
-            'image_url': url
+            'image_url': url,
+
         }
     else:
         params = {
             'username': form.data['username'],
             'email': form.data['email'],
             'password': form.data['password'],
-            'bio': form.data['bio']
+            'bio': form.data['bio'],
+            'online': form.data['online'],
+            'idle': form.data['idle']
         }
 
     if form.validate_on_submit():
         user = User(**params)
-        print('VALIDATING!! ========')
-        print('VALIDATING!! ========')
-        print('VALIDATING!! ========')
-        print('VALIDATING!! ========')
-        print('VALIDATING!! ========')
-        print('VALIDATING!! ========')
         db.session.add(user)
         db.session.commit()
         login_user(user)

@@ -1,19 +1,19 @@
 from ..models import db, Server
 
 servers = [
-    # {
-    #     "owner_id": 1,
-    #     "name": "The World of Pop",
-    #     "image_url": "https://dischord-profile-images.s3.amazonaws.com/pop-server-image.webp",
-    #     "public": False
-    # },
+    {
+        "owner_id": 1,
+        "name": "The World of Pop",
+        "image_url": "https://dischord-profile-images.s3.amazonaws.com/80faf884d4564afd84f0248980922b63.png",
+        "public": False
+    },
 
-    # {
-    #     "owner_id": 1,
-    #     "name": "Hip Hop Shop",
-    #     "image_url": "https://dischord-profile-images.s3.amazonaws.com/hip-hop-image.jpeg",
-    #     "public": False
-    # },
+    {
+        "owner_id": 1,
+        "name": "Hip Hop Shop",
+        "image_url": "https://dischord-profile-images.s3.amazonaws.com/hip-hop-image.jpeg",
+        "public": False
+    },
     # {
     #     "owner_id": 1,
     #     "name": "Classic Classical",

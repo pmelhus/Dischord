@@ -4,6 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../../../context/Modal";
 // import EditMessageModal from "./DeleteConfirmModalMessage ";
 import DeleteConfirmModalMessage from "./DeleteConfirmModalMessage";
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
+import { useLocation, Route } from "react-router-dom";
 
 const ChannelMessage = ({
   setMessageEditId,
@@ -23,8 +27,9 @@ const ChannelMessage = ({
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState(false);
+  const { pathname } = useLocation();
   // const [messageEditId, setMessageEditId] = useState(null);
-
+const servers = useSelector((state) => state.servers)
   const handleEditModal = () => {
     console.log(messageEditId, "MESSAGE EDIT ID");
     console.log(message.id, "MESSAGE ID")
@@ -117,12 +122,30 @@ const ChannelMessage = ({
   return new Date(message.created_at).toLocaleDateString(undefined, options)
  }
 
+
+const serverId = parseInt(pathname.split("/")[2]);
+
+const currentServer = servers[serverId]
+const user = users[message.owner_id]
+
+
+// const user = users.filter(user => user.id === message.user_id)
+const [userModal, setUserModal] = useState(false);
+ const popover = (
+  <Popover placement="left-start" id="popover-basic">
+    {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
+
+    <UserProfilePopover currentServer={currentServer} user={user} />
+  </Popover>
+);
   // if the preceding message is from the same user, then render message without username and profile image
 
   // useEffect(() => {
   //   setMessageEditId(message.id)
   //   console.log(messageEditId, "mESSAGE EDIT")
-  // }, [showEdit])
+  // }, [showEdit])j
+
+  // console.log(currentServer, user)
 
   return (
     <>
@@ -136,11 +159,26 @@ const ChannelMessage = ({
                 <h4 className="username-channel-message">{messageUser?.username}</h4>
                 <p className='message-date'>{displayMessageDate(message)}</p>
               </div>
+              {/* <button > */}
+
+              <OverlayTrigger
+                rootClose={true}
+                trigger={"click"}
+
+                placement="right-end"
+                overlay={popover}
+                onToggle={() => setUserModal(!userModal)}
+                // onHide={() => setUserModal(false)}
+                show={userModal}
+              >
                 <img
+                style={{cursor: "pointer"}}
                   className="channel-chat-profile-image"
                   alt="profile"
                   src={messageUser?.image_url}
-                />
+                  />
+                  </OverlayTrigger>
+              {/* </button> */}
               </>
             )}
           </>

@@ -1,7 +1,7 @@
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import "./UserOnlineCard.css";
 import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
+import "./UserOnlineCard.css";
 import { useState } from "react";
 
 const UserOfflineCard = ({ offline, user, currentServer }) => {

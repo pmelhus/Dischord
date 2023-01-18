@@ -12,7 +12,7 @@ const AddServerButton = () => {
 
   return (
     <div className="home-button-div">
-      <button className="server-image-icon" onClick={handleClick}>
+      <button className="server-image-icon-add" onClick={handleClick}>
         <i className="fa-solid fa-plus fa-xl"></i>
       </button>
       {showServerModal && (

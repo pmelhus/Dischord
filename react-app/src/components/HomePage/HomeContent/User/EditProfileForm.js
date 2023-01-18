@@ -4,7 +4,7 @@ import { editUserProfile } from "../../../../store/session";
 import { Modal } from "../../../../context/Modal";
 import PasswordModal from "./PasswordModal";
 import LogoutButton from "./LogoutButton";
-import {LoadingModal} from "../../../../context/LoadingModal"
+import { LoadingModal } from "../../../../context/LoadingModal";
 
 const EditProfileForm = ({ setEditModal, socket }) => {
   const user = useSelector((state) => state.session.user);
@@ -18,7 +18,7 @@ const EditProfileForm = ({ setEditModal, socket }) => {
   const [errors, setErrors] = useState({});
   const [passwordModal, setPasswordModal] = useState(false);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
 
@@ -37,15 +37,15 @@ const EditProfileForm = ({ setEditModal, socket }) => {
       bio,
       image,
     };
-    await setLoading(true)
+    await setLoading(true);
     const editedUser = await dispatch(editUserProfile(payload));
     if (editedUser.errors) {
-      await setLoading(false)
+      await setLoading(false);
       setErrors(editedUser.errors);
       return;
     } else {
       await setEditModal(false);
-      await setLoading(false)
+      await setLoading(false);
     }
   };
 
@@ -77,11 +77,14 @@ const EditProfileForm = ({ setEditModal, socket }) => {
 
   return (
     <div className="profile-edit-form">
-    {loading && (
-      <LoadingModal>
-        <img id='loading-image' src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"/>
-       </LoadingModal>
-    )}
+      {loading && (
+        <LoadingModal>
+          <img
+            id="loading-image"
+            src="https://c.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
+          />
+        </LoadingModal>
+      )}
       <form>
         <div className="login-email">
           <label>Username</label>
@@ -120,11 +123,10 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           ></textarea>
         </div>
         {preview ? (
-        <div id="user-picture-preview">
-          <img alt="current profile" src={preview} />
-        </div>
-
-        ):  (
+          <div id="user-picture-preview">
+            <img alt="current profile" src={preview} />
+          </div>
+        ) : (
           <div className="user-image-preview">
             {user?.image_url ? (
               <img
@@ -163,11 +165,14 @@ const EditProfileForm = ({ setEditModal, socket }) => {
           </div>
         )} */}
         <div className="button-div-user">
-
-          <button onClick={handleEditProfile}>Save Changes</button>
-          <button onClick={handlePasswordModal}>Change your password</button>
-          <button onClick={() => setEditModal(false)}>Cancel</button>
-          <LogoutButton {...{ socket }} />
+          <div>
+            <button onClick={handleEditProfile}>Save</button>
+            <button onClick={handlePasswordModal}>Change password</button>
+          </div>
+          <div>
+            <button onClick={() => setEditModal(false)}>Cancel</button>
+            <LogoutButton {...{ socket }} />
+          </div>
         </div>
       </form>
       <div>

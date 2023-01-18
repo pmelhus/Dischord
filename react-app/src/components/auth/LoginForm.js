@@ -31,7 +31,7 @@ const LoginForm = ({ socket }) => {
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await history.push("/channels/@me");
+        await history.push("/channels/1/1");
       }
       await idleTimer(socket, data.id)
     }
@@ -40,8 +40,8 @@ const LoginForm = ({ socket }) => {
   const handleDemo = async (e) => {
     if (socket) {
       e.preventDefault();
-      const data = await dispatch(login("demo@aa.io", "password"));
-      console.log(data, "DATA HERER")
+      const data = await dispatch(login("the@listener.com", "password"));
+      // console.log(data, "DATA HERER")
       await socket.emit("login", data);
       // console.log('I MADE IT')
       if (data?.errors) {
@@ -49,7 +49,7 @@ const LoginForm = ({ socket }) => {
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await history.push("/channels/@me");
+        await history.push("/channels/1/1");
       }
       await idleTimer(socket, data.id)
     }

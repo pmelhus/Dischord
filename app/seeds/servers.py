@@ -1,30 +1,31 @@
 from ..models import db, Server
 
 servers = [
-    {
-        "owner_id": 1,
-        "name": "Demo Apples",
-        "image_url": "https://dischord-profile-images.s3.amazonaws.com/app.png",
-        "public": False
-    },
-    {
-        "owner_id": 1,
-        "name": "DEMOlisher",
-        "image_url": "https://dischord-profile-images.s3.amazonaws.com/demolisher.jpeg",
-        "public": False
-    },
-    {
-        "owner_id": 3,
-        "name": "Now or Never",
-        "image_url": "https://dischord-profile-images.s3.amazonaws.com/bon2.jpeg",
-        "public": False
-    },
-    {
-        "owner_id": 5,
-        "name": "NezukoChan4Ever",
-        "image_url": "https://dischord-profile-images.s3.amazonaws.com/Nezuko-Sparkles.webp",
-        "public": False
-    }
+    # {
+    #     "owner_id": 1,
+    #     "name": "The World of Pop",
+    #     "image_url": "https://dischord-profile-images.s3.amazonaws.com/pop-server-image.webp",
+    #     "public": False
+    # },
+
+    # {
+    #     "owner_id": 1,
+    #     "name": "Hip Hop Shop",
+    #     "image_url": "https://dischord-profile-images.s3.amazonaws.com/hip-hop-image.jpeg",
+    #     "public": False
+    # },
+    # {
+    #     "owner_id": 1,
+    #     "name": "Classic Classical",
+    #     "image_url": "https://dischord-profile-images.s3.amazonaws.com/bon2.jpeg",
+    #     "public": True
+    # },
+    # {
+    #     "owner_id": 1,
+    #     "name": "Jazz isn't Dead",
+    #     "image_url": "https://dischord-profile-images.s3.amazonaws.com/jazz-image.jpeg",
+    #     "public": True
+    # }
 ]
 
 

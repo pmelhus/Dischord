@@ -1,39 +1,60 @@
 from app.models import db, User
 
 
-# Adds a demo user, you can add other users here if you want
+# Adds a listener user, you can add other users here if you want
 def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password', bio='How about demo apples?', image_url="https://dischord-profile-images.s3.amazonaws.com/app.png")
-    vern = User(
-        username='Coolycool510', email='cool@cool.com', password='password', bio="I'm too cooly cool for you!", image_url=None)
-    bon = User(
-        username='BonJovi', email='bon@jovi.com', password='password', bio="It's my life!", image_url="https://dischord-profile-images.s3.amazonaws.com/bon2.jpeg")
-    darren = User(
-        username='ComeEatChinaCity', email='china@city.com', password='password', bio="Ara smells!", image_url=None)
-    ara = User(
-        username='Zensan', email='zen@san.com', password='password', bio="NEZUKO-CHAAAAN!!!", image_url="https://dischord-profile-images.s3.amazonaws.com/zen.jpeg")
-    chris = User(
-        username='Push2Main', email='chris@thegrepper.com', password='password', bio="Nothing will get in the way of me and my taco bell... HELLO?!", image_url=None)
-    brianna = User(
-        username='AtlShawty', email='atl@shawty.com', password='password', bio="Go Hawks!", image_url=None)
-    brendan = User(
-        username='Week6', email='week@6.com', password='password', bio='WEEK 6?!?! HELLO?!?', image_url=None)
-    anthony = User(
-        username="TheBroncaNator", email='bronca@bronca.com', password='password', bio="Ara ara...", image_url=None)
-    
-    db.session.add(demo)
-    db.session.add(vern)
-    db.session.add(bon)
-    db.session.add(darren)
-    db.session.add(ara)
-    db.session.add(chris)
-    db.session.add(brianna)
-    db.session.add(brendan)
-    db.session.add(anthony)
+    listener = User(
+        username='The Listener', email='the@listener.com', password='password', bio="I'm a great listener.", image_url="https://dischord-profile-images.s3.amazonaws.com/the-listener.png")
+    michael = User(
+        username='The Real King of Pop', email='michael@jackson.com', password='password', bio="Hee-Hee!!!", image_url="https://dischord-profile-images.s3.amazonaws.com/michael+jackson.jpeg")
+    harry = User(
+        username='The New King of Pop', email='harry@styles.com', password='password', bio="Watermelon sugar... hi!", image_url="https://dischord-profile-images.s3.amazonaws.com/harry-styles.jpeg")
+    justin = User(
+        username='J-Beebs', email='justin@bieber.com', password='password', bio="Baby, baby, baby, OOOO!", image_url="https://dischord-profile-images.s3.amazonaws.com/justin-bieber-gettyimages-1202421980.jpg")
+    taylor = User(
+        username='T-Swizzle', email='taylor@swift.com', password='password', bio="I'm the problem.", image_url="https://dischord-profile-images.s3.amazonaws.com/tswift.jpg")
+    beyonce = User(
+        username='Sasha Fierce', email='be@yonce.com', password='password', bio="If you liked it, then you should have put a ring on it.", image_url="https://dischord-profile-images.s3.amazonaws.com/yonce.png")
+    bruno = User(
+        username='The Bruno', email='bruno@mars.com', password='password', bio="Don't believe me, just watch.", image_url="https://dischord-profile-images.s3.amazonaws.com/bruno-mars.jpeg")
+    mariah = User(
+        username="Mariah", email='mariah@carey.com', password='password', bio='All I want for Christmas is ... more Christmas!', image_url="https://dischord-profile-images.s3.amazonaws.com/mariahxmas.jpg")
+    whitney = User(
+        username="Whitney", email='whitney@houston.com', password='password', bio="I just want to dance!", image_url="https://dischord-profile-images.s3.amazonaws.com/whitneyho.jpeg")
+    drake = User(
+        username="Drizzy", email='drake@drake.com', password='password', bio="I need a one dance.", image_url="https://dischord-profile-images.s3.amazonaws.com/drake.jpeg")
+    eminem = User(
+        username="The Real Slim Shady", email='slim@shady.com', password='password', bio="May I have your attention, please?", image_url="https://dischord-profile-images.s3.amazonaws.com/eminem.jpeg")
+    kanye = User(
+        username='Yeezy', email='kanye@west.com', password='password', bio="I feel like I'm too busy writing history to read it.", image_url="https://dischord-profile-images.s3.amazonaws.com/kanye.jpeg")
+    jay = User(
+        username="Mr. Carter", email='jay@z.com', password='password', bio='I put a ring on it.', image_url="https://dischord-profile-images.s3.amazonaws.com/jay+z.jpeg")
+    kendrick = User(
+        username="K-Dot", email='kendrick@lamar.com', password='password', bio="Don't kill my vibe.", image_url="https://dischord-profile-images.s3.amazonaws.com/kdrick.jpeg")
+    snoop = User(
+        username="Snoop Doggy Dog", email='snoop@dog.com', password='password', bio="Gin and juice.", image_url="https://dischord-profile-images.s3.amazonaws.com/snoop.jpeg")
+    paak = User(
+        username="The Paak", email='anderson@paak.com', password='password', bio="I won't bite, unless you like.", image_url="https://dischord-profile-images.s3.amazonaws.com/paak.jpg")
 
+
+
+    db.session.add(listener)
+    db.session.add(michael)
+    db.session.add(harry)
+    db.session.add(justin)
+    db.session.add(taylor)
+    db.session.add(beyonce)
+    db.session.add(bruno)
+    db.session.add(mariah)
+    db.session.add(whitney)
+    db.session.add(drake)
+    db.session.add(eminem)
+    db.session.add(kanye)
+    db.session.add(jay)
+    db.session.add(kendrick)
+    db.session.add(snoop)
+    db.session.add(paak)
     db.session.commit()
-
 
 # Uses a raw SQL query to TRUNCATE the users table.
 # SQLAlchemy doesn't have a built in function to do this

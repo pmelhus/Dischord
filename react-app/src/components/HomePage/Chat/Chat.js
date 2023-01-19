@@ -41,11 +41,24 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   const currentServer = useSelector((state) => state.servers[serverId]);
   const [messageError, setMessageError] = useState(true);
   const [messageEditId, setMessageEditId] = useState(null);
-  const bottomRef = useRef(null)
+  const bottomRef = useRef(null);
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
+
+    let inputValue = document.getElementById("channel-chat-input");
+    console.log(inputValue);
   };
+
+
+  // const endOfString = (string) => {
+  //   let httpsIndex = string.indexOf("https://");
+  //   let httpIndex = string.indexOf("http://");
+  //   if (httpsIndex) return string.slice(0, httpsIndex);
+  //   if (httpIndex) return string.slice(0, httpIndex);
+  // }
+
+
 
   const idleTimer = (socket, id) => {
     setTimeout(() => {
@@ -55,7 +68,6 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
 
   const sendChat = async (e) => {
     e.preventDefault();
-
 
     const sentMessage = await dispatch(
       createChannelMessage({
@@ -74,7 +86,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
-    await bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    await bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
@@ -116,6 +128,29 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     if (chatInput.length < 1001) {
       setMessageError(false);
     }
+
+  }, [chatInput]);
+
+  const urlInput = (string) => {
+    let httpsIndex = string.indexOf("https://");
+    let httpIndex = string.indexOf("http://");
+    if (httpsIndex) return string.slice(httpsIndex);
+    if (httpIndex) return string.slice(httpIndex);
+  };
+
+  const begOfString = (string) => {
+    let httpsIndex = string.indexOf("https://");
+    let httpIndex = string.indexOf("http://");
+    if (httpsIndex) return string.slice(0, httpsIndex);
+    if (httpIndex) return string.slice(0, httpIndex);
+  };
+
+  const checkIfIncludes = (string) => {
+    return string.includes("https://" || "http://");
+  };
+
+  useEffect(() => {
+    
   }, [chatInput]);
 
   return (
@@ -150,16 +185,20 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
               <>
                 {currentChannelMessages.map((message, ind) => (
                   <FadeIn>
-                    <div ref={bottomRef} className="channel-message-div" key={ind}>
+                    <div
+                      ref={bottomRef}
+                      className="channel-message-div"
+                      key={ind}
+                    >
                       <ChannelMessage
                         {...{ setMessageEditId }}
                         {...{ messageEditId }}
                         {...{ channelId }}
                         {...{ socket }}
                         {...{ message }}
-                        {...{currentChannelMessages}}
+                        {...{ chatInput }}
+                        {...{ currentChannelMessages }}
                         {...{ ind }}
-
                       />
                     </div>
                   </FadeIn>
@@ -188,6 +227,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                     }
                     onChange={updateChatInput}
                   />
+                  <a href={'clickme'}>asdf</a>
                   {/* <button type="submit">Send</button> */}
                 </form>
               </>

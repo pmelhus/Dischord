@@ -626,13 +626,13 @@ display:block;
   /* height: 30px; */
   /* padding: 5px; */
   background-color:#62656a7c;
-display: flex;
+/* display: flex; */
 align-items: center;
 border-radius: 7px;
-height: 40px;
+/* height: 40px; */
 /* margin: 10px; */
 margin: 0 10px;
-justify-content: start;
+/* justify-content: start; */
 }
 
 

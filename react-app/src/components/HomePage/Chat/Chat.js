@@ -1,6 +1,6 @@
 // import the socket
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Route } from "react-router-dom";
 import {
@@ -17,6 +17,10 @@ import MePage from "./MePage/MePage";
 // outside of your component, initialize the socket variabl
 import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
+import SlateTextEditor from "./SlateTextEditor"
+
+
+
 
 const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   // use state for controlled form input
@@ -46,8 +50,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
 
-    let inputValue = document.getElementById("channel-chat-input");
-    console.log(inputValue);
+
   };
 
 
@@ -58,16 +61,14 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   //   if (httpIndex) return string.slice(0, httpIndex);
   // }
 
-
-
   const idleTimer = (socket, id) => {
     setTimeout(() => {
       socket?.emit("change_idle", id);
     }, "3600000");
   };
 
-  const sendChat = async (e) => {
-    e.preventDefault();
+  const sendChat = async () => {
+
 
     const sentMessage = await dispatch(
       createChannelMessage({
@@ -128,7 +129,6 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     if (chatInput.length < 1001) {
       setMessageError(false);
     }
-
   }, [chatInput]);
 
   const urlInput = (string) => {
@@ -149,9 +149,8 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     return string.includes("https://" || "http://");
   };
 
-  useEffect(() => {
-    
-  }, [chatInput]);
+  useEffect(() => {}, [chatInput]);
+
 
   return (
     <div className="chat-container">
@@ -216,8 +215,8 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                     <p>*{errors.content}*</p>
                   </div>
                 )}
-                <form className="channel-chat-form" onSubmit={sendChat}>
-                  <input
+                <form className="channel-chat-form" >
+                  {/* <input
                     id="channel-chat-input"
                     value={chatInput}
                     placeholder={
@@ -226,8 +225,10 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                         : ""
                     }
                     onChange={updateChatInput}
-                  />
-                  <a href={'clickme'}>asdf</a>
+                  /> */}
+
+                  <SlateTextEditor {...{sendChat}} placeholder={`Message ${currentChannel?.name}`} {...{chatInput}} {...{setChatInput}}/>
+
                   {/* <button type="submit">Send</button> */}
                 </form>
               </>
@@ -287,5 +288,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     </div>
   );
 };
+
+
 
 export default Chat;

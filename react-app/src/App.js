@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -21,11 +21,14 @@ import { io } from "socket.io-client";
 
 let socket;
 function App() {
+  // const location = useLocation()
   // const [loadingScreen, setLoadingScreen] = useState(false);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.session.user);
+  const [location, setLocation] = useState('')
+
   // const [onlineMembers, setOnlineMembers] = useState();
 
   useEffect(() => {
@@ -44,8 +47,8 @@ function App() {
     socket.on("chat", (chat) => {
       // when we receive a chat, add it into our messages array in state
       // socket.emit('timeout_check')
-
-      dispatch(genChannelMessages());
+      console.log(location, 'LOCATION HERE')
+      dispatch(genChannelMessages(location));
     });
 
     // socket.on("", (chat) => {
@@ -89,9 +92,11 @@ function App() {
     };
   }, []);
 
+
   if (!loaded) {
     return null;
   }
+
 
   return (
     <BrowserRouter>
@@ -124,6 +129,7 @@ function App() {
               {...{setLoading}}
                 {...{ socket }}
                 {...{ setLoading }}
+                {...{setLocation}}
               />
             </ProtectedRoute>
           </Switch>

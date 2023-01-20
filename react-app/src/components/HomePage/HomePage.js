@@ -18,6 +18,7 @@ const HomePage = ({
   socket,
   setLoading,
   loading,
+  setLocation
 }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -61,6 +62,10 @@ const HomePage = ({
     }
   }, [channelId, dispatch, loaded]);
 
+  useEffect(()=> {
+    console.log(channelId, 'HERE YAAA')
+setLocation(channelId)
+  },[pathname])
 
   return (
     <div className="home-page-container">

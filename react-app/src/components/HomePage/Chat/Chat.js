@@ -1,6 +1,6 @@
 // import the socket
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Route } from "react-router-dom";
 import {
@@ -17,6 +17,10 @@ import MePage from "./MePage/MePage";
 // outside of your component, initialize the socket variabl
 import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
+import SlateTextEditor from "./SlateTextEditor"
+
+
+
 
 const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   // use state for controlled form input
@@ -41,11 +45,21 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
   const currentServer = useSelector((state) => state.servers[serverId]);
   const [messageError, setMessageError] = useState(true);
   const [messageEditId, setMessageEditId] = useState(null);
-  const bottomRef = useRef(null)
+  const bottomRef = useRef(null);
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
+
+
   };
+
+
+  // const endOfString = (string) => {
+  //   let httpsIndex = string.indexOf("https://");
+  //   let httpIndex = string.indexOf("http://");
+  //   if (httpsIndex) return string.slice(0, httpsIndex);
+  //   if (httpIndex) return string.slice(0, httpIndex);
+  // }
 
   const idleTimer = (socket, id) => {
     setTimeout(() => {
@@ -53,8 +67,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     }, "3600000");
   };
 
-  const sendChat = async (e) => {
-    e.preventDefault();
+  const sendChat = async () => {
 
 
     const sentMessage = await dispatch(
@@ -74,7 +87,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
-    await bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    await bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
@@ -118,6 +131,10 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     }
   }, [chatInput]);
 
+
+  useEffect(() => {}, [chatInput]);
+
+
   return (
     <div className="chat-container">
       <div className="channel-chat-container">
@@ -150,16 +167,20 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
               <>
                 {currentChannelMessages.map((message, ind) => (
                   <FadeIn>
-                    <div ref={bottomRef} className="channel-message-div" key={ind}>
+                    <div
+                      ref={bottomRef}
+                      className="channel-message-div"
+                      key={ind}
+                    >
                       <ChannelMessage
                         {...{ setMessageEditId }}
                         {...{ messageEditId }}
                         {...{ channelId }}
                         {...{ socket }}
                         {...{ message }}
-                        {...{currentChannelMessages}}
+                        {...{ chatInput }}
+                        {...{ currentChannelMessages }}
                         {...{ ind }}
-
                       />
                     </div>
                   </FadeIn>
@@ -177,8 +198,8 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                     <p>*{errors.content}*</p>
                   </div>
                 )}
-                <form className="channel-chat-form" onSubmit={sendChat}>
-                  <input
+                <form className="channel-chat-form" >
+                  {/* <input
                     id="channel-chat-input"
                     value={chatInput}
                     placeholder={
@@ -187,7 +208,10 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
                         : ""
                     }
                     onChange={updateChatInput}
-                  />
+                  /> */}
+
+                  <SlateTextEditor {...{sendChat}} placeholder={`Message ${currentChannel?.name}`} {...{chatInput}} {...{setChatInput}}/>
+
                   {/* <button type="submit">Send</button> */}
                 </form>
               </>
@@ -247,5 +271,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     </div>
   );
 };
+
+
 
 export default Chat;

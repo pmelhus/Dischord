@@ -8,6 +8,7 @@ import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
 import { useLocation, Route } from "react-router-dom";
+import LinkDisplay from "./LinkDisplay";
 
 const ChannelMessage = ({
   setMessageEditId,
@@ -29,10 +30,11 @@ const ChannelMessage = ({
   const [deleteEvent, setDeleteEvent] = useState(false);
   const { pathname } = useLocation();
   // const [messageEditId, setMessageEditId] = useState(null);
-const servers = useSelector((state) => state.servers)
+  const servers = useSelector((state) => state.servers);
+
   const handleEditModal = () => {
     console.log(messageEditId, "MESSAGE EDIT ID");
-    console.log(message.id, "MESSAGE ID")
+    console.log(message.id, "MESSAGE ID");
 
     setShowEdit(true);
     setContent(message.content);
@@ -42,7 +44,7 @@ const servers = useSelector((state) => state.servers)
 
   const editInputSubmit = async (e) => {
     // channel_id, content, edited, owner_id, id
-   await e.preventDefault();
+    await e.preventDefault();
     const payload = {
       channel_id: message.channel_id,
       content: content,
@@ -50,7 +52,6 @@ const servers = useSelector((state) => state.servers)
       owner_id: message.owner_id,
       id: message.id,
     };
-
     const editedMessage = await dispatch(editChannelMessage(payload));
     await setContent(editedMessage.content);
 
@@ -67,10 +68,9 @@ const servers = useSelector((state) => state.servers)
         setDeleteModal(true);
       }
       return;
-
     } else {
-      await setShowEdit(false)
-   await console.log(showEdit,'HERRAA')
+      await setShowEdit(false);
+      await console.log(showEdit, "HERRAA");
       await socket.emit("chat");
       await setErrorsEdit({});
     }
@@ -103,7 +103,6 @@ const servers = useSelector((state) => state.servers)
   // }, [message]);
   // check the preceding message
 
-
   const checkAdjacentMessages = (message, currentChannelMessages, ind) => {
     if (!currentChannelMessages[ind - 1]) return true;
     const previousMessage = currentChannelMessages[ind - 1];
@@ -117,35 +116,38 @@ const servers = useSelector((state) => state.servers)
     }
   };
 
- const displayMessageDate = (message)=> {
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(message.created_at).toLocaleDateString(undefined, options)
- }
+  const displayMessageDate = (message) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(message.created_at).toLocaleDateString(undefined, options);
+  };
 
+  const serverId = parseInt(pathname.split("/")[2]);
 
-const serverId = parseInt(pathname.split("/")[2]);
+  const currentServer = servers[serverId];
+  const user = users[message.owner_id];
 
-const currentServer = servers[serverId]
-const user = users[message.owner_id]
+  // const user = users.filter(user => user.id === message.user_id)
+  const [userModal, setUserModal] = useState(false);
+  const popover = (
+    <Popover placement="left-start" id="popover-basic">
+      {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
 
+      <UserProfilePopover currentServer={currentServer} user={user} />
+    </Popover>
+  );
 
-// const user = users.filter(user => user.id === message.user_id)
-const [userModal, setUserModal] = useState(false);
- const popover = (
-  <Popover placement="left-start" id="popover-basic">
-    {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
-
-    <UserProfilePopover currentServer={currentServer} user={user} />
-  </Popover>
-);
-  // if the preceding message is from the same user, then render message without username and profile image
-
-  // useEffect(() => {
-  //   setMessageEditId(message.id)
-  //   console.log(messageEditId, "mESSAGE EDIT")
-  // }, [showEdit])j
-
-  // console.log(currentServer, user)
+// Checks for url in string
+  const checkIfIncludes = (string) => {
+    const urlRegex =
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/gim;
+    return string.search(urlRegex);
+  };
 
   return (
     <>
@@ -154,31 +156,31 @@ const [userModal, setUserModal] = useState(false);
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
               <>
-              <div className='username-message-date-div'>
+                <div className="username-message-date-div">
+                  <h4 className="username-channel-message">
+                    {messageUser?.username}
+                  </h4>
+                  <p className="message-date">{displayMessageDate(message)}</p>
+                </div>
+                {/* <button > */}
 
-                <h4 className="username-channel-message">{messageUser?.username}</h4>
-                <p className='message-date'>{displayMessageDate(message)}</p>
-              </div>
-              {/* <button > */}
-
-              <OverlayTrigger
-                rootClose={true}
-                trigger={"click"}
-
-                placement="right-end"
-                overlay={popover}
-                onToggle={() => setUserModal(!userModal)}
-                // onHide={() => setUserModal(false)}
-                show={userModal}
-              >
-                <img
-                style={{cursor: "pointer"}}
-                  className="channel-chat-profile-image"
-                  alt="profile"
-                  src={messageUser?.image_url}
+                <OverlayTrigger
+                  rootClose={true}
+                  trigger={"click"}
+                  placement="right-end"
+                  overlay={popover}
+                  onToggle={() => setUserModal(!userModal)}
+                  // onHide={() => setUserModal(false)}
+                  show={userModal}
+                >
+                  <img
+                    style={{ cursor: "pointer" }}
+                    className="channel-chat-profile-image"
+                    alt="profile"
+                    src={messageUser?.image_url}
                   />
-                  </OverlayTrigger>
-              {/* </button> */}
+                </OverlayTrigger>
+                {/* </button> */}
               </>
             )}
           </>
@@ -186,11 +188,12 @@ const [userModal, setUserModal] = useState(false);
           <>
             {checkAdjacentMessages(message, currentChannelMessages, ind) && (
               <>
-              <div className='username-message-date-div'>
-
-                <h4 className="username-channel-message">{messageUser?.username}</h4>
-                <p className='message-date'>{displayMessageDate(message)}</p>
-              </div>
+                <div className="username-message-date-div">
+                  <h4 className="username-channel-message">
+                    {messageUser?.username}
+                  </h4>
+                  <p className="message-date">{displayMessageDate(message)}</p>
+                </div>
                 <div className="channel-chat-profile-image">
                   <i className="fa-solid fa-user-music"></i>
                 </div>
@@ -209,7 +212,6 @@ const [userModal, setUserModal] = useState(false);
                     </div>
                   )}
                   <form onSubmit={editInputSubmit}>
-
                     <div className="message-edit-input-container">
                       <input
                         className="message-content-edit"
@@ -229,7 +231,16 @@ const [userModal, setUserModal] = useState(false);
               </>
             ) : (
               <div className="message-content-edited">
-                <p id="message-actual-content">{`${message?.content}`}</p>
+
+                {/* Displays regular message unless theres a link present in the message */}
+
+                {checkIfIncludes(message.content) !== -1 ? (
+                  <>
+                    <LinkDisplay {...{ message }} />
+                  </>
+                ) : (
+                  <p id="message-actual-content">{`${message?.content}`}</p>
+                )}
                 {/* <div> */}
                 {message.edited && <p id="message-edited">(edited)</p>}
                 {/* </div> */}

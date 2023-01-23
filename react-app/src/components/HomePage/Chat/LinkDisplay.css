@@ -4,5 +4,26 @@
 }
 
 .url-iframe {
+
+
+}
+
+.loading-gif-div {
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  margin-top: 12px;
+}
+
+.loading-gif-div img {
+  margin-top: 12px;
+  padding: 8px;
+  position: absolute;
+}
+
+.iframe-div {
+  position: relative;
+  width: 400px;
+  height: 200px;
   margin-top: 12px;
 }

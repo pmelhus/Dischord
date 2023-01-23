@@ -16,7 +16,7 @@ const LinkDisplay = ({ message }) => {
 
   const begOfString = (text) => {
     if (text.indexOf(matches[0]) === 0) return;
-    return text.slice(0, text.indexOf(matches[0])).trim();
+    return text.slice(0, text.indexOf(matches[0]));
   };
 
   const match = matches[0];

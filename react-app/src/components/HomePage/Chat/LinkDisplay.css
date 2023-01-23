@@ -10,7 +10,7 @@
 
 .loading-gif-div {
   width: 400px;
-  height: 200px;
+  height: 190px;
   position: absolute;
   margin-top: 12px;
 }
@@ -25,5 +25,16 @@
   position: relative;
   width: 400px;
   height: 200px;
+  margin-top: 12px;
+}
+
+.link-img {
+  max-width: 400px;
+  object-fit:contain;
+  max-height: 200px;
+}
+
+.link-img-div {
+  display: flex;
   margin-top: 12px;
 }

@@ -131,23 +131,6 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
     }
   }, [chatInput]);
 
-  const urlInput = (string) => {
-    let httpsIndex = string.indexOf("https://");
-    let httpIndex = string.indexOf("http://");
-    if (httpsIndex) return string.slice(httpsIndex);
-    if (httpIndex) return string.slice(httpIndex);
-  };
-
-  const begOfString = (string) => {
-    let httpsIndex = string.indexOf("https://");
-    let httpIndex = string.indexOf("http://");
-    if (httpsIndex) return string.slice(0, httpsIndex);
-    if (httpIndex) return string.slice(0, httpIndex);
-  };
-
-  const checkIfIncludes = (string) => {
-    return string.includes("https://" || "http://");
-  };
 
   useEffect(() => {}, [chatInput]);
 

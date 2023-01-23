@@ -8,6 +8,7 @@ import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
 import { useLocation, Route } from "react-router-dom";
+import LinkDisplay from "./LinkDisplay";
 
 const ChannelMessage = ({
   setMessageEditId,
@@ -30,7 +31,6 @@ const ChannelMessage = ({
   const { pathname } = useLocation();
   // const [messageEditId, setMessageEditId] = useState(null);
   const servers = useSelector((state) => state.servers);
-
 
   const handleEditModal = () => {
     console.log(messageEditId, "MESSAGE EDIT ID");
@@ -140,15 +140,14 @@ const ChannelMessage = ({
       <UserProfilePopover currentServer={currentServer} user={user} />
     </Popover>
   );
-  // if the preceding message is from the same user, then render message without username and profile image
 
-  // useEffect(() => {
-  //   setMessageEditId(message.id)
-  //   console.log(messageEditId, "mESSAGE EDIT")
-  // }, [showEdit])j
-
-  // console.log(currentServer, user)
-
+// Checks for url in string
+  const checkIfIncludes = (string) => {
+    const urlRegex =
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/gim;
+    return string.search(urlRegex);
+  };
 
   return (
     <>
@@ -232,7 +231,16 @@ const ChannelMessage = ({
               </>
             ) : (
               <div className="message-content-edited">
-                <p id="message-actual-content">{`${message?.content}`}</p>
+
+                {/* Displays regular message unless theres a link present in the message */}
+
+                {checkIfIncludes(message.content) !== -1 ? (
+                  <>
+                    <LinkDisplay {...{ message }} />
+                  </>
+                ) : (
+                  <p id="message-actual-content">{`${message?.content}`}</p>
+                )}
                 {/* <div> */}
                 {message.edited && <p id="message-edited">(edited)</p>}
                 {/* </div> */}

@@ -3,7 +3,7 @@ import { Slate, Editable, withReact } from "slate-react";
 import { Editor, Transforms } from "slate";
 import { useState, useCallback, useEffect } from "react";
 import { Node } from "slate";
-
+import "./SlateTextEditor.css";
 const serialize = (value) => {
   return (
     value
@@ -21,8 +21,6 @@ const initialValue = [
   },
 ];
 
-
-
 const SlateTextEditor = ({
   sendChat,
   placeholder,
@@ -34,44 +32,67 @@ const SlateTextEditor = ({
 
   useEffect(() => {
     Transforms.select(editor, { offset: 0, path: [0, 0] });
-  }, [])
+  }, []);
 
   const checkIfIncludes = () => {
     return chatInput.includes("https://" || "http://");
   };
 
+  const renderElement = useCallback((props) => {
+    return <DefaultElement {...props} />;
+  }, []);
 
-  const renderElement = useCallback(props => {
-    switch (props.element.type) {
-      case 'link':
-        return <LinkElement {...props} />
-      default:
-        return <DefaultElement {...props} />
+  const findUrlsInText = (text) => {
+    const urlRegex =
+      // eslint-disable-next-line no-useless-escape
+      /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/gim;
+
+    const matches = text.match(urlRegex);
+
+    return matches
+      ? matches.map((m) => [m.trim(), text.indexOf(m.trim())])
+      : [];
+  };
+
+  const myDecorator = ([node, path]) => {
+    const nodeText = node.text;
+
+    if (!nodeText) return [];
+
+    const urls = findUrlsInText(nodeText);
+
+    return urls.map(([url, index]) => {
+      return {
+        anchor: {
+          path,
+          offset: index,
+        },
+        focus: {
+          path,
+          offset: index + url.length,
+        },
+        decoration: "link",
+      };
+    });
+  };
+
+  const Leaf = ({ attributes, children, leaf }) => {
+    if (leaf.decoration === "link") {
+      children = (
+        <a
+          style={{ cursor: "pointer" }}
+          href={leaf.text}
+          onClick={() => {
+            window.open(leaf.text, "_blank", "noopener,noreferrer");
+          }}
+        >
+          {children}
+        </a>
+      );
     }
-  }, [])
 
-
-
-  const checkForLink = () => {
-if (checkIfIncludes()) {
-  let httpsIndex = chatInput.indexOf("https://");
-  let httpIndex = chatInput.indexOf("http://");
-  let selectedUrlHttps = chatInput.substring(httpsIndex).split(' ')[0]
-  let selectedUrlHttp = chatInput.substring(httpIndex).split(' ')[0]
-
-
-  Transforms.setNodes(
-    editor,
-    { type: 'link' },
-    { match: n => Editor.isBlock(editor, n) }
-  )
-}
-// console.log(editor)
-// console.log(
-
-
+    return <span {...attributes}>{children}</span>
   }
-
   // const renderElement = useCallback(([...props]) => {
   //   switch (props.element.type) {
   //     case "link":
@@ -93,13 +114,13 @@ if (checkIfIncludes()) {
         if (isAstChange) {
           // Save the value to state value
           setChatInput(serialize(value));
-
         }
       }}
     >
       <Editable
+        decorate={myDecorator}
         renderElement={renderElement}
-        onChange={checkForLink()}
+        renderLeaf={Leaf}
         autoFocus={true}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
@@ -114,30 +135,18 @@ if (checkIfIncludes()) {
                 children: [{ text: "" }],
               },
             ];
+            Transforms.select(editor, { offset: 0, path: [0, 0] });
           }
-
         }}
       />
     </Slate>
   );
 };
 
-const Leaf = (props) => {
-  return <span {...props.attributes}>{props.children}</span>;
-};
 
-const LinkElement = (props) => {
- console.log(props.children[0].props.text.text)
-  return (
-   <a {...props.attributes} href={props.children}>
-
-     {props.children}
-   </a>
-  );
-};
 
 const DefaultElement = (props) => {
-  return <p {...props.attributes}>{props.children}</p>;
+  return <p className="slate-paragraph" {...props.attributes}>{props.children}</p>;
 };
 
 export default SlateTextEditor;

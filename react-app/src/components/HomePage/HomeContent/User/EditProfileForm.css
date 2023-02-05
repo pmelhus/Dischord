@@ -1,0 +1,41 @@
+
+.edit-account-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 101;
+
+  display: flex;
+
+}
+
+.edit-account-nav {
+  width: 38%;
+  height: 100%;
+  background-color: #2e3237;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2px;
+}
+
+.edit-account-nav p {
+  color:#b9b9b9;
+  font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 12px;
+}
+
+.edit-account-forms {
+  width: 62%;
+  height: 100%;
+  background-color: #36393f;
+}
+
+.edit-account-nav-items {
+  padding: 60px 6px 60px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 218px;
+}

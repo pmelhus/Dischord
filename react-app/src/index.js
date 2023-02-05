@@ -6,6 +6,7 @@ import configureStore from "./store";
 import { ModalProvider } from "./context/Modal";
 import { LoadingModalProvider } from "./context/LoadingModal";
 import { UserModalProvider } from "./context/UserModal";
+import { ProfileModalProvider} from "./context/ProfileModal"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import ThemeProvider from "react-bootstrap/ThemeProvider";
@@ -26,11 +27,13 @@ ReactDOM.render(
         minBreakpoint="xxs"
       >
         <ModalProvider>
-          <LoadingModalProvider>
-            <UserModalProvider>
-              <App />
-            </UserModalProvider>
-          </LoadingModalProvider>
+          <ProfileModalProvider>
+            <LoadingModalProvider>
+              <UserModalProvider>
+                <App />
+              </UserModalProvider>
+            </LoadingModalProvider>
+          </ProfileModalProvider>
         </ModalProvider>
       </ThemeProvider>
     </Provider>

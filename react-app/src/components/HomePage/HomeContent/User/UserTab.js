@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { editUser } from "../../../../store/session";
-import { Modal } from "../../../../context/Modal";
+import { ProfileModal } from "../../../../context/ProfileModal";
 import EditProfileForm from "./EditProfileForm";
 import { useState } from "react";
+import "./EditProfileForm.css"
 
 const UserTab = ({socket}) => {
   const user = useSelector((state) => state.session.user);
@@ -32,9 +33,9 @@ const UserTab = ({socket}) => {
         </button>
       </div>
       {editModal && (
-        <Modal onClose={() => setEditModal(false)}>
+        <ProfileModal className="edit-profile-modal" onClose={() => setEditModal(false)}>
           <EditProfileForm {...{socket}} {...{ setEditModal }} />
-        </Modal>
+        </ProfileModal>
       )}
     </>
   );

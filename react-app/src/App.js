@@ -58,7 +58,7 @@ function App() {
     // });
 
     socket.on("login", (data) => {
-      socket.emit('timeout_user')
+      socket.emit('timeout_user', user)
       dispatch(genUsers());
     });
 

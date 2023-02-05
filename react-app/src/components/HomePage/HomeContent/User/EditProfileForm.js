@@ -6,9 +6,22 @@ import PasswordModal from "./PasswordModal";
 
 import { LoadingModal } from "../../../../context/LoadingModal";
 import EditForm from "./EditForm";
+import { useHistory } from "react-router-dom";
+import { logout } from "../../../../store/session";
 
 const EditProfileForm = ({ setEditModal, socket }) => {
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const user = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+  const onLogout = async (e) => {
+    e.preventDefault();
+
+    await dispatch(logout(user.id));
+    await socket.emit("logout", user);
+
+    await history.push("/");
+  };
 
   return (
     <div className="profile-edit-form">
@@ -23,12 +36,20 @@ const EditProfileForm = ({ setEditModal, socket }) => {
       <div className="edit-account-container">
         <div className="edit-account-nav">
           <div className="edit-account-nav-items">
-            <p>USER SETTINGS</p>
-          <nav>
+            <p className="user-settings-p">USER SETTINGS</p>
+            <nav>
+              <div className="my-account-div">
+                <p className="account-p">My Account</p>
+              </div>
+              <div onClick={onLogout} className="my-account-div">
 
-              <div>My Account</div>
+                  {/* <button onClick={() => setEditModal(false)}>Cancel</button> */}
 
-          </nav>
+                  <p className="account-p">Log Out</p>
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                </div>
+
+            </nav>
           </div>
         </div>
 

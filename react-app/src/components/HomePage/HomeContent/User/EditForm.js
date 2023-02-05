@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editUserProfile } from "../../../../store/session";
-import LogoutButton from "./LogoutButton";
+
 
 const EditForm = ({setEditModal, socket, setLoading}) => {
 
@@ -158,10 +158,7 @@ const EditForm = ({setEditModal, socket, setLoading}) => {
         <button onClick={handleEditProfile}>Save</button>
         <button onClick={handlePasswordModal}>Change password</button>
       </div>
-      <div>
-        <button onClick={() => setEditModal(false)}>Cancel</button>
-        <LogoutButton {...{ socket }} />
-      </div>
+
     </div>
   </form>
   )

@@ -3,9 +3,10 @@ import { editUser } from "../../../../store/session";
 import { ProfileModal } from "../../../../context/ProfileModal";
 import EditProfileForm from "./EditProfileForm";
 import { useState } from "react";
-import "./EditProfileForm.css"
+import "./EditProfileForm.css";
+import FadeIn from "react-fade-in";
 
-const UserTab = ({socket}) => {
+const UserTab = ({ socket }) => {
   const user = useSelector((state) => state.session.user);
   const [editModal, setEditModal] = useState(false);
 
@@ -21,7 +22,7 @@ const UserTab = ({socket}) => {
             <img alt="profile" src={user.image_url}></img>
           ) : (
             <>
-              <div className='usertab-default-profile-image'>
+              <div className="usertab-default-profile-image">
                 <i className="fa-solid fa-user-music"></i>
               </div>
             </>
@@ -32,11 +33,16 @@ const UserTab = ({socket}) => {
           <i className="fa-solid fa-gear"></i>
         </button>
       </div>
+
       {editModal && (
-        <ProfileModal className="edit-profile-modal" onClose={() => setEditModal(false)}>
-          <EditProfileForm {...{socket}} {...{ setEditModal }} />
-        </ProfileModal>
+        <ProfileModal
+        className="edit-profile-modal"
+        onClose={() => setEditModal(false)}
+        >
+            <EditProfileForm {...{editModal}} {...{ socket }} {...{ setEditModal }} />
+          </ProfileModal>
       )}
+
     </>
   );
 };

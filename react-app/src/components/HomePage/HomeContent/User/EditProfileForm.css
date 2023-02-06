@@ -5,7 +5,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 101;
+  z-index: 49;
 
   display: flex;
 
@@ -28,9 +28,11 @@
 }
 
 .edit-account-forms {
-  width: 62%;
+  padding: 60px 40px;
+width: 700px;
   height: 100%;
   background-color: #36393f;
+
 }
 
 .edit-account-nav-items {
@@ -62,4 +64,13 @@
 
 .my-account-div:hover .account-p {
   color: white;
+}
+
+.account-form-container {
+  display: flex;
+/* width: 660px; */
+
+}
+.edit-account-form {
+  width:98%;
 }

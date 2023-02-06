@@ -86,7 +86,6 @@ const EditForm = ({ editModal, setEditModal, socket, setLoading }) => {
       {passwordModal && (
         <Modal>
           <PasswordModal />
-
         </Modal>
       )}
       <div className="login-email">

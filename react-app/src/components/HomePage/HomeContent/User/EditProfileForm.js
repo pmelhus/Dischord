@@ -14,6 +14,11 @@ const EditProfileForm = ({ editModal, setEditModal, socket }) => {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
+
+  // state for when a tab is selected in the nav element
+  const [selected, setSelected] = useState("my-account")
+
+
   const onLogout = async (e) => {
     e.preventDefault();
 
@@ -40,9 +45,10 @@ const EditProfileForm = ({ editModal, setEditModal, socket }) => {
               <div className="edit-account-nav-items">
                 <p className="user-settings-p">USER SETTINGS</p>
                 <nav>
-                  <div className="my-account-div">
+                  <div onClick={() => setSelected('my-account')} className={selected === "my-account" ? ("my-account-div-selected"): ("my-account-div")}>
                     <p className="account-p">My Account</p>
                   </div>
+                  <div className='line-divider'></div>
                   <div onClick={onLogout} className="my-account-div">
                     {/* <button onClick={() => setEditModal(false)}>Cancel</button> */}
 

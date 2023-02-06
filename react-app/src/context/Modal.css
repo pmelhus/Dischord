@@ -65,6 +65,7 @@
   left: 0;
   bottom: 0;
   background-color: #36393f;
-
+z-index: 10;
   /* backdrop-filter: blur(2px); */
 }
+

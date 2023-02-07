@@ -129,10 +129,10 @@ const ServerCreateForm = ({ setShowServerModal }) => {
           </label>
         </div>
         <div className="button-div-user">
-          <button id="channel-submit" onClick={handleSubmit}>
+          <button className='signup-login-button' onClick={handleSubmit}>
             Create Server
           </button>
-          <button id="channel-submit" onClick={() => setShowServerModal(false)}>
+          <button className='signup-login-button' onClick={() => setShowServerModal(false)}>
             Cancel
           </button>
         </div>

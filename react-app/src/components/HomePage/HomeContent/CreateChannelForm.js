@@ -80,8 +80,8 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
 				</div>
 			)} */}
         <div className="button-div-user">
-          <button id="channel-submit" onClick={handleSubmit}>Create Channel</button>
-          <button id='channel-submit' onClick={() => setShowChannelForm(false)}>Cancel</button>
+          <button className='signup-login-button'onClick={handleSubmit}>Create Channel</button>
+          <button className='signup-login-button' onClick={() => setShowChannelForm(false)}>Cancel</button>
         </div>
       </form>
     </>

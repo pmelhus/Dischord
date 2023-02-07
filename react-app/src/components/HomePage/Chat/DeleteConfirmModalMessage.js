@@ -49,8 +49,8 @@ const DeleteConfirmModalMessage = ({
             </div>
           </div>
           <div className="button-div-user">
-            <button onClick={handleDelete}>Yes</button>
-            <button className="btn" onClick={() => setDeleteModal(false)}>
+            <button className='signup-login-button' onClick={handleDelete}>Yes</button>
+            <button className='signup-login-button' onClick={() => setDeleteModal(false)}>
               No
             </button>
           </div>

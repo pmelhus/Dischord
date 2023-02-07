@@ -5,7 +5,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 101;
+  z-index: 49;
 
   display: flex;
 
@@ -28,9 +28,11 @@
 }
 
 .edit-account-forms {
-  width: 62%;
+  padding: 60px 40px;
+width: 700px;
   height: 100%;
   background-color: #36393f;
+
 }
 
 .edit-account-nav-items {
@@ -44,7 +46,7 @@
 .my-account-div p {
 
   font-size: 14px;
-  color:#c9c6c6
+  color:#818181
 }
 
 .my-account-div {
@@ -56,10 +58,44 @@
 }
 
 .my-account-div:hover {
-  background-color: rgb(70, 70, 70);
+  background-color: rgb(77, 77, 78);
   cursor: pointer;
 }
 
 .my-account-div:hover .account-p {
   color: white;
+}
+
+.account-form-container {
+  display: flex;
+/* width: 660px; */
+
+}
+.edit-account-form {
+  width:98%;
+  padding-right: 20px;
+}
+
+.line-divider {
+  /* width: 100%; */
+  background-color:#464646;
+  height: 1px;
+  margin: 4px 7px;
+}
+
+.my-account-div-selected {
+  padding: 5px 8px;
+  border-radius: 1px;
+  background-color: rgb(77, 77, 78);
+  cursor: pointer;
+}
+
+.my-account-div-selected .account-p {
+  color: white;
+}
+
+.my-account-div-selected p {
+
+  font-size: 14px;
+  color:#c9c6c6
 }

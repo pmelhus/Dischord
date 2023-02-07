@@ -55,82 +55,86 @@ const HomeContent = ({ socket, setLoading, loading }) => {
         </div>
       ) : (
         <div className="server-sidebar-container">
-          <nav>
-            <button
-              id="server-name-div-button"
-              onClick={() => setShowDropdown(true)}
-            >
-              <div className="server-name-div">
-                <h3>{currentServer?.name}</h3>
+          <nav style={{display: 'flex', flexDirection:'column', justifyContent:'space-between'}}>
+            <div>
+              <button
+                id="server-name-div-button"
+                onClick={() => setShowDropdown(true)}
+              >
+                <div className="server-name-div">
+                  <h3>{currentServer?.name}</h3>
 
-                {showDropdown ? (
-                  <>
-                    <i className="fa-solid fa-xmark"></i>
-                  </>
-                ) : (
-                  <>
-                    <i className="fa-solid fa-angle-down"></i>
-                  </>
-                )}
-              </div>
-            </button>
-
-            {showEditModal && (
-              <div>
-                <Modal onClose={() => setShowEditModal(false)}>
-                  <ServerEditModal setShowEditModal={setShowEditModal} />
-                </Modal>
-              </div>
-            )}
-
-            {showDropdown && currentServer?.owner_id === sessionUser.id && (
-              <div className="dropdown-container">
-                <ul id="profile-dropdown-nav">
-                  <li>
-                    <button onClick={() => setInviteModal(true)}>
-                      <p>Invite people</p>
-                      <i className="fa-solid fa-person-circle-plus"></i>
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => setShowEditModal(true)}>
-                      <p>Server Settings</p>
-                      <i className="fa-solid fa-gear"></i>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
-            {currentServer?.owner_id === sessionUser.id && showInviteButton && (
-              <div id="invite-button-div">
-                <div className="invite-profile-icon-div">
-                  <button
-                    id="invite-cancel-button"
-                    onClick={() => setShowInviteButton(false)}
-                  >
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
-                  <img
-                    id="invite-profile"
-                    alt="profile-default"
-                    src="https://cdn0.iconfinder.com/data/icons/audio-25/24/person-profile-listen-headphones-music-head-512.png"
-                  ></img>
+                  {showDropdown ? (
+                    <>
+                      <i className="fa-solid fa-xmark"></i>
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa-solid fa-angle-down"></i>
+                    </>
+                  )}
                 </div>
+              </button>
+
+              {showEditModal && (
                 <div>
-                  <button
-                    id="invite-button"
-                    onClick={() => setInviteModal(true)}
-                  >
-                    Invite People
-                  </button>
+                  <Modal onClose={() => setShowEditModal(false)}>
+                    <ServerEditModal setShowEditModal={setShowEditModal} />
+                  </Modal>
                 </div>
+              )}
+
+              {showDropdown && currentServer?.owner_id === sessionUser.id && (
+                <div className="dropdown-container">
+                  <ul id="profile-dropdown-nav">
+                    <li>
+                      <button onClick={() => setInviteModal(true)}>
+                        <p>Invite people</p>
+                        <i className="fa-solid fa-person-circle-plus"></i>
+                      </button>
+                    </li>
+                    <li>
+                      <button onClick={() => setShowEditModal(true)}>
+                        <p>Server Settings</p>
+                        <i className="fa-solid fa-gear"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+              {currentServer?.owner_id === sessionUser.id &&
+                showInviteButton && (
+                  <div id="invite-button-div">
+                    <div className="invite-profile-icon-div">
+                      <button
+                        id="invite-cancel-button"
+                        onClick={() => setShowInviteButton(false)}
+                      >
+                        <i className="fa-solid fa-xmark"></i>
+                      </button>
+                      <img
+                        id="invite-profile"
+                        alt="profile-default"
+                        src="https://cdn0.iconfinder.com/data/icons/audio-25/24/person-profile-listen-headphones-music-head-512.png"
+                      ></img>
+                    </div>
+                    <div>
+                      <button
+                    className='signup-login-button'
+                        onClick={() => setInviteModal(true)}
+                      >
+                        Invite People
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+              <ChannelList {...{ setLoading }} {...{ loading }} />
+            </div>
+            <div>
+              <div className="server-nav-bottom">
+                <UserTab {...{ socket }} />
               </div>
-            )}
-
-              <ChannelList {...{setLoading}} {...{loading}} />
-
-            <div className="server-nav-bottom">
-              <UserTab {...{ socket }} />
             </div>
           </nav>
         </div>

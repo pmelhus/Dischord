@@ -145,6 +145,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
             {...{ socket }}
             {...{ currentServer }}
             {...{ setInviteModal }}
+            {...{sessionUser}}
           />
         </Modal>
       )}

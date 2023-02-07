@@ -89,9 +89,9 @@ const EditChannelForm2 = ({ setShowEditForm2, channel }) => {
         </div>
 
         <div className="button-div-user">
-          <button id="channel-submit" onClick={handleSubmit}>Save Changes</button>
-          <button id="channel-submit" onClick={() =>  setShowEditForm2(false)}>Cancel</button>
-          <button id="channel-submit" onClick={handleDelete}>Delete Channel</button>
+          <button className='signup-login-button'onClick={handleSubmit}>Save Changes</button>
+          <button className='signup-login-button' onClick={() =>  setShowEditForm2(false)}>Cancel</button>
+          <button className='signup-login-button' onClick={handleDelete}>Delete Channel</button>
         </div>
       </form>
     </>

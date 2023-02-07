@@ -46,7 +46,7 @@ width: 700px;
 .my-account-div p {
 
   font-size: 14px;
-  color:#c9c6c6
+  color:#818181
 }
 
 .my-account-div {
@@ -73,6 +73,7 @@ width: 700px;
 }
 .edit-account-form {
   width:98%;
+  padding-right: 20px;
 }
 
 .line-divider {

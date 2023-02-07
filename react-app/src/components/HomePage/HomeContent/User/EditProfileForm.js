@@ -8,12 +8,14 @@ import { LoadingModal } from "../../../../context/LoadingModal";
 import EditForm from "./EditForm";
 import { useHistory } from "react-router-dom";
 import { logout } from "../../../../store/session";
+import LogoutConfirm from "./LogoutConfirm"
 
 const EditProfileForm = ({ editModal, setEditModal, socket }) => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
+  const [logoutConfirm, setLogoutConfirm] = useState(false)
 
   // state for when a tab is selected in the nav element
   const [selected, setSelected] = useState("my-account")
@@ -39,6 +41,13 @@ const EditProfileForm = ({ editModal, setEditModal, socket }) => {
             />
           </LoadingModal>
         )}
+        {logoutConfirm && (
+<>
+<Modal>
+  <LogoutConfirm {...{onLogout}} {...{setLogoutConfirm}} />
+</Modal>
+</>
+        )}
         <div className="edit-account-container">
           <div className="edit-account-nav">
             <FadeIn>
@@ -49,9 +58,8 @@ const EditProfileForm = ({ editModal, setEditModal, socket }) => {
                     <p className="account-p">My Account</p>
                   </div>
                   <div className='line-divider'></div>
-                  <div onClick={onLogout} className="my-account-div">
+                  <div onClick={() => {setLogoutConfirm(true)}} className="my-account-div">
                     {/* <button onClick={() => setEditModal(false)}>Cancel</button> */}
-
                     <p className="account-p">Log Out</p>
                     <i className="fa-solid fa-right-from-bracket"></i>
                   </div>

@@ -90,9 +90,9 @@ const EditChannelForm = ({ setShowEditForm }) => {
           ></input>
         </div>
         <div className="button-div-user">
-          <button id="channel-submit"  onClick={handleSubmit}>Save Changes</button>
+          <button className='signup-login-button'  onClick={handleSubmit}>Save Changes</button>
           <button onClick={() =>  setShowEditForm (false)}>Cancel</button>
-          <button id="channel-submit"  onClick={handleDelete}>Delete Channel</button>
+          <button className='signup-login-button' onClick={handleDelete}>Delete Channel</button>
         </div>
       </form>
     </>

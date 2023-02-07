@@ -27,7 +27,17 @@ const UserTab = ({ socket }) => {
               </div>
             </>
           )}
-          <h4>{user.username}</h4>
+          <h4
+            style={{
+              textOverflow: "ellipsis",
+              display: "block",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              maxWidth: "155px",
+            }}
+          >
+            {user.username}
+          </h4>
         </div>
         <button onClick={handleEditModal} id="usertab-gear-icon">
           <i className="fa-solid fa-gear"></i>
@@ -36,13 +46,16 @@ const UserTab = ({ socket }) => {
 
       {editModal && (
         <ProfileModal
-        className="edit-profile-modal"
-        onClose={() => setEditModal(false)}
+          className="edit-profile-modal"
+          onClose={() => setEditModal(false)}
         >
-            <EditProfileForm {...{editModal}} {...{ socket }} {...{ setEditModal }} />
-          </ProfileModal>
+          <EditProfileForm
+            {...{ editModal }}
+            {...{ socket }}
+            {...{ setEditModal }}
+          />
+        </ProfileModal>
       )}
-
     </>
   );
 };

@@ -28,7 +28,7 @@ export function ProfileModal({ onClose, children }) {
   if (!modalNode) return null;
 
   return ReactDOM.createPortal(
-    <div id="profile-modal">
+    <div id="modal">
       <div id="profile-modal-background" onClick={onClose} />
       <div id="profile-modal-content">{children}</div>
     </div>,

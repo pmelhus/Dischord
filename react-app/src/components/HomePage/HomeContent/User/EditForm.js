@@ -19,9 +19,9 @@ const EditForm = ({ editModal, setEditModal, socket, setLoading }) => {
 
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
   const handleCancel = () => {
-    console.log(editModal)
-    setEditModal(!editModal)
-  }
+    console.log(editModal);
+    setEditModal(!editModal);
+  };
 
   const updateImage = (e) => {
     const file = e.target.files[0];
@@ -79,83 +79,94 @@ const EditForm = ({ editModal, setEditModal, socket, setLoading }) => {
 
   return (
     <div className="account-form-container">
-
-
-    <form className="edit-account-form">
-      <h3 style={{paddingBottom: "10px"}}>My Account</h3>
-      {passwordModal && (
-        <Modal>
-          <PasswordModal />
-        </Modal>
-      )}
-      <div className="login-email">
-        <label>Username</label>
-        {errors && errors.username && (
-          <div className="error-msg">
-            <p>*{errors.username}*</p>
-          </div>
-        )}
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        ></input>
-      </div>
-      <div className="login-email">
-        <label>Email</label>
-        {errors && errors.email && (
-          <div className="error-msg">
-            <p>*{errors.email}*</p>
-          </div>
-        )}
-        <input value={email} onChange={(e) => setEmail(e.target.value)}></input>
-      </div>
-      <div className="login-email">
-        {errors && errors.bio && (
-          <div className="error-msg">
-            <p>*{errors.bio}*</p>
-          </div>
-        )}
-        <label>Bio</label>
-        <textarea
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-        ></textarea>
-      </div>
-      {preview ? (
-        <div id="user-picture-preview">
-          <img alt="current profile" src={preview} />
-        </div>
-      ) : (
-        <div className="user-image-preview">
-          {user?.image_url ? (
-            <img
-              alt="profile preview"
-              className="server-image-icon-edit"
-              src={user?.image_url}
-            />
+      <form className="edit-account-form">
+        <h3 style={{ paddingBottom: "10px" }}>My Account</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            paddingBottom: "10px",
+          }}
+        >
+          {preview ? (
+            <div id="user-picture-preview">
+              <img alt="current profile" src={preview} />
+            </div>
           ) : (
-            <h2 className="server-image-icon-edit">
-              {user?.username.split("")[0]}
-            </h2>
+            <div className="user-image-preview">
+              {user?.image_url ? (
+                <img
+                  alt="profile preview"
+                  className="server-image-icon-edit"
+                  src={user?.image_url}
+                />
+              ) : (
+                <h2 className="server-image-icon-edit">
+                  {user?.username.split("")[0]}
+                </h2>
+              )}
+            </div>
           )}
+          <div className="edit-profile-image-preview">
+            <label className="custom-file-upload">
+              {errors && errors.image_file && (
+                <div className="error-msg">
+                  <p>*{errors.image_file}*</p>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/png, image/gif"
+                onChange={updateImage}
+              ></input>
+              Edit profile picture
+            </label>
+          </div>
         </div>
-      )}
-      <div className="edit-profile-image-preview">
-        <label className="custom-file-upload">
-          {errors && errors.image_file && (
+        {passwordModal && (
+          <Modal>
+            <PasswordModal {...{ setPasswordModal }} />
+          </Modal>
+        )}
+        <div className="login-email">
+          <label>Username</label>
+          {errors && errors.username && (
             <div className="error-msg">
-              <p>*{errors.image_file}*</p>
+              <p>*{errors.username}*</p>
             </div>
           )}
           <input
-            type="file"
-            accept="image/png, image/jpeg, image/png, image/gif"
-            onChange={updateImage}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           ></input>
-          Upload your profile pic!
-        </label>
-      </div>
-      {/* {Object.keys(errors).length > 0 && (
+        </div>
+        <div className="login-email">
+          <label>Email</label>
+          {errors && errors.email && (
+            <div className="error-msg">
+              <p>*{errors.email}*</p>
+            </div>
+          )}
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+        </div>
+        <div className="login-email">
+          {errors && errors.bio && (
+            <div className="error-msg">
+              <p>*{errors.bio}*</p>
+            </div>
+          )}
+          <label>Bio</label>
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          ></textarea>
+        </div>
+
+        {/* {Object.keys(errors).length > 0 && (
       <div className="form-errors">
         {Object.keys(errors).map(
           // (key) => `${errors[key]}`
@@ -163,21 +174,19 @@ const EditForm = ({ editModal, setEditModal, socket, setLoading }) => {
         )}
       </div>
     )} */}
-      <div className="button-div-user">
-        <div>
-          <button onClick={handleEditProfile}>Save</button>
-          <button onClick={handlePasswordModal}>Change password</button>
+        <div className="button-div-user">
+          <div>
+            <button className='signup-login-button' onClick={handleEditProfile}>Save</button>
+            <button className='signup-login-button' onClick={handlePasswordModal}>Change password</button>
+          </div>
         </div>
+      </form>
+      <div style={{ paddingTop: "2px" }}>
+        <div style={{ cursor: "pointer", color: "#818181" }} onClick={handleCancel}>
+          <i className="fa-regular fa-circle-xmark fa-2xl"></i>
+        </div>
+        <p style={{ color:'#818181', paddingTop: "5px" }}>ESC</p>
       </div>
-    </form>
-    <div  style={{paddingTop: "2px"}}>
-
-<div style={{cursor: "pointer"}}  onClick={handleCancel} >
-
-    <i className="fa-regular fa-circle-xmark fa-2xl"></i>
-</div>
-    <p style={{paddingTop: "5px"}}>ESC</p>
-    </div>
     </div>
   );
 };

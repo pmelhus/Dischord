@@ -36,10 +36,10 @@ const DeleteConfirmModal = ({currServer, setShowDeleteModal, setShowEditModal, s
         <br></br>
         <br></br>
         <div className="button-div-user">
-          <button className="btn" onClick={handleDelete}>
+          <button className='signup-login-button' onClick={handleDelete}>
             Yes
           </button>
-          <button className="btn" onClick={() => setShowDeleteModal(false)}>
+          <button className='signup-login-button' onClick={() => setShowDeleteModal(false)}>
             No
           </button>
         </div>

@@ -9,7 +9,7 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
   const memberSinceDate = currentServer.members_ids.find(
     (member) => member.user_id === user.id
   ).member_since;
-  
+
   const userDate = new Date(user.created_at);
   const memberDate = new Date(memberSinceDate);
   const options = { year: "numeric", month: "long", day: "numeric" };

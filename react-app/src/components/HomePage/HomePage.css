@@ -178,9 +178,12 @@ border-radius: 35%;
 .server-nav-bottom {
   bottom: 0;
   height: fit-content;
+  display: block;
   /* right: 0; */
-  position: absolute;
-  width: 100%;
+
+  /* position: absolute; */
+width: 100%;
+  max-width: 280px;
 }
 
 .server-tab-div {
@@ -483,9 +486,13 @@ display:block;
   display: flex;
   justify-content: space-between;
   background-color:#35373c;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   /* position: absolute; */
   /* bottom: 0; */
-  width: 100%;
+  /* width: 100%; */
+  max-width: 100%;
 }
 
 .usertab-image-username {
@@ -1341,7 +1348,8 @@ margin: 20px;
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
-  padding: 6px 12px;
+  padding: 15px 12px;
+
   cursor: pointer;
 }
 
@@ -1363,12 +1371,6 @@ margin: 20px;
 
 }
 
-.profile-edit-form button {
-cursor: pointer;
-/* height: 200px; */
-    background-color:#950652;
-
-}
 
 .profile-edit-form-password {
   color: white;
@@ -1396,7 +1398,7 @@ cursor: pointer;
   justify-content: space-evenly;
 }
 
-.button-div-password button {
+/* .button-div-password button {
   margin-top: 10px;
   width: 125px;
   border-radius: 10px;
@@ -1404,13 +1406,13 @@ cursor: pointer;
   border: none;
   color: white;
   cursor: pointer;
-}
+} */
 
 .button-div-user {
 
   margin-top: 16px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: row;
 }
 
@@ -1419,7 +1421,7 @@ cursor: pointer;
   flex-direction: column;
 }
 
-.button-div-user button {
+/* .button-div-user button {
   min-width: 120px;
   border-radius: 10px;
   background-color:#950652;
@@ -1430,7 +1432,6 @@ cursor: pointer;
   white-space: nowrap;
 margin: 20px;
   /* height: 20px; */
-}
 
 .home-button-div button:hover {
 cursor: pointer;
@@ -1571,7 +1572,7 @@ cursor: pointer;
   margin-bottom: 5px;
 }
 .profile-edit-form label {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 #channel-gear:hover {

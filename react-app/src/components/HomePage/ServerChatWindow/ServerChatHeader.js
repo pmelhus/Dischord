@@ -5,7 +5,7 @@ const ServerChatHeader = () => {
   const channel_id = parseInt(pathname.split("/")[3]);
   const url = pathname.split("/")[2];
   const urlChannels = pathname.split("/")[3];
-  console.log(url);
+
   const channels = useSelector((state) => state.channels);
 
   return (

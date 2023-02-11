@@ -6,6 +6,7 @@ import ServerEditModal from "./ServerEditModal";
 import ChannelList from "./ChannelList";
 import UserTab from "./User/UserTab";
 import InviteUser from "./InviteUser";
+import FriendsNavBar from "./FriendsNavBar.js"
 
 const HomeContent = ({ socket, setLoading, loading }) => {
   //react
@@ -49,7 +50,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
     <div className="home-content-container">
       {pathname === "/channels/@me" ? (
         <div className="server-sidebar-container">
-          <nav></nav>
+          <FriendsNavBar/>
 
           <UserTab {...{ socket }} />
         </div>

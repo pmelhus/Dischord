@@ -8,6 +8,8 @@ top: 0;
 bottom: 0;
 right: 0;
 left:0;
+
+--text-gray: rgba(173, 171, 171, 0.861);
 }
 
 body {
@@ -20,6 +22,8 @@ body {
   height:100%;
   weight:100%;
   box-sizing: border-box;
+
+
 
 }
 

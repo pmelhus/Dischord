@@ -9,7 +9,7 @@ import { UserModalProvider } from "./context/UserModal";
 import { ProfileModalProvider} from "./context/ProfileModal"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import ThemeProvider from "react-bootstrap/ThemeProvider";
+import {ThemeProvider} from "react-jss";
 
 // Bootstrap CSS
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,12 +19,15 @@ import ThemeProvider from "react-bootstrap/ThemeProvider";
 
 const store = configureStore();
 
+const theme = {
+  textGray: 'rgba(173, 171, 171, 0.861)'
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider
-        breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
-        minBreakpoint="xxs"
+    theme = {theme}
       >
         <ModalProvider>
           <ProfileModalProvider>

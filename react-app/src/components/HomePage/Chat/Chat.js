@@ -136,13 +136,16 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
 
 
   return (
+
+    <>
+
     <div className="chat-container">
       <div className="channel-chat-container">
-        {/* <div className="channel-chat-and-send-form"> */}
-        <div className="channel-chat-messages">
           <Route exact path="/channels/@me">
             <MePage />
           </Route>
+        {/* <div className="channel-chat-and-send-form"> */}
+        <div className="channel-chat-messages">
           <Route exact path={`/channels/${serverId}/noChannels`}>
             <div className="no-channels-container">
               <div className="no-channels-div">
@@ -269,6 +272,7 @@ const Chat = ({ socket, setLoadingMessages, loadingMessages }) => {
         {/* </div> */}
       </div>
     </div>
+    </>
   );
 };
 

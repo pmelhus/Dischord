@@ -6,7 +6,7 @@ import ServerEditModal from "./ServerEditModal";
 import ChannelList from "./ChannelList";
 import UserTab from "./User/UserTab";
 import InviteUser from "./InviteUser";
-import FriendsNavBar from "./FriendsNavBar.js"
+import FriendsNavBar from "../Chat/MePage/FriendsComponents/FriendsNavBar.js"
 
 const HomeContent = ({ socket, setLoading, loading }) => {
   //react

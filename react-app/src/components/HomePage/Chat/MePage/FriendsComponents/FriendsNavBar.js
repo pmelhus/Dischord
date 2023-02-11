@@ -1,5 +1,6 @@
 import { createUseStyles, useTheme } from "react-jss";
 import { useLocation } from "react-router-dom";
+import FriendsIcon from "./FriendsIcon";
 
 const useStyles = createUseStyles((theme) => ({
   friendSearchToBe: {
@@ -22,17 +23,17 @@ const useStyles = createUseStyles((theme) => ({
     backgroundColor: theme.selectedBackground,
     cursor: "pointer",
     borderRadius: "5px",
-    '&:hover': {
+    "&:hover": {
       color: theme.offWhite,
-    }
+    },
   },
-
 }));
 
 const FriendsNavBar = () => {
   const { pathname } = useLocation();
   const theme = useTheme();
   const classes = useStyles({ theme });
+  const iconStyle = { marginRight: "16px", marginLeft: "8px" }
 
   return (
     <nav>
@@ -45,11 +46,7 @@ const FriendsNavBar = () => {
             : classes.friendsTab
         }
       >
-        <i
-          style={{ marginRight: "16px", marginLeft: "8px" }}
-          className="fa-solid fa-lg fa-users"
-        ></i>
-        <h3>Friends</h3>
+        <FriendsIcon {...{iconStyle}} />
       </div>
     </nav>
   );

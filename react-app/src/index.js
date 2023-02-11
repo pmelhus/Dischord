@@ -22,7 +22,8 @@ const store = configureStore();
 const theme = {
   textGray: 'rgba(173, 171, 171, 0.861)',
   selectedBackground: 'rgba(229, 230, 232, 0.129);',
-  offWhite: "rgba(255, 255, 255, 0.836)"
+  offWhite: "rgba(255, 255, 255, 0.836)",
+  textGrayTrans: 'rgba(173, 171, 171, 0.161)',
 }
 
 ReactDOM.render(

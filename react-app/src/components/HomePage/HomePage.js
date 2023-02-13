@@ -1,7 +1,7 @@
 import HomeNavBar from "./HomeNavBar/HomeNavBar";
 import HomeContent from "./HomeContent/HomeContent";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { genServers } from "../../store/server";
 import { genChannels } from "../../store/channel";

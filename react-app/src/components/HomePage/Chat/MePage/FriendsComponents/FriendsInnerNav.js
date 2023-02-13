@@ -10,7 +10,7 @@ const useStyles = createUseStyles((theme) => ({
     margin: "0 8px",
   },
   friendsNav: {
-    width: "500px",
+    // width: "500px",
     display: "flex",
     alignItems: "center",
   },
@@ -25,6 +25,8 @@ const useStyles = createUseStyles((theme) => ({
     cursor: "pointer",
     backgroundColor: "rgb(45, 125, 70)",
     padding: "4px 8px",
+    borderRadius: "4px",
+    // boxSizing: 'border-box',
     // height: '20px',
   },
   addFriendButtonSelected: {
@@ -32,6 +34,7 @@ const useStyles = createUseStyles((theme) => ({
     cursor: "default",
     // height: '20px',
     padding: "4px 8px",
+    // boxSizing: 'border-box',
   },
   addFriendButtonH4: {
     color: theme.offWhite,
@@ -40,15 +43,37 @@ const useStyles = createUseStyles((theme) => ({
   addFriendButtonH4Selected: {
     color: "rgb(70, 196, 110)",
     fontSize: "15px",
+    boxSizing: "border-box",
+  },
+  allFriends: {
+    boxSizing: "border-box",
+    margin: "0 12px",
+    padding: "2px 8px",
+    cursor: "pointer",
+    color: theme.textGray,
+    "&:hover": {
+      backgroundColor: theme.hoverBackground,
+      color: theme.offWhite,
+    },
+    // minWidth: '40px'
+  },
+  allFriendsSelected: {
+    boxSizing: "border-box",
+    backgroundColor: theme.selectedBackground,
+    margin: "0 12px",
+    padding: "2px 8px",
+    borderRadius: "4px",
+    cursor: "default",
+    color: theme.offWhite,
   },
 }));
 
-const FriendsInnerNav = () => {
+const FriendsInnerNav = ({setSelected, selected}) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
   const iconStyle = { color: theme.textGray, marginRight: "6px" };
 
-  const [selected, setSelected] = useState("addFriend");
+
 
   return (
     <nav className={classes.friendsNav}>
@@ -56,9 +81,18 @@ const FriendsInnerNav = () => {
         <FriendsIcon {...{ iconStyle }} />
       </div>
       <div className={classes.divider}></div>
-      <div onClick={() => setSelected("all")} className={classes.allFriends}>
+      {/* 'All' button on nav */}
+      <div
+        onClick={() => setSelected("all")}
+        className={
+          selected === "all" ? classes.allFriendsSelected : classes.allFriends
+        }
+      >
         <h3>All</h3>
       </div>
+      {/* Pending tab on nav */}
+
+      {/* Add friend button on nav */}
       <div
         className={
           selected === "addFriend"
@@ -76,6 +110,7 @@ const FriendsInnerNav = () => {
         >
           Add Friend
         </h3>
+
       </div>
     </nav>
   );

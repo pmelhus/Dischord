@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useLocation, NavLink } from "react-router-dom";
 import FriendsInnerNav from "../Chat/MePage/FriendsComponents/FriendsInnerNav";
-const ServerChatHeader = () => {
+const ServerChatHeader = ({selected, setSelected}) => {
   const { pathname } = useLocation();
   const channel_id = parseInt(pathname.split("/")[3]);
   const url = pathname.split("/")[2];
@@ -14,7 +14,7 @@ const ServerChatHeader = () => {
       {url === "@me" ? (
         <>
           <div className="server-chat-header-container">
-            <FriendsInnerNav />
+            <FriendsInnerNav {...{ selected }} {...{ setSelected }} />
           </div>
         </>
       ) : (

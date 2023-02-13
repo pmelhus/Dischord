@@ -1,6 +1,7 @@
 import Chat from "../Chat/Chat";
 import ServerChatHeader from "./ServerChatHeader";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const ServerChatWindow = ({
   setLoadingMessages,
@@ -10,10 +11,16 @@ const ServerChatWindow = ({
   socket,
   setLoading,
 }) => {
+  
+  // state for friends nav bar selection
+  const [selected, setSelected] = useState("addFriend");
+
   return (
     <div className="server-chat-container">
-      <ServerChatHeader />
+      <ServerChatHeader {...{ selected }} {...{ setSelected }} />
       <Chat
+        {...{ selected }}
+        {...{ setSelected }}
         {...{ setLoadingMessages }}
         {...{ loadingMessages }}
         {...{ onlineMembers }}

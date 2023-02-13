@@ -63,6 +63,18 @@ const useStyles = createUseStyles((theme) => ({
     color: theme.textGray,
     padding: "0 6px",
   },
+  errors: {
+    color: "red",
+    marginTop: "6px",
+    fontSize: "15px",
+    paddingLeft: "1px",
+  },
+  success: {
+    color: theme.friendGreen,
+    paddingLeft: "1px",
+    fontSize: "15px",
+    marginTop: "6px",
+  },
 }));
 
 /**
@@ -100,7 +112,7 @@ const AddFriendInput = () => {
 
   // update username input field to state
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -112,22 +124,30 @@ const AddFriendInput = () => {
   const sessionUser = useSelector((state) => state.session.user);
 
   // set errors state for error handling
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
+
+  // set success state for success message
+  const [success, setSuccess] = useState(false);
+
+  // set input field to empty string
+  const emptyInput = () => {
+    wrapperRef.current.value = "";
+  };
 
   const handleSubmit = async (e) => {
-
     const payload = { self_id: sessionUser.id, friend_username: username };
     e.preventDefault();
     const sentRequest = await dispatch(createFriendRequest(payload));
-
+    console.log(sentRequest);
     if (sentRequest && sentRequest.errors) {
-      await setErrors(sentRequest.errors)
-      return
+      await setErrors(sentRequest.errors);
+      return;
     }
-
-    await setErrors({})
-    await setUsername('')
+    await setSuccess(true);
+    await setErrors({});
+    await emptyInput();
   };
+  console.log(wrapperRef?.current?.value);
 
   return (
     <>
@@ -155,6 +175,19 @@ const AddFriendInput = () => {
               <div className={classes.buttonDiv}>Send Friend Request</div>
             </button>
           </div>
+          {errors && (
+            <div className={classes.errors}>
+              <p>{errors.friend_username}</p>
+            </div>
+          )}
+          {success && (
+            <div className={classes.success}>
+              <p style={{display: 'inline'}}>
+                {`Success! Your friend request to`} <p style={{fontWeight: 'bold', display: 'inline'}}>{username}</p>
+                {` was sent.`}
+              </p>
+            </div>
+          )}
         </div>
       </form>
     </>

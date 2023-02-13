@@ -27,7 +27,8 @@ const theme = {
   textGrayTrans: 'rgba(173, 171, 171, 0.161)',
   darkInputBackground: "rgba(32, 34, 37, 1)",
   pinkTheme: '#950652',
-  buttonPink: 'rgb(116, 56, 73)'
+  buttonPink: 'rgb(116, 56, 73)',
+  friendGreen: "rgb(45, 125, 70)"
 }
 
 ReactDOM.render(

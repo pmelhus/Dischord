@@ -23,7 +23,7 @@ const useStyles = createUseStyles((theme) => ({
   addFriendButton: {
     margin: "0 12px",
     cursor: "pointer",
-    backgroundColor: "rgb(45, 125, 70)",
+    backgroundColor: theme.friendGreen,
     padding: "4px 8px",
     borderRadius: "4px",
     // boxSizing: 'border-box',

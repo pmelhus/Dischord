@@ -47,12 +47,7 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
   const [messageEditId, setMessageEditId] = useState(null);
   const bottomRef = useRef(null);
 
-  const updateChatInput = (e) => {
-    setChatInput(e.target.value);
-
-
-  };
-
+ 
 
   // const endOfString = (string) => {
   //   let httpsIndex = string.indexOf("https://");

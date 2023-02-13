@@ -2,8 +2,8 @@ from .db import db
 from .creation_mixin import CrUpMixin
 
 
-class Friendship(db.Model, CrUpMixin):
-    __tablename__ = 'friendship'
+class FriendshipRequest(db.Model, CrUpMixin):
+    __tablename__ = 'friendship_request'
 
     id = db.Column(db.Integer, primary_key=True)
     self_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

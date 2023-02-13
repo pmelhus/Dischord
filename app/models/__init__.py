@@ -8,4 +8,5 @@ from .inbox_user import inbox_users
 from .direct_message import DirectMessage
 from .inbox import Inbox
 from .friendship import Friendship
+from .friendship_request import FriendshipRequest
 

@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, Friendship, User
-from app.forms import FriendshipForm
+from app.models import db, Friendship, FriendshipRequest, User
+from app.forms import FriendshipRequestForm
 
-friendship_routes = Blueprint('friends', __name__)
+friendship_routes = Blueprint('friendships', __name__)
 
 
 def validation_errors_to_error_messages(validation_errors):
@@ -28,20 +28,44 @@ def getFriendship(id):
 # This route creates a new friend connection
 
 
+# @friendship_routes.route('/', methods=["POST"])
+# @login_required
+# def createFriendship():
+#     form = FriendshipRequestForm()
+#     form['csrf_token'].data = request.cookies['csrf_token']
+#     params = {
+#         "user_id_self": form.data['user_id_self'],
+#         "user_id_friend": form.data['user_id_friend']
+#     }
+#     if form.validate_on_submit():
+#         friendship = Friendship(**params)
+#         db.session.add(friendship)
+#         db.session.commit()
+#         return friendship.to_dict()
+#     else:
+#         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+# This route creates a pending friend request
+
 @friendship_routes.route('/', methods=["POST"])
 @login_required
-def createFriendship():
-    form = FriendshipForm()
+def create_friendship_request():
+
+    form = FriendshipRequestForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    params = {
-        "user_id_self": form.data['user_id_self'],
-        "user_id_friend": form.data['user_id_friend']
-    }
     if form.validate_on_submit():
-        friendship = Friendship(**params)
-        db.session.add(friendship)
+        user = User.query.where(User.username == form.data['friend_username']).one()
+        params = {
+            "self_id": form.data['self_id'],
+            "friend_id": user.id
+        }
+        print(params, 'PARAMS HEYA')
+     
+        friendship_request = FriendshipRequest(**params)
+        db.session.add(friendship_request)
         db.session.commit()
-        return friendship.to_dict()
+        return friendship_request.to_dict()
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 

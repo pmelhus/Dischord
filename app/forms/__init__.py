@@ -5,4 +5,4 @@ from .channel_form import ChannelForm
 from .user_edit_form import UserEdit
 from .user_password_edit import UserEditPassword
 from .channel_message_form import ChannelMessageForm
-from .friendship_form import FriendshipForm
+from .friendship_request_form import FriendshipRequestForm

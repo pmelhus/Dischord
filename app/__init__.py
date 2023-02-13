@@ -41,7 +41,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(server_routes, url_prefix='/api/servers')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(channel_message_routes, url_prefix='/api/channel_messages')
-app.register_blueprint(friendship_routes, url_prefixes='/api/friendships')
+app.register_blueprint(friendship_routes, url_prefix='/api/friendships')
 db.init_app(app)
 
 socketio.init_app(app)

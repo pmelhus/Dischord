@@ -1,8 +1,9 @@
 import { createUseStyles, useTheme } from "react-jss";
-import { useState, useRef, useEffect} from "react"
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createFriendRequest } from "./../../../../../store/friend";
 
-const useStyles = createUseStyles((theme, focus) => ({
-
+const useStyles = createUseStyles((theme) => ({
   addFriendHeader: {
     color: theme.offWhite,
     padding: "20px 30px",
@@ -14,10 +15,9 @@ const useStyles = createUseStyles((theme, focus) => ({
     marginTop: "16px",
     // width: "1000px",
     backgroundColor: theme.darkInputBackground,
-    padding: '0 12px',
-    borderRadius: '8px',
+    padding: "0 12px",
+    borderRadius: "8px",
     border: `1px solid ${theme.darkInputBackground}`,
-
   },
   inputButDivWithBorder: {
     display: "flex",
@@ -26,44 +26,43 @@ const useStyles = createUseStyles((theme, focus) => ({
     marginTop: "16px",
     // width: "1000px",
     backgroundColor: theme.darkInputBackground,
-    padding: '0 12px',
-    borderRadius: '8px',
-    border: '1px solid rgb(100, 56, 73)'
+    padding: "0 12px",
+    borderRadius: "8px",
+    border: "1px solid rgb(100, 56, 73)",
   },
   inputField: {
     height: "40px",
-    backgroundColor: 'unset',
-    border: 'none',
-    outline: '0',
+    backgroundColor: "unset",
+    border: "none",
+    outline: "0",
     fontSize: "16px",
     fontWeight: "500",
-    width: '100%',
-    borderRadius: '3px',
+    width: "100%",
+    borderRadius: "3px",
     // padding: '0 4px'
-    color: theme.textGray
+    color: theme.textGray,
   },
   inputWrapper: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    padding: '4px 0',
-    width: '100%',
+    backgroundColor: "transparent",
+    border: "none",
+    padding: "4px 0",
+    width: "100%",
     flex: "1 1 auto",
   },
   buttonField: {
     backgroundColor: theme.buttonPink,
-    minWidth: 'auto',
-    minHeight: '32px',
-    display: 'flex',
-    alignItems: 'center'
-
+    minWidth: "auto",
+    minHeight: "32px",
+    display: "flex",
+    alignItems: "center",
   },
   buttonDiv: {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    fontSize: '14px',
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    fontSize: "14px",
     color: theme.textGray,
-    padding: '0 6px'
-  }
+    padding: "0 6px",
+  },
 }));
 
 /**
@@ -76,7 +75,7 @@ function useOutsideAlerter(ref, setFocus, focus) {
      */
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        setFocus(false)
+        setFocus(false);
       }
     }
     // Bind the event listener
@@ -89,36 +88,71 @@ function useOutsideAlerter(ref, setFocus, focus) {
 }
 
 const AddFriendInput = () => {
-
-// theme and classes for styling
-const [focus, setFocus] = useState(false)
+  // theme and classes for styling
+  const [focus, setFocus] = useState(false);
   const theme = useTheme();
   const classes = useStyles({ theme, focus });
-// state for whether input is focused or not
+  // state for whether input is focused or not
 
+  // wrapper for outside click alert
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setFocus, focus);
 
-// wrapper for outside click alert
-const wrapperRef = useRef(null)
-useOutsideAlerter(wrapperRef, setFocus, focus)
+  // update username input field to state
 
-console.log(focus)
+  const [username, setUsername] = useState('');
+
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  // dispatch username input and current user id to store
+
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+
+  // set errors state for error handling
+  const [errors, setErrors] = useState({})
+
+  const handleSubmit = async (e) => {
+
+    const payload = { self_id: sessionUser.id, friend_username: username };
+    e.preventDefault();
+    const sentRequest = await dispatch(createFriendRequest(payload));
+
+    if (sentRequest && sentRequest.errors) {
+      await setErrors(sentRequest.errors)
+      return
+    }
+
+    await setErrors({})
+    await setUsername('')
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={classes.addFriendHeader}>
           <h4 style={{ marginBottom: "8px" }}>ADD FRIEND</h4>
           <p style={{ color: theme.textGray, fontSize: "12px" }}>
             You can add a friend with their Dishord Tag. It's cAsE sEnSitivE!
           </p>
-          <div className={focus ? classes.inputButDivWithBorder : classes.inputButDiv}>
+          <div
+            className={
+              focus ? classes.inputButDivWithBorder : classes.inputButDiv
+            }
+          >
             <div className={classes.inputWrapper}>
-
-            <input ref={wrapperRef} onFocus={() => setFocus(true)} className={classes.inputField} placeholder="Enter a Username" />
+              <input
+                ref={wrapperRef}
+                onChange={handleUsername}
+                onFocus={() => setFocus(true)}
+                className={classes.inputField}
+                placeholder="Enter a Username"
+              />
             </div>
             <button type="submit" className={classes.buttonField}>
-              <div className={classes.buttonDiv}>
-              Send Friend Request
-              </div>
+              <div className={classes.buttonDiv}>Send Friend Request</div>
             </button>
           </div>
         </div>

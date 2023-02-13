@@ -89,7 +89,7 @@ export const createServer = (payload) => async (dispatch) => {
     // console.log(image);
     f.append("image", image);
   }
-  console.log(payload);
+
 
   const [response] = await Promise.all([
     fetch(`/api/servers/`, {

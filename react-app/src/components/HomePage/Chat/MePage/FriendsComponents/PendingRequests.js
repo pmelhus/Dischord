@@ -1,9 +1,10 @@
 import { createUseStyles, useTheme } from "react-jss";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
-import {removeRequest, loadAllRequests} from "../../../../../store/friend"
-
+import { removeRequest, loadAllRequests, createFriendship } from "../../../../../store/friend";
 
 // styling
 const useStyles = createUseStyles((theme) => ({
@@ -43,11 +44,17 @@ const useStyles = createUseStyles((theme) => ({
     alignItems: "center",
   },
   cancelRequest: {
-    cursor: 'pointer'
+    cursor: "pointer",
+    marginLeft: "5px",
+    "&:hover": {backgroundColor: 'darkred', borderRadius:'100%'}
+  },
+  acceptRequest: {
+    cursor: 'pointer',
+    "&:hover": {backgroundColor: 'darkgreen', borderRadius:'100%'}
   }
 }));
 
-const PendingRequests = ({loaded}) => {
+const PendingRequests = ({ loaded }) => {
   // styling variables for jss
   const theme = useTheme();
   const classes = useStyles({ theme });
@@ -57,9 +64,10 @@ const PendingRequests = ({loaded}) => {
   const users = useSelector((state) => state.users);
   const sessionUser = useSelector((state) => state.session.user);
 
-  const requests = useSelector((state) => Object.values(state.friends.requests));
+  const requests = useSelector((state) =>
+    Object.values(state.friends.requests)
+  );
   // filter requests based on user_id
-
 
   const outgoingRequests = requests?.filter(
     (request) => request?.self_id === sessionUser.id
@@ -70,21 +78,33 @@ const PendingRequests = ({loaded}) => {
   );
 
   // errors
-  const [errors, setErrors] = useState({})
-
+  const [errors, setErrors] = useState({});
 
   // deletes request
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const handleDelete = async(id) => {
- const deletedRequest = await dispatch(removeRequest(id))
+  const handleDelete = async (id) => {
+    const deletedRequest = await dispatch(removeRequest(id));
     if (deletedRequest && deletedRequest.errors) {
-      await setErrors(deletedRequest.errors)
-      return
+      await setErrors(deletedRequest.errors);
+      return;
     }
-    await dispatch(loadAllRequests(sessionUser.id))
-    
+    await dispatch(loadAllRequests(sessionUser.id));
+  };
+
+  // accepts a request
+
+  const handleAccept = async(request) => {
+    const friendship = await dispatch(createFriendship(request))
+    if (friendship && friendship.errors) {
+      await setErrors(friendship.errors);
+      return;
+    }
+    await dispatch(removeRequest(request.id))
+    await dispatch(loadAllRequests(sessionUser.id));
   }
+
+
 
   return (
     <div className={classes.container}>
@@ -118,10 +138,19 @@ const PendingRequests = ({loaded}) => {
                       </p>
                     </div>
                   </div>
-                  <div className={classes.cancelRequest} onClick={() => handleDelete(request.id)}>
-                    <i className="fa-solid fa-2xl fa-circle-xmark"></i>
-                  </div>
+
                 </div>
+                <div style={{ display: "flex" }}>
+                    <div onClick={() => handleAccept(request)}className={classes.acceptRequest}>
+                      <i className="fa-solid fa-2xl fa-circle-check"></i>
+                    </div>
+                    <div
+                      className={classes.cancelRequest}
+                      onClick={() => handleDelete(request.id)}
+                    >
+                      <i className="fa-solid fa-2xl fa-circle-xmark"></i>
+                    </div>
+                  </div>
               </div>
             </>
           );
@@ -154,7 +183,10 @@ const PendingRequests = ({loaded}) => {
                     </div>
                   </div>
                 </div>
-                <div className={classes.cancelRequest} onClick={() => handleDelete(request.id)}>
+                <div
+                  className={classes.cancelRequest}
+                  onClick={() => handleDelete(request.id)}
+                >
                   <i className="fa-solid fa-2xl fa-circle-xmark"></i>
                 </div>
               </div>

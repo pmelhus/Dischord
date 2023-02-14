@@ -19,7 +19,7 @@ const ServerChatWindow = ({
   const dispatch = useDispatch();
 
   const [loaded, setLoaded] = useState(false);
-
+// console.log(sessionUser)
   useEffect(() => {
     dispatch(loadAllRequests(sessionUser.id));
     setLoaded(true)

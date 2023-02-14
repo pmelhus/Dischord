@@ -4,10 +4,10 @@ const LOAD_FRIENDS = "friends/loadFriends";
 const LOAD_REQUESTS = "friends/loadRequests";
 const DELETE_REQUEST = "friends/deleteRequest";
 
-const addFriendship = (friend_id, self_id) => {
+const addFriendship = (friendship) => {
   return {
     type: ADD_FRIENDSHIP,
-    payload: { friend_id, self_id },
+    payload: friendship,
   };
 };
 
@@ -46,7 +46,7 @@ export const createFriendRequest = (payload) => async (dispatch) => {
   f.append("friend_username", friend_username);
 
   const [response] = await Promise.all([
-    fetch(`/api/friendships/`, {
+    fetch(`/api/friendships/requests/`, {
       method: "POST",
       body: f,
     }),
@@ -73,11 +73,17 @@ export const createFriendRequest = (payload) => async (dispatch) => {
 };
 
 export const createFriendship = (payload) => async (dispatch) => {
-  const { self_id, friend_username } = payload;
+  const { self_id, friend_id } = payload;
+
+  const f = new FormData
+
+  f.append("self_id", self_id)
+  f.append('friend_id', friend_id)
 
   const [response] = await Promise.all([
-    fetch(`/api/friendships/${self_id}/${friend_username}`, {
+    fetch(`/api/friendships/`, {
       method: "POST",
+      body: f
     }),
   ]);
 
@@ -103,6 +109,7 @@ export const createFriendship = (payload) => async (dispatch) => {
 };
 
 export const loadAllRequests = (id) => async (dispatch) => {
+  console.log(id)
   const [response] = await Promise.all([
     fetch(`/api/friendships/requests/${id}`),
   ]);
@@ -133,7 +140,7 @@ const friendReducer = (state = {}, action) => {
     case ADD_FRIENDSHIP:
       return {
         ...state,
-        friendships: { [action.payload.self_id]: action.payload.friend_id },
+        friendships: { [action.payload.id]: [action.payload.friend_id, action.payload.self_id]},
       };
     case ADD_FRIEND_REQUEST:
       return {

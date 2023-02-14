@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import db, Friendship, FriendshipRequest, User
-from app.forms import FriendshipRequestForm
+from app.forms import FriendshipRequestForm, FriendshipForm
+from sqlalchemy import and_, or_, not_
 
 friendship_routes = Blueprint('friendships', __name__)
 
@@ -22,33 +23,34 @@ def validation_errors_to_error_messages(validation_errors):
 @friendship_routes.route('/requests/<int:id>')
 @login_required
 def getRequests(id):
-    requests = FriendshipRequest.query.filter(FriendshipRequest.self_id == id).all()
+    requests = FriendshipRequest.query.filter(or_(FriendshipRequest.self_id == id, FriendshipRequest.friend_id == id)).all()
+    print(requests, "herehere")
     return {'requests': [request.to_dict() for request in requests]}
 
 # This route creates a new friend connection
 
 
-# @friendship_routes.route('/', methods=["POST"])
-# @login_required
-# def createFriendship():
-#     form = FriendshipRequestForm()
-#     form['csrf_token'].data = request.cookies['csrf_token']
-#     params = {
-#         "user_id_self": form.data['user_id_self'],
-#         "user_id_friend": form.data['user_id_friend']
-#     }
-#     if form.validate_on_submit():
-#         friendship = Friendship(**params)
-#         db.session.add(friendship)
-#         db.session.commit()
-#         return friendship.to_dict()
-#     else:
-#         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+@friendship_routes.route('/', methods=["POST"])
+@login_required
+def createFriendship():
+    form = FriendshipForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        params = {
+            "self_id": form.data['self_id'],
+            "friend_id": form.data['friend_id']
+        }
 
+        friendship = Friendship(**params)
+        db.session.add(friendship)
+        db.session.commit()
+        return friendship.to_dict()
+    else:
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # This route creates a pending friend request
 
-@friendship_routes.route('/', methods=["POST"])
+@friendship_routes.route('/requests/', methods=["POST"])
 @login_required
 def create_friendship_request():
 

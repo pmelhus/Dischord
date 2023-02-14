@@ -57,9 +57,9 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
   // }
 
   const idleTimer = (socket, id) => {
-    setTimeout(() => {
-      socket?.emit("change_idle", id);
-    }, "3600000");
+    // setTimeout(() => {
+    //   socket?.emit("change_idle", id);
+    // }, "3600000");
   };
 
   const sendChat = async () => {

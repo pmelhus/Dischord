@@ -6,8 +6,8 @@ const useStyles = createUseStyles((theme) => ({
   avatar: {
     width: "40px",
     height: "40px",
-    objectFit: 'cover',
-    borderRadius:'100%'
+    objectFit: "cover",
+    borderRadius: "100%",
   },
   heading: {
     color: theme.textGray,
@@ -47,12 +47,12 @@ const useStyles = createUseStyles((theme) => ({
   cancelRequest: {
     cursor: "pointer",
     marginLeft: "5px",
-    "&:hover": {backgroundColor: 'darkred', borderRadius:'100%'}
+    "&:hover": { backgroundColor: "darkred", borderRadius: "100%" },
   },
   acceptRequest: {
-    cursor: 'pointer',
-    "&:hover": {backgroundColor: 'darkgreen', borderRadius:'100%'}
-  }
+    cursor: "pointer",
+    "&:hover": { backgroundColor: "darkgreen", borderRadius: "100%" },
+  },
 }));
 
 const FriendsList = () => {
@@ -69,58 +69,56 @@ const FriendsList = () => {
   // function to determine whether user is friend_id or self_id
 
   const determineId = (friend) => {
-    if (sessionUser.id === friend.id) {
+    if (sessionUser.id === friend.friend_id) {
       return friend.self_id;
+    }
+    if (sessionUser.id === friend.self_id) {
+      return friend.friend_id;
     }
   };
 
   return (
     <>
-     <div className={classes.heading}>
-        <p>{`ALL FRIENDS - ${
-          friendsList.length
-        }`}</p>
+      <div className={classes.heading}>
+        <p>{`ALL FRIENDS - ${friendsList.length}`}</p>
       </div>
-      {friendsList.map((friend) => {
-        const currFriend = users[determineId(friend)];
-        return (
-          <>
-          <div key={friend.id} className={classes.divider}></div>
+      {friendsList.length &&
+        friendsList.map((friend) => {
+          const currFriend = users[determineId(friend)];
+          return (
+            <>
+              <div key={friend.id} className={classes.divider}></div>
               <div className={classes.outgoingCard}>
                 <div className={classes.imageAndText}>
                   <div>
                     <img
                       className={classes.avatar}
-                      src={currFriend.image_url}
+                      src={currFriend?.image_url}
                     ></img>
                   </div>
                   <div style={{ paddingLeft: "10px" }}>
                     <div>
                       <h3 style={{ color: theme.offWhite }}>
-                        {currFriend.username}
+                        {currFriend?.username}
                       </h3>
                       {/* <p style={{ fontSize: "11px", color: theme.textGray }}>
                         Incoming Friend Request
                       </p> */}
                     </div>
                   </div>
-
                 </div>
                 <div style={{ display: "flex" }}>
-                    <div className={classes.acceptRequest}>
-                      <i className="fa-solid fa-2xl fa-circle-check"></i>
-                    </div>
-                    <div
-                      className={classes.cancelRequest}
-
-                    >
-                      <i className="fa-solid fa-2xl fa-circle-xmark"></i>
-                    </div>
+                  <div className={classes.acceptRequest}>
+                    <i className="fa-solid fa-2xl fa-circle-check"></i>
                   </div>
+                  <div className={classes.cancelRequest}>
+                    <i className="fa-solid fa-2xl fa-circle-xmark"></i>
+                  </div>
+                </div>
               </div>
-          </>
-        );
-      })}
+            </>
+          );
+        })}
     </>
   );
 };

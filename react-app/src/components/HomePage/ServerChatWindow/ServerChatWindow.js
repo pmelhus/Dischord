@@ -3,7 +3,7 @@ import ServerChatHeader from "./ServerChatHeader";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { loadAllRequests } from "../../../store/friend";
+import { loadAllRequests, loadAllFriends } from "../../../store/friend";
 
 const ServerChatWindow = ({
   setLoadingMessages,
@@ -22,6 +22,7 @@ const ServerChatWindow = ({
 // console.log(sessionUser)
   useEffect(() => {
     dispatch(loadAllRequests(sessionUser.id));
+    dispatch(loadAllFriends(sessionUser.id))
     setLoaded(true)
   }, [selected]);
 

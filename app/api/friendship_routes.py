@@ -27,6 +27,14 @@ def getRequests(id):
     print(requests, "herehere")
     return {'requests': [request.to_dict() for request in requests]}
 
+# This route retrieves all friendships
+@friendship_routes.route('/<int:id>')
+@login_required
+def getFriends(id):
+    friends = Friendship.query.filter(or_(Friendship.self_id == id, Friendship.friend_id == id)).all()
+
+    return {'friends': [friend.to_dict() for friend in friends]}
+
 # This route creates a new friend connection
 
 

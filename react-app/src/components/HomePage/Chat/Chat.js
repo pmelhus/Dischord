@@ -22,7 +22,7 @@ import SlateTextEditor from "./SlateTextEditor"
 
 
 
-const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessages }) => {
+const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessages, loaded }) => {
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
   const [messageEditId, setMessageEditId] = useState(null);
   const bottomRef = useRef(null);
 
- 
+
 
   // const endOfString = (string) => {
   //   let httpsIndex = string.indexOf("https://");
@@ -137,7 +137,7 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
     <div className="chat-container">
       <div className="channel-chat-container">
           <Route exact path="/channels/@me">
-            <MePage {...{ selected }} {...{ setSelected }} />
+            <MePage      {...{loaded}} {...{ selected }} {...{ setSelected }} />
           </Route>
         {/* <div className="channel-chat-and-send-form"> */}
         <div className="channel-chat-messages">

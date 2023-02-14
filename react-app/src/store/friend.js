@@ -2,6 +2,7 @@ const ADD_FRIENDSHIP = "friends/addFriendship";
 const ADD_FRIEND_REQUEST = "friends/addFriendRequest";
 const LOAD_FRIENDS = "friends/loadFriends";
 const LOAD_REQUESTS = "friends/loadRequests";
+const DELETE_REQUEST = "friends/deleteRequest";
 
 const addFriendship = (friend_id, self_id) => {
   return {
@@ -10,10 +11,10 @@ const addFriendship = (friend_id, self_id) => {
   };
 };
 
-const addFriendRequest = (friend_id, self_id) => {
+const addFriendRequest = (request) => {
   return {
     type: ADD_FRIEND_REQUEST,
-    payload: { friend_id, self_id },
+    payload: request,
   };
 };
 
@@ -28,6 +29,13 @@ const loadRequests = (requests) => {
   return {
     type: LOAD_REQUESTS,
     payload: requests,
+  };
+};
+
+const deleteRequest = (request) => {
+  return {
+    type: DELETE_REQUEST,
+    payload: request,
   };
 };
 
@@ -94,18 +102,31 @@ export const createFriendship = (payload) => async (dispatch) => {
   }
 };
 
-const loadAllRequests = () => async(dispatch) => {
+export const loadAllRequests = (id) => async (dispatch) => {
   const [response] = await Promise.all([
-    fetch(`/api/friendships/requests`),
+    fetch(`/api/friendships/requests/${id}`),
   ]);
 
-  const [requests] = await Promise.all([response.json()])
+  const [requests] = await Promise.all([response.json()]);
 
-  if (requests.ok) {
+  if (response.ok) {
     dispatch(loadRequests(requests.requests));
     return requests;
   }
-}
+};
+
+export const removeRequest = (id) => async (dispatch) => {
+  const [response] = await Promise.all([
+    fetch(`/api/friendships/requests/${id}`, { method: "DELETE" }),
+  ]);
+  const [request] = await Promise.all([response.json()]);
+
+  if (response.ok) {
+    console.log(request)
+    dispatch(deleteRequest(request));
+    return request;
+  }
+};
 
 const friendReducer = (state = {}, action) => {
   switch (action.type) {
@@ -117,13 +138,32 @@ const friendReducer = (state = {}, action) => {
     case ADD_FRIEND_REQUEST:
       return {
         ...state,
-        requests: {
-          [action.payload.id]: [
-            action.payload.self_id,
-            action.payload.friend_id,
-          ],
+        request: {
+          [action.payload.id]: {
+            ...action.payload.self_id,
+            ...action.payload.friend_id,
+          },
         },
       };
+
+    case LOAD_REQUESTS:
+      const requestsObj = {};
+      const requestsArr = []
+
+      for (let request of action.payload) {
+
+       requestsArr.push( requestsObj[request.id] = request);
+      }
+      return {
+        ...state,
+        requests: requestsObj
+      };
+
+    case DELETE_REQUEST:
+      console.log(action.payload)
+      const newState = { ...state };
+      delete newState["requests"][action.payload.id];
+      return newState
     default: {
       return state;
     }

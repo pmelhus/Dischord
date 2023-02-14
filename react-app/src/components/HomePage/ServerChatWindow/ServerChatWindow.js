@@ -1,7 +1,9 @@
 import Chat from "../Chat/Chat";
 import ServerChatHeader from "./ServerChatHeader";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { loadAllRequests } from "../../../store/friend";
 
 const ServerChatWindow = ({
   setLoadingMessages,
@@ -11,14 +13,23 @@ const ServerChatWindow = ({
   socket,
   setLoading,
 }) => {
-  
   // state for friends nav bar selection
+  const sessionUser = useSelector((state) => state.session.user);
   const [selected, setSelected] = useState("addFriend");
+  const dispatch = useDispatch();
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    dispatch(loadAllRequests(sessionUser.id));
+    setLoaded(true)
+  }, [selected]);
 
   return (
     <div className="server-chat-container">
       <ServerChatHeader {...{ selected }} {...{ setSelected }} />
       <Chat
+        {...{ loaded }}
         {...{ selected }}
         {...{ setSelected }}
         {...{ setLoadingMessages }}

@@ -19,11 +19,11 @@ def validation_errors_to_error_messages(validation_errors):
 # This route retrieves all the friends of a particular friend id (user_id_self)
 
 
-@friendship_routes.route('/<int:id>')
+@friendship_routes.route('/requests/<int:id>')
 @login_required
-def getFriendship(id):
-    friendship = Friendship.query.filter(Friendship.user_id_self == id)
-    return {'friendship': [friendship.to_dict() for friendship in friendships]}
+def getRequests(id):
+    requests = FriendshipRequest.query.filter(FriendshipRequest.self_id == id).all()
+    return {'requests': [request.to_dict() for request in requests]}
 
 # This route creates a new friend connection
 
@@ -72,14 +72,13 @@ def create_friendship_request():
 # This route deletes a friend connection
 
 
-@friendship_routes.route('/<int:self>/<int:friend>', methods=["DELETE"])
+@friendship_routes.route('/requests/<int:id>', methods=["DELETE"])
 @login_required
-def friend_delete(self, friend):
-    friendship = Friend.query.filter(
-        Friendship.user_id_self == self & Friendship.user_id_friend == friend)
-    if not friendship:
-        return {"errors": f"This friendship does not exist"}, 404
+def request_delete(id):
+    request = FriendshipRequest.query.get(id)
+    if not request:
+        return {"errors": f"This request does not exist"}, 404
     else:
-        db.session.delete(friend)
+        db.session.delete(request)
         db.session.commit()
-        return friendship.to_dict()
+        return request.to_dict()

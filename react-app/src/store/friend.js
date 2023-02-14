@@ -94,6 +94,19 @@ export const createFriendship = (payload) => async (dispatch) => {
   }
 };
 
+const loadAllRequests = () => async(dispatch) => {
+  const [response] = await Promise.all([
+    fetch(`/api/friendships/requests`),
+  ]);
+
+  const [requests] = await Promise.all([response.json()])
+
+  if (requests.ok) {
+    dispatch(loadRequests(requests.requests));
+    return requests;
+  }
+}
+
 const friendReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_FRIENDSHIP:

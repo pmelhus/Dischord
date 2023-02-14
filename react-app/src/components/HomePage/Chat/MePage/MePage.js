@@ -5,6 +5,7 @@ import { useState } from "react";
 // components
 import AddFriendInput from "./FriendsComponents/AddFriendInput";
 import FriendsList from "./FriendsComponents/FriendsList"
+import PendingRequests from "./FriendsComponents/PendingRequests"
 
 const MePage = ({selected, setSelected}) => {
 
@@ -20,6 +21,9 @@ const MePage = ({selected, setSelected}) => {
     }
     {selected === 'all' &&
     <FriendsList/>
+    }
+      {selected === 'pending' &&
+    <PendingRequests/>
     }
     </>
   );

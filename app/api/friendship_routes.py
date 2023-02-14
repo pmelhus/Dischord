@@ -60,8 +60,8 @@ def create_friendship_request():
             "self_id": form.data['self_id'],
             "friend_id": user.id
         }
-        print(params, 'PARAMS HEYA')
-     
+
+
         friendship_request = FriendshipRequest(**params)
         db.session.add(friendship_request)
         db.session.commit()

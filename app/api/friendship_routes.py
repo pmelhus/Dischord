@@ -3,6 +3,7 @@ from flask_login import login_required
 from app.models import db, Friendship, FriendshipRequest, User
 from app.forms import FriendshipRequestForm, FriendshipForm
 from sqlalchemy import and_, or_, not_
+from app.utils.uuid_creator import generate_uuid
 
 friendship_routes = Blueprint('friendships', __name__)
 
@@ -24,7 +25,7 @@ def validation_errors_to_error_messages(validation_errors):
 @login_required
 def getRequests(id):
     requests = FriendshipRequest.query.filter(or_(FriendshipRequest.self_id == id, FriendshipRequest.friend_id == id)).all()
-    print(requests, "herehere")
+
     return {'requests': [request.to_dict() for request in requests]}
 
 # This route retrieves all friendships
@@ -46,7 +47,8 @@ def createFriendship():
     if form.validate_on_submit():
         params = {
             "self_id": form.data['self_id'],
-            "friend_id": form.data['friend_id']
+            "friend_id": form.data['friend_id'],
+            "dm_uuid": generate_uuid()
         }
 
         friendship = Friendship(**params)

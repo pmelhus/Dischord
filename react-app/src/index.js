@@ -7,7 +7,7 @@ import { ModalProvider } from "./context/Modal";
 import { LoadingModalProvider } from "./context/LoadingModal";
 import { UserModalProvider } from "./context/UserModal";
 import { ProfileModalProvider} from "./context/ProfileModal"
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import {ThemeProvider} from "react-jss";
 

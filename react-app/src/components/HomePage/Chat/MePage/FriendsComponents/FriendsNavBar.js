@@ -1,6 +1,7 @@
 import { createUseStyles, useTheme } from "react-jss";
-import { useLocation } from "react-router-dom";
+import { useLocation, Route, Switch } from "react-router-dom";
 import FriendsIcon from "./FriendsIcon";
+import DirectMessagesList from "../DirectMessages/DirectMessagesList"
 
 const useStyles = createUseStyles((theme) => ({
   friendSearchToBe: {
@@ -27,13 +28,21 @@ const useStyles = createUseStyles((theme) => ({
       color: theme.offWhite,
     },
   },
+  directMessagesDiv: {
+    padding: '10px'
+  },
+  directMessagesP: {
+    color: theme.textGray,
+    fontSize: '12px',
+    marginLeft: '18px'
+  }
 }));
 
 const FriendsNavBar = () => {
   const { pathname } = useLocation();
   const theme = useTheme();
   const classes = useStyles({ theme });
-  const iconStyle = { marginRight: "16px", marginLeft: "8px" }
+  const iconStyle = { marginRight: "16px", marginLeft: "8px" };
 
   return (
     <nav>
@@ -46,8 +55,12 @@ const FriendsNavBar = () => {
             : classes.friendsTab
         }
       >
-        <FriendsIcon {...{iconStyle}} />
+        <FriendsIcon {...{ iconStyle }} />
       </div>
+          <p className={classes.directMessagesP}>DIRECT MESSAGES</p>
+        <div className={classes.directMessagesDiv}>
+          <DirectMessagesList/>
+        </div>
     </nav>
   );
 };

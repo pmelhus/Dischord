@@ -149,18 +149,19 @@ border-radius: 35%;
 .server-sidebar-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: #2f3136;
   color: white;
   min-width: 100%;
   flex: 0 0 auto;
-  min-height: 0;
+
   vertical-align: baseline;
-  min-height: 325px;
-  height: 100%;
+
+  min-height: 100%;
 
 }
 
-.server-sidebar-container nav {
+.server-sidebar-container-nav {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

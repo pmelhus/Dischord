@@ -17,12 +17,17 @@ import MePage from "./MePage/MePage";
 // outside of your component, initialize the socket variabl
 import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
-import SlateTextEditor from "./SlateTextEditor"
+import SlateTextEditor from "./SlateTextEditor";
+import DirectMessageConversation from "./MePage/DirectMessages/DirectMessageConversation";
 
-
-
-
-const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessages, loaded }) => {
+const Chat = ({
+  socket,
+  selected,
+  setSelected,
+  setLoadingMessages,
+  loadingMessages,
+  loaded,
+}) => {
   // use state for controlled form input
   const [chatInput, setChatInput] = useState("");
   const dispatch = useDispatch();
@@ -47,8 +52,6 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
   const [messageEditId, setMessageEditId] = useState(null);
   const bottomRef = useRef(null);
 
-
-
   // const endOfString = (string) => {
   //   let httpsIndex = string.indexOf("https://");
   //   let httpIndex = string.indexOf("http://");
@@ -63,8 +66,6 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
   };
 
   const sendChat = async () => {
-
-
     const sentMessage = await dispatch(
       createChannelMessage({
         user_id: user.id,
@@ -126,78 +127,77 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
     }
   }, [chatInput]);
 
-
   useEffect(() => {}, [chatInput]);
 
-
   return (
-
     <>
-
-    <div className="chat-container">
-      <div className="channel-chat-container">
+      <Route path="/channels/@me/*">
+        <DirectMessageConversation />
+      </Route>
+      <div className="chat-container">
+        <div className="channel-chat-container">
           <Route exact path="/channels/@me">
-            <MePage      {...{loaded}} {...{ selected }} {...{ setSelected }} />
+            <MePage {...{ loaded }} {...{ selected }} {...{ setSelected }} />
           </Route>
-        {/* <div className="channel-chat-and-send-form"> */}
-        <div className="channel-chat-messages">
-          <Route exact path={`/channels/${serverId}/noChannels`}>
-            <div className="no-channels-container">
-              <div className="no-channels-div">
-                <h1>Wow, such empty...</h1>
-                <h3>Looks like this server has no channels!</h3>
-                <h3>
-                  If you're the creator of this server, you can add channels by
-                  clicking the " <i className="fa-solid fa-plus fa-lg"></i> "
-                  next to " Text Channels "
-                </h3>
+          {/* <div className="channel-chat-and-send-form"> */}
+          <div className="channel-chat-messages">
+            <Route exact path={`/channels/${serverId}/noChannels`}>
+              <div className="no-channels-container">
+                <div className="no-channels-div">
+                  <h1>Wow, such empty...</h1>
+                  <h3>Looks like this server has no channels!</h3>
+                  <h3>
+                    If you're the creator of this server, you can add channels
+                    by clicking the " <i className="fa-solid fa-plus fa-lg"></i>{" "}
+                    " next to " Text Channels "
+                  </h3>
+                </div>
               </div>
+            </Route>
+            <div>
+              {loadingMessages ? (
+                <div className="channel-message-div-loader">
+                  <Placeholder />
+                  <Placeholder />
+                  <Placeholder />
+                </div>
+              ) : (
+                <>
+                  {currentChannelMessages.map((message, ind) => (
+                    <FadeIn>
+                      <div
+                        ref={bottomRef}
+                        className="channel-message-div"
+                        key={ind}
+                      >
+                        <ChannelMessage
+                          {...{ setMessageEditId }}
+                          {...{ messageEditId }}
+                          {...{ channelId }}
+                          {...{ socket }}
+                          {...{ message }}
+                          {...{ chatInput }}
+                          {...{ currentChannelMessages }}
+                          {...{ ind }}
+                        />
+                      </div>
+                    </FadeIn>
+                  ))}
+                </>
+              )}
             </div>
-          </Route>
-          <div>
-            {loadingMessages ? (
-              <div className="channel-message-div-loader">
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-              </div>
-            ) : (
-              <>
-                {currentChannelMessages.map((message, ind) => (
-                  <FadeIn>
-                    <div
-                      ref={bottomRef}
-                      className="channel-message-div"
-                      key={ind}
-                    >
-                      <ChannelMessage
-                        {...{ setMessageEditId }}
-                        {...{ messageEditId }}
-                        {...{ channelId }}
-                        {...{ socket }}
-                        {...{ message }}
-                        {...{ chatInput }}
-                        {...{ currentChannelMessages }}
-                        {...{ ind }}
-                      />
-                    </div>
-                  </FadeIn>
-                ))}
-              </>
-            )}
           </div>
-        </div>
-        <div className="channel-chat-form-div">
-          {pathname.split("/")[2] !== "@me" &&
-            pathname.split("/")[3] !== "noChannels" && (
-              <>
-                {errors && messageError && errors.content && (
-                  <div className="error-msg-message">
-                    <p>*{errors.content}*</p>
-                  </div>
-                )}
-                <form className="channel-chat-form" >
-                  {/* <input
+          <div className="channel-chat-form-div">
+            {pathname.split("/")[2] !== "@me" &&
+              pathname.split("/")[3] !== "noChannels" && (
+                <>
+                  {errors && messageError && errors.content && (
+                    <div className="error-msg-message">
+                      <p>*{errors.content}*</p>
+                    </div>
+                  )}
+                  <form className="channel-chat-form">
+                    {/* <input
                     id="channel-chat-input"
                     value={chatInput}
                     placeholder={
@@ -208,69 +208,76 @@ const Chat = ({ socket, selected, setSelected, setLoadingMessages, loadingMessag
                     onChange={updateChatInput}
                   /> */}
 
-                  <SlateTextEditor {...{sendChat}} placeholder={`Message ${currentChannel?.name}`} {...{chatInput}} {...{setChatInput}}/>
+                    <SlateTextEditor
+                      {...{ sendChat }}
+                      placeholder={`Message ${currentChannel?.name}`}
+                      {...{ chatInput }}
+                      {...{ setChatInput }}
+                    />
 
-                  {/* <button type="submit">Send</button> */}
-                </form>
-              </>
+                    {/* <button type="submit">Send</button> */}
+                  </form>
+                </>
+              )}
+          </div>
+          {/* </div> */}
+        </div>
+        <div className="server-members">
+          {/* <div className="server-members-list"> */}
+          <div className="server-members-online">
+            {url !== "@me" && (
+              <h4 className="server-members-titles">
+                Online - {online.length}
+              </h4>
             )}
+            {users &&
+              users.map((user) => {
+                if (serverMembersArr?.includes(user.id)) {
+                  return (
+                    <>
+                      {user.online && (
+                        <>
+                          <UserOnlineCard
+                            {...{ online }}
+                            {...{ currentServer }}
+                            {...{ serverMembersArr }}
+                            {...{ user }}
+                          />
+                        </>
+                      )}
+                    </>
+                  );
+                }
+              })}
+            {url !== "@me" && (
+              <p className="server-members-titles">
+                Offline - {offline.length}
+              </p>
+            )}
+            {users &&
+              users.map((user) => {
+                if (serverMembersArr?.includes(user.id)) {
+                  return (
+                    <>
+                      {!user.online && (
+                        <>
+                          <UserOfflineCard
+                            {...{ currentServer }}
+                            {...{ serverMembersArr }}
+                            {...{ user }}
+                          />
+                        </>
+                      )}
+                    </>
+                  );
+                }
+              })}
+          </div>
+          {/* </div> */}
         </div>
-        {/* </div> */}
       </div>
-      <div className="server-members">
-        {/* <div className="server-members-list"> */}
-        <div className="server-members-online">
-          {url !== "@me" && (
-            <h4 className="server-members-titles">Online - {online.length}</h4>
-          )}
-          {users &&
-            users.map((user) => {
-              if (serverMembersArr?.includes(user.id)) {
-                return (
-                  <>
-                    {user.online && (
-                      <>
-                        <UserOnlineCard
-                          {...{ online }}
-                          {...{ currentServer }}
-                          {...{ serverMembersArr }}
-                          {...{ user }}
-                        />
-                      </>
-                    )}
-                  </>
-                );
-              }
-            })}
-          {url !== "@me" && (
-            <p className="server-members-titles">Offline - {offline.length}</p>
-          )}
-          {users &&
-            users.map((user) => {
-              if (serverMembersArr?.includes(user.id)) {
-                return (
-                  <>
-                    {!user.online && (
-                      <>
-                        <UserOfflineCard
-                          {...{ currentServer }}
-                          {...{ serverMembersArr }}
-                          {...{ user }}
-                        />
-                      </>
-                    )}
-                  </>
-                );
-              }
-            })}
-        </div>
-        {/* </div> */}
-      </div>
-    </div>
     </>
   );
 };
-
-
 
 export default Chat;

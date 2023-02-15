@@ -56,7 +56,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
         </div>
       ) : (
         <div className="server-sidebar-container">
-          <nav style={{display: 'flex', flexDirection:'column', justifyContent:'space-between'}}>
+          <nav>
             <div>
               <button
                 id="server-name-div-button"

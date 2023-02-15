@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createUseStyles, useTheme } from "react-jss";
 import { loadAllFriends } from "../../../../../store/friend";
+import {useHistory} from "react-router-dom"
 
 const useStyles = createUseStyles((theme) => ({
   avatar: {
@@ -53,6 +54,17 @@ const useStyles = createUseStyles((theme) => ({
     cursor: "pointer",
     "&:hover": { backgroundColor: "darkgreen", borderRadius: "100%" },
   },
+  messageFriend: {
+    color: theme.textGray,
+    backgroundColor: theme.darkInputBackground,
+    cursor: "pointer",
+    borderRadius: "100%",
+    width: "30px",
+    height: "30px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
 const FriendsList = () => {
@@ -76,6 +88,15 @@ const FriendsList = () => {
       return friend.friend_id;
     }
   };
+
+  // function that pushes new url to direct messages of friend
+
+  const history = useHistory()
+
+  const handleDmChat = (friend) => {
+console.log(friend)
+    history.push(`/channels/@me/${friend.dm_uuid}`)
+  }
 
   return (
     <>
@@ -108,11 +129,8 @@ const FriendsList = () => {
                   </div>
                 </div>
                 <div style={{ display: "flex" }}>
-                  <div className={classes.acceptRequest}>
-                    <i className="fa-solid fa-2xl fa-circle-check"></i>
-                  </div>
-                  <div className={classes.cancelRequest}>
-                    <i className="fa-solid fa-2xl fa-circle-xmark"></i>
+                  <div onClick={() => handleDmChat(friend)} className={classes.messageFriend}>
+                    <i className="fa-solid fa-message"></i>
                   </div>
                 </div>
               </div>

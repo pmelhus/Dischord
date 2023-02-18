@@ -3,12 +3,12 @@ from .creation_mixin import CrUpMixin
 
 
 class Friendship(db.Model, CrUpMixin):
-    __tablename__ = 'friendship'
+    __tablename__ = 'friendships'
 
     id = db.Column(db.Integer, primary_key=True)
     self_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     friend_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    dm_uuid = db.Column(db.String(100), nullable=False )
+
 #   user_id_self = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 #   user_id_friend = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
@@ -20,7 +20,7 @@ class Friendship(db.Model, CrUpMixin):
             'id': self.id,
             'self_id': self.self_id,
             'friend_id': self.friend_id,
-            'dm_uuid': self.dm_uuid
+
         }
 
     @staticmethod
@@ -28,5 +28,4 @@ class Friendship(db.Model, CrUpMixin):
         friendship = Friendship()
         friendship.self_id = friendship_data.get("self_id")
         friendship.friend_id = friendship_data.get("friend_id")
-        friendship.dm_uuid = friendship_data.get("dm_uuid")
         return friendship

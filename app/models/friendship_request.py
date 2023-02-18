@@ -3,7 +3,7 @@ from .creation_mixin import CrUpMixin
 
 
 class FriendshipRequest(db.Model, CrUpMixin):
-    __tablename__ = 'friendship_request'
+    __tablename__ = 'friendship_requests'
 
     id = db.Column(db.Integer, primary_key=True)
     self_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

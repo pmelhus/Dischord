@@ -28,7 +28,8 @@ const theme = {
   darkInputBackground: "rgba(32, 34, 37, 1)",
   pinkTheme: '#950652',
   buttonPink: 'rgb(116, 56, 73)',
-  friendGreen: "rgb(45, 125, 70)"
+  friendGreen: "rgb(45, 125, 70)",
+  darkGray: 'rgb(142, 146, 151)'
 }
 
 ReactDOM.render(

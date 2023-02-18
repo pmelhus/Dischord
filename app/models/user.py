@@ -31,7 +31,7 @@ class User(db.Model, UserMixin, CrUpMixin):
     # many to many
 
     memberships = db.relationship("Server", back_populates="members", secondary=server_members)
-    dm_members = db.relationship("Inbox", back_populates="inbox_members", secondary=inbox_users)
+    inbox_memberships = db.relationship("Inbox", back_populates="inbox_members", secondary=inbox_users)
 
     # belongs to one
 
@@ -61,7 +61,8 @@ class User(db.Model, UserMixin, CrUpMixin):
             'online': self.online,
             'idle': self.idle,
             'created_at': self.created_at,
-            'memberships': [server.to_dict() for server in self.memberships]
+            'memberships': [server.to_dict() for server in self.memberships],
+            'inbox_memberships' : [inbox.to_dict() for inbox in self.inbox_memberships]
         }
 
     @staticmethod

@@ -66,6 +66,7 @@ function App() {
       socket.emit('timeout_user')
       dispatch(logout(data.id))
       dispatch(genUsers());
+
     });
 
     socket.on('sign-up', () => {

@@ -1,7 +1,7 @@
 import { createUseStyles, useTheme } from "react-jss";
 import { useLocation, Route, Switch } from "react-router-dom";
 import FriendsIcon from "./FriendsIcon";
-import DirectMessagesList from "../DirectMessages/DirectMessagesList"
+import DirectMessagesList from "../DirectMessages/DirectMessagesInboxes"
 
 const useStyles = createUseStyles((theme) => ({
   friendSearchToBe: {
@@ -50,7 +50,7 @@ const FriendsNavBar = () => {
       <div className={classes.tabSeparator}></div>
       <div
         className={
-          pathname === "/channels/@me"
+          pathname.split('/')[2] === "@me"
             ? classes.friendsTabSelected
             : classes.friendsTab
         }

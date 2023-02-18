@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation, Route } from "react-router-dom";
+import { useLocation, Route, Switch } from "react-router-dom";
 import {
   createChannelMessage,
   genChannelMessages,
@@ -19,6 +19,7 @@ import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
 import SlateTextEditor from "./SlateTextEditor";
 import DirectMessageConversation from "./MePage/DirectMessages/DirectMessageConversation";
+
 
 const Chat = ({
   socket,
@@ -87,7 +88,7 @@ const Chat = ({
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
-    await idleTimer(socket, sentMessage.owner_id);
+
   };
 
   useEffect(() => {
@@ -131,6 +132,9 @@ const Chat = ({
 
   return (
     <>
+    <Switch>
+
+
       <Route path="/channels/@me/*">
         <DirectMessageConversation />
       </Route>
@@ -222,6 +226,8 @@ const Chat = ({
           </div>
           {/* </div> */}
         </div>
+        <Route path="/channels/*/*">
+
         <div className="server-members">
           {/* <div className="server-members-list"> */}
           <div className="server-members-online">
@@ -275,7 +281,9 @@ const Chat = ({
           </div>
           {/* </div> */}
         </div>
+        </Route>
       </div>
+    </Switch>
     </>
   );
 };

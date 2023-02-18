@@ -181,11 +181,13 @@ def create_server_member(server_id, user_id):
     server = Server.query.get(server_id)
     user = User.query.get(user_id)
 
+    print(user, 'AHHH')
 
     if not server and user:
         return {"errors": "Either the server or user does not exist"}, 404
 
     else:
+        print(type(server.members), 'HEREWEGO')
         server.members.append(user)
         db.session.add(server)
         db.session.commit()

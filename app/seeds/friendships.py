@@ -1,11 +1,10 @@
 from ..models import db, Friendship
-from app.utils.uuid_creator import generate_uuid
+
 
 friendships = [
     {
     'self_id': 1,
-    'friend_id': 2,
-    'dm_uuid': generate_uuid()
+    'friend_id': 2
     }
 ]
 
@@ -17,5 +16,5 @@ def seed_friendships():
 
 
 def undo_friendships():
-    db.session.execute('TRUNCATE channels RESTART IDENTITY CASCADE;')
+    db.session.execute('TRUNCATE friendships RESTART IDENTITY CASCADE;')
     db.session.commit()

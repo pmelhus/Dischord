@@ -10,6 +10,7 @@ import { genChannelMessages } from "../../store/channelMessage";
 import { LoadingModal } from "../../context/LoadingModal";
 import LoadingScreen from "../LoadingScreen";
 import "./HomePage.css";
+import {loadAllFriends} from "../../store/friend"
 import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
 
 const HomePage = ({
@@ -51,6 +52,7 @@ const HomePage = ({
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
+    await dispatch(loadAllFriends(sessionUser.id))
     await setLoaded(true);
     await setLoadingScreen(false);
   }, [dispatch, loadingScreen]);

@@ -1,5 +1,6 @@
 const ADD_INBOX = "inboxes/addInbox";
-
+const GET_INBOX = "inboxes/getInbox";
+const GET_ALL_INBOXES = 'inboxes/getAllInboxes'
 
 const addInbox = (inbox) => {
   return {
@@ -8,14 +9,27 @@ const addInbox = (inbox) => {
   };
 };
 
+const getInbox = (inbox) => {
+  return {
+    type: GET_INBOX,
+    payload: inbox,
+  };
+};
+
+const getAllInboxes = (inboxes) => {
+  return {
+    type: GET_ALL_INBOXES,
+    payload: inboxes
+  }
+}
 
 export const createInbox = (payload) => async (dispatch) => {
   const { self_id, friend_id } = payload;
   // console.log('test')
-  const f = new FormData()
+  const f = new FormData();
 
-  f.append("self_id", self_id)
-  f.append('friend_id', friend_id)
+  f.append("self_id", self_id);
+  f.append("friend_id", friend_id);
 
   const [response] = await Promise.all([
     fetch(`/api/inboxes/`, {
@@ -47,11 +61,11 @@ export const createInbox = (payload) => async (dispatch) => {
 export const addInboxMembers = (payload) => async (dispatch) => {
   const { self_id, friend_id, inbox_id } = payload;
   // console.log('test')
-  const f = new FormData()
+  const f = new FormData();
 
-  f.append("self_id", self_id)
-  f.append('friend_id', friend_id)
-  f.append('inbox_id', inbox_id)
+  f.append("self_id", self_id);
+  f.append("friend_id", friend_id);
+  f.append("inbox_id", inbox_id);
 
   const [response] = await Promise.all([
     fetch(`/api/inboxes/add_members`, {
@@ -80,18 +94,81 @@ export const addInboxMembers = (payload) => async (dispatch) => {
   }
 };
 
+export const getOneInbox = (payload) => async (dispatch) => {
+  const { self_id, friend_id } = payload;
+
+  const [response] = await Promise.all([
+    fetch(`/api/inboxes/get_one/${self_id}/${friend_id}`),
+  ]);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getInbox(data));
+    return data.inbox;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+      let errorObj = {};
+      data.errors.forEach((error) => {
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+      });
+      return { errors: errorObj };
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+export const getInboxes = (id) => async (dispatch) => {
+
+
+
+  const [response] = await Promise.all([
+    fetch(`/api/inboxes/get_all/${id}`),
+  ]);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getAllInboxes(data));
+    return data.inboxes;
+  } else if (response.status < 500) {
+    const data = await response.json();
+
+    if (data.errors) {
+      let errorObj = {};
+      data.errors.forEach((error) => {
+        let key = error.split(":")[0];
+        errorObj[key] = error.split(":")[1];
+      });
+      return { errors: errorObj };
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
 const inboxReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_INBOX:
       return {
         ...state,
-        [action.payload.id]: {
-          members: {
-            self_id: action.payload.self_id,
-            friend_id: action.payload.friend_id,
-          },
-        },
+        [action.payload.id]: action.payload,
       };
+    case GET_INBOX:
+      return {
+        ...state,
+        [action.payload.inbox.id]: action.payload.inbox,
+      };
+      case GET_ALL_INBOXES:
+        const inboxData = {}
+        action.payload.inboxes.forEach((inbox) => {
+          inboxData[inbox.id] = inbox
+        })
+        return {
+          ...inboxData
+        };
     default: {
       return state;
     }

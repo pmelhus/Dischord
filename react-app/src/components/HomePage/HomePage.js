@@ -10,8 +10,9 @@ import { genChannelMessages } from "../../store/channelMessage";
 import { LoadingModal } from "../../context/LoadingModal";
 import LoadingScreen from "../LoadingScreen";
 import "./HomePage.css";
-import {loadAllFriends} from "../../store/friend"
+import { loadAllFriends } from "../../store/friend";
 import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
+import { getInboxes } from "../../store/inbox";
 
 const HomePage = ({
   onlineMembers,
@@ -19,7 +20,7 @@ const HomePage = ({
   socket,
   setLoading,
   loading,
-  setLocation
+  setLocation,
 }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -47,12 +48,12 @@ const HomePage = ({
     await setLoadingMessages(false);
   };
 
-
   useEffect(async () => {
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
-    await dispatch(loadAllFriends(sessionUser.id))
+    await dispatch(loadAllFriends(sessionUser.id));
+    await dispatch(getInboxes(sessionUser.id));
     await setLoaded(true);
     await setLoadingScreen(false);
   }, [dispatch, loadingScreen]);
@@ -64,10 +65,10 @@ const HomePage = ({
     }
   }, [channelId, dispatch, loaded]);
 
-  useEffect(()=> {
-    console.log(channelId, 'HERE YAAA')
-setLocation(channelId)
-  },[pathname])
+  useEffect(() => {
+    console.log(channelId, "HERE YAAA");
+    setLocation(channelId);
+  }, [pathname]);
 
   return (
     <div className="home-page-container">

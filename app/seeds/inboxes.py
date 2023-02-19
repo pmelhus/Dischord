@@ -1,9 +1,13 @@
 from ..models import db, Inbox
 from app.utils.uuid_creator import generate_uuid
 
-inboxes = [
+def generate_multiple_inboxes(number_of_inboxes):
+    inbox_list = []
+    for x in range(number_of_inboxes):
+        inbox_list.append({"dm_uuid": generate_uuid()})
+    return inbox_list
 
-]
+inboxes = generate_multiple_inboxes(5)
 
 
 def seed_inboxes():

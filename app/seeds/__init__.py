@@ -6,7 +6,7 @@ from .channel_messages import undo_channel_messages, seed_channel_messages
 from .server_members import seed_server_members, undo_server_members
 from .friendships import seed_friendships, undo_friendships
 from .inboxes import seed_inboxes, undo_inboxes
-from .inbox_users import undo_inbox_users
+from .inbox_users import seed_inbox_users, undo_inbox_users
 
 
 # Creates a seed group to hold our commands
@@ -24,6 +24,7 @@ def seed():
     seed_channel_messages()
     seed_friendships()
     seed_inboxes()
+    seed_inbox_users()
     # Add other seed functions here
 
 

@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createUseStyles, useTheme } from "react-jss";
 import { loadAllFriends } from "../../../../../store/friend";
-import { createInbox, addInboxMembers } from "../../../../../store/inbox";
+import {
+  createInbox,
+  addInboxMembers,
+  getOneInbox,
+} from "../../../../../store/inbox";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
@@ -92,24 +96,30 @@ const FriendsList = () => {
     }
   };
 
-  // function that pushes new url to direct messages of friend
-
   const history = useHistory();
+  // function that pushes new url to direct messages of friend if there is an existing inbox
+  // if there isnt an existing inbox, then a new inbox is created and then user gets pushed to the new inbox url
 
   const handleDmChat = async (friend) => {
     const { self_id, friend_id } = friend;
 
     const payload = { self_id, friend_id };
-    const createdInbox = await dispatch(createInbox(payload));
 
-    if (createdInbox && createdInbox.errors) {
-      await setErrors(createdInbox.errors);
+    const existingInbox = await dispatch(getOneInbox(payload));
+    console.log(existingInbox)
+    if (existingInbox.errors) {
+      const createdInbox = await dispatch(createInbox(payload));
+
+      if (createdInbox && createdInbox.errors) {
+        await setErrors(createdInbox.errors);
+      }
+      // console.log(createdInbox.inbox.id)
+      const inbox_id = createdInbox.inbox.id;
+      const memberPayload = { self_id, friend_id, inbox_id };
+      const addedInboxMembers = await dispatch(addInboxMembers(memberPayload));
+      history.push(`/channels/@me/${createdInbox.uuid}`);
     }
-    // console.log(createdInbox.inbox.id)
-    const inbox_id = createdInbox.inbox.id;
-    const memberPayload = { self_id, friend_id, inbox_id };
-    const addedInboxMembers = await dispatch(addInboxMembers(memberPayload));
-    // history.push(`/channels/@me/${createdInbox.uuid}`);
+    history.push(`/channels/@me/${existingInbox.uuid}`);
   };
 
   return (

@@ -106,7 +106,7 @@ const FriendsList = () => {
     const payload = { self_id, friend_id };
 
     const existingInbox = await dispatch(getOneInbox(payload));
-    console.log(existingInbox)
+    console.log(existingInbox);
     if (existingInbox.errors) {
       const createdInbox = await dispatch(createInbox(payload));
 

@@ -1,7 +1,7 @@
 import { createUseStyles, useTheme } from "react-jss";
-import { useLocation, Route, Switch } from "react-router-dom";
+import { useLocation, Route, Switch, NavLink } from "react-router-dom";
 import FriendsIcon from "./FriendsIcon";
-import DirectMessagesList from "../DirectMessages/DirectMessagesInboxes"
+import DirectMessagesList from "../DirectMessages/DirectMessagesInboxes";
 
 const useStyles = createUseStyles((theme) => ({
   friendSearchToBe: {
@@ -28,14 +28,31 @@ const useStyles = createUseStyles((theme) => ({
       color: theme.offWhite,
     },
   },
+  friendsTab: {
+    // width: "100%",
+    height: "44px",
+    color: theme.textGray,
+    display: "flex",
+    alignItems: "center",
+    margin: "0 10px",
+
+    cursor: "pointer",
+    borderRadius: "5px",
+    "&:hover": {
+      color: theme.offWhite,
+    },
+  },
   directMessagesDiv: {
-    padding: '10px'
+    padding: "0 10px",
   },
   directMessagesP: {
     color: theme.textGray,
-    fontSize: '12px',
-    marginLeft: '18px'
-  }
+    fontSize: "12px",
+    marginLeft: "14px",
+    margin: "0",
+    marginTop: '24px',
+    marginBottom: '4px'
+  },
 }));
 
 const FriendsNavBar = () => {
@@ -50,17 +67,19 @@ const FriendsNavBar = () => {
       <div className={classes.tabSeparator}></div>
       <div
         className={
-          pathname.split('/')[2] === "@me"
+          !pathname.split("/")[3]
             ? classes.friendsTabSelected
             : classes.friendsTab
         }
       >
+
         <FriendsIcon {...{ iconStyle }} />
+
       </div>
-          <p className={classes.directMessagesP}>DIRECT MESSAGES</p>
-        <div className={classes.directMessagesDiv}>
-          <DirectMessagesList/>
-        </div>
+      <p className={classes.directMessagesP}>DIRECT MESSAGES</p>
+      <div className={classes.directMessagesDiv}>
+        <DirectMessagesList />
+      </div>
     </nav>
   );
 };

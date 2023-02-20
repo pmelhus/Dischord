@@ -28,10 +28,11 @@ const DirectMessageHeader = () => {
 
   // grabbing state from redux for dm header username
 
-  const inbox = useSelector((state) => Object.values(state.inboxes));
+  const inboxes = useSelector((state) => Object.values(state.inboxes));
 
-  const inboxMembers = inbox[0].inbox_members;
+  const currentInbox = inboxes.find(inbox => (inbox.uuid === uuid))
 
+const inboxMembers = currentInbox.inbox_members
 
   // function to determine whether user is friend_id or self_id
 
@@ -56,7 +57,7 @@ const DirectMessageHeader = () => {
           style={{ color: theme.darkGray, padding: "0 10px" }}
           className="fa-solid fa-lg fa-at"
         ></i>
-        <h4 className={classes.username}>{dmUser.username}</h4>
+        <h4 className={classes.username}>{dmUser?.username}</h4>
       </div>
     </>
   );

@@ -13,9 +13,12 @@ const HomeButton = () => {
 
   }
 
+  const urlArr = pathname.split('/')
+
+
   return (
     <div className="home-button-div">
-      <button className={ pathname === '/channels/@me' ?  'server-image-icon-selected':
+      <button className={ urlArr[2] === '@me' ?  'server-image-icon-selected':
         "server-image-icon"} onClick={handleClick}>
       <i className="fa-solid fa-house-chimney-heart fa-2xl"></i>
       </button>

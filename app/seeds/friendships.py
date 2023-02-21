@@ -22,6 +22,10 @@ friendships = [
         'self_id': 2,
         'friend_id': 3
     },
+        {
+        'self_id': 15,
+        'friend_id': 1
+    },
 ]
 
 

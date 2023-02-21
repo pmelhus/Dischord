@@ -8,6 +8,7 @@ import userReducer from "./user"
 import serverMemberReducer from "./serverMember"
 import friendReducer from "./friend"
 import inboxReducer from "./inbox"
+import directMessageReducer from './directMessage'
 
 const rootReducer = combineReducers({
   session,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   users: userReducer,
   serverMembers: serverMemberReducer,
   friends: friendReducer,
-  inboxes: inboxReducer
+  inboxes: inboxReducer,
+  directMessages: directMessageReducer
 });
 
 let enhancer;

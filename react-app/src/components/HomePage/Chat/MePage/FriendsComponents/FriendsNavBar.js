@@ -1,5 +1,5 @@
 import { createUseStyles, useTheme } from "react-jss";
-import { useLocation, Route, Switch, NavLink } from "react-router-dom";
+import { useLocation, useHistory} from "react-router-dom";
 import FriendsIcon from "./FriendsIcon";
 import DirectMessagesList from "../DirectMessages/DirectMessagesInboxes";
 
@@ -50,8 +50,8 @@ const useStyles = createUseStyles((theme) => ({
     fontSize: "12px",
     marginLeft: "14px",
     margin: "0",
-    marginTop: '24px',
-    marginBottom: '4px'
+    marginTop: "24px",
+    marginBottom: "4px",
   },
 }));
 
@@ -60,6 +60,11 @@ const FriendsNavBar = () => {
   const theme = useTheme();
   const classes = useStyles({ theme });
   const iconStyle = { marginRight: "16px", marginLeft: "8px" };
+  const history = useHistory()
+
+  const handleFriendsClick = () => {
+    history.push('/channels/@me')
+  }
 
   return (
     <nav>
@@ -71,10 +76,9 @@ const FriendsNavBar = () => {
             ? classes.friendsTabSelected
             : classes.friendsTab
         }
+        onClick={handleFriendsClick}
       >
-
         <FriendsIcon {...{ iconStyle }} />
-
       </div>
       <p className={classes.directMessagesP}>DIRECT MESSAGES</p>
       <div className={classes.directMessagesDiv}>

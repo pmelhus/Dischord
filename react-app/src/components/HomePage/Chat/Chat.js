@@ -20,7 +20,6 @@ import FadeIn from "react-fade-in";
 import SlateTextEditor from "./SlateTextEditor";
 import DirectMessageConversation from "./MePage/DirectMessages/DirectMessageConversation";
 
-
 const Chat = ({
   socket,
   selected,
@@ -88,7 +87,6 @@ const Chat = ({
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
-
   };
 
   useEffect(() => {
@@ -132,76 +130,75 @@ const Chat = ({
 
   return (
     <>
-    <Switch>
-
-
-      <Route path="/channels/@me/*">
-        <DirectMessageConversation />
-      </Route>
-      <div className="chat-container">
-        <div className="channel-chat-container">
-          <Route exact path="/channels/@me">
-            <MePage {...{ loaded }} {...{ selected }} {...{ setSelected }} />
-          </Route>
-          {/* <div className="channel-chat-and-send-form"> */}
-          <div className="channel-chat-messages">
-            <Route exact path={`/channels/${serverId}/noChannels`}>
-              <div className="no-channels-container">
-                <div className="no-channels-div">
-                  <h1>Wow, such empty...</h1>
-                  <h3>Looks like this server has no channels!</h3>
-                  <h3>
-                    If you're the creator of this server, you can add channels
-                    by clicking the " <i className="fa-solid fa-plus fa-lg"></i>{" "}
-                    " next to " Text Channels "
-                  </h3>
-                </div>
-              </div>
+      <Switch>
+        <Route path="/channels/@me/*">
+          <DirectMessageConversation {...{socket}} />
+        </Route>
+        <div className="chat-container">
+          <div className="channel-chat-container">
+            <Route exact path="/channels/@me">
+              <MePage {...{ loaded }} {...{ selected }} {...{ setSelected }} />
             </Route>
-            <div>
-              {loadingMessages ? (
-                <div className="channel-message-div-loader">
-                  <Placeholder />
-                  <Placeholder />
-                  <Placeholder />
+            {/* <div className="channel-chat-and-send-form"> */}
+            <div className="channel-chat-messages">
+              <Route exact path={`/channels/${serverId}/noChannels`}>
+                <div className="no-channels-container">
+                  <div className="no-channels-div">
+                    <h1>Wow, such empty...</h1>
+                    <h3>Looks like this server has no channels!</h3>
+                    <h3>
+                      If you're the creator of this server, you can add channels
+                      by clicking the "{" "}
+                      <i className="fa-solid fa-plus fa-lg"></i> " next to "
+                      Text Channels "
+                    </h3>
+                  </div>
                 </div>
-              ) : (
-                <>
-                  {currentChannelMessages.map((message, ind) => (
-                    <FadeIn>
-                      <div
-                        ref={bottomRef}
-                        className="channel-message-div"
-                        key={ind}
-                      >
-                        <ChannelMessage
-                          {...{ setMessageEditId }}
-                          {...{ messageEditId }}
-                          {...{ channelId }}
-                          {...{ socket }}
-                          {...{ message }}
-                          {...{ chatInput }}
-                          {...{ currentChannelMessages }}
-                          {...{ ind }}
-                        />
-                      </div>
-                    </FadeIn>
-                  ))}
-                </>
-              )}
+              </Route>
+              <div>
+                {loadingMessages ? (
+                  <div className="channel-message-div-loader">
+                    <Placeholder />
+                    <Placeholder />
+                    <Placeholder />
+                  </div>
+                ) : (
+                  <>
+                    {currentChannelMessages.map((message, ind) => (
+                      <FadeIn>
+                        <div
+                          ref={bottomRef}
+                          className="channel-message-div"
+                          key={ind}
+                        >
+                          <ChannelMessage
+                            {...{ setMessageEditId }}
+                            {...{ messageEditId }}
+                            {...{ channelId }}
+                            {...{ socket }}
+                            {...{ message }}
+                            {...{ chatInput }}
+                            {...{ currentChannelMessages }}
+                            {...{ ind }}
+                          />
+                        </div>
+                      </FadeIn>
+                    ))}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="channel-chat-form-div">
-            {pathname.split("/")[2] !== "@me" &&
-              pathname.split("/")[3] !== "noChannels" && (
-                <>
-                  {errors && messageError && errors.content && (
-                    <div className="error-msg-message">
-                      <p>*{errors.content}*</p>
-                    </div>
-                  )}
-                  <form className="channel-chat-form">
-                    {/* <input
+            <div className="channel-chat-form-div">
+              {pathname.split("/")[2] !== "@me" &&
+                pathname.split("/")[3] !== "noChannels" && (
+                  <>
+                    {errors && messageError && errors.content && (
+                      <div className="error-msg-message">
+                        <p>*{errors.content}*</p>
+                      </div>
+                    )}
+                    <form className="channel-chat-form">
+                      {/* <input
                     id="channel-chat-input"
                     value={chatInput}
                     placeholder={
@@ -212,78 +209,77 @@ const Chat = ({
                     onChange={updateChatInput}
                   /> */}
 
-                    <SlateTextEditor
-                      {...{ sendChat }}
-                      placeholder={`Message ${currentChannel?.name}`}
-                      {...{ chatInput }}
-                      {...{ setChatInput }}
-                    />
+                      <SlateTextEditor
+                        {...{ sendChat }}
+                        placeholder={`Message ${currentChannel?.name}`}
+                        {...{ chatInput }}
+                        {...{ setChatInput }}
+                      />
 
-                    {/* <button type="submit">Send</button> */}
-                  </form>
-                </>
-              )}
+                      {/* <button type="submit">Send</button> */}
+                    </form>
+                  </>
+                )}
+            </div>
+            {/* </div> */}
           </div>
-          {/* </div> */}
-        </div>
-        <Route path="/channels/*/*">
-
-        <div className="server-members">
-          {/* <div className="server-members-list"> */}
-          <div className="server-members-online">
-            {url !== "@me" && (
-              <h4 className="server-members-titles">
-                Online - {online.length}
-              </h4>
-            )}
-            {users &&
-              users.map((user) => {
-                if (serverMembersArr?.includes(user.id)) {
-                  return (
-                    <>
-                      {user.online && (
+          <Route path="/channels/*/*">
+            <div className="server-members">
+              {/* <div className="server-members-list"> */}
+              <div className="server-members-online">
+                {url !== "@me" && (
+                  <h4 className="server-members-titles">
+                    Online - {online.length}
+                  </h4>
+                )}
+                {users &&
+                  users.map((user) => {
+                    if (serverMembersArr?.includes(user.id)) {
+                      return (
                         <>
-                          <UserOnlineCard
-                            {...{ online }}
-                            {...{ currentServer }}
-                            {...{ serverMembersArr }}
-                            {...{ user }}
-                          />
+                          {user.online && (
+                            <>
+                              <UserOnlineCard
+                                {...{ online }}
+                                {...{ currentServer }}
+                                {...{ serverMembersArr }}
+                                {...{ user }}
+                              />
+                            </>
+                          )}
                         </>
-                      )}
-                    </>
-                  );
-                }
-              })}
-            {url !== "@me" && (
-              <p className="server-members-titles">
-                Offline - {offline.length}
-              </p>
-            )}
-            {users &&
-              users.map((user) => {
-                if (serverMembersArr?.includes(user.id)) {
-                  return (
-                    <>
-                      {!user.online && (
+                      );
+                    }
+                  })}
+                {url !== "@me" && (
+                  <p className="server-members-titles">
+                    Offline - {offline.length}
+                  </p>
+                )}
+                {users &&
+                  users.map((user) => {
+                    if (serverMembersArr?.includes(user.id)) {
+                      return (
                         <>
-                          <UserOfflineCard
-                            {...{ currentServer }}
-                            {...{ serverMembersArr }}
-                            {...{ user }}
-                          />
+                          {!user.online && (
+                            <>
+                              <UserOfflineCard
+                                {...{ currentServer }}
+                                {...{ serverMembersArr }}
+                                {...{ user }}
+                              />
+                            </>
+                          )}
                         </>
-                      )}
-                    </>
-                  );
-                }
-              })}
-          </div>
-          {/* </div> */}
+                      );
+                    }
+                  })}
+              </div>
+              {/* </div> */}
+            </div>
+          </Route>
         </div>
-        </Route>
-      </div>
-    </Switch>
+      </Switch>
     </>
   );
 };

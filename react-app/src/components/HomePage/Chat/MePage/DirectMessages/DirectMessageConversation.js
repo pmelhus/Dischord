@@ -1,9 +1,11 @@
-import DirectMessagesList from "./DirectMessagesList";
+import DirectMessage from "./DirectMessage";
 import SlateTextEditor from "../../SlateTextEditor";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { createUseStyles, useTheme } from "react-jss";
+import { createDirectMessage } from "../../../../../store/directMessage";
+import FadeIn from "react-fade-in";
 
 const useStyles = createUseStyles((theme) => ({
   slateEditor: {
@@ -28,9 +30,11 @@ const useStyles = createUseStyles((theme) => ({
 
 }));
 
-const DirectMessageConversation = () => {
+const DirectMessageConversation = ({socket}) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
+
+  const dispatch = useDispatch()
 
   const sessionUser = useSelector((state) => state.session.user);
   const users = useSelector((state) => state.users);
@@ -39,13 +43,46 @@ const DirectMessageConversation = () => {
 
   const [chatInput, setChatInput] = useState("");
 
-  const sendChat = () => {};
+  const uuid = pathname.split('/')[3]
+
+  const inboxes = useSelector(state => (Object.values(state.inboxes)))
+
+  const currInbox = inboxes.find(inbox=>(inbox.uuid === uuid))
+
+  const [errors, setErrors] = useState({});
+  const [isSent, setIsSent] = useState(false);
+
+  const sendChat = async () =>
+  {
+
+    const sentMessage = await dispatch(
+      createDirectMessage({
+        user_id: sessionUser.id,
+        msg: chatInput,
+        inbox_id: currInbox?.id,
+      })
+    );
+    if (sentMessage && sentMessage.errors) {
+      await setErrors(sentMessage.errors);
+      return;
+    }
+    // console.log(sentMessage, "SENT MESSAGE");
+    await socket?.emit("dmChat", sentMessage.owner_id, currInbox?.id);
+
+    // await socket?.emit("timeout_user");
+    // await setErrors({})
+    await setIsSent(true);
+    // await bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    // clear the input field after the message is sent
+    await setErrors({});
+    await setChatInput("");
+  }
 
   return (
     <div className={classes.container}>
       <div className={classes.messages}>
 
-      <DirectMessagesList />
+      <DirectMessage {...{socket}} />
       </div>
       <div className={classes.slateEditor}>
         <SlateTextEditor

@@ -77,6 +77,13 @@ const PendingRequests = ({ loaded }) => {
     (request) => request?.friend_id === sessionUser.id
   );
 
+  // determine which id is the session users when confirming request
+
+  const determineId = (request) => {
+    if (request.self_id === sessionUser.id) return request.friend_id
+    if (request.friend_id === sessionUser.id) return request.self_id
+  }
+
   // errors
   const [errors, setErrors] = useState({});
 
@@ -115,7 +122,7 @@ const PendingRequests = ({ loaded }) => {
       </div>
       <div className={classes.pendingOutgoingList}>
         {incomingRequests?.map((request) => {
-          const currUser = users[request.self_id];
+          const currUser = users[determineId(request)];
 
           return (
             <>

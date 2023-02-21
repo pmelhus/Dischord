@@ -13,6 +13,7 @@ from .api.channel_routes import channel_routes
 from .api.channel_messages import channel_message_routes
 from .api.friendship_routes import friendship_routes
 from .api.inbox_routes import inbox_routes
+from .api.direct_messages import direct_message_routes
 
 from .seeds import seed_commands
 
@@ -44,6 +45,7 @@ app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(channel_message_routes, url_prefix='/api/channel_messages')
 app.register_blueprint(friendship_routes, url_prefix='/api/friendships')
 app.register_blueprint(inbox_routes, url_prefix='/api/inboxes')
+app.register_blueprint(direct_message_routes, url_prefix='/api/direct_messages')
 db.init_app(app)
 
 socketio.init_app(app)

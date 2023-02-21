@@ -1,6 +1,7 @@
 const ADD_INBOX = "inboxes/addInbox";
 const GET_INBOX = "inboxes/getInbox";
 const GET_ALL_INBOXES = 'inboxes/getAllInboxes'
+const ADD_INBOX_MEMBERS = 'inboxes/addInboxMembers'
 
 const addInbox = (inbox) => {
   return {
@@ -20,6 +21,13 @@ const getAllInboxes = (inboxes) => {
   return {
     type: GET_ALL_INBOXES,
     payload: inboxes
+  }
+}
+
+const addAllInboxMembers = (data) => {
+  return {
+    type: ADD_INBOX_MEMBERS,
+    payload: data
   }
 }
 
@@ -76,7 +84,8 @@ export const addInboxMembers = (payload) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(addInbox(data));
+
+    dispatch(addAllInboxMembers(data));
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -101,9 +110,10 @@ export const getOneInbox = (payload) => async (dispatch) => {
     fetch(`/api/inboxes/get_one/${self_id}/${friend_id}`),
   ]);
 
+
   if (response.ok) {
     const data = await response.json();
-    dispatch(getInbox(data));
+    dispatch(getInbox(data.inbox));
     return data.inbox;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -154,7 +164,7 @@ const inboxReducer = (state = {}, action) => {
     case ADD_INBOX:
       return {
         ...state,
-        [action.payload.id]: action.payload,
+        [action.payload.inbox.id]: action.payload.inbox,
       };
     case GET_INBOX:
       return {
@@ -163,12 +173,17 @@ const inboxReducer = (state = {}, action) => {
       };
       case GET_ALL_INBOXES:
         const inboxData = {}
+       if (action.payload.errors) return {...state}
         action.payload.inboxes.forEach((inbox) => {
           inboxData[inbox.id] = inbox
         })
         return {
           ...inboxData
         };
+        case ADD_INBOX_MEMBERS:
+          return {
+            ...state, [action.payload.inbox.id]: action.payload.inbox
+          }
     default: {
       return state;
     }

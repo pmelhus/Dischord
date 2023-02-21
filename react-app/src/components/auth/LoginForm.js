@@ -31,7 +31,7 @@ const LoginForm = ({ socket }) => {
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await history.push("/channels/1/1");
+        await history.push("/channels/@me");
       }
       await idleTimer(socket, data.id)
     }

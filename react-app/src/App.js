@@ -11,6 +11,7 @@ import HomePage from "./components/HomePage/HomePage";
 import { authenticate, logout } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
 import { genChannelMessages } from "./store/channelMessage";
+import {genDirectMessages} from "./store/directMessage"
 // import { genServers } from "./store/server";
 import { LoadingModal } from "./context/LoadingModal";
 import { genUsers } from "./store/user";
@@ -49,6 +50,13 @@ function App() {
       // socket.emit('timeout_check')
       console.log(location, 'LOCATION HERE')
       dispatch(genChannelMessages(location));
+    });
+
+    socket.on("dmChat", (dmChat) => {
+      // when we receive a chat, add it into our messages array in state
+      // socket.emit('timeout_check')
+console.log(dmChat, "inbox id here")
+      dispatch(genDirectMessages(dmChat.inbox_id));
     });
 
     // socket.on("", (chat) => {

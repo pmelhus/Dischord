@@ -32,6 +32,7 @@ def create_inbox():
 
     return {"inbox": inbox.to_dict()}
 
+
 @inbox_routes.route('/add_members', methods=["POST"])
 @login_required
 def add_members():
@@ -44,7 +45,8 @@ def add_members():
     db.session.add(inbox)
     db.session.commit()
 
-    return {"member_1": user_a.to_dict(), "member_2": user_b.to_dict()}
+    return {"member_1": user_a.to_dict(), "member_2": user_b.to_dict(), 'inbox': inbox.to_dict()}
+
 
 @inbox_routes.route('/get_one/<int:self_id>/<int:friend_id>')
 @login_required
@@ -56,7 +58,7 @@ def getOneInbox(self_id, friend_id):
         inbox_class = Inbox.query.get(inbox.id)
         return {"inbox": inbox_class.to_dict()}
     else:
-        return {'errors': 'No inbox was found with the given members'}
+        return {'errors': ['No inbox was found with the given members']}, 404
 
 
 @inbox_routes.route('/get_all/<int:id>')
@@ -65,7 +67,7 @@ def getAllInboxes(id):
 
     all_inbox_users = db.session.query(inbox_users).all()
     print(all_inbox_users, 'INBOX USERS')
-    relevant_inbox_ids=[]
+    relevant_inbox_ids = []
 
     for user in all_inbox_users:
         if user.user_id == id:
@@ -77,4 +79,4 @@ def getAllInboxes(id):
         return {"inboxes": [inbox.to_dict() for inbox in inboxes]}
     else:
 
-        return {'errors': "No inboxes associated with this user ID"}
+        return {'errors': ["No inboxes associated with this user ID"]}, 404

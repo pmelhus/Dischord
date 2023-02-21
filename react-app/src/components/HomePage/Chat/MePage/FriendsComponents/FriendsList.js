@@ -106,20 +106,24 @@ const FriendsList = () => {
     const payload = { self_id, friend_id };
 
     const existingInbox = await dispatch(getOneInbox(payload));
-    console.log(existingInbox);
+    console.log(existingInbox, "existing inbox");
     if (existingInbox.errors) {
       const createdInbox = await dispatch(createInbox(payload));
-
       if (createdInbox && createdInbox.errors) {
         await setErrors(createdInbox.errors);
       }
-      // console.log(createdInbox.inbox.id)
+
       const inbox_id = createdInbox.inbox.id;
       const memberPayload = { self_id, friend_id, inbox_id };
       const addedInboxMembers = await dispatch(addInboxMembers(memberPayload));
-      history.push(`/channels/@me/${createdInbox.uuid}`);
+      if (addedInboxMembers.errors) {
+        await setErrors(addedInboxMembers.errors);
+      }
+      await console.log(createdInbox.inbox.uuid, "created inbox");
+      return await history.push(`/channels/@me/${createdInbox.inbox.uuid}`);
     }
-    history.push(`/channels/@me/${existingInbox.uuid}`);
+
+    return await history.push(`/channels/@me/${existingInbox.uuid}`);
   };
 
   return (
@@ -129,43 +133,42 @@ const FriendsList = () => {
           style={{ fontSize: "12px" }}
         >{`ALL FRIENDS - ${friendsList.length}`}</h4>
       </div>
-      {friendsList.length &&
-        friendsList.map((friend) => {
-          const currFriend = users[determineId(friend)];
-          return (
-            <>
-              <div key={friend.id} className={classes.divider}></div>
-              <div className={classes.outgoingCard}>
-                <div className={classes.imageAndText}>
+      {friendsList.map((friend) => {
+        const currFriend = users[determineId(friend)];
+        return (
+          <>
+            <div key={friend.id} className={classes.divider}></div>
+            <div className={classes.outgoingCard}>
+              <div className={classes.imageAndText}>
+                <div>
+                  <img
+                    className={classes.avatar}
+                    src={currFriend?.image_url}
+                  ></img>
+                </div>
+                <div style={{ paddingLeft: "10px" }}>
                   <div>
-                    <img
-                      className={classes.avatar}
-                      src={currFriend?.image_url}
-                    ></img>
-                  </div>
-                  <div style={{ paddingLeft: "10px" }}>
-                    <div>
-                      <h3 style={{ color: theme.offWhite }}>
-                        {currFriend?.username}
-                      </h3>
-                      {/* <p style={{ fontSize: "11px", color: theme.textGray }}>
+                    <h3 style={{ color: theme.offWhite }}>
+                      {currFriend?.username}
+                    </h3>
+                    {/* <p style={{ fontSize: "11px", color: theme.textGray }}>
                         Incoming Friend Request
                       </p> */}
-                    </div>
-                  </div>
-                </div>
-                <div style={{ display: "flex" }}>
-                  <div
-                    onClick={() => handleDmChat(friend)}
-                    className={classes.messageFriend}
-                  >
-                    <i className="fa-solid fa-message"></i>
                   </div>
                 </div>
               </div>
-            </>
-          );
-        })}
+              <div style={{ display: "flex" }}>
+                <div
+                  onClick={() => handleDmChat(friend)}
+                  className={classes.messageFriend}
+                >
+                  <i className="fa-solid fa-message"></i>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      })}
     </>
   );
 };

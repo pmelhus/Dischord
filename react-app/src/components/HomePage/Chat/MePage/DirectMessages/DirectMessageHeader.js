@@ -32,13 +32,13 @@ const DirectMessageHeader = () => {
 
   const currentInbox = inboxes.find(inbox => (inbox.uuid === uuid))
 
-const inboxMembers = currentInbox.inbox_members
+const inboxMembers = currentInbox?.inbox_members
 
   // function to determine whether user is friend_id or self_id
 
   const determineId = (inboxMembers) => {
     const idArr = [];
-    inboxMembers.forEach((id) => {
+    inboxMembers?.forEach((id) => {
       if (id !== sessionUser.id) {
         idArr.push(id);
       }

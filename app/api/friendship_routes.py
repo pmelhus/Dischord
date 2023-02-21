@@ -48,7 +48,6 @@ def createFriendship():
         params = {
             "self_id": form.data['self_id'],
             "friend_id": form.data['friend_id'],
-            "dm_uuid": generate_uuid()
         }
 
         friendship = Friendship(**params)

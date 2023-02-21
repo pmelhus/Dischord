@@ -54,10 +54,8 @@ const LinkDisplay = ({ message }) => {
   };
 
   function isImgUrl(url) {
-    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
+    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url);
   }
-
-
 
   // console.log(sliceUrlSearch(new URL(matches[0]).search))
   //   console.log(new URL(matches[0]));
@@ -110,11 +108,11 @@ const LinkDisplay = ({ message }) => {
           </div>
         )}
 
-        {isValidUrl(match) && isImgUrl(match)  &&(
-          <div className='link-img-div'>
-<img className="link-img" src={match}></img>
-          </div>
-        )}
+      {isValidUrl(match) && isImgUrl(match) && (
+        <div className="link-img-div">
+          <img className="link-img" src={match}></img>
+        </div>
+      )}
     </div>
   );
 };

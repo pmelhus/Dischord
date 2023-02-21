@@ -7,6 +7,7 @@ from .server_members import seed_server_members, undo_server_members
 from .friendships import seed_friendships, undo_friendships
 from .inboxes import seed_inboxes, undo_inboxes
 from .inbox_users import seed_inbox_users, undo_inbox_users
+from .direct_messages import undo_direct_messages
 
 
 # Creates a seed group to hold our commands
@@ -38,5 +39,6 @@ def undo():
     undo_channels()
     undo_channel_messages()
     undo_inboxes()
+    undo_direct_messages()
     undo_friendships()
     # Add other undo functions here

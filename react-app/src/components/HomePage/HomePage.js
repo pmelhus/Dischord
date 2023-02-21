@@ -13,6 +13,7 @@ import "./HomePage.css";
 import { loadAllFriends } from "../../store/friend";
 import ServerChatWindow from "./ServerChatWindow/ServerChatWindow";
 import { getInboxes } from "../../store/inbox";
+import { genDirectMessages } from "../../store/directMessage";
 
 const HomePage = ({
   onlineMembers,
@@ -32,6 +33,8 @@ const HomePage = ({
 
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
+  const urlMe = pathname.split('/')[2]
+
   //   useEffect(() => {
 
   // dispatch(genServers(sessionUser.id));
@@ -56,19 +59,26 @@ const HomePage = ({
     await dispatch(getInboxes(sessionUser.id));
     await setLoaded(true);
     await setLoadingScreen(false);
+
+
   }, [dispatch, loadingScreen]);
 
   useEffect(async () => {
-    if (channelId && loaded) {
+    if (urlMe !== "@me" && channelId && loaded) {
+      console.log(serverId)
       await componentMounted();
       await setLoadingMessages(false);
     }
-  }, [channelId, dispatch, loaded]);
+  }, [channelId, dispatch, loaded, serverId]);
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log(channelId, "HERE YAAA");
-    setLocation(channelId);
+    if (urlMe !== "@me") {
+      await setLocation(channelId);
+    }
   }, [pathname]);
+
+
 
   return (
     <div className="home-page-container">

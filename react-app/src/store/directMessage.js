@@ -26,6 +26,7 @@ const removeDirectMessage = (directMessage) => {
 export const genDirectMessages = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
 
+
   const [directMessagesResponse] = await Promise.all([
     fetch(`/api/direct_messages/${id}`),
   ]);

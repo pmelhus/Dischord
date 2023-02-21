@@ -11,14 +11,13 @@ import HomePage from "./components/HomePage/HomePage";
 import { authenticate, logout } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
 import { genChannelMessages } from "./store/channelMessage";
-import {genDirectMessages} from "./store/directMessage"
+import { genDirectMessages } from "./store/directMessage";
 // import { genServers } from "./store/server";
 import { LoadingModal } from "./context/LoadingModal";
 import { genUsers } from "./store/user";
 // import LoadingScreen from "./components/LoadingScreen";
 import Splash from "./components/Splash";
 import { io } from "socket.io-client";
-
 
 let socket;
 function App() {
@@ -28,7 +27,7 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.session.user);
-  const [location, setLocation] = useState('')
+  const [location, setLocation] = useState("");
 
   // const [onlineMembers, setOnlineMembers] = useState();
 
@@ -48,14 +47,14 @@ function App() {
     socket.on("chat", (chat) => {
       // when we receive a chat, add it into our messages array in state
       // socket.emit('timeout_check')
-      console.log(location, 'LOCATION HERE')
+      console.log(location, "LOCATION HERE");
       dispatch(genChannelMessages(location));
     });
 
     socket.on("dmChat", (dmChat) => {
       // when we receive a chat, add it into our messages array in state
       // socket.emit('timeout_check')
-console.log(dmChat, "inbox id here")
+      console.log(dmChat, "inbox id here");
       dispatch(genDirectMessages(dmChat.inbox_id));
     });
 
@@ -66,19 +65,18 @@ console.log(dmChat, "inbox id here")
     // });
 
     socket.on("login", (data) => {
-      socket.emit('timeout_user', user)
+      socket.emit("timeout_user", user);
       dispatch(genUsers());
     });
 
     socket.on("logout", (data) => {
-      socket.emit('timeout_user')
-      dispatch(logout(data.id))
+      socket.emit("timeout_user");
+      dispatch(logout(data.id));
       dispatch(genUsers());
-
     });
 
-    socket.on('sign-up', () => {
-      socket.emit('timeout_user')
+    socket.on("sign-up", () => {
+      socket.emit("timeout_user");
       dispatch(genUsers());
     });
 
@@ -101,11 +99,9 @@ console.log(dmChat, "inbox id here")
     };
   }, []);
 
-
   if (!loaded) {
     return null;
   }
-
 
   return (
     <BrowserRouter>
@@ -134,11 +130,11 @@ console.log(dmChat, "inbox id here")
             </ProtectedRoute>
             <ProtectedRoute path="/channels">
               <HomePage
-              {...{loading}}
-              {...{setLoading}}
+                {...{ loading }}
+                {...{ setLoading }}
                 {...{ socket }}
                 {...{ setLoading }}
-                {...{setLocation}}
+                {...{ setLocation }}
               />
             </ProtectedRoute>
           </Switch>

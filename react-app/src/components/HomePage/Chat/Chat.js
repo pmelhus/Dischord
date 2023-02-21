@@ -19,6 +19,7 @@ import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
 import SlateTextEditor from "./SlateTextEditor";
 import DirectMessageConversation from "./MePage/DirectMessages/DirectMessageConversation";
+import {genDirectMessages} from "../../../store/directMessage";
 
 const Chat = ({
   socket,
@@ -126,13 +127,30 @@ const Chat = ({
     }
   }, [chatInput]);
 
-  useEffect(() => {}, [chatInput]);
+  const uuid = pathname.split("/")[3];
+
+  const inboxes = useSelector((state) => Object.values(state.inboxes));
+
+  const currInbox = inboxes.find((inbox) => inbox.uuid === uuid);
+
+  useEffect(() => {
+    if (uuid && currInbox) {
+
+      dispatch(genDirectMessages(currInbox.id));
+    }
+  }, []);
+  useEffect(() => {
+    if (uuid && currInbox) {
+
+      dispatch(genDirectMessages(currInbox.id));
+    }
+  }, [pathname]);
 
   return (
     <>
       <Switch>
         <Route path="/channels/@me/*">
-          <DirectMessageConversation {...{socket}} />
+          <DirectMessageConversation {...{ socket }} />
         </Route>
         <div className="chat-container">
           <div className="channel-chat-container">

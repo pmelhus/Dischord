@@ -7,9 +7,9 @@ import { ModalProvider } from "./context/Modal";
 import { LoadingModalProvider } from "./context/LoadingModal";
 import { UserModalProvider } from "./context/UserModal";
 import { ProfileModalProvider} from "./context/ProfileModal"
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import ThemeProvider from "react-bootstrap/ThemeProvider";
+import {ThemeProvider} from "react-jss";
 
 // Bootstrap CSS
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,12 +19,24 @@ import ThemeProvider from "react-bootstrap/ThemeProvider";
 
 const store = configureStore();
 
+const theme = {
+  textGray: 'rgba(185, 187, 190)',
+  selectedBackground: 'rgba(229, 230, 232, 0.129)',
+  hoverBackground: "rgba(250, 230, 255, 0.06)",
+  offWhite: "rgba(255, 255, 255, 0.836)",
+  textGrayTrans: 'rgba(173, 171, 171, 0.161)',
+  darkInputBackground: "rgba(32, 34, 37, 1)",
+  pinkTheme: '#950652',
+  buttonPink: 'rgb(116, 56, 73)',
+  friendGreen: "rgb(45, 125, 70)",
+  darkGray: 'rgb(142, 146, 151)'
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider
-        breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
-        minBreakpoint="xxs"
+    theme = {theme}
       >
         <ModalProvider>
           <ProfileModalProvider>

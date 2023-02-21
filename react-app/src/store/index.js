@@ -6,6 +6,9 @@ import channelReducer from "./channel"
 import channelMessageReducer from "./channelMessage"
 import userReducer from "./user"
 import serverMemberReducer from "./serverMember"
+import friendReducer from "./friend"
+import inboxReducer from "./inbox"
+import directMessageReducer from './directMessage'
 
 const rootReducer = combineReducers({
   session,
@@ -13,7 +16,10 @@ const rootReducer = combineReducers({
   channels: channelReducer,
   channelMessages: channelMessageReducer,
   users: userReducer,
-  serverMembers: serverMemberReducer
+  serverMembers: serverMemberReducer,
+  friends: friendReducer,
+  inboxes: inboxReducer,
+  directMessages: directMessageReducer
 });
 
 let enhancer;

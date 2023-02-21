@@ -15,9 +15,9 @@ const LoginForm = ({ socket }) => {
   const history = useHistory();
 
   const idleTimer = (socket, id) => {
-    setTimeout(() => {
-      socket?.emit('change_idle', id)
-    }, "3600000")
+    // setTimeout(() => {
+    //   socket?.emit('change_idle', id)
+    // }, "3600000")
   }
 
   const onLogin = async (e) => {
@@ -31,7 +31,7 @@ const LoginForm = ({ socket }) => {
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await history.push("/channels/1/1");
+        await history.push("/channels/@me");
       }
       await idleTimer(socket, data.id)
     }

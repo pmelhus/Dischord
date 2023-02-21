@@ -1,37 +1,34 @@
-import { useSelector } from "react-redux";
+// tools
+import { createUseStyles, useTheme } from "react-jss";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {loadAllRequests} from "../../../../store/friend"
+// components
+import AddFriendInput from "./FriendsComponents/AddFriendInput";
+import FriendsList from "./FriendsComponents/FriendsList";
+import PendingRequests from "./FriendsComponents/PendingRequests";
 
-const MePage = () => {
+const MePage = ({ selected, setSelected, loaded}) => {
   const user = useSelector((state) => state.session.user);
   const allServers = useSelector((state) => Object.values(state.servers));
   const myServers = allServers.filter((server) => server.owner_id === user.id);
+
+
+
+  // useEffect(() => {
+  //   if (selected === "pending") {
+  //     dispatch(loadAllRequests(sessionUser.id));
+  //     setLoaded(true)
+  //   }
+  // }, [selected]);
+
+  // const requests = useSelector((state) => Object.values(state.friends.requests));
+
   return (
     <>
-      {!myServers.length ? (
-        <div className="home-page-container">
-          <div className="welcome-message">
-            <h1>Welcome to Dischord, {user.username}!</h1>
-            <h3>Add a server to start communicating with your peers</h3>
-          </div>
-          <div className="home-image-div">
-            <img
-              id="home-image"
-              src="https://res.cloudinary.com/dmtap2h65/image/upload/v1655481454/MusicPNG_fqhod5.png"
-            ></img>
-          </div>
-        </div>
-      ) : (
-        <div className="home-page-container">
-          <div className="welcome-message">
-            <h1>Welcome back, {user.username}!</h1>
-          </div>
-          <div className="home-image-div">
-            <img
-              id="home-image"
-              src="https://res.cloudinary.com/dmtap2h65/image/upload/v1655481454/MusicPNG_fqhod5.png"
-            ></img>
-          </div>
-        </div>
-      )}
+      {selected === "addFriend" && <AddFriendInput />}
+      {selected === "all" && <FriendsList />}
+      {selected === "pending" && loaded && <PendingRequests />}
     </>
   );
 };

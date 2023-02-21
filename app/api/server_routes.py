@@ -156,7 +156,6 @@ def server_delete(id):
 @server_routes.route('/server_members/<int:server_id>')
 @login_required
 def get_server_members(server_id):
-    # server_members = server_member.query.filter(server_member.server_id == server_id)
     server = Server.query.get(server_id)
     if not server:
         return {"errors": "Server doesn't exist"}, 404
@@ -171,7 +170,6 @@ def get_one_server_member(server_id, user_id):
     members = db.session.query(server_members).all()
     for member in members:
         if member.user_id == user_id and member.server_id == server_id:
-            print((member), row2dict(member), '====================================================================================')
             return row2dict(member)
 
 
@@ -180,15 +178,16 @@ def get_one_server_member(server_id, user_id):
 @server_routes.route('/server_members/<int:server_id>/<int:user_id>', methods=["POST"])
 @login_required
 def create_server_member(server_id, user_id):
-    # print('HERE ===============')
     server = Server.query.get(server_id)
     user = User.query.get(user_id)
-    # server_member = Server.server_members.get(user.id)
+
+    print(user, 'AHHH')
 
     if not server and user:
         return {"errors": "Either the server or user does not exist"}, 404
 
     else:
+        print(type(server.members), 'HEREWEGO')
         server.members.append(user)
         db.session.add(server)
         db.session.commit()

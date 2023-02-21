@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, Friendship, User
-from app.forms import FriendshipForm
+from app.models import db, Friendship, FriendshipRequest, User
+from app.forms import FriendshipRequestForm, FriendshipForm
+from sqlalchemy import and_, or_, not_
+from app.utils.uuid_creator import generate_uuid
 
-friendship_routes = Blueprint('friends', __name__)
+friendship_routes = Blueprint('friendships', __name__)
 
 
 def validation_errors_to_error_messages(validation_errors):
@@ -19,11 +21,20 @@ def validation_errors_to_error_messages(validation_errors):
 # This route retrieves all the friends of a particular friend id (user_id_self)
 
 
+@friendship_routes.route('/requests/<int:id>')
+@login_required
+def getRequests(id):
+    requests = FriendshipRequest.query.filter(or_(FriendshipRequest.self_id == id, FriendshipRequest.friend_id == id)).all()
+
+    return {'requests': [request.to_dict() for request in requests]}
+
+# This route retrieves all friendships
 @friendship_routes.route('/<int:id>')
 @login_required
-def getFriendship(id):
-    friendship = Friendship.query.filter(Friendship.user_id_self == id)
-    return {'friendship': [friendship.to_dict() for friendship in friendships]}
+def getFriends(id):
+    friends = Friendship.query.filter(or_(Friendship.self_id == id, Friendship.friend_id == id)).all()
+
+    return {'friends': [friend.to_dict() for friend in friends]}
 
 # This route creates a new friend connection
 
@@ -33,11 +44,12 @@ def getFriendship(id):
 def createFriendship():
     form = FriendshipForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    params = {
-        "user_id_self": form.data['user_id_self'],
-        "user_id_friend": form.data['user_id_friend']
-    }
     if form.validate_on_submit():
+        params = {
+            "self_id": form.data['self_id'],
+            "friend_id": form.data['friend_id'],
+        }
+
         friendship = Friendship(**params)
         db.session.add(friendship)
         db.session.commit()
@@ -45,17 +57,39 @@ def createFriendship():
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+# This route creates a pending friend request
+
+@friendship_routes.route('/requests/', methods=["POST"])
+@login_required
+def create_friendship_request():
+
+    form = FriendshipRequestForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        user = User.query.where(User.username == form.data['friend_username']).one()
+        params = {
+            "self_id": form.data['self_id'],
+            "friend_id": user.id
+        }
+
+
+        friendship_request = FriendshipRequest(**params)
+        db.session.add(friendship_request)
+        db.session.commit()
+        return friendship_request.to_dict()
+    else:
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 # This route deletes a friend connection
 
 
-@friendship_routes.route('/<int:self>/<int:friend>', methods=["DELETE"])
+@friendship_routes.route('/requests/<int:id>', methods=["DELETE"])
 @login_required
-def friend_delete(self, friend):
-    friendship = Friend.query.filter(
-        Friendship.user_id_self == self & Friendship.user_id_friend == friend)
-    if not friendship:
-        return {"errors": f"This friendship does not exist"}, 404
+def request_delete(id):
+    request = FriendshipRequest.query.get(id)
+    if not request:
+        return {"errors": f"This request does not exist"}, 404
     else:
-        db.session.delete(friend)
+        db.session.delete(request)
         db.session.commit()
-        return friendship.to_dict()
+        return request.to_dict()

@@ -1,9 +1,9 @@
-import {useHistory} from "react-router-dom"
+import {useLocation, useHistory} from "react-router-dom"
 
 const HomeButton = () => {
 
   const history = useHistory()
-
+  const {pathname} = useLocation()
 
   const handleClick = (e) => {
 
@@ -13,9 +13,13 @@ const HomeButton = () => {
 
   }
 
+  const urlArr = pathname.split('/')
+
+
   return (
     <div className="home-button-div">
-      <button className="server-image-icon" onClick={handleClick}>
+      <button className={ urlArr[2] === '@me' ?  'server-image-icon-selected':
+        "server-image-icon"} onClick={handleClick}>
       <i className="fa-solid fa-house-chimney-heart fa-2xl"></i>
       </button>
     </div>

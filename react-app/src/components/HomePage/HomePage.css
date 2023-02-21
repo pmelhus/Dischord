@@ -9,9 +9,9 @@
   /* min-width: 100%; */
   /* max-width: 100%; */
   /* width: 100%; */
-  min-width: 850px;
+  /* min-width: 100vw; */
+  height: 100vh;
   /* min-width:  */
-  height: 100%;
   /* max-height: 100%; */
   /* margin-top: 200px; */
   /* top: 200px; */
@@ -23,7 +23,7 @@
 .home-content-container {
   position: relative;
   min-width: 250px;
-  /* height: 100%; */
+ min-height: 100%;
 }
 
 .username-channel-message {
@@ -86,7 +86,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow:2px 2px 2px 1px #950652;
+  box-shadow:2px 2px 2px 1px rgb(200, 56, 73);
 }
 
 
@@ -116,7 +116,7 @@ border-radius: 35%;
   background-color: #202225;
   padding: 0;
   margin: 0;
-  height: 100%;
+  min-height: 100%;
   /* padding-right: 4px; */
   min-width: 72px;
   display: flex;
@@ -149,18 +149,19 @@ border-radius: 35%;
 .server-sidebar-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: #2f3136;
   color: white;
   min-width: 100%;
-  flex: 0 0 auto;
-  min-height: 0;
-  vertical-align: baseline;
-  min-height: 325px;
+  /* flex: 0 0 auto; */
+
+
   height: 100%;
+  /* min-height: 100%; */
 
 }
 
-.server-sidebar-container nav {
+.server-sidebar-container-nav {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -595,7 +596,7 @@ display:block;
   min-width: 400px;
   /* min-width: 90 */
   /* min-height: 100%; */
-  height: 100%;
+  min-height: 100%;
   /* flex-shrink: 0; */
 }
 

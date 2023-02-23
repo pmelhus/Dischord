@@ -65,6 +65,10 @@ class User(db.Model, UserMixin, CrUpMixin):
             'inbox_memberships' : [inbox.to_dict() for inbox in self.inbox_memberships]
         }
 
+    def get_id(self):
+        return self.id
+
+
     @staticmethod
     def seed(user_data):
         user = User()

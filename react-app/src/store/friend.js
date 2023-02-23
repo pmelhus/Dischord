@@ -3,6 +3,7 @@ const ADD_FRIEND_REQUEST = "friends/addFriendRequest";
 const LOAD_FRIENDS = "friends/loadFriends";
 const LOAD_REQUESTS = "friends/loadRequests";
 const DELETE_REQUEST = "friends/deleteRequest";
+const LOAD_MUTUAL_FRIENDS = 'friends/loadMutuals'
 
 const addFriendship = (friendship) => {
   return {
@@ -38,6 +39,13 @@ const deleteRequest = (request) => {
     payload: request,
   };
 };
+
+const loadMutuals = (friends) => {
+  return {
+    type: LOAD_MUTUAL_FRIENDS,
+    payload: friends
+  }
+}
 
 export const createFriendRequest = (payload) => async (dispatch) => {
   const { self_id, friend_username } = payload;
@@ -144,6 +152,17 @@ export const removeRequest = (id) => async (dispatch) => {
     return request;
   }
 };
+
+export const loadMutualFriends = (id) => async (dispatch) => {
+  const [response] = await Promise.all([fetch(`/api/friendships/mutual_friends/${id}`)]);
+  console.log('HERE')
+  const [friends] = await Promise.all([response.json()]);
+
+  if (response.ok) {
+    dispatch(loadFriends(friends.friends));
+    return friends;
+  }
+}
 
 const friendReducer = (state = {}, action) => {
   switch (action.type) {

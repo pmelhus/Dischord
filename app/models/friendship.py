@@ -1,5 +1,6 @@
 from .db import db
 from .creation_mixin import CrUpMixin
+from .user import User
 
 
 class Friendship(db.Model, CrUpMixin):
@@ -7,7 +8,8 @@ class Friendship(db.Model, CrUpMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     self_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    friend_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    friend_id = db.Column(
+        db.Integer, db.ForeignKey("users.id"), nullable=False)
 
 #   user_id_self = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 #   user_id_friend = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
@@ -22,6 +24,22 @@ class Friendship(db.Model, CrUpMixin):
             'friend_id': self.friend_id,
 
         }
+
+    def return_other_friend(self, id):
+        if self.self_id == id:
+            user = User.query.get(self.friend_id)
+            return user
+
+        if self.friend_id == id:
+            user = User.query.get(self.self_id)
+            return user
+    def return_self_user(self):
+        user = User.query.get(self.self_id)
+        return user
+    def return_friend_user(self):
+        user = User.query.get(self.friend_id)
+        return user
+
 
     @staticmethod
     def seed(friendship_data):

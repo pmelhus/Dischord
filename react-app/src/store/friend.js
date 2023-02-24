@@ -221,7 +221,7 @@ const friendReducer = (state = {}, action) => {
       for (let user of action.payload.users) {
        mutualsArr.push( mutualsObj[user.id] = user)
       }
-      for (let user of action.payload.mutual_friends) {
+      for (let user of action.payload.mutual_friendships) {
         mutualFriendsObj[user.id] = user;
       }
       return {

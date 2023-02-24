@@ -120,20 +120,20 @@ def get_mutuals(id):
 
     # initializes dictionary of the number of frequencies a user id appears in a friendship between the session user's friends list
     friends_friendships_ids = {}
-    mutual_friends = set()
+    mutual_friends = []
 
     for friendship in friends_friendships:
         # checks if the ids in friendship modal are in the session user's friends list and adds the ids not in the session users friend list to a dictionary with a value of the frequency they appear
         if friendship.return_self_user().id not in session_u_friend_id_set and friendship.return_friend_user().id in session_u_friend_id_set:
             if f'{friendship.return_self_user().id}' in friends_friendships_ids:
                 friends_friendships_ids[f'{friendship.return_self_user().id}'] += 1
-                mutual_friends.add(friendship.return_friend_user().id)
+                mutual_friends.append(friendship)
             else:
                 friends_friendships_ids[f'{friendship.return_self_user().id}'] = 1
         if friendship.return_friend_user().id not in session_u_friend_id_set and friendship.return_self_user().id in session_u_friend_id_set:
             if f'{friendship.return_friend_user().id}' in friends_friendships_ids:
                 friends_friendships_ids[f'{friendship.return_friend_user().id}'] += 1
-                mutual_friends.add(friendship.return_self_user().id)
+                mutual_friends.append(friendship)
             else:
                 friends_friendships_ids[f'{friendship.return_friend_user().id}'] = 1
 
@@ -141,17 +141,13 @@ def get_mutuals(id):
     sorted_converted_friends = dict(
         sorted(friends_friendships_ids.items(), key=lambda x: x[1], reverse=True))
 
-    # queries user by the dictionary user ids and appends the user class to a list to be sent as a response to the front end
+    # queries user by the dictionary user ids and appends the user class to a list to be sent as a response to the front end if the frequency is above 1 (indicates theres more than one friend in common)
     recommended_friends_list = []
     for key, value in sorted_converted_friends.items():
-        user = User.query.get(int(key))
-        recommended_friends_list.append(user)
-
-    mutual_friends_list = []
-    for id in mutual_friends:
-        user = User.query.get(id)
-        mutual_friends_list.append(user)
-    print (recommended_friends_list, 'banana')
+        if value > 1:
+            user = User.query.get(int(key))
+            recommended_friends_list.append(user)
 
 
-    return {'users': [user.to_dict() for user in recommended_friends_list], "mutual_friends": [user.to_dict() for user in mutual_friends_list]}
+
+    return {'users': [user.to_dict() for user in recommended_friends_list], "mutual_friendships": [friendship.to_dict() for friendship in mutual_friends]}

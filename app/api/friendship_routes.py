@@ -144,6 +144,8 @@ def get_mutuals(id):
     # queries user by the dictionary user ids and appends the user class to a list to be sent as a response to the front end if the frequency is above 1 (indicates theres more than one friend in common)
     recommended_friends_list = []
     for key, value in sorted_converted_friends.items():
+
+    # if frequency is above 1 time, push the user to recommended friends list
         if value > 1:
             user = User.query.get(int(key))
             recommended_friends_list.append(user)

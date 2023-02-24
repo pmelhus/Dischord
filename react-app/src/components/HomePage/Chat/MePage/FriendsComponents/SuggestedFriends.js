@@ -72,7 +72,11 @@ const SuggestedFriends = () => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+
+  // grabs state of the most frequent mutual friends of friends of session user
   const mutualUsers = useSelector((state) => state.friends.recommended);
+
+  // grabs from redux the mutual friends of the friends of session user
   const mutualFriendships = useSelector((state) =>
     Object.values(state.friends.mutualFriends)
   );
@@ -80,6 +84,8 @@ const SuggestedFriends = () => {
 
   const sessionUser = useSelector((state) => state.session.user);
 
+
+  // finds associated friendships with the displayed user and session user
   const findAssociatedFriendships = (id) => {
     return mutualFriendships?.filter((friendship) => {
       return friendship.self_id == id || friendship.friend_id == id;
@@ -90,6 +96,8 @@ const SuggestedFriends = () => {
     Object.values(state.friends.requests)
   );
 
+  //  checks if there are existing requests between displayed user and session user
+
   const checkRequests = (user) => {
   const existingRequests =  requests.filter((request) => {
       return( request.friend_id === user.id && request.self_id === sessionUser.id ) || (request.self_id === user.id && request.friend_id === sessionUser.id);
@@ -98,6 +106,8 @@ const SuggestedFriends = () => {
     return existingRequests
   };
 
+
+  // submits friend request
   const handleSubmit = async (e, user) => {
     const payload = { self_id: sessionUser.id, friend_username: user.username };
     e.preventDefault();

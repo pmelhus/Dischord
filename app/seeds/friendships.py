@@ -26,6 +26,97 @@ friendships = [
         'self_id': 15,
         'friend_id': 1
     },
+            {
+        'self_id': 7,
+        'friend_id': 8
+    },
+            {
+        'self_id': 9,
+        'friend_id': 10
+    },
+                {
+        'self_id': 2,
+        'friend_id': 11
+    },
+                    {
+        'self_id': 3,
+        'friend_id': 11
+    },
+                    {
+        'self_id': 5,
+        'friend_id': 11
+    },
+                        {
+        'self_id': 4,
+        'friend_id': 12
+
+    },
+                            {
+        'self_id': 5,
+        'friend_id': 12
+
+    },
+                                {
+        'self_id': 5,
+        'friend_id': 13
+
+    },
+
+                                        {
+        'self_id': 6,
+        'friend_id': 11
+
+    },
+                                        {
+        'self_id': 6,
+        'friend_id': 10
+
+    },
+                                        {
+        'self_id': 2,
+        'friend_id': 12
+
+    },
+                                        {
+        'self_id': 4,
+        'friend_id': 11
+
+    },
+                                    {
+        'self_id': 15,
+        'friend_id': 13
+
+    },
+                                        {
+        'self_id': 2,
+        'friend_id': 13
+
+    },
+                                            {
+        'self_id': 3,
+        'friend_id': 12
+
+    },
+                                                {
+        'self_id': 3,
+        'friend_id': 6
+
+    },
+                                                {
+        'self_id': 3,
+        'friend_id': 7
+
+    },
+                                                    {
+        'self_id': 4,
+        'friend_id': 7
+
+    },
+                                                    {
+        'self_id': 5,
+        'friend_id': 7
+
+    },
 ]
 
 

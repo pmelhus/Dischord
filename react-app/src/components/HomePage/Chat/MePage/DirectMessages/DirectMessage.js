@@ -47,7 +47,7 @@ const useStyles = createUseStyles((theme) => ({
 const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
-
+  // grabs all users
   const users = useSelector((state) => state.users);
   const sessionUser = useSelector((state) => state.session.user);
 

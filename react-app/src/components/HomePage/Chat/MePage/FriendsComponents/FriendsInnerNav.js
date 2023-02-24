@@ -91,6 +91,7 @@ const FriendsInnerNav = ({setSelected, selected}) => {
         <h3>All</h3>
       </div>
       {/* Pending tab on nav */}
+
       <div
         onClick={() => setSelected("pending")}
         className={
@@ -98,6 +99,15 @@ const FriendsInnerNav = ({setSelected, selected}) => {
         }
       >
         <h3>Pending</h3>
+      </div>
+
+      <div
+        onClick={() => setSelected("suggested")}
+        className={
+          selected === "suggested" ? classes.allFriendsSelected : classes.allFriends
+        }
+      >
+        <h3>Friend Suggestions</h3>
       </div>
 
       {/* Add friend button on nav */}

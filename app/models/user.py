@@ -2,9 +2,10 @@ from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .creation_mixin import CrUpMixin
+
 from .server_member import server_members
 from .inbox_user import inbox_users
-
+from sqlalchemy import and_, or_, not_
 
 class User(db.Model, UserMixin, CrUpMixin):
     __tablename__ = 'users'
@@ -32,6 +33,7 @@ class User(db.Model, UserMixin, CrUpMixin):
 
     memberships = db.relationship("Server", back_populates="members", secondary=server_members)
     inbox_memberships = db.relationship("Inbox", back_populates="inbox_members", secondary=inbox_users)
+
 
     # belongs to one
 
@@ -68,6 +70,17 @@ class User(db.Model, UserMixin, CrUpMixin):
     def get_id(self):
         return self.id
 
+    # def get_all_friends(self):
+    #     allFriendships = Friendship.query.filter(or_(Friendship.self_id == self.id, Friendship.friend_id == self.id)).all()
+    #     friends_list = []
+    #     for friendship in allFriendships:
+    #         if friendship.self_id == self.id:
+    #             friends_list.append(friendship.friend_id)
+    #         if friendship.friend_id == self.id:
+    #             friends_list.append(friendship.self_id)
+
+
+    #     return friends_list
 
     @staticmethod
     def seed(user_data):

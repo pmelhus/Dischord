@@ -7,6 +7,7 @@ import { loadAllRequests, loadMutualFriends } from "../../../../store/friend";
 import AddFriendInput from "./FriendsComponents/AddFriendInput";
 import FriendsList from "./FriendsComponents/FriendsList";
 import PendingRequests from "./FriendsComponents/PendingRequests";
+import SuggestedFriends from "./FriendsComponents/SuggestedFriends";
 
 const MePage = ({ selected, setSelected, loaded }) => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -14,10 +15,8 @@ const MePage = ({ selected, setSelected, loaded }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (selected === "all") {
-      dispatch(loadMutualFriends(sessionUser.id));
-    }
-  }, [selected]);
+    dispatch(loadMutualFriends(sessionUser.id));
+  }, [dispatch]);
 
   // const requests = useSelector((state) => Object.values(state.friends.requests));
 
@@ -26,6 +25,7 @@ const MePage = ({ selected, setSelected, loaded }) => {
       {selected === "addFriend" && <AddFriendInput />}
       {selected === "all" && <FriendsList />}
       {selected === "pending" && loaded && <PendingRequests />}
+      {selected === "suggested" && <SuggestedFriends />}
     </>
   );
 };

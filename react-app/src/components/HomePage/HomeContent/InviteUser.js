@@ -3,19 +3,24 @@ import InviteUserItem from './InviteUserItem.js'
 
 const InviteUser = ({sessionUser, socket, currentServer, setInviteModal}) => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => Object.values(state.users));
+
+  const users = useSelector(state=> state.users)
   const serverMembers = useSelector(state => state.servers)[currentServer.id].members_ids
+  const friendships = useSelector((state) => Object.values(state.friends.friendships))
 
-const serverMemberIds = []
+const friendsList = []
 
-// serverMembers?.forEach(member => {
-//   serverMemberIds.push(member.id)
-// })
+  friendships.forEach(friendship => {
+    if (friendship.self_id === sessionUser.id) {
+      friendsList.push(users[friendship.friend_id])
+    }
+    if (friendship.friend_id === sessionUser.id) {
+      friendsList.push(users[friendship.self_id])
+    }
+  })
 
-const serverMembersIds = serverMembers.map(obj => {
-  return obj.user_id
-})
-console.log(serverMembersIds)
+
+
   return (
     <div className='invite-user-container'>
       {/* <div className='user-search'>
@@ -26,8 +31,8 @@ console.log(serverMembersIds)
       </div>
       <div className="invite-user-list">
         <ul>
-          {users?.map((user) => {
-            if (user.id === sessionUser.id || serverMembersIds.includes(user.id)) return
+          {friendsList?.map((user) => {
+
             return (
               <div style={{padding:'8px 0'}} className="invite-user-item-div">
                 <InviteUserItem {...{socket}} {...{setInviteModal}} {...{currentServer}} {...{user}}/>

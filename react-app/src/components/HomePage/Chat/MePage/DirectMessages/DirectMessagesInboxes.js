@@ -51,15 +51,19 @@ const DirectMessagesInboxes = () => {
   const inboxes = useSelector((state) => Object.values(state.inboxes));
   const users = useSelector((state) => state.users);
   const sessionUser = useSelector((state) => state.session.user);
+  
+  const { pathname } = useLocation();
+  const urlArr = pathname.split("/");
 
   // state for which inbox is selected
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(urlArr[3]);
 
   const history = useHistory();
 
-  const { pathname } = useLocation();
 
-  const urlArr = pathname.split("/");
+
+
+
 
   const handleInboxClick = (uuid) => {
     setSelected(uuid);

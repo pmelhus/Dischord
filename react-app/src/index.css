@@ -2,7 +2,7 @@
 html {
   min-width: 100vw;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   /* width: 100%; */
 --text-gray: rgba(173, 171, 171, 0.861);
 }
@@ -17,8 +17,8 @@ body {
   /* height:100%; */
   /* weight:100%; */
   box-sizing: border-box;
-
-overflow: hidden;
+  overflow-x: hidden;
+/* overflow: hidden; */
 
 }
 
@@ -27,7 +27,8 @@ overflow: hidden;
 #root {
   /* min-width: 1980px;
   min-height: 1080px; */
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-x: hidden;
 
   font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 

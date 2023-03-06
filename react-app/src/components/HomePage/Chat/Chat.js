@@ -1,5 +1,6 @@
 // import the socket
 
+import { createUseStyles, useTheme } from "react-jss";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Route, Switch } from "react-router-dom";
@@ -19,7 +20,28 @@ import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
 import SlateTextEditor from "./SlateTextEditor";
 import DirectMessageConversation from "./MePage/DirectMessages/DirectMessageConversation";
-import {genDirectMessages} from "../../../store/directMessage";
+import { genDirectMessages } from "../../../store/directMessage";
+
+const useStyles = createUseStyles((theme) => ({
+  welcomeDiv: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "12px 12px 0 12px",
+  },
+  welcomeHeading: {
+    color: theme.offWhite,
+  },
+  welcomeMessage: {
+    color: theme.textGray,
+  },
+  channelChatContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: "flex-start",
+    minWidth: "100%"
+  }
+}));
 
 const Chat = ({
   socket,
@@ -52,6 +74,8 @@ const Chat = ({
   const [messageError, setMessageError] = useState(true);
   const [messageEditId, setMessageEditId] = useState(null);
   const bottomRef = useRef(null);
+  const theme = useTheme();
+  const classes = useStyles({ theme });
 
   // const endOfString = (string) => {
   //   let httpsIndex = string.indexOf("https://");
@@ -135,13 +159,11 @@ const Chat = ({
 
   useEffect(() => {
     if (uuid && currInbox) {
-
       dispatch(genDirectMessages(currInbox.id));
     }
   }, []);
   useEffect(() => {
     if (uuid && currInbox) {
-
       dispatch(genDirectMessages(currInbox.id));
     }
   }, [pathname]);
@@ -153,70 +175,74 @@ const Chat = ({
           <DirectMessageConversation {...{ socket }} />
         </Route>
         <div className="chat-container">
-          <div className="channel-chat-container">
+          <div className={url !== "@me" ? ( "channel-chat-container"): (classes.channelChatContainer) }>
             <Route exact path="/channels/@me">
               <MePage {...{ loaded }} {...{ selected }} {...{ setSelected }} />
             </Route>
+
             {/* <div className="channel-chat-and-send-form"> */}
-            <div className="channel-chat-messages">
-              <Route exact path={`/channels/${serverId}/noChannels`}>
-                <div className="no-channels-container">
-                  <div className="no-channels-div">
-                    <h1>Wow, such empty...</h1>
-                    <h3>Looks like this server has no channels!</h3>
-                    <h3>
-                      If you're the creator of this server, you can add channels
-                      by clicking the "{" "}
-                      <i className="fa-solid fa-plus fa-lg"></i> " next to "
-                      Text Channels "
-                    </h3>
-                  </div>
-                </div>
-              </Route>
-              <div>
-                {loadingMessages ? (
-                  <div className="channel-message-div-loader">
-                    <Placeholder />
-                    <Placeholder />
-                    <Placeholder />
-                  </div>
-                ) : (
-                  <>
-                    {currentChannelMessages.map((message, ind) => (
-                      <FadeIn>
-                        <div
-                          ref={bottomRef}
-                          className="channel-message-div"
-                          key={ind}
-                        >
-                          <ChannelMessage
-                            {...{ setMessageEditId }}
-                            {...{ messageEditId }}
-                            {...{ channelId }}
-                            {...{ socket }}
-                            {...{ message }}
-                            {...{ chatInput }}
-                            {...{ currentChannelMessages }}
-                            {...{ ind }}
-                          />
-                        </div>
-                      </FadeIn>
-                    ))}
-                  </>
-                )}
-              </div>
-            </div>
-            <div className="channel-chat-form-div">
-              {pathname.split("/")[2] !== "@me" &&
-                pathname.split("/")[3] !== "noChannels" && (
-                  <>
-                    {errors && messageError && errors.content && (
-                      <div className="error-msg-message">
-                        <p>*{errors.content}*</p>
+            <Route exact path="/channels/*/*">
+              <div className="channel-chat-messages">
+                <div>
+                  {loadingMessages ? (
+                    <div className="channel-message-div-loader">
+                      <Placeholder />
+                      <Placeholder />
+                      <Placeholder />
+                    </div>
+                  ) : (
+                    <>
+                      <div className={classes.welcomeDiv}>
+                        <h1 className={classes.welcomeHeading}>
+                          Welcome to {currentServer?.name}
+                        </h1>
+                        {currentServer?.owner_id === user?.id ? (
+                          <p className={classes.welcomeMessage}>
+                            This is your brand new, shiny server. Here are some
+                            steps to help you get started.{" "}
+                          </p>
+                        ) : (
+                          <p>
+                            This is a brand new, shiny server. Here are some
+                            steps to help you get started.{" "}
+                          </p>
+                        )}
                       </div>
-                    )}
-                    <form className="channel-chat-form">
-                      {/* <input
+                      {currentChannelMessages.map((message, ind) => (
+                        <FadeIn>
+                          <div
+                            ref={bottomRef}
+                            className="channel-message-div"
+                            key={ind}
+                          >
+                            <ChannelMessage
+                              {...{ setMessageEditId }}
+                              {...{ messageEditId }}
+                              {...{ channelId }}
+                              {...{ socket }}
+                              {...{ message }}
+                              {...{ chatInput }}
+                              {...{ currentChannelMessages }}
+                              {...{ ind }}
+                            />
+                          </div>
+                        </FadeIn>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </div>
+            <div className="channel-chat-form-div">
+              {/* {pathname.split("/")[2] !== "@me" &&
+                pathname.split("/")[3] !== "noChannels" && ( */}
+              <>
+                {errors && messageError && errors.content && (
+                  <div className="error-msg-message">
+                    <p>*{errors.content}*</p>
+                  </div>
+                )}
+                <form className="channel-chat-form">
+                  {/* <input
                     id="channel-chat-input"
                     value={chatInput}
                     placeholder={
@@ -227,19 +253,19 @@ const Chat = ({
                     onChange={updateChatInput}
                   /> */}
 
-                      <SlateTextEditor
-                        {...{ sendChat }}
-                        placeholder={`Message ${currentChannel?.name}`}
-                        {...{ chatInput }}
-                        {...{ setChatInput }}
-                      />
+                  <SlateTextEditor
+                    {...{ sendChat }}
+                    placeholder={`Message ${currentChannel?.name}`}
+                    {...{ chatInput }}
+                    {...{ setChatInput }}
+                  />
 
-                      {/* <button type="submit">Send</button> */}
-                    </form>
-                  </>
-                )}
+                  {/* <button type="submit">Send</button> */}
+                </form>
+              </>
+              {/* )} */}
             </div>
-            {/* </div> */}
+            </Route>
           </div>
           <Route path="/channels/*/*">
             <div className="server-members">

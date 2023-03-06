@@ -23,7 +23,7 @@ const theme = {
   textGray: 'rgba(185, 187, 190)',
   selectedBackground: 'rgba(229, 230, 232, 0.129)',
   hoverBackground: "rgba(250, 230, 255, 0.06)",
-  offWhite: "rgba(255, 255, 255, 0.836)",
+  offWhite: "rgba(255, 255, 255, 0.996)",
   textGrayTrans: 'rgba(173, 171, 171, 0.161)',
   darkInputBackground: "rgba(32, 34, 37, 1)",
   pinkTheme: '#950652',

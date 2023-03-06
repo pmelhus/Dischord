@@ -1,6 +1,6 @@
 import DirectMessage from "./DirectMessage";
 import SlateTextEditor from "../../SlateTextEditor";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { createUseStyles, useTheme } from "react-jss";
@@ -33,7 +33,39 @@ const useStyles = createUseStyles((theme) => ({
     flexDirection: "column",
     scrollbarWidth: "none",
     maxHeight: "100%",
-    marginTop: '14px'
+    marginTop: "14px",
+  },
+  originAvatar: {
+    width: "80px",
+    height: "80px",
+    objectFit: "cover",
+    borderRadius: "100%",
+  },
+  originDiv: {
+    margin: "16px",
+  },
+  originHeading: {
+    margin: "8px 0",
+    color: theme.offWhite,
+  },
+  originText: {
+    color: theme.textGray,
+    display: "inline",
+  },
+  usernameText: {
+    fontWeight: "bold",
+    color: theme.textGray,
+    display: "inline",
+  },
+  buttonContainer: {
+    marginTop: "16px",
+  },
+  directMessagesContainer: {
+    position: "relative",
+    flexShrink: "0",
+    height: "fit-content",
+    flexBasis: "auto",
+    width: "100%",
   },
 }));
 
@@ -79,10 +111,10 @@ const DirectMessageConversation = ({ socket }) => {
     // await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
-    await bottomRef.current?.scrollIntoView({
+    await bottomRef.current.scrollIntoView({
       behavior: "smooth",
-      block: "nearest",
-      inline: "start",
+      block: "end",
+      inline: "nearest",
     });
     // clear the input field after the message is sent
     await setErrors({});
@@ -96,13 +128,52 @@ const DirectMessageConversation = ({ socket }) => {
     (message) => message.inbox_id === currInbox?.id
   );
 
+  // function to determine who is who in inbox
+  console.log(currInbox, "currInbox");
+  const determineId = () => {
+    let friendId = null;
+    currInbox.inbox_members.forEach((id) => {
+      if (id !== sessionUser.id) {
+        friendId = id;
+      }
+    });
+    return friendId;
+  };
+  const otherUser = users[determineId()];
+
+  const alignToTop = false
+
+  bottomRef?.current?.scrollIntoView(alignToTop)
+
+  useEffect(() => {
+    bottomRef?.current?.scrollIntoView(alignToTop)
+  }, [pathname])
+
+  const handleDelete = (message) => {
+
+  }
+
+
   return (
     <div className={classes.container}>
       <div className={classes.messages}>
+        <div className={classes.originDiv}>
+          <img className={classes.originAvatar} src={otherUser.image_url}></img>
+          <h1 className={classes.originHeading}>{otherUser.username}</h1>
+          <div>
+            <p className={classes.originText}>
+              This is the beginning of your direct message history with{" "}
+            </p>
+            <p className={classes.usernameText}>@{otherUser.username}</p>
+            <div className={classes.buttonContainer}>
+              <button onClick={handleDelete}>Remove Friend</button>
+            </div>
+          </div>
+        </div>
         {inboxDms.map((message, ind) => {
           return (
             <FadeIn>
-              <div ref={bottomRef}>
+              <div className={classes.directMessagesContainer} ref={bottomRef}>
                 <DirectMessage
                   {...{ socket }}
                   {...{ message }}

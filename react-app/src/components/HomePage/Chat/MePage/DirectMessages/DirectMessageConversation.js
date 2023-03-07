@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
   },
   messages: {
     width: "100%",
-    height: "calc(100% - 120px)",
+    height: "calc(100% - 130px)",
     display: "flex",
     overflowY: "scroll",
     overflowX: "hidden",
@@ -111,14 +111,10 @@ const DirectMessageConversation = ({ socket }) => {
     // await socket?.emit("timeout_user");
     // await setErrors({})
     await setIsSent(true);
-    await bottomRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    });
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
+    await bottomRef?.current.scrollIntoView(false);
   };
 
   const directMessages = useSelector((state) =>
@@ -132,7 +128,7 @@ const DirectMessageConversation = ({ socket }) => {
   console.log(currInbox, "currInbox");
   const determineId = () => {
     let friendId = null;
-    currInbox.inbox_members.forEach((id) => {
+    currInbox?.inbox_members.forEach((id) => {
       if (id !== sessionUser.id) {
         friendId = id;
       }
@@ -141,30 +137,30 @@ const DirectMessageConversation = ({ socket }) => {
   };
   const otherUser = users[determineId()];
 
-  const alignToTop = false
+  const alignToTop = false;
 
-  bottomRef?.current?.scrollIntoView(alignToTop)
+  bottomRef?.current?.scrollIntoView(alignToTop);
 
   useEffect(() => {
-    bottomRef?.current?.scrollIntoView(alignToTop)
-  }, [pathname])
+    bottomRef?.current?.scrollIntoView(alignToTop);
+  }, [pathname]);
 
-  const handleDelete = (message) => {
-
-  }
-
+  const handleDelete = (message) => {};
 
   return (
     <div className={classes.container}>
       <div className={classes.messages}>
         <div className={classes.originDiv}>
-          <img className={classes.originAvatar} src={otherUser.image_url}></img>
-          <h1 className={classes.originHeading}>{otherUser.username}</h1>
+          <img
+            className={classes.originAvatar}
+            src={otherUser?.image_url}
+          ></img>
+          <h1 className={classes.originHeading}>{otherUser?.username}</h1>
           <div>
             <p className={classes.originText}>
               This is the beginning of your direct message history with{" "}
             </p>
-            <p className={classes.usernameText}>@{otherUser.username}</p>
+            <p className={classes.usernameText}>@{otherUser?.username}</p>
             <div className={classes.buttonContainer}>
               <button onClick={handleDelete}>Remove Friend</button>
             </div>

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import db, Friendship, FriendshipRequest, User, user_friendships
+from app.models import db, Friendship, FriendshipRequest, User
 from app.forms import FriendshipRequestForm, FriendshipForm
 from sqlalchemy import and_, or_, not_
 from app.utils.uuid_creator import generate_uuid
@@ -35,7 +35,8 @@ def getRequests(id):
 @friendship_routes.route('/<int:id>')
 @login_required
 def getFriends(id):
-
+    friends = Friendship.query.filter(
+        or_(Friendship.self_id == id, Friendship.friend_id == id)).all()
     return {'friends': [friend.to_dict() for friend in friends]}
 
 # This route creates a new friend connection
@@ -51,18 +52,9 @@ def createFriendship():
             "self_id": form.data['self_id'],
             "friend_id": form.data['friend_id'],
         }
-<<<<<<< Updated upstream
 
         friendship = Friendship(**params)
         db.session.add(friendship)
-=======
-        user = User.query.get(form.data['self_id'])
-        friend = User.query.get(form.data['friend_id'])
-        user.friend_list.append(friend)
-        friend.friend_list.append(user)
-        db.session.add(user)
-        db.session.add(friend)
->>>>>>> Stashed changes
         db.session.commit()
         return friendship.to_dict()
     else:

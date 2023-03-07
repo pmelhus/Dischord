@@ -51,27 +51,23 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
   const users = useSelector((state) => state.users);
   const sessionUser = useSelector((state) => state.session.user);
 
-
   const messageUser = users[message.owner_id];
 
   const checkAdjacentMessages = (message, inboxDms, ind) => {
-
-    const createdAtDate = new Date(message.created_at)
+    const createdAtDate = new Date(message.created_at);
 
     if (!inboxDms[ind - 1]) return true;
     const previousMessage = inboxDms[ind - 1];
-    const previousCreatedAt = new Date(previousMessage.created_at)
+    const previousCreatedAt = new Date(previousMessage.created_at);
 
     if (
       previousMessage?.owner_id &&
       previousMessage?.owner_id !== message?.owner_id
     ) {
       return true;
-    } else if ( ((createdAtDate - previousCreatedAt) / 1000) > 3600) {
-
-      return true
-    }
-    else {
+    } else if ((createdAtDate - previousCreatedAt) / 1000 > 3600) {
+      return true;
+    } else {
       return false;
     }
   };
@@ -83,7 +79,13 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
       month: "long",
       day: "numeric",
     };
-    return `${new Date(message.created_at).toLocaleDateString(undefined, options)} at ${new Date(message.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
+    return `${new Date(message.created_at).toLocaleDateString(
+      undefined,
+      options
+    )} at ${new Date(message.created_at).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })}`;
   };
 
   return (
@@ -112,7 +114,12 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
                         {displayMessageDate(message)}
                       </p>
                     </div>
+                    {!message.serverInvite ? <>
+
                     <p className={classes.contentFirst}>{message.content}</p>
+                    </> : <>
+
+                    </>}
                   </div>
                 </div>
               )}

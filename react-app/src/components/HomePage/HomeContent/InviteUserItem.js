@@ -6,6 +6,7 @@ import {createInbox} from "../../../store/inbox"
 
 
 
+
 const InviteUserItem = ({ socket, currentServer, user, setInviteModal }) => {
 const dispatch = useDispatch()
 const [errors, setErrors] = useState({})
@@ -15,8 +16,6 @@ const sessionUser = useSelector(state => (state.session.user))
 const inboxes = useSelector(state => (Object.values(state.inboxes)))
 
 const relevantInbox = inboxes.find(inbox => (inbox.inbox_members.includes(sessionUser.id) && inbox.inbox_members.includes(user.id)))
-
-
 
 const handleInvite = async(e) => {
   e.preventDefault()

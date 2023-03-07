@@ -34,7 +34,7 @@ def direct_message_submit():
         direct_message = DirectMessage(**params)
         db.session.add(direct_message)
         db.session.commit()
-        return direct_message.to_dict()
+        return {"direct_message": direct_message.to_dict()}
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 

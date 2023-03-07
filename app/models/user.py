@@ -40,6 +40,12 @@ class User(db.Model, UserMixin, CrUpMixin):
     # friend_sender = db.relationship("Friendship", back_populates="user_id_self", uselist=False)
     # friend_receiver = db.relationship("Friendship", back_populates="user_id_friend", uselist=False)
 
+<<<<<<< Updated upstream
+=======
+    # relationship to friendships join table
+    friend_list = db.relationship("User", secondary=user_friendships, primaryjoin=(user_friendships.c.friend_a_id == id),
+                              secondaryjoin=(user_friendships.c.friend_b_id == id), backref=db.backref('user_friendships', lazy="dynamic"), lazy='dynamic')
+>>>>>>> Stashed changes
 
 
     @property
@@ -53,6 +59,10 @@ class User(db.Model, UserMixin, CrUpMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     def to_dict(self):
         return {
             'id': self.id,
@@ -64,7 +74,13 @@ class User(db.Model, UserMixin, CrUpMixin):
             'idle': self.idle,
             'created_at': self.created_at,
             'memberships': [server.to_dict() for server in self.memberships],
+<<<<<<< Updated upstream
             'inbox_memberships' : [inbox.to_dict() for inbox in self.inbox_memberships]
+=======
+            'inbox_memberships': [inbox.to_dict() for inbox in self.inbox_memberships],
+            'added_friends': [user.to_dict() for user in self.friend_list],
+            'accepted_friends': [user.to_dict() for user in self.user_friendships]
+>>>>>>> Stashed changes
         }
 
     def get_id(self):

@@ -55,19 +55,20 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
   const messageUser = users[message.owner_id];
 
   const checkAdjacentMessages = (message, inboxDms, ind) => {
-    const today = new Date()
+
     const createdAtDate = new Date(message.created_at)
-console.log(today)
-console.log(createdAtDate)
 
     if (!inboxDms[ind - 1]) return true;
     const previousMessage = inboxDms[ind - 1];
+    const previousCreatedAt = new Date(previousMessage.created_at)
+
     if (
       previousMessage?.owner_id &&
       previousMessage?.owner_id !== message?.owner_id
     ) {
       return true;
-    } else if ( (((today -createdAtDate)/ 1000))  > 36000 ) {
+    } else if ( ((createdAtDate - previousCreatedAt) / 1000) > 3600) {
+
       return true
     }
     else {

@@ -22,7 +22,7 @@ const useStyles = createUseStyles((theme) => ({
     fontWeight: "550",
     margin: "16px 20px 8px 30px",
   },
-  container: {},
+
   pendingOutgoingList: {},
   avatar: {
     width: "32px",
@@ -137,6 +137,7 @@ const FriendsList = () => {
         const currFriend = users[determineId(friend)];
         return (
           <>
+          <div className={classes.cardContainer}>
             <div key={friend.id} className={classes.divider}></div>
             <div className={classes.outgoingCard}>
               <div className={classes.imageAndText}>
@@ -154,9 +155,9 @@ const FriendsList = () => {
                     {/* <p style={{ fontSize: "11px", color: theme.textGray }}>
                         Incoming Friend Request
                       </p> */}
+                    </div>
                   </div>
                 </div>
-              </div>
               <div style={{ display: "flex" }}>
                 <div
                   onClick={() => handleDmChat(friend)}
@@ -165,12 +166,14 @@ const FriendsList = () => {
                   <i className="fa-solid fa-message"></i>
                 </div>
               </div>
+              </div>
             </div>
+
           </>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
 
 export default FriendsList;

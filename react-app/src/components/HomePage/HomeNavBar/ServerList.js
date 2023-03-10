@@ -14,7 +14,7 @@ const ServerList = () => {
   // function that keys into member ids array of objects and returns an array of member ids
   const memberIdsToArr = (server) => {
     const arr = [];
-    server.members_ids.forEach((member) => {
+    server.members_ids?.forEach((member) => {
       arr.push(member.user_id);
     });
     return arr;

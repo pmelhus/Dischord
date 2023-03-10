@@ -21,13 +21,24 @@ def direct_message_submit():
 
     form = DirectMessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print('GETTING HERE')
-    params = {
-        "inbox_id": form.data['inbox_id'],
-        'owner_id': form.data['owner_id'],
-        "content": form.data['content'],
-        "edited": form.data['edited']
-    }
+
+    if form.data['server_invite']:
+        params = {
+            "inbox_id": form.data['inbox_id'],
+            'owner_id': form.data['owner_id'],
+            "content": form.data['content'],
+            "edited": form.data['edited'],
+            "server_invite": form.data['server_invite'],
+            "server_invite_id": form.data['server_invite_id']
+        }
+
+    else:
+        params = {
+            "inbox_id": form.data['inbox_id'],
+            'owner_id': form.data['owner_id'],
+            "content": form.data['content'],
+            "edited": form.data['edited'],
+        }
 
     if form.validate_on_submit():
         print('hello')

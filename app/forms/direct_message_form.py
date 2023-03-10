@@ -10,3 +10,5 @@ class DirectMessageForm(FlaskForm):
     content = StringField('content', validators=[DataRequired(), Length(
         min=0, max=1000, message='Message cannot be longer than 1000 characters')])
     edited = BooleanField('edited')
+    server_invite = BooleanField('server_invite')
+    server_invite_id = IntegerField('server_invite_id')

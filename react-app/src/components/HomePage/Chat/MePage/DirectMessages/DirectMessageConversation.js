@@ -10,7 +10,7 @@ import FadeIn from "react-fade-in";
 const useStyles = createUseStyles((theme) => ({
   slateEditor: {
     backgroundColor: "#4a51577c",
-    margin: "4px 14px",
+    margin: "8px 14px",
     borderRadius: "10px",
   },
   container: {
@@ -20,19 +20,18 @@ const useStyles = createUseStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "space-between",
-    minHeight: "calc(100% - 15px)",
+
     height: "calc(100% - 15px)",
-    maxHeight: "calc(100% - 15px)",
+    maxHeight: "calc(100% - 55px)",
   },
   messages: {
     width: "100%",
-    height: "calc(100% - 130px)",
+    height: "100%",
     display: "flex",
     overflowY: "scroll",
     overflowX: "hidden",
     flexDirection: "column",
     scrollbarWidth: "none",
-    maxHeight: "100%",
     marginTop: "14px",
   },
   originAvatar: {
@@ -63,6 +62,7 @@ const useStyles = createUseStyles((theme) => ({
   directMessagesContainer: {
     position: "relative",
     flexShrink: "0",
+    minHeight: "20px",
     height: "fit-content",
     flexBasis: "auto",
     width: "100%",
@@ -72,6 +72,8 @@ const useStyles = createUseStyles((theme) => ({
 const DirectMessageConversation = ({ socket }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
+
+  const alignToTop = false;
 
   const dispatch = useDispatch();
 
@@ -93,6 +95,11 @@ const DirectMessageConversation = ({ socket }) => {
 
   const bottomRef = useRef(null);
 
+  const scrollToBottom = () => {
+    if (isSent) {
+    }
+  };
+
   const sendChat = async () => {
     const sentMessage = await dispatch(
       createDirectMessage({
@@ -107,14 +114,12 @@ const DirectMessageConversation = ({ socket }) => {
     }
     // console.log(sentMessage, "SENT MESSAGE");
     await socket?.emit("dmChat", sentMessage.owner_id, currInbox?.id);
-
+    await setIsSent(true);
     // await socket?.emit("timeout_user");
     // await setErrors({})
-    await setIsSent(true);
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
-    await bottomRef?.current.scrollIntoView(false);
   };
 
   const directMessages = useSelector((state) =>
@@ -125,7 +130,7 @@ const DirectMessageConversation = ({ socket }) => {
   );
 
   // function to determine who is who in inbox
-  console.log(currInbox, "currInbox");
+
   const determineId = () => {
     let friendId = null;
     currInbox?.inbox_members.forEach((id) => {
@@ -137,13 +142,11 @@ const DirectMessageConversation = ({ socket }) => {
   };
   const otherUser = users[determineId()];
 
-  const alignToTop = false;
 
-  bottomRef?.current?.scrollIntoView(alignToTop);
 
   useEffect(() => {
-    bottomRef?.current?.scrollIntoView(alignToTop);
-  }, [pathname]);
+    bottomRef.current?.scrollIntoView({behavior:'smooth', block:'end'});
+  }, [pathname, inboxDms]);
 
   const handleDelete = (message) => {};
 
@@ -166,22 +169,21 @@ const DirectMessageConversation = ({ socket }) => {
             </div>
           </div>
         </div>
-        {inboxDms.map((message, ind) => {
-          return (
-            <FadeIn>
-              <div className={classes.directMessagesContainer} ref={bottomRef}>
-                <DirectMessage
-                  {...{ socket }}
-                  {...{ message }}
-                  {...{ ind }}
-                  {...{ chatInput }}
-                  {...{ currInbox }}
-                  {...{ inboxDms }}
-                />
-              </div>
-            </FadeIn>
-          );
-        })}
+        {inboxDms.map((message, ind) => (
+          <FadeIn>
+            <div key={ind} className={classes.directMessagesContainer}>
+              <DirectMessage
+                {...{ socket }}
+                {...{ message }}
+                {...{ ind }}
+                {...{ chatInput }}
+                {...{ currInbox }}
+                {...{ inboxDms }}
+              />
+            </div>
+          </FadeIn>
+        ))}
+        <div style={{ height: "1px" }} ref={bottomRef}></div>
       </div>
       <div className={classes.slateEditor}>
         <SlateTextEditor

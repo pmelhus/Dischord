@@ -1,5 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { createUseStyles, useTheme } from "react-jss";
+import {useEffect} from "react"
+import ServerInviteMessage from "./ServerInviteMessage.js";
+import {genOneServer} from "../../../../../store/server"
 
 const useStyles = createUseStyles((theme) => ({
   userAvatar: {
@@ -50,6 +53,7 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
   // grabs all users
   const users = useSelector((state) => state.users);
   const sessionUser = useSelector((state) => state.session.user);
+  const dispatch = useDispatch()
 
   const messageUser = users[message.owner_id];
 
@@ -88,6 +92,23 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
     })}`;
   };
 
+const determineIfServerMember = (id) => {
+  let isMember = false
+  sessionUser.memberships?.forEach((server) => {
+    if (server.id === id) {
+      isMember = true
+    }
+  });
+  return isMember
+}
+
+  useEffect(()=> {
+    if (message.server_invite === true && !determineIfServerMember(message.server_invite_id)) {
+
+      dispatch(genOneServer(message.server_invite_id))
+    }
+  }, [message])
+
   return (
     <>
       <div className={classes.messageDiv}>
@@ -114,12 +135,17 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
                         {displayMessageDate(message)}
                       </p>
                     </div>
-                    {!message.serverInvite ? <>
-
-                    <p className={classes.contentFirst}>{message.content}</p>
-                    </> : <>
-
-                    </>}
+                    {!message.server_invite ? (
+                      <>
+                        <p className={classes.contentFirst}>
+                          {message.content}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <ServerInviteMessage {...{socket}} {...{ message }} />
+                      </>
+                    )}
                   </div>
                 </div>
               )}
@@ -136,7 +162,17 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
           )}
 
           {!checkAdjacentMessages(message, inboxDms, ind) && (
-            <p className={classes.content}>{message.content}</p>
+            <>
+              {!message.server_invite ? (
+                <>
+                  <p className={classes.content}>{message.content}</p>
+                </>
+              ) : (
+                <>
+                  <ServerInviteMessage needsPadding = {true} {...{socket}} {...{ message }} />
+                </>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -27,7 +27,7 @@ const friendsList = []
         <input></input>
       </div> */}
       <div className="invite-user-heading">
-        <h3>Invite people to your server!</h3>
+        <h3>Invite friends to your server!</h3>
       </div>
       <div className="invite-user-list">
         <ul>

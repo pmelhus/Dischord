@@ -29,7 +29,9 @@ const theme = {
   pinkTheme: '#950652',
   buttonPink: 'rgb(116, 56, 73)',
   friendGreen: "rgb(45, 125, 70)",
-  darkGray: 'rgb(142, 146, 151)'
+  hoverFriendGreen: "rgb(3, 125, 70)",
+  darkGray: 'rgb(142, 146, 151)',
+  channelListGray: '#2f3136'
 }
 
 ReactDOM.render(

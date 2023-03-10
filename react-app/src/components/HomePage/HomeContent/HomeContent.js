@@ -127,7 +127,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
                           className="signup-login-button"
                           onClick={() => setInviteModal(true)}
                         >
-                          Invite People
+                          Invite Friends
                         </button>
                       </div>
                     </div>

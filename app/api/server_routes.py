@@ -53,6 +53,14 @@ def servers(id):
 #     return server.to_dict()
 
 
+@server_routes.route('/<int:id>')
+@login_required
+def get_one_server(id):
+
+    server = Server.query.get(id)
+
+    return {'server': server.to_dict()}
+
 @server_routes.route('/', methods=["POST"])
 @login_required
 def server_form_submit():

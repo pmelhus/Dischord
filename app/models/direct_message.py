@@ -10,8 +10,8 @@ class DirectMessage(db.Model, CrUpMixin):
     inbox_id = db.Column(db.Integer, db.ForeignKey(
         "inboxes.id"), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    serverInvite = db.Column(db.Boolean, default=False)
-    serverInviteId = db.Column(db.Integer)
+    server_invite = db.Column(db.Boolean, default=False)
+    server_invite_id = db.Column(db.Integer)
     edited = db.Column(db.Boolean)
 
     # belongs to one
@@ -28,8 +28,8 @@ class DirectMessage(db.Model, CrUpMixin):
             "owner_id": self.owner_id,
             "inbox_id": self.inbox_id,
             "content": self.content,
-            "serverInvite": self.serverInvite,
-            "serverInviteId": self.serverInviteId,
+            "server_invite": self.server_invite,
+            "server_invite_id": self.server_invite_id,
             "edited": self.edited,
             "inbox": self.inbox.to_dict(),
             "owner": self.owner.to_dict(),

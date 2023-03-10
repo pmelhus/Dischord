@@ -40,7 +40,7 @@ export const genDirectMessages = (id) => async (dispatch) => {
 export const createDirectMessage = (payload) => async (dispatch) => {
   const edited = false;
   // console.log(payload, 'PAYLOAD=========')
-  const { user_id, msg, inbox_id } = payload;
+  const { user_id, msg, inbox_id, server_invite, server_invite_id } = payload;
   console.log(payload, 'payload here')
 
   const f = new FormData();
@@ -48,6 +48,10 @@ export const createDirectMessage = (payload) => async (dispatch) => {
   f.append("inbox_id", inbox_id);
   f.append("owner_id", user_id);
   f.append("edited", edited);
+  if (server_invite) {
+    f.append('server_invite_id', server_invite_id)
+    f.append('server_invite', server_invite)
+  }
 
   const [response] = await Promise.all([
     fetch(`/api/direct_messages/`, {

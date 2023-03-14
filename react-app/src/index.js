@@ -1,4 +1,5 @@
 import React from "react";
+
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
@@ -7,7 +8,7 @@ import { ModalProvider } from "./context/Modal";
 import { LoadingModalProvider } from "./context/LoadingModal";
 import { UserModalProvider } from "./context/UserModal";
 import { ProfileModalProvider} from "./context/ProfileModal"
-// import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./index.css";
 import {ThemeProvider} from "react-jss";
 
@@ -31,7 +32,13 @@ const theme = {
   friendGreen: "rgb(45, 125, 70)",
   hoverFriendGreen: "rgb(3, 125, 70)",
   darkGray: 'rgb(142, 146, 151)',
-  channelListGray: '#2f3136'
+  channelListGray: 'rgb(43, 45, 49)',
+  serverListGray: '#202225',
+  chatBackground: 'rgb(49, 51, 56)',
+  messageHighlight: 'rgb(0, 168, 252)',
+  buttonGray: 'rgb(85, 87, 95)',
+  redTheme: 'rgb(200 56 73)',
+  redThemeGrayed: 'rgba(200, 56, 73, .5)'
 }
 
 ReactDOM.render(

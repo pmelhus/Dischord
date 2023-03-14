@@ -59,12 +59,13 @@ def handle_chat(id):
     db.session.commit()
     emit("chat", broadcast=True)
 
+
 @socketio.on("dmChat")
 def handle_chat(id, inbox_id):
     user = User.query.get(id)
 
-
     emit("dmChat", {'inbox_id': inbox_id}, broadcast=True)
+
 
 @socketio.on('change_idle')
 def change_idle(id):
@@ -72,7 +73,6 @@ def change_idle(id):
     user = User.query.get(id)
     user.idle = False
     db.session.commit()
-
 
 
 @socketio.on('timeout_user')
@@ -121,6 +121,8 @@ def handle_sign_up(data):
     # idle_timer(user)
 
 
+    # print(user, 'USER================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================')
+
+
 # socketio.on("connection", (socket) => {
-#   socket.emit("hello", "world");
 # });

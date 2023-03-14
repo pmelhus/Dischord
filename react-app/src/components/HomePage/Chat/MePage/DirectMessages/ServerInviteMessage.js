@@ -1,7 +1,7 @@
 import { createUseStyles, useTheme } from "react-jss";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createServerMember } from "../../../../../store/server";
+import { createServerMember, genServers } from "../../../../../store/server";
 import { useState } from "react";
 
 const useStyles = createUseStyles((theme, needsPadding) => ({
@@ -60,12 +60,13 @@ const useStyles = createUseStyles((theme, needsPadding) => ({
   },
   joinButton: {
     color: theme.offWhite,
-    padding: "10px",
+    padding: "12px",
     backgroundColor: theme.friendGreen,
-    width: "50px",
+    // width: "50px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: '4px',
     height: "20px",
     cursor: "pointer",
     "&:hover": { backgroundColor: theme.hoverFriendGreen },
@@ -88,9 +89,11 @@ const ServerInviteMessage = ({ needsPadding, socket, message }) => {
   const server = useSelector((state) => state.servers)[
     message.server_invite_id
   ];
+
+  // server user is being invited to join
   const newServer = useSelector((state) => state.servers.requestedServer);
 
-
+  // determines whether user has a membership to a server and returns the new server
   const determineServer = () => {
     let returnServer = null;
     sessionUser.memberships.forEach((server) => {
@@ -106,15 +109,13 @@ const ServerInviteMessage = ({ needsPadding, socket, message }) => {
   };
 
 
-  const allChannels = useSelector((state) => state.channels);
-
   // determine whether receiving user in inbox is part of server already
 
   // get the receiving user in inbox
   const inboxMembers = message.inbox.inbox_members;
 
 
-
+  // determines whether a user is a member of a server and returns boolean
   const determineIfServerMember = (receivingId) => {
     let isMember = false;
     sessionUser.memberships.forEach((server) => {
@@ -125,6 +126,8 @@ const ServerInviteMessage = ({ needsPadding, socket, message }) => {
     return isMember;
   };
 
+
+  // handles joining a server as a member
   const handleJoin = async () => {
     if (determineIfServerMember(message.server_invite_id)) {
       history.push(`/channels/${determineServer().id}/${determineServer().channel_ids[0]}`);
@@ -140,6 +143,7 @@ const ServerInviteMessage = ({ needsPadding, socket, message }) => {
         await setErrors(serverMember.errors);
         return;
       }
+      await dispatch(genServers(sessionUser.id))
       await history.push(`/channels/${determineServer().id}/${determineServer().channel_ids[0]}`)
     }
   };

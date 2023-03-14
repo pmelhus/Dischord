@@ -84,7 +84,7 @@ def create_friendship_request():
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-# This route deletes a friend connection
+# This route deletes a friend request
 
 
 @friendship_routes.route('/requests/<int:id>', methods=["DELETE"])
@@ -97,6 +97,17 @@ def request_delete(id):
         db.session.delete(request)
         db.session.commit()
         return request.to_dict()
+
+@friendship_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def friendship_delete(id):
+    friendship = Friendship.query.get(id)
+    if not friendship:
+        return {"errors": f"This friendship does not exist"}, 404
+    else:
+        db.session.delete(friendship)
+        db.session.commit()
+        return friendship.to_dict()
 
 # route grabs the most frequent mutual friends between sessionUsers current friends
 

@@ -147,7 +147,7 @@ const AddFriendInput = () => {
     await setErrors({});
     await emptyInput();
   };
-  console.log(wrapperRef?.current?.value);
+
 
   return (
     <>

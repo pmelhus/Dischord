@@ -8,6 +8,12 @@ const InviteUser = ({sessionUser, socket, currentServer, setInviteModal}) => {
   const serverMembers = useSelector(state => state.servers)[currentServer.id].members_ids
   const friendships = useSelector((state) => Object.values(state.friends.friendships))
 
+  const currentServerMembers = currentServer.members_ids
+  const memberIds = currentServerMembers.map(user => {
+    return user.user_id
+  })
+  console.log(memberIds, "IDS HERE")
+
 const friendsList = []
 
   friendships.forEach(friendship => {
@@ -19,7 +25,8 @@ const friendsList = []
     }
   })
 
-
+const filteredFriendsList = friendsList.filter(friend => (!memberIds.includes(friend.id)))
+console.log(filteredFriendsList, 'FILTERED FRIENDS')
 
   return (
     <div className='invite-user-container'>
@@ -31,7 +38,7 @@ const friendsList = []
       </div>
       <div className="invite-user-list">
         <ul>
-          {friendsList?.map((user) => {
+          {filteredFriendsList?.map((user) => {
 
             return (
               <div style={{padding:'8px 0'}} className="invite-user-item-div">

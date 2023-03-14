@@ -18,6 +18,7 @@ import { genUsers } from "./store/user";
 // import LoadingScreen from "./components/LoadingScreen";
 import Splash from "./components/Splash";
 import { io } from "socket.io-client";
+import {loadAllFriends} from "./store/friend"
 
 let socket;
 function App() {
@@ -79,6 +80,10 @@ function App() {
       socket.emit("timeout_user");
       dispatch(genUsers());
     });
+
+    socket.on('update_friends', () => {
+      dispatch(loadAllFriends(user.id))
+    })
 
     // socket.on("logout", (logout) => {
     //   setOnlineMembers((onlineMembers) =>

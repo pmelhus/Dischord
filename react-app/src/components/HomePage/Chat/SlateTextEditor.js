@@ -26,6 +26,7 @@ const SlateTextEditor = ({
   placeholder,
   chatInput,
   setChatInput,
+  setHighlight
 }) => {
   const [editor] = useState(() => withReact(createEditor()));
   // console.log(editor);

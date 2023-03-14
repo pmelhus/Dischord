@@ -2,8 +2,10 @@ const ADD_FRIENDSHIP = "friends/addFriendship";
 const ADD_FRIEND_REQUEST = "friends/addFriendRequest";
 const LOAD_FRIENDS = "friends/loadFriends";
 const LOAD_REQUESTS = "friends/loadRequests";
+const LOAD_REQUEST = "friends/loadRequest"
 const DELETE_REQUEST = "friends/deleteRequest";
 const LOAD_MUTUAL_FRIENDS = "friends/loadMutuals";
+const DELETE_FRIENDSHIP = "friends/deleteFriendship";
 
 const addFriendship = (friendship) => {
   return {
@@ -33,6 +35,13 @@ const loadRequests = (requests) => {
   };
 };
 
+const loadRequest = (request) => {
+  return {
+    type:LOAD_REQUEST,
+    payload: request
+  }
+}
+
 const deleteRequest = (request) => {
   return {
     type: DELETE_REQUEST,
@@ -44,6 +53,13 @@ const loadMutuals = (friends) => {
   return {
     type: LOAD_MUTUAL_FRIENDS,
     payload: friends,
+  };
+};
+
+const deleteFriendship = (friendship) => {
+  return {
+    type: DELETE_FRIENDSHIP,
+    payload: friendship,
   };
 };
 
@@ -129,6 +145,19 @@ export const loadAllRequests = (id) => async (dispatch) => {
   }
 };
 
+export const loadOneRequest = (self_id, friend_id) => async(dispatch) => {
+  const [response] = await Promise.all([
+    fetch(`/api/friendships/requests/${self_id}/${friend_id}`),
+  ]);
+
+  const [request] = await Promise.all([response.json()]);
+
+  if (response.ok) {
+    dispatch(loadRequests(request.request));
+    return request;
+  }
+}
+
 export const loadAllFriends = (id) => async (dispatch) => {
   const [response] = await Promise.all([fetch(`/api/friendships/${id}`)]);
 
@@ -163,6 +192,18 @@ export const loadMutualFriends = (id) => async (dispatch) => {
   if (response.ok) {
     dispatch(loadMutuals(users));
     return users;
+  }
+};
+
+export const removeFriendship = (id) => async (dispatch) => {
+  const [response] = await Promise.all([
+    fetch(`/api/friendships/${id}`, { method: "DELETE" }),
+  ]);
+  const [friendship] = await Promise.all([response.json()]);
+
+  if (response.ok) {
+    dispatch(deleteFriendship(friendship));
+    return friendship;
   }
 };
 
@@ -214,12 +255,12 @@ const friendReducer = (state = {}, action) => {
 
     case LOAD_MUTUAL_FRIENDS:
       const mutualsObj = {};
-      const mutualsArr = []
+      const mutualsArr = [];
 
       const mutualFriendsObj = {};
 
       for (let user of action.payload.users) {
-       mutualsArr.push( mutualsObj[user.id] = user)
+        mutualsArr.push((mutualsObj[user.id] = user));
       }
       for (let user of action.payload.mutual_friendships) {
         mutualFriendsObj[user.id] = user;
@@ -231,10 +272,14 @@ const friendReducer = (state = {}, action) => {
       };
 
     case DELETE_REQUEST:
-      console.log(action.payload);
       const newState = { ...state };
       delete newState["requests"][action.payload.id];
       return newState;
+
+    case DELETE_FRIENDSHIP:
+      const newerState = {...state}
+      delete newerState["friendships"][action.payload.id];
+      return newerState;
     default: {
       return state;
     }

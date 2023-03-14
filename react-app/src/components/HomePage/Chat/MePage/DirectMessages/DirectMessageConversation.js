@@ -6,6 +6,11 @@ import { useLocation } from "react-router-dom";
 import { createUseStyles, useTheme } from "react-jss";
 import { createDirectMessage } from "../../../../../store/directMessage";
 import FadeIn from "react-fade-in";
+import {
+  removeFriendship,
+  createFriendRequest,
+  loadAllRequests,
+} from "../../../../../store/friend";
 
 const useStyles = createUseStyles((theme) => ({
   slateEditor: {
@@ -67,13 +72,61 @@ const useStyles = createUseStyles((theme) => ({
     flexBasis: "auto",
     width: "100%",
   },
+  removeButton: {
+    padding: "2px 16px",
+    backgroundColor: theme.buttonGray,
+    height: "26px",
+    display: "flex",
+    alignItems: "center",
+    fontSize: "14px",
+    color: theme.offWhite,
+    border: "none",
+    fontWeight: "500",
+    background: "none",
+    borderRadius: "3px",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.darkGray,
+    },
+  },
+  requestSentButton: {
+    padding: "2px 16px",
+    backgroundColor: theme.redThemeGrayed,
+    height: "26px",
+    display: "flex",
+    alignItems: "center",
+    fontSize: "14px",
+    color: theme.textGray,
+    border: "none",
+    fontWeight: "500",
+    background: "none",
+    borderRadius: "3px",
+    cursor: "not-allowed",
+  },
+  addButton: {
+    padding: "2px 16px",
+    backgroundColor: theme.redTheme,
+    height: "26px",
+    display: "flex",
+    alignItems: "center",
+    fontSize: "14px",
+    color: theme.offWhite,
+    border: "none",
+    fontWeight: "500",
+    background: "none",
+    borderRadius: "3px",
+    cursor: "pointer",
+  },
 }));
 
-const DirectMessageConversation = ({ socket }) => {
+const DirectMessageConversation = ({
+  setRequestLoaded,
+  requestLoaded,
+  setUpdateRequests,
+  socket,
+}) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
-
-  const alignToTop = false;
 
   const dispatch = useDispatch();
 
@@ -94,11 +147,6 @@ const DirectMessageConversation = ({ socket }) => {
   const [isSent, setIsSent] = useState(false);
 
   const bottomRef = useRef(null);
-
-  const scrollToBottom = () => {
-    if (isSent) {
-    }
-  };
 
   const sendChat = async () => {
     const sentMessage = await dispatch(
@@ -142,13 +190,57 @@ const DirectMessageConversation = ({ socket }) => {
   };
   const otherUser = users[determineId()];
 
-
-
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({behavior:'smooth', block:'end'});
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [pathname, inboxDms]);
 
-  const handleDelete = (message) => {};
+  const myFriendships = useSelector((state) =>
+    Object?.values(state.friends.friendships)
+  );
+  const currFriendship = myFriendships.find(
+    (friendship) =>
+      friendship.self_id === otherUser.id ||
+      friendship.friend_id === otherUser.id
+  );
+
+  const handleDeleteFriendship = async () => {
+    const deletedFriendship = await dispatch(
+      removeFriendship(currFriendship.id)
+    );
+    if (deletedFriendship && deletedFriendship.errors) {
+      await setErrors(deletedFriendship.errors);
+      return;
+    }
+    await setErrors({});
+  };
+
+  const requests = useSelector((state) =>
+    Object.values(state?.friends?.requests)
+  );
+
+  const handleFriendAdd = async (e) => {
+    const payload = {
+      self_id: sessionUser.id,
+      friend_username: otherUser.username,
+    };
+    e.preventDefault();
+    const sentRequest = await dispatch(createFriendRequest(payload));
+    console.log(sentRequest);
+    if (sentRequest && sentRequest.errors) {
+      await setErrors(sentRequest.errors);
+      return;
+    }
+    await setErrors({});
+    await dispatch(loadAllRequests(sessionUser.id))
+    // await setUpdateRequests(true)
+  };
+
+  const matchingRequest = requests.find(
+    (request) =>
+      (request.friend_id === sessionUser.id ||
+        request.self_id === sessionUser.id) &&
+      (request.friend_id === otherUser.id || request.self_id === otherUser.id)
+  );
 
   return (
     <div className={classes.container}>
@@ -165,7 +257,31 @@ const DirectMessageConversation = ({ socket }) => {
             </p>
             <p className={classes.usernameText}>@{otherUser?.username}</p>
             <div className={classes.buttonContainer}>
-              <button onClick={handleDelete}>Remove Friend</button>
+              {currFriendship && (
+                <button
+                  onClick={handleDeleteFriendship}
+                  className={classes.removeButton}
+                >
+                  <div>Remove Friend</div>
+                </button>
+              )}
+            {!currFriendship && !matchingRequest && (
+                    <button
+                    onClick={handleFriendAdd}
+                    className={classes.addButton}
+                  >
+                    <div>Add Friend</div>
+                  </button>
+                )}
+
+              {matchingRequest && (
+                <button
+                  onClick={handleDeleteFriendship}
+                  className={classes.requestSentButton}
+                >
+                  <div>Friend Request Sent</div>
+                </button>
+              )}
             </div>
           </div>
         </div>

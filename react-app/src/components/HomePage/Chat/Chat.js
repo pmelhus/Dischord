@@ -15,32 +15,45 @@ import UserOnlineCard from "./UserOnlineCard";
 import UserOfflineCard from "./UserOfflineCard";
 
 import MePage from "./MePage/MePage";
-// outside of your component, initialize the socket variabl
+// outside of your component, initialize the socket variable
 import Placeholder from "../../Placeholders/Placeholder";
 import FadeIn from "react-fade-in";
 import SlateTextEditor from "./SlateTextEditor";
 import DirectMessageConversation from "./MePage/DirectMessages/DirectMessageConversation";
 import { genDirectMessages } from "../../../store/directMessage";
+import InviteUser from "../../HomePage/HomeContent/InviteUser";
+import { Modal } from "../../../context/Modal";
+import InviteFriendsWelcome from "./InviteFriendsWelcome";
+import { loadAllFriends } from "../../../store/friend";
 
 const useStyles = createUseStyles((theme) => ({
-  welcomeDiv: {
+  channelChatContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    padding: "12px 12px 0 12px",
-  },
-  welcomeHeading: {
-    color: theme.offWhite,
-  },
-  welcomeMessage: {
-    color: theme.textGray,
-  },
-  channelChatContainer: {
-    display: 'flex',
-    flexDirection: 'column',
     justifyContent: "flex-start",
-    minWidth: "100%"
-  }
+    minWidth: "100%",
+  },
+  inviteFriendsWelcome: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  channelChatForm: {
+    backgroundColor: "#4a51577c",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "7px",
+    height: "40px",
+    margin: "0 10px",
+  },
+  channelChatFormHighlighted: {
+    backgroundColor: "#4a51577c",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "7px",
+    height: "40px",
+    margin: "0 10px",
+    boxShadow: `0 0 0 4px ${theme.messageHighlight}`,
+  },
 }));
 
 const Chat = ({
@@ -77,6 +90,10 @@ const Chat = ({
   const theme = useTheme();
   const classes = useStyles({ theme });
 
+  const sessionUser = useSelector((state) => state.session.user);
+
+  const [inviteModal, setInviteModal] = useState(false);
+
   // const endOfString = (string) => {
   //   let httpsIndex = string.indexOf("https://");
   //   let httpIndex = string.indexOf("http://");
@@ -89,6 +106,9 @@ const Chat = ({
     //   socket?.emit("change_idle", id);
     // }, "3600000");
   };
+
+  // state for highlighting message field
+  const [highlight, setHighlight] = useState(false);
 
   const sendChat = async () => {
     const sentMessage = await dispatch(
@@ -157,25 +177,53 @@ const Chat = ({
 
   const currInbox = inboxes.find((inbox) => inbox.uuid === uuid);
 
+  const [updateRequests, setUpdateRequests] = useState(false);
+  const [requestLoaded, setRequestLoaded] = useState(false);
+
   useEffect(() => {
     if (uuid && currInbox) {
       dispatch(genDirectMessages(currInbox.id));
     }
   }, []);
+
   useEffect(() => {
     if (uuid && currInbox) {
       dispatch(genDirectMessages(currInbox.id));
     }
   }, [pathname]);
 
+  const handleClick = () => {
+    setHighlight(false);
+  };
+
+  useEffect(() => {
+    if (highlight) {
+      window.addEventListener("click", handleClick);
+      return () => {
+        window.removeEventListener("click", handleClick);
+      };
+    }
+  }, [highlight]);
+
+  useEffect(async () => {
+   await dispatch(loadAllFriends(sessionUser.id));
+   await setRequestLoaded(true);
+  }, [dispatch]);
+
   return (
     <>
       <Switch>
         <Route path="/channels/@me/*">
-          <DirectMessageConversation {...{ socket }} />
+          {requestLoaded && <DirectMessageConversation {...{ socket }} />}
         </Route>
         <div className="chat-container">
-          <div className={url !== "@me" ? ( "channel-chat-container"): (classes.channelChatContainer) }>
+          <div
+            className={
+              url !== "@me"
+                ? "channel-chat-container"
+                : classes.channelChatContainer
+            }
+          >
             <Route exact path="/channels/@me">
               <MePage {...{ loaded }} {...{ selected }} {...{ setSelected }} />
             </Route>
@@ -184,6 +232,14 @@ const Chat = ({
             <Route exact path="/channels/*/*">
               <div className="channel-chat-messages">
                 <div>
+                  <div className={classes.inviteFriendsWelcome}>
+                    <InviteFriendsWelcome
+                      {...{ setHighlight }}
+                      {...{ currentServer }}
+                      {...{ user }}
+                      {...{ setInviteModal }}
+                    />
+                  </div>
                   {loadingMessages ? (
                     <div className="channel-message-div-loader">
                       <Placeholder />
@@ -192,22 +248,6 @@ const Chat = ({
                     </div>
                   ) : (
                     <>
-                      <div className={classes.welcomeDiv}>
-                        <h1 className={classes.welcomeHeading}>
-                          Welcome to {currentServer?.name}
-                        </h1>
-                        {currentServer?.owner_id === user?.id ? (
-                          <p className={classes.welcomeMessage}>
-                            This is your brand new, shiny server. Here are some
-                            steps to help you get started.{" "}
-                          </p>
-                        ) : (
-                          <p>
-                            This is a brand new, shiny server. Here are some
-                            steps to help you get started.{" "}
-                          </p>
-                        )}
-                      </div>
                       {currentChannelMessages.map((message, ind) => (
                         <FadeIn>
                           <div
@@ -232,39 +272,34 @@ const Chat = ({
                   )}
                 </div>
               </div>
-            <div className="channel-chat-form-div">
-              {/* {pathname.split("/")[2] !== "@me" &&
+              <div className="channel-chat-form-div">
+                {/* {pathname.split("/")[2] !== "@me" &&
                 pathname.split("/")[3] !== "noChannels" && ( */}
-              <>
-                {errors && messageError && errors.content && (
-                  <div className="error-msg-message">
-                    <p>*{errors.content}*</p>
-                  </div>
-                )}
-                <form className="channel-chat-form">
-                  {/* <input
-                    id="channel-chat-input"
-                    value={chatInput}
-                    placeholder={
-                      currentChannel?.name
-                        ? `Message ${currentChannel?.name}`
-                        : ""
+                <>
+                  {errors && messageError && errors.content && (
+                    <div className="error-msg-message">
+                      <p>*{errors.content}*</p>
+                    </div>
+                  )}
+                  <form
+                    className={
+                      highlight
+                        ? classes.channelChatFormHighlighted
+                        : classes.channelChatForm
                     }
-                    onChange={updateChatInput}
-                  /> */}
+                  >
+                    <SlateTextEditor
+                      {...{ sendChat }}
+                      placeholder={`Message ${currentChannel?.name}`}
+                      {...{ chatInput }}
+                      {...{ setChatInput }}
+                    />
 
-                  <SlateTextEditor
-                    {...{ sendChat }}
-                    placeholder={`Message ${currentChannel?.name}`}
-                    {...{ chatInput }}
-                    {...{ setChatInput }}
-                  />
-
-                  {/* <button type="submit">Send</button> */}
-                </form>
-              </>
-              {/* )} */}
-            </div>
+                    {/* <button type="submit">Send</button> */}
+                  </form>
+                </>
+                {/* )} */}
+              </div>
             </Route>
           </div>
           <Route path="/channels/*/*">
@@ -324,6 +359,16 @@ const Chat = ({
           </Route>
         </div>
       </Switch>
+      {inviteModal && (
+        <Modal onClose={() => setInviteModal(false)}>
+          <InviteUser
+            {...{ setInviteModal }}
+            {...{ socket }}
+            {...{ currentServer }}
+            {...{ sessionUser }}
+          />
+        </Modal>
+      )}
     </>
   );
 };

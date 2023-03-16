@@ -9,6 +9,7 @@ import { LoadingModalProvider } from "./context/LoadingModal";
 import { UserModalProvider } from "./context/UserModal";
 import { ProfileModalProvider} from "./context/ProfileModal"
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./index.css";
 import {ThemeProvider} from "react-jss";
 
@@ -35,10 +36,13 @@ const theme = {
   channelListGray: 'rgb(43, 45, 49)',
   serverListGray: '#202225',
   chatBackground: 'rgb(49, 51, 56)',
+  messageBackground: 'rgba(0, 0, 0, 0.089)',
   messageHighlight: 'rgb(0, 168, 252)',
   buttonGray: 'rgb(85, 87, 95)',
   redTheme: 'rgb(200 56 73)',
-  redThemeGrayed: 'rgba(200, 56, 73, .5)'
+  redThemeGrayed: 'rgba(200, 56, 73, .5)',
+  boxShadowButton: 'rgba(2, 2, 2, 0.15)',
+  darkMenuBackground: 'rgb(17, 18, 20)'
 }
 
 ReactDOM.render(

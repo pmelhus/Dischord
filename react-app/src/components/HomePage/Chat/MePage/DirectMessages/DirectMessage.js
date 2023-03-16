@@ -1,10 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { createUseStyles, useTheme } from "react-jss";
-import {useEffect} from "react"
+import { useEffect, useState } from "react";
 import ServerInviteMessage from "./ServerInviteMessage.js";
-import {genOneServer} from "../../../../../store/server"
+import { genOneServer } from "../../../../../store/server";
+import DirectMessageEditButtons from "./DirectMessageEditButtons";
 
 const useStyles = createUseStyles((theme) => ({
+  messageDiv: {
+    "&:hover": {
+      backgroundColor: theme.messageBackground,
+    },
+    marginRight: "4px",
+  },
   userAvatar: {
     boxSizing: "border-box",
     display: "flex",
@@ -25,7 +32,7 @@ const useStyles = createUseStyles((theme) => ({
   content: {
     margin: "0",
     marginLeft: "56px",
-    marginBottom: "14px",
+    // marginBottom: "14px",
     color: theme.offWhite,
   },
   usernameAndContentFirst: {},
@@ -53,7 +60,11 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
   // grabs all users
   const users = useSelector((state) => state.users);
   const sessionUser = useSelector((state) => state.session.user);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const [editButtons, setEditButtons] = useState(false);
+  const [inEllipses, setInEllipses] = useState(false);
+  const [change, setChange] = useState(ind)
 
   const messageUser = users[message.owner_id];
 
@@ -92,26 +103,56 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
     })}`;
   };
 
-const determineIfServerMember = (id) => {
-  let isMember = false
-  sessionUser.memberships?.forEach((server) => {
-    if (server.id === id) {
-      isMember = true
-    }
-  });
-  return isMember
-}
+  const determineIfServerMember = (id) => {
+    let isMember = false;
+    sessionUser.memberships?.forEach((server) => {
+      if (server.id === id) {
+        isMember = true;
+      }
+    });
+    return isMember;
+  };
 
-  useEffect(()=> {
-    if (message.server_invite === true && !determineIfServerMember(message.server_invite_id)) {
-
-      dispatch(genOneServer(message.server_invite_id))
+  useEffect(() => {
+    if (
+      message.server_invite === true &&
+      !determineIfServerMember(message.server_invite_id)
+    ) {
+      dispatch(genOneServer(message.server_invite_id));
     }
-  }, [message])
+  }, [message]);
+
+  useEffect(() => {
+    if (inEllipses) {
+      setEditButtons(true);
+    } else {
+      setEditButtons(false);
+    }
+  }, [inEllipses]);
+
+  const handleMouseOver = () => {
+
+  setEditButtons(true)
+
+
+  };
+
+  const handleMouseOut = () => {
+
+    setEditButtons(false);
+
+
+  };
 
   return (
     <>
-      <div className={classes.messageDiv}>
+      <div
+        onMouseEnter={() => handleMouseOver()}
+        onMouseLeave={()=> handleMouseOut()}
+
+        // onHover={(ind) => setChange(ind)}
+        className={classes.messageDiv}
+      >
         <div className={classes.imageAndUsername}>
           {messageUser?.image_url ? (
             <>
@@ -143,7 +184,7 @@ const determineIfServerMember = (id) => {
                       </>
                     ) : (
                       <>
-                        <ServerInviteMessage {...{socket}} {...{ message }} />
+                        <ServerInviteMessage {...{ socket }} {...{ message }} />
                       </>
                     )}
                   </div>
@@ -169,12 +210,19 @@ const determineIfServerMember = (id) => {
                 </>
               ) : (
                 <>
-                  <ServerInviteMessage needsPadding = {true} {...{socket}} {...{ message }} />
+                  <ServerInviteMessage
+                    needsPadding={true}
+                    {...{ socket }}
+                    {...{ message }}
+                  />
                 </>
               )}
             </>
           )}
         </div>
+        {editButtons && (
+          <DirectMessageEditButtons {...{setEditButtons}} {...{ socket }} {...{ message }} />
+        )}
       </div>
     </>
   );

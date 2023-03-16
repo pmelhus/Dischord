@@ -289,6 +289,7 @@ const Chat = ({
                     }
                   >
                     <SlateTextEditor
+
                       {...{ sendChat }}
                       placeholder={`Message ${currentChannel?.name}`}
                       {...{ chatInput }}

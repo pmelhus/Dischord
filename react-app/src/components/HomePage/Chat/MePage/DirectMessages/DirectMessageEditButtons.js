@@ -20,7 +20,7 @@ const useStyles = createUseStyles((theme) => ({
   },
 }));
 
-const DirectMessageEditButtons = ({setEditButtons, socket, message }) => {
+const DirectMessageEditButtons = ({messageId, setMessageId, setEditButtons, socket, message, setShowEditor }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
 
@@ -29,9 +29,9 @@ const DirectMessageEditButtons = ({setEditButtons, socket, message }) => {
   return (
     <div className={classes.editButtonsWrapper}>
       <div className={classes.buttons}>
-    {message.owner_id === sessionUser.id && (
+    {message.owner_id === sessionUser.id && !message.server_invite &&(
 
-        <EditMessageButton  {...{setEditButtons}}  {...{ message }} />
+        <EditMessageButton {...{setMessageId}}   {...{setShowEditor}}  {...{setEditButtons}}  {...{ message }} />
     )}
         <EllipsesEditButton {...{setEditButtons}} {...{ message }} />
       </div>

@@ -16,7 +16,10 @@ const useStyles = createUseStyles((theme) => ({
   slateEditor: {
     backgroundColor: "#4a51577c",
     margin: "8px 14px",
-    borderRadius: "10px",
+    borderRadius: "7px",
+    height: '40px',
+    display: "flex",
+    alignItems: "center",
   },
   container: {
     backgroundColor: "#36393f",
@@ -148,7 +151,14 @@ const DirectMessageConversation = ({
 
   const bottomRef = useRef(null);
 
+  // state for loading edited message
+
+
+  // state for keeping track of message being edited
+  const [messageId, setMessageId] = useState(null)
+
   const sendChat = async () => {
+
     const sentMessage = await dispatch(
       createDirectMessage({
         user_id: sessionUser.id,
@@ -160,14 +170,16 @@ const DirectMessageConversation = ({
       await setErrors(sentMessage.errors);
       return;
     }
-    // console.log(sentMessage, "SENT MESSAGE");
+
     await socket?.emit("dmChat", sentMessage.owner_id, currInbox?.id);
     await setIsSent(true);
+
     // await socket?.emit("timeout_user");
     // await setErrors({})
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
+
   };
 
   const directMessages = useSelector((state) =>
@@ -192,7 +204,11 @@ const DirectMessageConversation = ({
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [pathname, inboxDms]);
+  }, [inboxDms]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, []);
 
   const myFriendships = useSelector((state) =>
     Object?.values(state.friends.friendships)
@@ -289,6 +305,8 @@ const DirectMessageConversation = ({
           <FadeIn>
             <div key={ind} className={classes.directMessagesContainer}>
               <DirectMessage
+              {...{setMessageId}}
+              {...{messageId}}
                 {...{ socket }}
                 {...{ message }}
                 {...{ ind }}

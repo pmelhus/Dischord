@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import ServerInviteMessage from "./ServerInviteMessage.js";
 import { genOneServer } from "../../../../../store/server";
 import DirectMessageEditButtons from "./DirectMessageEditButtons";
+import SlateTextEditor from "../../SlateTextEditor";
+import { editInboxMessage } from "../../../../../store/directMessage";
+
 
 const useStyles = createUseStyles((theme) => ({
   messageDiv: {
@@ -53,8 +56,38 @@ const useStyles = createUseStyles((theme) => ({
     color: theme.darkGray,
     fontSize: "12px",
   },
+  channelChatForm: {
+    backgroundColor: "#4a51577c",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "7px",
+    height: "40px",
+    width: "calc(100% - 48px)",
+    marginLeft: "48px",
+  },
+  channelChatFormFirst: {
+    backgroundColor: "#4a51577c",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "7px",
+    height: "40px",
+    width: "calc(100% - 48px)",
+  },
+  loadingIconEdit: {
+    width: "100px",
+    height: "100px",
+    color: "white",
+  },
 }));
-const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
+const DirectMessage = ({
+  setMessageId,
+  messageId,
+  currInbox,
+  message,
+  socket,
+  ind,
+  inboxDms,
+}) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
   // grabs all users
@@ -64,9 +97,57 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
 
   const [editButtons, setEditButtons] = useState(false);
   const [inEllipses, setInEllipses] = useState(false);
-  const [change, setChange] = useState(ind)
+  const [change, setChange] = useState(ind);
 
   const messageUser = users[message.owner_id];
+
+  // state for editing messages (rendering message and slate text editor)
+  const [showEditor, setShowEditor] = useState(false);
+
+  // state for slateeditor chat input
+  const [chatInput, setChatInput] = useState(message.content);
+
+  // state for loading edited message
+
+  const [editLoading, setEditLoading] = useState(false);
+
+  // function sending edited message
+
+  const [errors, setErrors] = useState({});
+
+  const sendChat = async (e) => {
+    await setEditLoading(true);
+    const payload = {
+      inbox_id: message.inbox_id,
+      content: chatInput,
+      edited: true,
+      owner_id: message.owner_id,
+      id: message.id,
+    };
+    const editedMessage = await dispatch(editInboxMessage(payload));
+    await setChatInput(editedMessage.content);
+    if (editedMessage.errors) {
+      setErrors(editedMessage.errors);
+      // console.log(editedMessage.errors);
+      // setShowEdit(false);
+      setChatInput(message.content);
+      // console.log(content.length, "CONTENT");
+      if (chatInput.length > 1000) {
+        setChatInput(chatInput);
+      }
+
+      return;
+    } else {
+      await setShowEditor(false);
+      await socket.emit(
+        "dmChat",
+        editedMessage.owner_id,
+        editedMessage.inbox_id
+      );
+      await setEditLoading(false);
+      await setErrors({});
+    }
+  };
 
   const checkAdjacentMessages = (message, inboxDms, ind) => {
     const createdAtDate = new Date(message.created_at);
@@ -131,25 +212,38 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
   }, [inEllipses]);
 
   const handleMouseOver = () => {
-
-  setEditButtons(true)
-
-
+    setEditButtons(true);
   };
 
   const handleMouseOut = () => {
-
     setEditButtons(false);
-
-
   };
+
+  const escFunction = (e) => {
+    if (e.key === "Escape") {
+      setShowEditor(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, [escFunction]);
+
+  useEffect(() => {
+    if (messageId !== message.id) {
+      setShowEditor(false);
+    }
+  }, [messageId]);
 
   return (
     <>
       <div
         onMouseEnter={() => handleMouseOver()}
-        onMouseLeave={()=> handleMouseOut()}
-
+        onMouseLeave={() => handleMouseOut()}
         // onHover={(ind) => setChange(ind)}
         className={classes.messageDiv}
       >
@@ -178,9 +272,31 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
                     </div>
                     {!message.server_invite ? (
                       <>
-                        <p className={classes.contentFirst}>
-                          {message.content}
-                        </p>
+                        {showEditor ? (
+                          <>
+                            {editLoading ? (
+                              <>
+
+                              </>
+                            ) : (
+                              <>
+                                <form className={classes.channelChatFormFirst}>
+                                  <SlateTextEditor
+                                    {...{ sendChat }}
+                                    {...{ chatInput }}
+                                    {...{ setChatInput }}
+                                  />
+                                </form>
+                              </>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <p className={classes.contentFirst}>
+                              {message.content}
+                            </p>
+                          </>
+                        )}
                       </>
                     ) : (
                       <>
@@ -206,7 +322,29 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
             <>
               {!message.server_invite ? (
                 <>
-                  <p className={classes.content}>{message.content}</p>
+                  {showEditor ? (
+                    <>
+                      {editLoading ? (
+                        <>
+
+                        </>
+                      ) : (
+                        <>
+                          <form className={classes.channelChatForm}>
+                            <SlateTextEditor
+                              {...{ sendChat }}
+                              {...{ chatInput }}
+                              {...{ setChatInput }}
+                            />
+                          </form>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <p className={classes.content}>{message.content}</p>
+                    </>
+                  )}
                 </>
               ) : (
                 <>
@@ -221,7 +359,14 @@ const DirectMessage = ({ currInbox, message, socket, ind, inboxDms }) => {
           )}
         </div>
         {editButtons && (
-          <DirectMessageEditButtons {...{setEditButtons}} {...{ socket }} {...{ message }} />
+          <DirectMessageEditButtons
+            {...{ setMessageId }}
+            {...{ messageId }}
+            {...{ setEditButtons }}
+            {...{ socket }}
+            {...{ message }}
+            {...{ setShowEditor }}
+          />
         )}
       </div>
     </>

@@ -2,6 +2,7 @@ const ADD_DIRECT_MESSAGE = "directMessages/addDirectMessage";
 const LOAD__MESSAGES = "directMessages/loadDirectMessages";
 const REMOVE_DIRECT_MESSAGE = "directMessages/removeDirectMessage";
 
+
 const loadDirectMessages = (directMessages) => {
   return {
     type: LOAD__MESSAGES,
@@ -22,6 +23,8 @@ const removeDirectMessage = (directMessage) => {
     payload: directMessage,
   };
 };
+
+
 
 export const genDirectMessages = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...

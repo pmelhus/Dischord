@@ -1,6 +1,7 @@
 import { createUseStyles, useTheme } from "react-jss";
 import { useState } from "react";
 
+
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
@@ -29,7 +30,7 @@ const useStyles = createUseStyles((theme) => ({
 
 }));
 
-const EditMessageButton = ({setEditButtons}) => {
+const EditMessageButton = ({setMessageId, setEditButtons, message, setShowEditor}) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
 
@@ -40,6 +41,11 @@ const EditMessageButton = ({setEditButtons}) => {
         </div>
     </Tooltip>
   );
+
+  const handleEditButton = () => {
+    setMessageId(message.id)
+setShowEditor(true)
+  }
 
   return (
     <>
@@ -54,7 +60,7 @@ const EditMessageButton = ({setEditButtons}) => {
       >
 
 
-    <div className={classes.editButton}>
+    <div onClick={handleEditButton} className={classes.editButton}>
       <i
         style={{ color: `${theme.offWhite}` }}
         className="fa-sm fa-solid fa-pencil"

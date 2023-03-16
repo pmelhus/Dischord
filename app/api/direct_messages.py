@@ -73,7 +73,7 @@ def message_update(id):
 
     if form.validate_on_submit():
         # print(form.data, 'BETCH')
-        direct_message.inbox_id = form.data['channel_id']
+        direct_message.inbox_id = form.data['inbox_id']
         direct_message.owner_id = form.data['owner_id']
         direct_message.content = form.data['content']
         direct_message.edited = form.data['edited']

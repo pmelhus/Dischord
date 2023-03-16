@@ -14,23 +14,22 @@ const serialize = (value) => {
   );
 };
 
-const initialValue = [
-  {
-    type: "paragraph",
-    children: [{ text: "" }],
-  },
-];
-
 const SlateTextEditor = ({
   sendChat,
   placeholder,
   chatInput,
   setChatInput,
-  setHighlight
+  setHighlight,
 }) => {
   const [editor] = useState(() => withReact(createEditor()));
   // console.log(editor);
 
+  const initialValue = [
+    {
+      type: "paragraph",
+      children: [{ text: `${chatInput}` }],
+    },
+  ];
   useEffect(() => {
     Transforms.select(editor, { offset: 0, path: [0, 0] });
   }, []);
@@ -92,8 +91,8 @@ const SlateTextEditor = ({
       );
     }
 
-    return <span {...attributes}>{children}</span>
-  }
+    return <span {...attributes}>{children}</span>;
+  };
   // const renderElement = useCallback(([...props]) => {
   //   switch (props.element.type) {
   //     case "link":
@@ -102,6 +101,13 @@ const SlateTextEditor = ({
   //       return <DefaultElement {...props} />;
   //   }
   // }, []);
+useEffect(() => {
+
+
+    Transforms.select(editor, Editor.end(editor, []) );
+
+
+},[])
 
   return (
     // Add a toolbar with buttons that call the same methods.
@@ -144,10 +150,12 @@ const SlateTextEditor = ({
   );
 };
 
-
-
 const DefaultElement = (props) => {
-  return <p className="slate-paragraph" {...props.attributes}>{props.children}</p>;
+  return (
+    <p className="slate-paragraph" {...props.attributes}>
+      {props.children}
+    </p>
+  );
 };
 
 export default SlateTextEditor;

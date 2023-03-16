@@ -6,6 +6,8 @@ import { genOneServer } from "../../../../../store/server";
 import DirectMessageEditButtons from "./DirectMessageEditButtons";
 import SlateTextEditor from "../../SlateTextEditor";
 import { editInboxMessage } from "../../../../../store/directMessage";
+import loadingIcon from "../../../../../images/loadingIcon.gif"
+
 
 
 const useStyles = createUseStyles((theme) => ({
@@ -74,9 +76,20 @@ const useStyles = createUseStyles((theme) => ({
     width: "calc(100% - 48px)",
   },
   loadingIconEdit: {
-    width: "100px",
-    height: "100px",
+    width: "30px",
+    height: "20px",
     color: "white",
+    marginLeft: '60px',
+    objectFit: 'cover',
+    color: theme.offWhite
+  },
+  loadingIconEditFirst: {
+    width: "30px",
+    height: "20px",
+    color: "white",
+    objectFit: 'cover',
+    color: theme.offWhite
+
   },
 }));
 const DirectMessage = ({
@@ -239,6 +252,7 @@ const DirectMessage = ({
     }
   }, [messageId]);
 
+
   return (
     <>
       <div
@@ -247,6 +261,7 @@ const DirectMessage = ({
         // onHover={(ind) => setChange(ind)}
         className={classes.messageDiv}
       >
+
         <div className={classes.imageAndUsername}>
           {messageUser?.image_url ? (
             <>
@@ -261,6 +276,7 @@ const DirectMessage = ({
                     src={messageUser.image_url}
                     className={classes.userAvatar}
                   ></img>
+
                   <div className={classes.usernameAndContentFirst}>
                     <div style={{ display: "flex", alignItems: "flex-end" }}>
                       <h4 className={classes.username}>
@@ -276,7 +292,7 @@ const DirectMessage = ({
                           <>
                             {editLoading ? (
                               <>
-
+        <img className={classes.loadingIconEditFirst} src={loadingIcon}></img>
                               </>
                             ) : (
                               <>
@@ -326,7 +342,7 @@ const DirectMessage = ({
                     <>
                       {editLoading ? (
                         <>
-
+        <img className={classes.loadingIconEdit} src={loadingIcon}></img>
                         </>
                       ) : (
                         <>

@@ -34,15 +34,21 @@ def seed_channel_messages():
     channel_id=1, user_id=6, content="Excuse me? https://media.giphy.com/media/saJ4Lt12dUmPucCrDh/giphy.gif"
     )
 
-    db.session.add(m1)
-    db.session.add(m2)
-    db.session.add(m3)
-    db.session.add(m4)
-    db.session.add(m5)
-    db.session.add(m6)
-    db.session.add(m7)
-    db.session.add(m8)
-    db.session.add(m9)
+
+    m10 = ChannelMessage(
+    channel_id=1, user_id=12, content="You know, I'm a creative genius and there's no other way to word it."
+    )
+
+    m11 = ChannelMessage(
+    channel_id=1, user_id=12, content="You know, I'm a creative genius and there's no other way to word it."
+    )
+
+    message_list = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11]
+
+    for message in message_list:
+        db.session.add(message)
+
+
     db.session.commit()
 
 def undo_channel_messages():

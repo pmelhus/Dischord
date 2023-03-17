@@ -24,8 +24,7 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
-
-
+      console.log(data, 'DATA')
       await socket.emit("login", data);
       if (data.errors) {
         setErrors(data.errors);
@@ -34,7 +33,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
-      await idleTimer(socket, data)
+      await idleTimer(socket, data.id)
     }
   };
 
@@ -42,18 +41,17 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login("the@listener.com", "password"));
-
-
-      await socket.emit("login", data);
+      // console.log(data, "DATA HERER")
+      // await socket.emit("login", data);
       // console.log('I MADE IT')
       if (data?.errors) {
         setErrors(data?.errors);
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await history.push("/channels/@me");
+        await history.push("/channels/1/1");
       }
-
+      await idleTimer(socket, data.id)
     }
   };
 
@@ -68,7 +66,7 @@ const LoginForm = ({ socket }) => {
   // if (user) {
   //   return <Redirect to="/channels/@me" />;
   // }
-
+  console.log(errors);
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={onLogin}>

@@ -39,7 +39,7 @@ def seed_users():
     dre = User(
         username="The Paak", email='anderson@paak.com', password='password', bio="I won't bite, unless you like.", image_url="https://dischord-profile-images.s3.amazonaws.com/paak.jpg")
 
-    user_list = [listener, michael, harry, justin, taylor, beyonce, bruno, mariah, whitney, drake, eminem, kayne, jay, kendrick, snoop, paak]
+    user_list = [listener, michael, harry, justin, taylor, beyonce, bruno, mariah, whitney, drake, eminem, kanye, jay, kendrick, snoop, paak]
 
     for user in user_list:
         db.session.add(user)

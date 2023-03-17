@@ -24,7 +24,7 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
-      const userId = data.id
+
 
       await socket.emit("login", data);
       if (data.errors) {
@@ -51,9 +51,9 @@ const LoginForm = ({ socket }) => {
       } else {
         // console.log(data);
         // const jsonData= JSON.stringify(data)
-        await history.push("/channels/1/1");
+        await history.push("/channels/@me");
       }
-      await idleTimer(socket, data.id)
+
     }
   };
 

@@ -4,13 +4,17 @@ const LOAD_SERVERS = "servers/loadServers";
 const REMOVE_SERVER = "servers/removeServer";
 const LOAD_SERVER = "servers/loadServer";
 const REMOVE_SERVER_MEMBER = "serverMembers/removeServerMember";
-
+const LOAD_ONE_SERVER = "servers/loadOneServer";
 
 const loadServers = (servers) => {
   return {
     type: LOAD_SERVERS,
     payload: servers,
   };
+};
+
+const loadOneServer = (server) => {
+  return { type: LOAD_ONE_SERVER, payload: server };
 };
 
 const loadServer = (serverMembers) => {
@@ -33,8 +37,6 @@ const removeServerMember = (serverMember) => {
     payload: serverMember,
   };
 };
-
-
 
 const addServer = (server) => {
   return {
@@ -63,9 +65,22 @@ export const genServerMembers = (server_id) => async (dispatch) => {
   }
 };
 
+export const genOneServer = (id) => async (dispatch) => {
+  // doing it this way in case we want more types of responses here later ...
+
+  const [serverResponse] = await Promise.all([fetch(`/api/servers/${id}`)]);
+  // console.log(serversResponse, 'SERVER RESPONSE HERE')
+  const [server] = await Promise.all([serverResponse.json()]);
+
+  if (serverResponse.ok) {
+    dispatch(loadOneServer(server.server));
+    return server;
+  }
+};
+
 export const genServers = (userId) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  console.log(userId, 'YO')
+  console.log(userId, "YO");
   const [serversResponse] = await Promise.all([
     fetch(`/api/servers/usersServers/${userId}`),
   ]);
@@ -90,7 +105,6 @@ export const createServer = (payload) => async (dispatch) => {
     f.append("image", image);
   }
 
-
   const [response] = await Promise.all([
     fetch(`/api/servers/`, {
       method: "POST",
@@ -104,7 +118,7 @@ export const createServer = (payload) => async (dispatch) => {
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
-console.log(data)
+    console.log(data);
     if (data.errors) {
       console.log(data.errors);
       let errorObj = {};
@@ -165,7 +179,7 @@ export const editServer = (data) => async (dispatch) => {
 
 export const deleteServer = (server) => async (dispatch) => {
   const { id } = server;
-  console.log(server)
+  console.log(server);
   // console.log('inside the thunk');
   // console.log('estateowner', estate.owner_id);
   // console.log("estateid", estate.id);
@@ -191,8 +205,6 @@ export const deleteServer = (server) => async (dispatch) => {
   } else {
     return ["An error occurred. Please try again."];
   }
-
-
 };
 
 export const createServerMember = (payload) => async (dispatch) => {
@@ -252,8 +264,6 @@ export const deleteServerMember = (serverMember) => async (dispatch) => {
   }
 };
 
-
-
 const serverReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_SERVER:
@@ -282,9 +292,11 @@ const serverReducer = (state = {}, action) => {
         }
         return { ...serverMemberData };
       }
+    case LOAD_ONE_SERVER:
+      return { ...state, requestedServer: action.payload };
     case ADD_SERVER_MEMBER:
       // console.log(action.payload)
-      return {...state, [action.payload.server.id]: action.payload.server}
+      return { ...state, [action.payload.server.id]: action.payload.server };
     default:
       return state;
   }

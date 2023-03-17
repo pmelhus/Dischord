@@ -103,6 +103,7 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
                       <p>{userDate.toLocaleDateString(undefined, options)}</p>
                       <img
                         className="server-icon"
+                        style={{borderRadius: '100%', objectFit: 'cover'}}
                         src={currentServer.image_url}
                       ></img>
                       <p>{memberDate.toLocaleDateString(undefined, options)}</p>

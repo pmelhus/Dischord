@@ -3,31 +3,44 @@ import InviteUserItem from './InviteUserItem.js'
 
 const InviteUser = ({sessionUser, socket, currentServer, setInviteModal}) => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => Object.values(state.users));
+
+  const users = useSelector(state=> state.users)
   const serverMembers = useSelector(state => state.servers)[currentServer.id].members_ids
+  const friendships = useSelector((state) => Object.values(state.friends.friendships))
 
-const serverMemberIds = []
+  const currentServerMembers = currentServer.members_ids
+  const memberIds = currentServerMembers.map(user => {
+    return user.user_id
+  })
+  console.log(memberIds, "IDS HERE")
 
-// serverMembers?.forEach(member => {
-//   serverMemberIds.push(member.id)
-// })
+const friendsList = []
 
-const serverMembersIds = serverMembers.map(obj => {
-  return obj.user_id
-})
-console.log(serverMembersIds)
+  friendships.forEach(friendship => {
+    if (friendship.self_id === sessionUser.id) {
+      friendsList.push(users[friendship.friend_id])
+    }
+    if (friendship.friend_id === sessionUser.id) {
+      friendsList.push(users[friendship.self_id])
+    }
+  })
+
+const filteredFriendsList = friendsList.filter(friend => (!memberIds.includes(friend.id)))
+console.log(filteredFriendsList, 'FILTERED FRIENDS')
+
   return (
     <div className='invite-user-container'>
+      <i onClick={() => setInviteModal(false)} style={{color: 'whitesmoke', position: 'absolute', right: '30px', cursor: 'pointer'}}className="fa-sharp fa-regular fa-circle-xmark"></i>
       {/* <div className='user-search'>
         <input></input>
       </div> */}
       <div className="invite-user-heading">
-        <h3>Invite people to your server!</h3>
+        <h3>Invite friends to your server!</h3>
       </div>
       <div className="invite-user-list">
         <ul>
-          {users?.map((user) => {
-            if (user.id === sessionUser.id || serverMembersIds.includes(user.id)) return
+          {filteredFriendsList?.map((user) => {
+
             return (
               <div style={{padding:'8px 0'}} className="invite-user-item-div">
                 <InviteUserItem {...{socket}} {...{setInviteModal}} {...{currentServer}} {...{user}}/>

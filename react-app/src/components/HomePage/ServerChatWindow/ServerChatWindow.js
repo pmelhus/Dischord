@@ -12,18 +12,20 @@ const ServerChatWindow = ({
   onlineMembers,
   socket,
   setLoading,
+  setSelected,
+  selected,
 }) => {
   // state for friends nav bar selection
   const sessionUser = useSelector((state) => state.session.user);
-  const [selected, setSelected] = useState("addFriend");
+
   const dispatch = useDispatch();
 
   const [loaded, setLoaded] = useState(false);
-// console.log(sessionUser)
-  useEffect(() => {
-    dispatch(loadAllRequests(sessionUser.id));
-    dispatch(loadAllFriends(sessionUser.id))
-    setLoaded(true)
+  // console.log(sessionUser)
+  useEffect(async () => {
+    await dispatch(loadAllRequests(sessionUser.id));
+    await dispatch(loadAllFriends(sessionUser.id));
+    await setLoaded(true);
   }, [selected]);
 
   return (

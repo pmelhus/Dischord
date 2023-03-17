@@ -2,6 +2,7 @@ const ADD_DIRECT_MESSAGE = "directMessages/addDirectMessage";
 const LOAD__MESSAGES = "directMessages/loadDirectMessages";
 const REMOVE_DIRECT_MESSAGE = "directMessages/removeDirectMessage";
 
+
 const loadDirectMessages = (directMessages) => {
   return {
     type: LOAD__MESSAGES,
@@ -23,6 +24,8 @@ const removeDirectMessage = (directMessage) => {
   };
 };
 
+
+
 export const genDirectMessages = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
 
@@ -40,7 +43,7 @@ export const genDirectMessages = (id) => async (dispatch) => {
 export const createDirectMessage = (payload) => async (dispatch) => {
   const edited = false;
   // console.log(payload, 'PAYLOAD=========')
-  const { user_id, msg, inbox_id } = payload;
+  const { user_id, msg, inbox_id, server_invite, server_invite_id } = payload;
   console.log(payload, 'payload here')
 
   const f = new FormData();
@@ -48,6 +51,10 @@ export const createDirectMessage = (payload) => async (dispatch) => {
   f.append("inbox_id", inbox_id);
   f.append("owner_id", user_id);
   f.append("edited", edited);
+  if (server_invite) {
+    f.append('server_invite_id', server_invite_id)
+    f.append('server_invite', server_invite)
+  }
 
   const [response] = await Promise.all([
     fetch(`/api/direct_messages/`, {
@@ -113,7 +120,7 @@ export const editInboxMessage = (payload) => async (dispatch) => {
   }
 };
 
-export const deleteChannelMessage = (directMessage) => async (dispatch) => {
+export const deleteDirectMessage = (directMessage) => async (dispatch) => {
   // console.log(directMessage, 'HIYA')
   const { id } = directMessage;
   const response = await fetch(`/api/direct_messages/${id}`, {

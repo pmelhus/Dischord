@@ -6,7 +6,7 @@ import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
-import User from "./components/User";
+
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate, logout } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
@@ -18,6 +18,7 @@ import { genUsers } from "./store/user";
 // import LoadingScreen from "./components/LoadingScreen";
 import Splash from "./components/Splash";
 import { io } from "socket.io-client";
+import {loadAllFriends} from "./store/friend"
 
 let socket;
 function App() {
@@ -80,6 +81,10 @@ function App() {
       dispatch(genUsers());
     });
 
+    socket.on('update_friends', () => {
+      dispatch(loadAllFriends(user.id))
+    })
+
     // socket.on("logout", (logout) => {
     //   setOnlineMembers((onlineMembers) =>
     //     [...onlineMembers].filter((member) => member.id !== logout.id)
@@ -122,12 +127,6 @@ function App() {
       {loaded && (
         <>
           <Switch>
-            <ProtectedRoute path="/users" exact={true}>
-              <UsersList />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users/:userId" exact={true}>
-              <User />
-            </ProtectedRoute>
             <ProtectedRoute path="/channels">
               <HomePage
                 {...{ loading }}

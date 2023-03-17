@@ -1,20 +1,24 @@
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import { createUseStyles, useTheme } from "react-jss";
 
 const useStyles = createUseStyles((theme) => ({
   header: {
     display: "flex",
     alignItems: "center",
-    // width: "100%",
+    width: "100%",
     height: "50px",
-    borderBottom: "rgba(26, 24, 24, 0.607) solid .2px",
     paddingLeft: "4px",
+    justifyContent: "space-between",
   },
   username: {
     color: theme.offWhite,
     fontSize: "15px",
   },
+  atUsername: {
+    display: 'flex',
+    alignItems: 'center'
+  }
 }));
 
 const DirectMessageHeader = () => {
@@ -30,9 +34,9 @@ const DirectMessageHeader = () => {
 
   const inboxes = useSelector((state) => Object.values(state.inboxes));
 
-  const currentInbox = inboxes.find(inbox => (inbox.uuid === uuid))
+  const currentInbox = inboxes.find((inbox) => inbox.uuid === uuid);
 
-const inboxMembers = currentInbox?.inbox_members
+  const inboxMembers = currentInbox?.inbox_members;
 
   // function to determine whether user is friend_id or self_id
 
@@ -43,8 +47,8 @@ const inboxMembers = currentInbox?.inbox_members
         idArr.push(id);
       }
     });
-    if (idArr.length > 1) return idArr
-    if (idArr.length === 1) return idArr[0]
+    if (idArr.length > 1) return idArr;
+    if (idArr.length === 1) return idArr[0];
   };
 
   const dmUser = users[determineId(inboxMembers)];
@@ -53,11 +57,13 @@ const inboxMembers = currentInbox?.inbox_members
   return (
     <>
       <div className={classes.header}>
-        <i
-          style={{ color: theme.darkGray, padding: "0 10px" }}
-          className="fa-solid fa-lg fa-at"
-        ></i>
-        <h4 className={classes.username}>{dmUser?.username}</h4>
+        <div className={classes.atUsername}>
+          <i
+            style={{ color: theme.darkGray, padding: "0 10px" }}
+            className="fa-solid fa-lg fa-at"
+          ></i>
+          <h4 className={classes.username}>{dmUser?.username}</h4>
+        </div>
       </div>
     </>
   );

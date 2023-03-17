@@ -21,20 +21,31 @@ def direct_message_submit():
 
     form = DirectMessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print('GETTING HERE')
-    params = {
-        "inbox_id": form.data['inbox_id'],
-        'owner_id': form.data['owner_id'],
-        "content": form.data['content'],
-        "edited": form.data['edited']
-    }
+
+    if form.data['server_invite']:
+        params = {
+            "inbox_id": form.data['inbox_id'],
+            'owner_id': form.data['owner_id'],
+            "content": form.data['content'],
+            "edited": form.data['edited'],
+            "server_invite": form.data['server_invite'],
+            "server_invite_id": form.data['server_invite_id']
+        }
+
+    else:
+        params = {
+            "inbox_id": form.data['inbox_id'],
+            'owner_id': form.data['owner_id'],
+            "content": form.data['content'],
+            "edited": form.data['edited'],
+        }
 
     if form.validate_on_submit():
         print('hello')
         direct_message = DirectMessage(**params)
         db.session.add(direct_message)
         db.session.commit()
-        return direct_message.to_dict()
+        return {"direct_message": direct_message.to_dict()}
     else:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
@@ -62,7 +73,7 @@ def message_update(id):
 
     if form.validate_on_submit():
         # print(form.data, 'BETCH')
-        direct_message.inbox_id = form.data['channel_id']
+        direct_message.inbox_id = form.data['inbox_id']
         direct_message.owner_id = form.data['owner_id']
         direct_message.content = form.data['content']
         direct_message.edited = form.data['edited']

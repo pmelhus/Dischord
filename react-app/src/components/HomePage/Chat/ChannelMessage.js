@@ -70,7 +70,6 @@ const ChannelMessage = ({
       return;
     } else {
       await setShowEdit(false);
-      await console.log(showEdit, "HERRAA");
       await socket.emit("chat");
       await setErrorsEdit({});
     }

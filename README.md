@@ -46,8 +46,13 @@ Dischord is a full stack application intended for musicians and other creatives 
 ## Features
 - Logged in users can:
   - Sign up / login with email.
-  - Users can create, edit, and delete their servers, channels, and live messages
+  - Create, edit, and delete their servers and channels
+  - Send friend requests to other users using their username
+  - Once friends, the user can invite someone from their friend list to a server
+  - Live messaging is implemented for both servers and direct messages between friends
   - Update their profile and servers with a personal avatar
+
+- Friend Recommendations
 
 ## Getting Development Environment Up And Running
 - Git Clone the repo to your local machine (latest main branch repo)

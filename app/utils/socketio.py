@@ -86,16 +86,13 @@ def timeout_user():
 
 
 @socketio.on("login")
-def handle_login(data):
-    # print(data, 'USER HERE NOW BETCH ==========================================================')
-    user = User.query.get(data['id'])
-    # print(user, 'USER HERE ==================================================================================================================================================================================================================')
-
+def handle_login(userId):
+    user = User.query.get(userId)
     user.online = True
     user.idle = False
     db.session.commit()
-    emit("login", data, broadcast=True)
-    # idle_timer(user)
+    emit("login", user, broadcast=True)
+
 
 
 @socketio.on("logout")

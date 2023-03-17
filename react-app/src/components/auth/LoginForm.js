@@ -24,8 +24,9 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
-      console.log(data, 'DATA')
-      await socket.emit("login", data);
+      const userId = data.id
+
+      await socket.emit("login", userId);
       if (data.errors) {
         setErrors(data.errors);
       } else {
@@ -33,7 +34,7 @@ const LoginForm = ({ socket }) => {
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }
-      await idleTimer(socket, data.id)
+      await idleTimer(socket, data)
     }
   };
 
@@ -41,8 +42,9 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login("the@listener.com", "password"));
-      // console.log(data, "DATA HERER")
-      await socket.emit("login", data);
+      const userId = data.id
+
+      await socket.emit("login", userId);
       // console.log('I MADE IT')
       if (data?.errors) {
         setErrors(data?.errors);
@@ -66,7 +68,7 @@ const LoginForm = ({ socket }) => {
   // if (user) {
   //   return <Redirect to="/channels/@me" />;
   // }
-  console.log(errors);
+
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={onLogin}>

@@ -26,7 +26,7 @@ const LoginForm = ({ socket }) => {
       const data = await dispatch(login(email, password));
       const userId = data.id
 
-      await socket.emit("login", userId);
+      await socket.emit("login", data);
       if (data.errors) {
         setErrors(data.errors);
       } else {
@@ -42,9 +42,9 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login("the@listener.com", "password"));
-      const userId = data.id
 
-      await socket.emit("login", userId);
+
+      await socket.emit("login", data);
       // console.log('I MADE IT')
       if (data?.errors) {
         setErrors(data?.errors);

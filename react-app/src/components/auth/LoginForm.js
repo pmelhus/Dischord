@@ -24,7 +24,6 @@ const LoginForm = ({ socket }) => {
     if (socket) {
       e.preventDefault();
       const data = await dispatch(login(email, password));
-      console.log(data, 'DATA')
       await socket.emit("login", data);
       if (data.errors) {
         setErrors(data.errors);

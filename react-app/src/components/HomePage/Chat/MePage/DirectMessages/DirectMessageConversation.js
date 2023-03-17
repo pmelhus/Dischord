@@ -325,6 +325,8 @@ const DirectMessageConversation = ({
           placeholder={`Message `}
           {...{ chatInput }}
           {...{ setChatInput }}
+          editMessage={false}
+
         />
       </div>
     </div>

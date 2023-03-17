@@ -6,9 +6,7 @@ import { genOneServer } from "../../../../../store/server";
 import DirectMessageEditButtons from "./DirectMessageEditButtons";
 import SlateTextEditor from "../../SlateTextEditor";
 import { editInboxMessage } from "../../../../../store/directMessage";
-import loadingIcon from "../../../../../images/loadingIcon.gif"
-
-
+import loadingIcon from "../../../../../images/loadingIcon.gif";
 
 const useStyles = createUseStyles((theme) => ({
   messageDiv: {
@@ -32,6 +30,7 @@ const useStyles = createUseStyles((theme) => ({
   },
   imageAndUsername: {
     display: "flex",
+    width: '100%'
   },
 
   content: {
@@ -45,7 +44,7 @@ const useStyles = createUseStyles((theme) => ({
     margin: "0",
     color: theme.offWhite,
     marginLeft: "4px",
-    marginTop: "7px",
+    // marginTop: "7px",
   },
   username: {
     marginLeft: "4px",
@@ -77,21 +76,40 @@ const useStyles = createUseStyles((theme) => ({
   },
   loadingIconEdit: {
     width: "30px",
-    height: "20px",
+    height: "24px",
     color: "white",
-    marginLeft: '60px',
-    objectFit: 'cover',
-    color: theme.offWhite
+    marginLeft: "60px",
+    objectFit: "cover",
+    color: theme.offWhite,
   },
   loadingIconEditFirst: {
     width: "30px",
-    height: "20px",
+    height: "24px",
     color: "white",
-    objectFit: 'cover',
-    color: theme.offWhite
-
+    objectFit: "cover",
+    color: theme.offWhite,
   },
+  messageContentDivFirst: {
+    display: "flex",
+    width: '100%',
+    height: '20px',
+    alignItems: 'center',
+    marginTop: '9px'
+  },
+  messageContentDiv: {
+    display: "flex",
+    width: '100%',
+    height: '20px',
+    alignItems: 'center',
+    margin: '4px 0'
+  },
+  editedMessage: {
+    color: theme.darkGray,
+    marginLeft: '4px',
+    fontSize: '11px'
+  }
 }));
+
 const DirectMessage = ({
   setMessageId,
   messageId,
@@ -252,7 +270,6 @@ const DirectMessage = ({
     }
   }, [messageId]);
 
-
   return (
     <>
       <div
@@ -261,7 +278,6 @@ const DirectMessage = ({
         // onHover={(ind) => setChange(ind)}
         className={classes.messageDiv}
       >
-
         <div className={classes.imageAndUsername}>
           {messageUser?.image_url ? (
             <>
@@ -290,28 +306,27 @@ const DirectMessage = ({
                       <>
                         {showEditor ? (
                           <>
-                            {editLoading ? (
-                              <>
-        <img className={classes.loadingIconEditFirst} src={loadingIcon}></img>
-                              </>
-                            ) : (
-                              <>
-                                <form className={classes.channelChatFormFirst}>
-                                  <SlateTextEditor
-                                    {...{ sendChat }}
-                                    {...{ chatInput }}
-                                    {...{ setChatInput }}
-                                  />
-                                </form>
-                              </>
-                            )}
+                            <>
+                              <form className={classes.channelChatFormFirst}>
+                                <SlateTextEditor
+                                  {...{ setShowEditor }}
+                                  editMessage={true}
+                                  {...{ sendChat }}
+                                  {...{ chatInput }}
+                                  {...{ setChatInput }}
+                                />
+                              </form>
+                            </>
                           </>
                         ) : (
-                          <>
+                          <div className={classes.messageContentDivFirst}>
                             <p className={classes.contentFirst}>
                               {message.content}
                             </p>
-                          </>
+                            {message.edited && (
+                              <p className={classes.editedMessage}>(edited)</p>
+                            )}
+                          </div>
                         )}
                       </>
                     ) : (
@@ -340,26 +355,25 @@ const DirectMessage = ({
                 <>
                   {showEditor ? (
                     <>
-                      {editLoading ? (
-                        <>
-        <img className={classes.loadingIconEdit} src={loadingIcon}></img>
-                        </>
-                      ) : (
-                        <>
-                          <form className={classes.channelChatForm}>
-                            <SlateTextEditor
-                              {...{ sendChat }}
-                              {...{ chatInput }}
-                              {...{ setChatInput }}
-                            />
-                          </form>
-                        </>
-                      )}
+                      <>
+                        <form className={classes.channelChatForm}>
+                          <SlateTextEditor
+                            {...{ setShowEditor }}
+                            {...{ sendChat }}
+                            editMessage={true}
+                            {...{ chatInput }}
+                            {...{ setChatInput }}
+                          />
+                        </form>
+                      </>
                     </>
                   ) : (
-                    <>
+                    <div className={classes.messageContentDiv}>
                       <p className={classes.content}>{message.content}</p>
-                    </>
+                      {message.edited && (
+                        <p className={classes.editedMessage}>(edited)</p>
+                      )}
+                    </div>
                   )}
                 </>
               ) : (

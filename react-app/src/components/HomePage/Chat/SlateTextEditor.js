@@ -16,10 +16,12 @@ const serialize = (value) => {
 
 const SlateTextEditor = ({
   sendChat,
+  editMessage,
   placeholder,
   chatInput,
   setChatInput,
   setHighlight,
+  setShowEditor
 }) => {
   const [editor] = useState(() => withReact(createEditor()));
   // console.log(editor);
@@ -143,6 +145,9 @@ useEffect(() => {
               },
             ];
             Transforms.select(editor, { offset: 0, path: [0, 0] });
+            if (editMessage) {
+              setShowEditor(false)
+            }
           }
         }}
       />

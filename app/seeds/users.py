@@ -3,6 +3,7 @@ from app.models import db, User
 
 # Adds a listener user, you can add other users here if you want
 def seed_users():
+
     listener = User(
         username='The Listener', email='the@listener.com', password='password', bio="I'm a great listener.", image_url="https://dischord-profile-images.s3.amazonaws.com/the-listener.png")
     michael = User(
@@ -35,25 +36,13 @@ def seed_users():
         username="Snoop Doggy Dog", email='snoop@dog.com', password='password', bio="Gin and juice.", image_url="https://dischord-profile-images.s3.amazonaws.com/snoop.jpeg")
     paak = User(
         username="The Paak", email='anderson@paak.com', password='password', bio="I won't bite, unless you like.", image_url="https://dischord-profile-images.s3.amazonaws.com/paak.jpg")
+    dre = User(
+        username="The Paak", email='anderson@paak.com', password='password', bio="I won't bite, unless you like.", image_url="https://dischord-profile-images.s3.amazonaws.com/paak.jpg")
 
+    user_list = [listener, michael, harry, justin, taylor, beyonce, bruno, mariah, whitney, drake, eminem, kayne, jay, kendrick, snoop, paak]
 
-
-    db.session.add(listener)
-    db.session.add(michael)
-    db.session.add(harry)
-    db.session.add(justin)
-    db.session.add(taylor)
-    db.session.add(beyonce)
-    db.session.add(bruno)
-    db.session.add(mariah)
-    db.session.add(whitney)
-    db.session.add(drake)
-    db.session.add(eminem)
-    db.session.add(kanye)
-    db.session.add(jay)
-    db.session.add(kendrick)
-    db.session.add(snoop)
-    db.session.add(paak)
+    for user in user_list:
+        db.session.add(user)
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE the users table.

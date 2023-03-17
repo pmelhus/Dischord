@@ -11,8 +11,8 @@ class DirectMessage(db.Model, CrUpMixin):
         "inboxes.id"), nullable=False)
     content = db.Column(db.Text, nullable=False)
     server_invite = db.Column(db.Boolean, default=False)
-    server_invite_id = db.Column(db.Integer)
-    edited = db.Column(db.Boolean)
+    server_invite_id = db.Column(db.Integer, nullable=True)
+    edited = db.Column(db.Boolean, default=False)
 
     # belongs to one
     inbox = db.relationship(

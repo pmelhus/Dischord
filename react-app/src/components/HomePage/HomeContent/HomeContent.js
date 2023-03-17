@@ -69,6 +69,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
         {...{ sessionUser }}
         {...{ setShowEditModal }}
         {...{ setInviteModal }}
+        {...{setShowDropdown}}
       />
     </Popover>
   );

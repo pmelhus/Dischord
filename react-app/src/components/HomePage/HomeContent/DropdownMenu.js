@@ -32,9 +32,20 @@ const DropdownMenu = ({
   setShowEditModal,
   sessionUser,
   currentServer,
+  setShowDropdown
 }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
+
+  const handleClickServer = () => {
+    setShowDropdown(false)
+    setShowEditModal(true)
+  }
+
+  const handleClickInvite = () => {
+    setShowDropdown(false)
+    setInviteModal(true)
+  }
 
   return (
     <>
@@ -42,7 +53,7 @@ const DropdownMenu = ({
         <ul className={classes.serverEditList}>
           <div
             className={classes.listButton}
-            onClick={() => setInviteModal(true)}
+            onClick={handleClickInvite}
           >
             <p>Invite people</p>
             <i className="fa-solid fa-person-circle-plus"></i>
@@ -51,7 +62,7 @@ const DropdownMenu = ({
           {currentServer?.owner_id === sessionUser.id && (
             <div
               className={classes.listButton}
-              onClick={() => setShowEditModal(true)}
+              onClick={handleClickServer}
             >
               <p>Server Settings</p>
               <i className="fa-solid fa-gear"></i>

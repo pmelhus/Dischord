@@ -6,7 +6,7 @@ import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
-import User from "./components/User";
+
 import HomePage from "./components/HomePage/HomePage";
 import { authenticate, logout } from "./store/session";
 import LoadingScreen from "./components/LoadingScreen";
@@ -127,12 +127,6 @@ function App() {
       {loaded && (
         <>
           <Switch>
-            <ProtectedRoute path="/users" exact={true}>
-              <UsersList />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users/:userId" exact={true}>
-              <User />
-            </ProtectedRoute>
             <ProtectedRoute path="/channels">
               <HomePage
                 {...{ loading }}

@@ -30,6 +30,7 @@ console.log(filteredFriendsList, 'FILTERED FRIENDS')
 
   return (
     <div className='invite-user-container'>
+      <i onClick={() => setInviteModal(false)} style={{color: 'whitesmoke', position: 'absolute', right: '30px', cursor: 'pointer'}}className="fa-sharp fa-regular fa-circle-xmark"></i>
       {/* <div className='user-search'>
         <input></input>
       </div> */}

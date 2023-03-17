@@ -33,8 +33,8 @@ const HomePage = ({
 
   const channelId = parseInt(pathname.split("/")[3]);
   const serverId = parseInt(pathname.split("/")[2]);
-  const urlMe = pathname.split('/')[2]
-
+  const urlMe = pathname.split("/")[2];
+  const [selected, setSelected] = useState("all");
   //   useEffect(() => {
 
   // dispatch(genServers(sessionUser.id));
@@ -51,37 +51,37 @@ const HomePage = ({
     await setLoadingMessages(false);
   };
 
-
   useEffect(async () => {
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
     await dispatch(genUsers());
-    await dispatch(loadAllFriends(sessionUser.id));
-    await dispatch(loadAllRequests(sessionUser.id))
+    const friends = await dispatch(loadAllFriends(sessionUser.id));
+    await dispatch(loadAllRequests(sessionUser.id));
     await dispatch(getInboxes(sessionUser.id));
+
+    // if user has no friends in friends list, then bring them to the add friend screen
+    // otherwise user is sent to friends list with selected state
+    if (!friends.friends.length) {
+      setSelected("addFriend");
+    }
+
     await setLoaded(true);
     await setLoadingScreen(false);
-
-
   }, [dispatch, loadingScreen]);
 
   useEffect(async () => {
     if (urlMe !== "@me" && channelId && loaded) {
-      console.log(serverId)
+      console.log(serverId);
       await componentMounted();
       await setLoadingMessages(false);
     }
   }, [channelId, dispatch, loaded, serverId]);
 
   useEffect(async () => {
-
     if (urlMe !== "@me") {
       await setLocation(channelId);
     }
   }, [pathname]);
-
-
-
 
   return (
     <div className="home-page-container">
@@ -92,6 +92,8 @@ const HomePage = ({
           <ServerChatWindow
             {...{ onlineMembers }}
             {...{ setOnlineMembers }}
+            {...{ setSelected }}
+            {...{ selected }}
             {...{ socket }}
             {...{ setLoading }}
             {...{ setLoadingMessages }}

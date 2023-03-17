@@ -60,7 +60,7 @@ const HomePage = ({
     await dispatch(getInboxes(sessionUser.id));
 
     // if user has no friends in friends list, then bring them to the add friend screen
-    // otherwise user is sent to friends list with selected state
+    // otherwise user is sent to friends list with selected
     if (!friends.friends.length) {
       setSelected("addFriend");
     }

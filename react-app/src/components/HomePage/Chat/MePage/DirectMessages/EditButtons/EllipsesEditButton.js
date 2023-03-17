@@ -35,12 +35,12 @@ const useStyles = createUseStyles((theme) => ({
     color: theme.offWhite,
   },
   tooltipText: {
-    fontSize: "11px",
-    padding: "1px",
-  },
+    fontSize: '11px'
+  }
+
 }));
 
-const EllipsesEditButton = ({setEditButtons, message }) => {
+const EllipsesEditButton = ({ setDeleteConfirm, setEditButtons, message }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
 
@@ -50,12 +50,12 @@ const EllipsesEditButton = ({setEditButtons, message }) => {
 
   const popover = (
     <Popover placement="left-start" id="popover-basic">
-      <EllipsesDropdown />
+      <EllipsesDropdown {...{ setDeleteConfirm }} />
     </Popover>
   );
 
   const tooltip = (
-    <Tooltip style={{ marginBottom: '5px'}} placement="top" id="tooltip-top">
+    <Tooltip placement="top" id="tooltip-top">
       <div className={classes.buttonNameContainer}>
         <div className={classes.tooltipText}>More</div>
       </div>
@@ -81,16 +81,29 @@ const EllipsesEditButton = ({setEditButtons, message }) => {
     }
   }, [ellipsesModal]);
 
+
+  const popperConfig = {
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 6], // set margin-top to 10px
+        },
+      },
+    ],
+  }
+  
   return (
     <>
       <OverlayTrigger
-        trigger={['focus', 'hover']}
+        trigger={["focus", "hover"]}
         placement="top"
         overlay={tooltip}
         onToggle={handleTooltip}
         onHide={() => setEditButtons(false)}
         show={showTooltip}
         onMouseEnter={() => setShowTooltip(false)}
+        popperConfig={popperConfig}
       >
         <div>
           <OverlayTrigger

@@ -120,7 +120,7 @@ export const editInboxMessage = (payload) => async (dispatch) => {
   }
 };
 
-export const deleteChannelMessage = (directMessage) => async (dispatch) => {
+export const deleteDirectMessage = (directMessage) => async (dispatch) => {
   // console.log(directMessage, 'HIYA')
   const { id } = directMessage;
   const response = await fetch(`/api/direct_messages/${id}`, {

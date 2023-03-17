@@ -151,7 +151,7 @@ def server_update(id):
 @server_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def server_delete(id):
-    # print('====================================')
+
     server = Server.query.get(id)
     if not server:
         return {"errors": f"No server with id {id} exists"}, 404

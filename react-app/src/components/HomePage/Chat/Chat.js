@@ -186,9 +186,11 @@ const Chat = ({
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(async() => {
     if (uuid && currInbox) {
-      dispatch(genDirectMessages(currInbox.id));
+      await setLoadingMessages(true)
+     await dispatch(genDirectMessages(currInbox.id));
+     await setLoadingMessages(false)
     }
   }, [pathname]);
 
@@ -214,7 +216,7 @@ const Chat = ({
     <>
       <Switch>
         <Route path="/channels/@me/*">
-          {requestLoaded && <DirectMessageConversation {...{ socket }} />}
+          {requestLoaded && <DirectMessageConversation {...{setLoadingMessages}} {...{loadingMessages}} {...{ socket }} />}
         </Route>
         <div className="chat-container">
           <div

@@ -1424,28 +1424,102 @@ cursor: pointer;
 
 .delete-message-form {
   color: white;
-  padding: 32px;
+
   background-color: #36393f;
   z-index: 2;
   /* border-radius: 5px; */
   width: 500px;
   height: auto;
   border-radius: 10px;
+
 }
 
-.delete-modal-content {
-  margin-bottom: 40px;
+.delete-message-heading {
+  margin-bottom: 10px;
+}
+
+.delete-message-question {
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.delete-message-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  object-fit: cover;
+  position:absolute;
+  left: 32px;
+
 }
 
 .delete-message-card {
-  display: flex;
-  align-items: start;
-  margin-bottom: 20px;
+padding-left: 80px;
+box-shadow: rgba(30,31,34,.6) 0px 0px 0px 1px;
+box-shadow: rgba(0, 0, 0, .2) 0px 2px 10px 0px;
+padding-top: 20px;
+padding-bottom: 20px;
 }
-.delete-message-card h4 {
-  padding: 0;
-  margin:0;
-  margin-top: 10px;
+
+
+.delete-message-date {
+  font-size: 11px;
+  color:#818386;
+  margin-left: 10px;
+
+}
+
+.delete-message-content {
+font-size: 13px;
+margin-top: 4px;
+
+}
+
+.delete-button-cancel {
+  min-width: 100px;
+  min-height: 30px;
+  background-color:#35373c;
+  color: white;
+  font-size: 12px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: '2px';
+}
+
+.delete-button-cancel:hover {
+  min-width: 100px;
+  min-height: 30px;
+  background-color:#4c4d50;
+  color: white;
+  font-size: 12px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: '2px';
+}
+
+.delete-button-delete {
+  min-width: 100px;
+  min-height: 30px;
+  background-color: rgb(218, 55, 60);
+  color: white;
+  font-size: 12px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: '2px';
+}
+.delete-button-delete:hover {
+  min-width: 100px;
+  min-height: 30px;
+  background-color: rgb(136, 51, 54);
+  color: white;
+  font-size: 12px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: '2px';
 }
 
 .server-edit-form {
@@ -1477,6 +1551,8 @@ cursor: pointer;
   padding: 0;
   margin-top: 20px;
 }
+
+
 
 #channel-submit {
   margin-top: 20px;

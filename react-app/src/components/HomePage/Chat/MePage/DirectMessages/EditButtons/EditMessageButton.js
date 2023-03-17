@@ -35,7 +35,7 @@ const EditMessageButton = ({setMessageId, setEditButtons, message, setShowEditor
   const classes = useStyles({ theme });
 
   const tooltip = (
-    <Tooltip  style={{ marginBottom: '5px'}}  placement="top" id="tooltip-top">
+    <Tooltip placement="top" id="tooltip-top">
         <div className={classes.buttonNameContainer}>
           <div className={classes.tooltipText}>Edit</div>
         </div>
@@ -47,6 +47,18 @@ const EditMessageButton = ({setMessageId, setEditButtons, message, setShowEditor
 setShowEditor(true)
   }
 
+  const popperConfig = {
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 6], // set margin-top to 10px
+        },
+      },
+    ],
+  }
+
+
   return (
     <>
       <OverlayTrigger
@@ -57,6 +69,7 @@ setShowEditor(true)
         // onToggle={() => setEllipsesModal(!ellipsesModal)}
         onHide={() => setEditButtons(false)}
         // show={ellipsesModal}
+        popperConfig={popperConfig}
       >
 
 

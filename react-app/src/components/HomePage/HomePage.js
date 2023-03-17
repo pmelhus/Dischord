@@ -51,6 +51,7 @@ const HomePage = ({
     await setLoadingMessages(false);
   };
 
+
   useEffect(async () => {
     await dispatch(genServers(sessionUser.id));
     await dispatch(genChannels(sessionUser.id));
@@ -73,11 +74,12 @@ const HomePage = ({
   }, [channelId, dispatch, loaded, serverId]);
 
   useEffect(async () => {
-    console.log(channelId, "HERE YAAA");
+
     if (urlMe !== "@me") {
       await setLocation(channelId);
     }
   }, [pathname]);
+
 
 
 

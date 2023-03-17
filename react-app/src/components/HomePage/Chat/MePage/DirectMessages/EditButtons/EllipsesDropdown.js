@@ -29,15 +29,19 @@
 
    }))
 
- const EllipsesDropdown = () => {
+ const EllipsesDropdown = ({setDeleteConfirm}) => {
 
    const theme = useTheme();
    const classes = useStyles({ theme });
 
+  const handleDelete = () => {
+setDeleteConfirm(true)
+  }
+
    return (
      <div className={classes.dropdownContainer}>
       <div className={classes.menu}>
-      <div className={classes.menuItem}>
+      <div onClick={handleDelete} className={classes.menuItem}>
           <div>Delete Message</div>
           <div><i className="fa-solid fa-trash-can"></i></div>
       </div>

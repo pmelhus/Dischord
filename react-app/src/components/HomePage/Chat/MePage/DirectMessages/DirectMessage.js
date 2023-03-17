@@ -7,6 +7,8 @@ import DirectMessageEditButtons from "./DirectMessageEditButtons";
 import SlateTextEditor from "../../SlateTextEditor";
 import { editInboxMessage } from "../../../../../store/directMessage";
 import loadingIcon from "../../../../../images/loadingIcon.gif";
+import { Modal } from "../../../../../context/Modal";
+import DeleteDmConfirm from "./DeleteDmConfirm";
 
 const useStyles = createUseStyles((theme) => ({
   messageDiv: {
@@ -30,7 +32,7 @@ const useStyles = createUseStyles((theme) => ({
   },
   imageAndUsername: {
     display: "flex",
-    width: '100%'
+    width: "100%",
   },
 
   content: {
@@ -91,23 +93,23 @@ const useStyles = createUseStyles((theme) => ({
   },
   messageContentDivFirst: {
     display: "flex",
-    width: '100%',
-    height: '20px',
-    alignItems: 'center',
-    marginTop: '9px'
+    width: "100%",
+    height: "20px",
+    alignItems: "center",
+    marginTop: "9px",
   },
   messageContentDiv: {
     display: "flex",
-    width: '100%',
-    height: '20px',
-    alignItems: 'center',
-    margin: '4px 0'
+    width: "100%",
+    height: "20px",
+    alignItems: "center",
+    margin: "4px 0",
   },
   editedMessage: {
     color: theme.darkGray,
-    marginLeft: '4px',
-    fontSize: '11px'
-  }
+    marginLeft: "4px",
+    fontSize: "11px",
+  },
 }));
 
 const DirectMessage = ({
@@ -145,6 +147,8 @@ const DirectMessage = ({
   // function sending edited message
 
   const [errors, setErrors] = useState({});
+
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const sendChat = async (e) => {
     await setEditLoading(true);
@@ -209,10 +213,7 @@ const DirectMessage = ({
     return `${new Date(message.created_at).toLocaleDateString(
       undefined,
       options
-    )} at ${new Date(message.created_at).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
+    )}`;
   };
 
   const determineIfServerMember = (id) => {
@@ -392,6 +393,7 @@ const DirectMessage = ({
           <DirectMessageEditButtons
             {...{ setMessageId }}
             {...{ messageId }}
+            {...{ setDeleteConfirm }}
             {...{ setEditButtons }}
             {...{ socket }}
             {...{ message }}
@@ -399,6 +401,11 @@ const DirectMessage = ({
           />
         )}
       </div>
+      {deleteConfirm && (
+        <Modal>
+          <DeleteDmConfirm {...{socket}} {...{ message }} {...{ setDeleteConfirm }} />
+        </Modal>
+      )}
     </>
   );
 };

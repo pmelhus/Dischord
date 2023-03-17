@@ -11,13 +11,16 @@ import {
   createFriendRequest,
   loadAllRequests,
 } from "../../../../../store/friend";
+import Placeholder from "../../../../Placeholders/Placeholder";
+
+
 
 const useStyles = createUseStyles((theme) => ({
   slateEditor: {
     backgroundColor: "#4a51577c",
     margin: "8px 14px",
     borderRadius: "7px",
-    height: '40px',
+    height: "40px",
     display: "flex",
     alignItems: "center",
   },
@@ -127,6 +130,8 @@ const DirectMessageConversation = ({
   requestLoaded,
   setUpdateRequests,
   socket,
+  setLoadingMessages,
+  loadingMessages,
 }) => {
   const theme = useTheme();
   const classes = useStyles({ theme });
@@ -149,16 +154,16 @@ const DirectMessageConversation = ({
   const [errors, setErrors] = useState({});
   const [isSent, setIsSent] = useState(false);
 
+
+
   const bottomRef = useRef(null);
 
   // state for loading edited message
 
-
   // state for keeping track of message being edited
-  const [messageId, setMessageId] = useState(null)
+  const [messageId, setMessageId] = useState(null);
 
   const sendChat = async () => {
-
     const sentMessage = await dispatch(
       createDirectMessage({
         user_id: sessionUser.id,
@@ -179,7 +184,6 @@ const DirectMessageConversation = ({
     // clear the input field after the message is sent
     await setErrors({});
     await setChatInput("");
-
   };
 
   const directMessages = useSelector((state) =>
@@ -247,7 +251,7 @@ const DirectMessageConversation = ({
       return;
     }
     await setErrors({});
-    await dispatch(loadAllRequests(sessionUser.id))
+    await dispatch(loadAllRequests(sessionUser.id));
     // await setUpdateRequests(true)
   };
 
@@ -281,14 +285,11 @@ const DirectMessageConversation = ({
                   <div>Remove Friend</div>
                 </button>
               )}
-            {!currFriendship && !matchingRequest && (
-                    <button
-                    onClick={handleFriendAdd}
-                    className={classes.addButton}
-                  >
-                    <div>Add Friend</div>
-                  </button>
-                )}
+              {!currFriendship && !matchingRequest && (
+                <button onClick={handleFriendAdd} className={classes.addButton}>
+                  <div>Add Friend</div>
+                </button>
+              )}
 
               {matchingRequest && (
                 <button
@@ -301,22 +302,32 @@ const DirectMessageConversation = ({
             </div>
           </div>
         </div>
-        {inboxDms.map((message, ind) => (
-          <FadeIn>
-            <div key={ind} className={classes.directMessagesContainer}>
-              <DirectMessage
-              {...{setMessageId}}
-              {...{messageId}}
-                {...{ socket }}
-                {...{ message }}
-                {...{ ind }}
-                {...{ chatInput }}
-                {...{ currInbox }}
-                {...{ inboxDms }}
-              />
-            </div>
-          </FadeIn>
-        ))}
+        {loadingMessages ? (
+          <div className="channel-message-div-loader">
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+          </div>
+        ) : (
+          <>
+            {inboxDms.map((message, ind) => (
+              <FadeIn>
+                <div key={ind} className={classes.directMessagesContainer}>
+                  <DirectMessage
+                    {...{ setMessageId }}
+                    {...{ messageId }}
+                    {...{ socket }}
+                    {...{ message }}
+                    {...{ ind }}
+                    {...{ chatInput }}
+                    {...{ currInbox }}
+                    {...{ inboxDms }}
+                  />
+                </div>
+              </FadeIn>
+            ))}
+          </>
+        )}
         <div style={{ height: "1px" }} ref={bottomRef}></div>
       </div>
       <div className={classes.slateEditor}>
@@ -326,9 +337,9 @@ const DirectMessageConversation = ({
           {...{ chatInput }}
           {...{ setChatInput }}
           editMessage={false}
-
         />
       </div>
+
     </div>
   );
 };

@@ -86,12 +86,12 @@ def timeout_user():
 
 
 @socketio.on("login")
-def handle_login(userId):
-    user = User.query.get(userId)
+def handle_login(data):
+    user = User.query.get(data['id'])
     user.online = True
     user.idle = False
     db.session.commit()
-    emit("login", user, broadcast=True)
+    emit("login", data, broadcast=True)
 
 
 

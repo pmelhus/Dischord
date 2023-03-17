@@ -83,7 +83,7 @@ Dischord is a full stack application intended for musicians and other creatives 
 
 ## Heroku Deployment
 1. Create a Heroku account if you don't have one already
-2. Create a new application in the dashboard, for example "my-dischord"
+2. Create a new application in the dashboard, for example "the-dischord"
 3. Under the "Resources" tab, click "Find More add-ons", and add "Heroku Postgres"
 4. Install <a href='https://devcenter.heroku.com/articles/heroku-cli'>Heroku CLI</a>
 5. Login to Heroku by running this in the terminal `heroku login`

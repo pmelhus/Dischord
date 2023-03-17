@@ -28,7 +28,7 @@ const LoginForm = ({ socket }) => {
       if (data.errors) {
         setErrors(data.errors);
       } else {
-        // console.log(data);
+        console.log(data);
         // const jsonData= JSON.stringify(data)
         await history.push("/channels/@me");
       }

@@ -83,6 +83,10 @@ const HomePage = ({
     }
   }, [pathname]);
 
+  // state for whether or not to display tooltips for tutorial
+
+  const [showTutorial, setShowTutorial] = useState(false)
+
   return (
     <div className="home-page-container">
       {loaded && (

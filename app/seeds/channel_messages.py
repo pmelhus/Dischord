@@ -36,14 +36,34 @@ def seed_channel_messages():
 
 
     m10 = ChannelMessage(
-    channel_id=1, user_id=12, content="You know, I'm a creative genius and there's no other way to word it."
+    channel_id=2, user_id=12, content="You know, I'm a creative genius and there's no other way to word it. https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F375909900127955628%2F&psig=AOvVaw1kNYMEeeMzCwXCNQxmTWR1&ust=1679190222874000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKjX9Zqt5P0CFQAAAAAdAAAAABAD "
     )
 
     m11 = ChannelMessage(
-    channel_id=1, user_id=12, content="You know, I'm a creative genius and there's no other way to word it."
+    channel_id=2, user_id=17, content="Listen Kanye... if you're not sincere with it, you shouldn't say anything at all."
     )
 
-    message_list = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11]
+    m12 = ChannelMessage(
+    channel_id=2, user_id=17, content="https://www.youtube.com/watch?v=_CL6n0FJZpk"
+    )
+
+    m13 = ChannelMessage(
+    channel_id=2, user_id=15, content="Gotta back up my guy Dre on that, Ye. https://www.youtube.com/watch?v=8GliyDgAGQI"
+    )
+
+    m14 = ChannelMessage(
+    channel_id=2, user_id=12, content="Listen, I respect y'all. But y'all old now..."
+    )
+
+    m15 = ChannelMessage(
+    channel_id=2, user_id=12, content="As a man I am flawed, but my music is perfect."
+    )
+
+    m16 = ChannelMessage(
+    channel_id=2, user_id=12, content="As a man I am flawed, but my music is perfect."
+    )
+
+    message_list = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18]
 
     for message in message_list:
         db.session.add(message)

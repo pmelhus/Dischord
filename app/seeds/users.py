@@ -37,9 +37,9 @@ def seed_users():
     paak = User(
         username="The Paak", email='anderson@paak.com', password='password', bio="I won't bite, unless you like.", image_url="https://dischord-profile-images.s3.amazonaws.com/paak.jpg")
     dre = User(
-        username="The Paak", email='anderson@paak.com', password='password', bio="I won't bite, unless you like.", image_url="https://dischord-profile-images.s3.amazonaws.com/paak.jpg")
+        username="Dre", email='dr@dre.com', password='password', bio="Nuthin' but a 'G' thang", image_url="https://dischord-profile-images.s3.amazonaws.com/dre.jpeg")
 
-    user_list = [listener, michael, harry, justin, taylor, beyonce, bruno, mariah, whitney, drake, eminem, kanye, jay, kendrick, snoop, paak]
+    user_list = [listener, michael, harry, justin, taylor, beyonce, bruno, mariah, whitney, drake, eminem, kanye, jay, kendrick, snoop, paak, dre]
 
     for user in user_list:
         db.session.add(user)

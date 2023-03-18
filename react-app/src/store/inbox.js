@@ -167,9 +167,10 @@ const inboxReducer = (state = {}, action) => {
         [action.payload.inbox.id]: action.payload.inbox,
       };
     case GET_INBOX:
+      console.log(action.payload, 'BOX')
       return {
         ...state,
-        [action.payload.inbox.id]: action.payload.inbox,
+        [action.payload.id]: action.payload,
       };
       case GET_ALL_INBOXES:
         const inboxData = {}

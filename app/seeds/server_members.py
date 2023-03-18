@@ -16,7 +16,10 @@ def seed_server_members():
       user.memberships.append(s2)
       db.session.add(user)
     user1.memberships.append(s2)
+    user2 = User().query.get(6)
+    user2.memberships.append(s2)
     db.session.add(user1)
+    db.session.add(user2)
     db.session.commit()
 
 def undo_server_members():

@@ -6,13 +6,13 @@ def seed_channel_messages():
     )
 
     m2 = ChannelMessage(
-        channel_id=1, user_id=3, content="Be a lover. Give love. Choose love. Love everyone, always."
+        channel_id=1, user_id=3, content="Be a lover. Give love. Choose love. Love everyone, always"
     )
     m3 = ChannelMessage(
         channel_id=1, user_id=3, content="It was Rolling Stones that dubbed me the new king of pop, Michael... I would never usurp the true king!"
     )
     m4 = ChannelMessage(
-        channel_id=1, user_id=4, content="I'm telling you, people. Everyday we wake up is another blessing. Follow your dreams and don't let anyone stop you. Never say never."
+        channel_id=1, user_id=4, content="I'm telling you, people. Everyday we wake up is another blessing. Follow your dreams and don't let anyone stop you. Never say never"
     )
     m5 = ChannelMessage(
     channel_id=1, user_id=4, content="However, Harry, you'll never be the king of pop..."
@@ -36,19 +36,19 @@ def seed_channel_messages():
 
 
     m10 = ChannelMessage(
-    channel_id=2, user_id=12, content="You know, I'm a creative genius and there's no other way to word it. https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F375909900127955628%2F&psig=AOvVaw1kNYMEeeMzCwXCNQxmTWR1&ust=1679190222874000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKjX9Zqt5P0CFQAAAAAdAAAAABAD "
+    channel_id=2, user_id=12, content="You know, I'm a creative genius and there's no other way to word it https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjEwNmRkZjJiODI3ZGI2ZmI4NjAwYzZlOGIxNzE2NDhkY2MyMWI5MiZjdD1n/SX5MzFdz6Nh6g/giphy.gif"
     )
 
     m11 = ChannelMessage(
-    channel_id=2, user_id=17, content="Listen Kanye... if you're not sincere with it, you shouldn't say anything at all."
+    channel_id=2, user_id=17, content="Listen Kanye... if you're not sincere with it, you shouldn't say anything at all"
     )
 
     m12 = ChannelMessage(
-    channel_id=2, user_id=17, content="https://www.youtube.com/watch?v=_CL6n0FJZpk"
+    channel_id=2, user_id=17, content="https://i.gifer.com/5ytn.gif"
     )
 
     m13 = ChannelMessage(
-    channel_id=2, user_id=15, content="Gotta back up my guy Dre on that, Ye. https://www.youtube.com/watch?v=8GliyDgAGQI"
+    channel_id=2, user_id=15, content="Gotta back up my guy Dre on that, Ye"
     )
 
     m14 = ChannelMessage(
@@ -56,14 +56,54 @@ def seed_channel_messages():
     )
 
     m15 = ChannelMessage(
-    channel_id=2, user_id=12, content="As a man I am flawed, but my music is perfect."
+    channel_id=2, user_id=12, content="As a man I am flawed, but my music is perfect"
     )
 
     m16 = ChannelMessage(
-    channel_id=2, user_id=12, content="As a man I am flawed, but my music is perfect."
+    channel_id=2, user_id=12, content="https://www.youtube.com/watch?v=MYF7H_fpc-g&t=2s"
     )
 
-    message_list = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18]
+    m17 = ChannelMessage(
+    channel_id=2, user_id=13, content="Listen Kanye, I love you man but you gotta cool it... If Beyonce taught me anything it was that even someone as great as me can be put in his place"
+    )
+
+    m18 = ChannelMessage(
+    channel_id=2, user_id=6, content="Did someone say my name? https://media.tenor.com/DPyfbUcI5CgAAAAC/beyonce-saymyname.gif"
+    )
+
+    m19 = ChannelMessage(
+    channel_id=2, user_id=6, content="J baby, don't forget what I did on Lemonade"
+    )
+
+    m20 = ChannelMessage(
+    channel_id=2, user_id=13, content="Don't worry Bey, I learned my lesson"
+    )
+
+    m21 = ChannelMessage(
+    channel_id=2, user_id=14, content="This is getting awkward, y'all..."
+    )
+
+    m22 = ChannelMessage(
+    channel_id=2, user_id=10, content="Yeah for real. I usually leave the deep stuff for my music"
+    )
+
+    m23 = ChannelMessage(
+    channel_id=2, user_id=10, content="https://assets.vogue.com/photos/5891c792ce34fb453af7d194/master/w_1600,c_limit/drake-memes.gif"
+    )
+
+    m24 = ChannelMessage(
+    channel_id=2, user_id=10, content="I was born to make mistakes, not to fake perfection"
+    )
+
+    m25 = ChannelMessage(
+    channel_id=2, user_id=14, content="Amen, Drizzy... It's easy to forget who you are"
+    )
+
+    m26 = ChannelMessage(
+        channel_id=2, user_id=11, content="I feel you on that, Beyonce... Trust is hard to come by. That’s why my circle is small and tight. I’m kind of funny about making new friends."
+    )
+
+    message_list = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18, m19, m20, m21, m22, m23, m24, m25, m26]
 
     for message in message_list:
         db.session.add(message)

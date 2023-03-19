@@ -10,6 +10,8 @@ const useStyles = createUseStyles((theme) => ({
     justifyContent: "space-between",
     width: "100%",
     borderBottom: "rgba(26, 24, 24, 0.607) solid 0.2px",
+    minHeight: '50px',
+    height: '50px',
   },
 }));
 

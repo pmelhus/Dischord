@@ -9,11 +9,11 @@ const getServerMembers = (serverMembers) => {
 }
 
 export const getAllServerMembers = (userId, serverId) => async (dispatch) => {
-  console.log('HERE !!!')
+
   const response = await fetch(`/api/servers/server_members/${userId}/${serverId}`)
   if (response.ok) {
     const serverMembers = await response.json();
-    console.log(serverMembers, "RESPONSE")
+
     dispatch(getServerMembers(serverMembers))
     return serverMembers
   } else {

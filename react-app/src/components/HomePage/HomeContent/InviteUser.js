@@ -12,7 +12,7 @@ const InviteUser = ({sessionUser, socket, currentServer, setInviteModal}) => {
   const memberIds = currentServerMembers.map(user => {
     return user.user_id
   })
-  console.log(memberIds, "IDS HERE")
+
 
 const friendsList = []
 
@@ -26,7 +26,7 @@ const friendsList = []
   })
 
 const filteredFriendsList = friendsList.filter(friend => (!memberIds.includes(friend.id)))
-console.log(filteredFriendsList, 'FILTERED FRIENDS')
+
 
   return (
     <div className='invite-user-container'>

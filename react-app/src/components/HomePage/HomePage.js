@@ -71,7 +71,6 @@ const HomePage = ({
 
   useEffect(async () => {
     if (urlMe !== "@me" && channelId && loaded) {
-      console.log(serverId);
       await componentMounted();
       await setLoadingMessages(false);
     }

@@ -31,7 +31,7 @@ export const authenticate = () => async (dispatch) => {
       "Content-Type": "application/json",
     },
   });
-  
+
   if (response.ok) {
     const data = await response.json();
     if (data.errors) {
@@ -53,11 +53,11 @@ export const login = (email, password) => async (dispatch) => {
       password,
     }),
   });
-  // console.log(response, 'RESPONSE HERE')
+
 
   if (response.ok) {
     const data = await response.json();
-    // console.log(data, 'DATA HERE')
+
     dispatch(setUser(data));
     return data;
   } else if (response.status < 500) {
@@ -78,7 +78,7 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = (id) => async (dispatch) => {
-  console.log(id);
+
   const response = await fetch(`/api/auth/logout/${id}`, {
     headers: {
       "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export const logout = (id) => async (dispatch) => {
 export const signUp =
   (username, email, password, repeatPassword, image, bio, online, idle) =>
   async (dispatch) => {
-    console.log(username, email, password, repeatPassword, image, bio, online, idle)
+
     const f = new FormData();
     f.append("username", username);
     f.append("email", email);
@@ -117,7 +117,7 @@ export const signUp =
     f.append('online', online)
     f.append('idle', idle)
     if (image) {
-      // console.log(image);
+
       f.append("image", image);
     }
     const response = await fetch("/api/auth/signup", {
@@ -132,8 +132,7 @@ export const signUp =
     } else if (response.status < 500) {
       const data = await response.json();
       if (data.errors) {
-        console.log(data.errors, "HERE");
-        // console.log(data.errors)
+
         let errorObj = {};
         data.errors.forEach((error) => {
           let key = error.split(":")[0];
@@ -147,11 +146,8 @@ export const signUp =
   };
 
 export const editUserProfile = (data) => async (dispatch) => {
-  // console.log("------------editcharterTHUNK");
-  // console.log(data)
-  // console.log("------------editcharterTHUNK");
+
   const { id, username, email, bio, image } = data;
-  // console.log(data, '======================data')
 
   const f = new FormData();
 
@@ -230,7 +226,7 @@ export const editUserPassword = (data) => async (dispatch) => {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      // console.log(action.payload, "PAYLOAD");
+
       return { user: action.payload };
     case REMOVE_USER:
       return { user: null };

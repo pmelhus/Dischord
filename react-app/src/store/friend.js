@@ -111,7 +111,7 @@ export const createFriendship = (payload) => async (dispatch) => {
     }),
   ]);
 
-  // console.log(response);
+
   if (response.ok) {
     const data = await response.json();
     dispatch(addFriendship(data));
@@ -176,7 +176,7 @@ export const removeRequest = (id) => async (dispatch) => {
   const [request] = await Promise.all([response.json()]);
 
   if (response.ok) {
-    console.log(request);
+
     dispatch(deleteRequest(request));
     return request;
   }
@@ -186,7 +186,7 @@ export const loadMutualFriends = (id) => async (dispatch) => {
   const [response] = await Promise.all([
     fetch(`/api/friendships/mutual_friends/${id}`),
   ]);
-  console.log("HERE");
+
   const [users] = await Promise.all([response.json()]);
 
   if (response.ok) {

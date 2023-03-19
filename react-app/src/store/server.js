@@ -69,7 +69,7 @@ export const genOneServer = (id) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
 
   const [serverResponse] = await Promise.all([fetch(`/api/servers/${id}`)]);
-  // console.log(serversResponse, 'SERVER RESPONSE HERE')
+
   const [server] = await Promise.all([serverResponse.json()]);
 
   if (serverResponse.ok) {
@@ -80,11 +80,11 @@ export const genOneServer = (id) => async (dispatch) => {
 
 export const genServers = (userId) => async (dispatch) => {
   // doing it this way in case we want more types of responses here later ...
-  console.log(userId, "YO");
+
   const [serversResponse] = await Promise.all([
     fetch(`/api/servers/usersServers/${userId}`),
   ]);
-  // console.log(serversResponse, 'SERVER RESPONSE HERE')
+
   const [servers] = await Promise.all([serversResponse.json()]);
 
   if (serversResponse.ok) {
@@ -95,13 +95,12 @@ export const genServers = (userId) => async (dispatch) => {
 
 export const createServer = (payload) => async (dispatch) => {
   const { name, image, publicValue, owner_id } = payload;
-  // console.log(payload)
+
   const f = new FormData();
   f.append("name", name);
   f.append("public", publicValue);
   f.append("owner_id", owner_id);
   if (image) {
-    // console.log(image);
     f.append("image", image);
   }
 
@@ -118,9 +117,9 @@ export const createServer = (payload) => async (dispatch) => {
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
-    console.log(data);
+
     if (data.errors) {
-      console.log(data.errors);
+
       let errorObj = {};
       data.errors.forEach((error) => {
         let key = error.split(":")[0];
@@ -134,11 +133,8 @@ export const createServer = (payload) => async (dispatch) => {
 };
 
 export const editServer = (data) => async (dispatch) => {
-  // console.log("------------editcharterTHUNK");
-  // console.log(data)
-  // console.log("------------editcharterTHUNK");
+
   const { id, name, privacy, owner_id, image } = data;
-  // console.log(data, '======================data')
 
   const f = new FormData();
 
@@ -179,11 +175,7 @@ export const editServer = (data) => async (dispatch) => {
 
 export const deleteServer = (server) => async (dispatch) => {
   const { id } = server;
-  console.log(server);
-  // console.log('inside the thunk');
-  // console.log('estateowner', estate.owner_id);
-  // console.log("estateid", estate.id);
-  // console.log(server, "=============");
+
   const [response] = await Promise.all([
     fetch(`/api/servers/${id}`, {
       method: "DELETE",
@@ -210,14 +202,12 @@ export const deleteServer = (server) => async (dispatch) => {
 export const createServerMember = (payload) => async (dispatch) => {
   const { user_id, server_id } = payload;
 
-  // console.log(payload, 'PAYLOAD=========')
+
   const [response] = await Promise.all([
     fetch(`/api/servers/server_members/${server_id}/${user_id}`, {
       method: "POST",
     }),
   ]);
-
-  // console.log(response);
   if (response.ok) {
     const data = await response.json();
     dispatch(addServerMember(data));
@@ -239,7 +229,7 @@ export const createServerMember = (payload) => async (dispatch) => {
 };
 
 export const deleteServerMember = (serverMember) => async (dispatch) => {
-  // console.log(serverMember, 'HIYA')
+
   const { id } = serverMember;
   const response = await fetch(`/api/server_members/${id}`, {
     method: "DELETE",
@@ -285,7 +275,7 @@ const serverReducer = (state = {}, action) => {
       return newState;
     case LOAD_SERVER:
       const serverMemberData = {};
-      // console.log(action.payload)
+
       if (action.payload) {
         for (let serverMember of action.payload) {
           serverMemberData[serverMember.id] = serverMember;
@@ -295,7 +285,7 @@ const serverReducer = (state = {}, action) => {
     case LOAD_ONE_SERVER:
       return { ...state, requestedServer: action.payload };
     case ADD_SERVER_MEMBER:
-      // console.log(action.payload)
+
       return { ...state, [action.payload.server.id]: action.payload.server };
     default:
       return state;

@@ -67,7 +67,7 @@ export const createChannel = (payload) => async (dispatch) => {
     }),
   ]);
 
-  // console.log(estateData);
+
   if (response.ok) {
     const data = await response.json();
     dispatch(addChannel(data));
@@ -134,10 +134,7 @@ export const editChannel = (data) => async (dispatch) => {
 
 export const deleteChannel = (channel) => async (dispatch) => {
   const { id } = channel;
-  // console.log('inside the thunk');
-  // console.log('estateowner', estate.owner_id);
-  // console.log("estateid", estate.id);
-  // console.log(channel, "=============");
+
   const response = await fetch(`/api/channels/${id}`, {
     method: "DELETE",
   });

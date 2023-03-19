@@ -4,7 +4,7 @@ import "./LinkDisplay.css";
 const LinkDisplay = ({ message }) => {
   const [videoUrl, setVideoUrl] = useState("");
   const text = message?.content;
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Finds the url in the message.content and displays it as an anchor tag around the rest of the message content.
 
@@ -22,7 +22,6 @@ const LinkDisplay = ({ message }) => {
   const match = matches[0];
 
   const endOfString = (text) => {
-    console.log(match);
     if (text.indexOf(match) + matches.length === text.length) return;
     return text.slice(text.indexOf(match) + match.length, text.length);
   };
@@ -57,8 +56,12 @@ const LinkDisplay = ({ message }) => {
     return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url);
   }
 
-  // console.log(sliceUrlSearch(new URL(matches[0]).search))
-  //   console.log(new URL(matches[0]));
+  useEffect(()=> {
+    if (isYouTubeUrl(match)) {
+      setLoading(true)
+    }
+  },[isYouTubeUrl])
+
 
   return (
     <div className="url-div">

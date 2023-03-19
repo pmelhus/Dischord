@@ -106,7 +106,6 @@ const FriendsList = () => {
     const payload = { self_id, friend_id };
 
     const existingInbox = await dispatch(getOneInbox(payload));
-    console.log(existingInbox, "existing inbox");
     if (existingInbox.errors) {
       const createdInbox = await dispatch(createInbox(payload));
       if (createdInbox && createdInbox.errors) {
@@ -119,7 +118,7 @@ const FriendsList = () => {
       if (addedInboxMembers.errors) {
         await setErrors(addedInboxMembers.errors);
       }
-      await console.log(createdInbox.inbox.uuid, "created inbox");
+
       return await history.push(`/channels/@me/${createdInbox.inbox.uuid}`);
     }
 

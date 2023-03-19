@@ -245,7 +245,6 @@ const DirectMessageConversation = ({
     };
     e.preventDefault();
     const sentRequest = await dispatch(createFriendRequest(payload));
-    console.log(sentRequest);
     if (sentRequest && sentRequest.errors) {
       await setErrors(sentRequest.errors);
       return;

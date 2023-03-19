@@ -3,7 +3,10 @@ import { Slate, Editable, withReact } from "slate-react";
 import { Editor, Transforms } from "slate";
 import { useState, useCallback, useEffect } from "react";
 import { Node } from "slate";
+import { createUseStyles, useTheme } from "react-jss";
+import CustomEditable from "./CustomEditable";
 import "./SlateTextEditor.css";
+
 const serialize = (value) => {
   return (
     value
@@ -14,6 +17,8 @@ const serialize = (value) => {
   );
 };
 
+const useStyles = createUseStyles((theme) => ({}));
+
 const SlateTextEditor = ({
   sendChat,
   editMessage,
@@ -21,10 +26,10 @@ const SlateTextEditor = ({
   chatInput,
   setChatInput,
   setHighlight,
-  setShowEditor
+  setShowEditor,
+  errors,
 }) => {
   const [editor] = useState(() => withReact(createEditor()));
-  // console.log(editor);
 
   const initialValue = [
     {
@@ -103,13 +108,9 @@ const SlateTextEditor = ({
   //       return <DefaultElement {...props} />;
   //   }
   // }, []);
-useEffect(() => {
-
-
-    Transforms.select(editor, Editor.end(editor, []) );
-
-
-},[])
+  useEffect(() => {
+    Transforms.select(editor, Editor.end(editor, []));
+  }, []);
 
   return (
     // Add a toolbar with buttons that call the same methods.
@@ -126,27 +127,30 @@ useEffect(() => {
         }
       }}
     >
-      <Editable
+      <CustomEditable
         decorate={myDecorator}
         renderElement={renderElement}
         renderLeaf={Leaf}
         autoFocus={true}
-        onKeyDown={(event) => {
+        onKeyDown={async (event) => {
           if (event.key === "Enter") {
-            event.preventDefault();
-            sendChat();
-            Transforms.delete(editor, {
-              at: [0],
-            });
-            editor.children = [
-              {
-                type: "paragraph",
-                children: [{ text: "" }],
-              },
-            ];
-            Transforms.select(editor, { offset: 0, path: [0, 0] });
+            await event.preventDefault();
+           const sentChat = await sendChat();
+            if (!sentChat.errors) {
+              await console.log(sentChat, "ERRORS HERE");
+              await Transforms.delete(editor, {
+                at: [0],
+              });
+              editor.children = [
+                {
+                  type: "paragraph",
+                  children: [{ text: "" }],
+                },
+              ];
+            }
+            await Transforms.select(editor, { offset: 0, path: [0, 0] });
             if (editMessage) {
-              setShowEditor(false)
+             await setShowEditor(false);
             }
           }
         }}

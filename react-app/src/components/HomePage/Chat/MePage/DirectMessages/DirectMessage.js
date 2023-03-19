@@ -163,10 +163,10 @@ const DirectMessage = ({
     await setChatInput(editedMessage.content);
     if (editedMessage.errors) {
       setErrors(editedMessage.errors);
-      // console.log(editedMessage.errors);
+
       // setShowEdit(false);
       setChatInput(message.content);
-      // console.log(content.length, "CONTENT");
+
       if (chatInput.length > 1000) {
         setChatInput(chatInput);
       }

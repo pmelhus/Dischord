@@ -55,7 +55,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
     setShowInviteButton(true);
   }, [pathname]);
 
-  console.log(showDropdown, 'DROPDOWN')
+
   const popover = (
     <Popover
       placement="bottom-start"

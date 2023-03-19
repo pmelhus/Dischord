@@ -102,7 +102,6 @@ const SuggestedFriends = () => {
   const existingRequests =  requests.filter((request) => {
       return( request.friend_id === user.id && request.self_id === sessionUser.id ) || (request.self_id === user.id && request.friend_id === sessionUser.id);
     });
-    console.log(existingRequests)
     return existingRequests
   };
 

@@ -13,10 +13,10 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
   const userDate = new Date(user.created_at);
   const memberDate = new Date(memberSinceDate);
   const options = { year: "numeric", month: "long", day: "numeric" };
-  // console.log(userDate.getDate());
+
   const bannerStyle = { backgroundColor: "rgb(42, 39, 33)" };
   // const dispatch = useDispatch();
-  // console.log(typeof userDate)
+
 
   // useEffect(() => {
 
@@ -24,7 +24,7 @@ const UserProfilePopover = ({ user, currentServer, memberIds }) => {
   // }, [dispatch]);
 
   // const currentServerMember = useSelector((state) => state.serverMembers.loadedServerMembers);
-  // console.log(currentServerMember)
+
 
   return (
     <>

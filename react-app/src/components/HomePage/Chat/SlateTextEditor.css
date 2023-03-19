@@ -1,5 +1,6 @@
 .slate-paragraph {
   color: white;
-  margin-left: 8px;
-  min-width: 1800px;
+  min-width: 100%;
+  width: 100%;
+
 }

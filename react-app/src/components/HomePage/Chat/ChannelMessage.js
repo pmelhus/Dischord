@@ -21,7 +21,7 @@ const ChannelMessage = ({
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
   const sessionUser = useSelector((state) => state.session.user);
-  // console.log(sessionUser)
+
   const [showEdit, setShowEdit] = useState(false);
   const [content, setContent] = useState(message.content);
   const [errors, setErrorsEdit] = useState({});
@@ -33,13 +33,11 @@ const ChannelMessage = ({
   const servers = useSelector((state) => state.servers);
 
   const handleEditModal = () => {
-    console.log(messageEditId, "MESSAGE EDIT ID");
-    console.log(message.id, "MESSAGE ID");
 
     setShowEdit(true);
     setContent(message.content);
     setMessageEditId(message.id);
-    // console.log(messageEditId, "MESSAGE EDIT ID ");
+
   };
 
   const editInputSubmit = async (e) => {
@@ -57,10 +55,10 @@ const ChannelMessage = ({
 
     if (editedMessage.errors) {
       setErrorsEdit(editedMessage.errors);
-      // console.log(editedMessage.errors);
+
       // setShowEdit(false);
       setContent(message.content);
-      // console.log(content.length, "CONTENT");
+
       if (content.length > 1000) {
         setContent(content);
       }
@@ -79,7 +77,7 @@ const ChannelMessage = ({
     setShowEdit(false);
     setErrorsEdit({});
     // setMessageEditId(message.id);
-    // console.log(messageEditId, "MESSAGE EDIT ID ");
+
   };
 
   const handleDeleteModal = () => {

@@ -42,9 +42,9 @@ export const genDirectMessages = (id) => async (dispatch) => {
 
 export const createDirectMessage = (payload) => async (dispatch) => {
   const edited = false;
-  // console.log(payload, 'PAYLOAD=========')
+
   const { user_id, msg, inbox_id, server_invite, server_invite_id } = payload;
-  console.log(payload, 'payload here')
+
 
   const f = new FormData();
   f.append("content", msg);
@@ -63,7 +63,7 @@ export const createDirectMessage = (payload) => async (dispatch) => {
     }),
   ]);
 
-  // console.log(response);
+
   if (response.ok) {
     const data = await response.json();
     dispatch(addDirectMessage(data));
@@ -86,7 +86,7 @@ export const createDirectMessage = (payload) => async (dispatch) => {
 
 export const editInboxMessage = (payload) => async (dispatch) => {
   const { id, content, inbox_id, owner_id, edited } = payload;
-  // console.log(payload, 'HEEERE')
+
   const f = new FormData();
   f.append("content", content);
   f.append("inbox_id", inbox_id);
@@ -121,7 +121,7 @@ export const editInboxMessage = (payload) => async (dispatch) => {
 };
 
 export const deleteDirectMessage = (directMessage) => async (dispatch) => {
-  // console.log(directMessage, 'HIYA')
+
   const { id } = directMessage;
   const response = await fetch(`/api/direct_messages/${id}`, {
     method: "DELETE",
@@ -156,7 +156,7 @@ const directMessageReducer = (state = {}, action) => {
       return copyState;
     case LOAD__MESSAGES:
       const directMessageData = {};
-      // console.log(action.payload)
+
       if (action.payload) {
         for (let directMessage of action.payload) {
           directMessageData[directMessage.id] = directMessage;

@@ -137,7 +137,6 @@ const SlateTextEditor = ({
             await event.preventDefault();
            const sentChat = await sendChat();
             if (!sentChat.errors) {
-              await console.log(sentChat, "ERRORS HERE");
               await Transforms.delete(editor, {
                 at: [0],
               });

@@ -20,26 +20,38 @@ Dischord is a full stack application intended for musicians and other creatives 
 
 ## **_Login Page_**
 
-<img width="1792" alt="Screen Shot 2022-06-20 at 12 31 51 AM" src="https://user-images.githubusercontent.com/97479364/174534397-f5ed6b94-0caa-4816-a3e6-e66ec50499de.png">
+![signin-dischord](https://user-images.githubusercontent.com/97479364/226231256-dc8fcc1a-5ae2-40be-834f-653937983fcd.png)
 
 <br>
 
 ## **_Signup Page_**
 
-<img width="1914" alt="Screen Shot 2022-06-20 at 12 31 36 AM" src="https://user-images.githubusercontent.com/97479364/174534436-04e32224-045b-4db0-812b-6744a03353fb.png">
-
+![signup-dischord](https://user-images.githubusercontent.com/97479364/226231285-691549d2-b92b-407c-ba65-a5fc031f1115.png)
 
 <br>
 
-## **_Home chat Page_**
+## **_Friends Page_**
 
-<img width="2560" alt="Screen Shot 2022-06-20 at 12 23 57 AM" src="https://user-images.githubusercontent.com/97479364/174534492-a69a27f2-cf99-49ed-9ae8-86810fa39d06.png">
+![friends-dischord](https://user-images.githubusercontent.com/97479364/226231413-b708e447-99bb-418d-9de3-a116a4213a5a.png)
+
 
 <br>
 
 ## **_Server Page_**
 
-<img width="2560" alt="Screen Shot 2022-06-20 at 12 25 02 AM" src="https://user-images.githubusercontent.com/97479364/174534558-84a7b6e3-60a6-4616-bd3c-0b5ce1768f74.png">
+![server-dischord](https://user-images.githubusercontent.com/97479364/226231478-6b3d024c-2d59-4070-9dc9-b956dcc2ce56.png)
+
+<br>
+
+## **_Direct Message Page_**
+
+![dm-page-dischord](https://user-images.githubusercontent.com/97479364/226231573-5505d332-5a6f-4370-bf3e-d643eb0ffb3e.png)
+
+<br>
+
+## **_User Settings Page_**
+
+![user-settings-dischord](https://user-images.githubusercontent.com/97479364/226231645-1a68f6a9-1412-4ffb-bd00-476cd5722c7c.png)
 
 <br>
 

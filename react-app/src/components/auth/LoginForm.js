@@ -40,7 +40,7 @@ const LoginForm = ({ socket }) => {
       e.preventDefault();
       const data = await dispatch(login("the@listener.com", "password"));
 
-      // await socket.emit("login", data);
+      await socket.emit("login", data);
 
       if (data?.errors) {
         setErrors(data?.errors);

@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import sadFish from "../../../../../images/newsadfish.png";
 
 const useStyles = createUseStyles((theme) => ({
   avatar: {
@@ -73,6 +74,22 @@ const useStyles = createUseStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  sadFishy: {
+    width: "200px",
+    height: "200px",
+    objectFit: "cover",
+    paddingBottom: "30px",
+  },
+  fishDiv: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "center",
+    color: theme.darkGray,
+    paddingRight: "40px",
+  },
 }));
 
 const FriendsList = () => {
@@ -135,6 +152,14 @@ const FriendsList = () => {
     </Tooltip>
   );
 
+  const friendTooltip = (
+    <Tooltip placement="bottom" id="tooltip-top">
+      <div className={classes.buttonNameContainer}>
+        <div className={classes.tooltipText}>Add a friend</div>
+      </div>
+    </Tooltip>
+  );
+
   const popperConfig = {
     modifiers: [
       {
@@ -153,6 +178,12 @@ const FriendsList = () => {
           style={{ fontSize: "12px" }}
         >{`ALL FRIENDS - ${friendsList.length}`}</h4>
       </div>
+      {!friendsList.length && (
+        <div className={classes.fishDiv}>
+          <img className={classes.sadFishy} src={sadFish}></img>
+          <p>No one's around to play with Goldie...</p>
+        </div>
+      )}
       {friendsList.map((friend) => {
         const currFriend = users[determineId(friend)];
         return (
@@ -183,7 +214,6 @@ const FriendsList = () => {
                     trigger={["focus", "hover"]}
                     placement="top"
                     overlay={tooltip}
- 
                     popperConfig={popperConfig}
                   >
                     <div

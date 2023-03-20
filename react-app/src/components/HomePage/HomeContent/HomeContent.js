@@ -43,7 +43,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
 
   // redux
   const servers = useSelector((state) => Object.values(state.servers));
-  const sessionUser = useSelector(state => (state.session.user));
+  const sessionUser = useSelector((state) => state.session.user);
   const [showInviteButton, setShowInviteButton] = useState(true);
   // finds server based on url params id
 
@@ -55,12 +55,11 @@ const HomeContent = ({ socket, setLoading, loading }) => {
     setShowInviteButton(true);
   }, [pathname]);
 
-
   const popover = (
     <Popover
       placement="bottom-start"
       id="popover-basic"
-      style={{ marginTop: '-4px', marginRight: '4px'}}
+      style={{ marginTop: "-4px", marginRight: "4px" }}
     >
       {/* <Popover.Header as="h3">{user.username}</Popover.Header> */}
 
@@ -69,14 +68,14 @@ const HomeContent = ({ socket, setLoading, loading }) => {
         {...{ sessionUser }}
         {...{ setShowEditModal }}
         {...{ setInviteModal }}
-        {...{setShowDropdown}}
+        {...{ setShowDropdown }}
       />
     </Popover>
   );
 
   return (
     <div className="home-content-container">
-      <Route exact path="/channels/@me">
+      <Route path="/channels/@me*">
         <div className="server-sidebar-container">
           <FriendsNavBar />
 
@@ -104,14 +103,19 @@ const HomeContent = ({ socket, setLoading, loading }) => {
                 onToggle={() => setShowDropdown(!showDropdown)}
                 // onHide={() => setUserModal(false)}
                 show={showDropdown}
-
               >
-                <div onClick={() => setShowDropdown(!showDropdown)} className="server-name-div">
+                <div
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className="server-name-div"
+                >
                   <h3 className={classes.serverName}>{currentServer?.name}</h3>
 
                   {showDropdown ? (
                     <>
-                      <i onClick={() => setShowDropdown(false)}  className="fa-solid fa-xmark"></i>
+                      <i
+                        onClick={() => setShowDropdown(false)}
+                        className="fa-solid fa-xmark"
+                      ></i>
                     </>
                   ) : (
                     <>
@@ -155,9 +159,9 @@ const HomeContent = ({ socket, setLoading, loading }) => {
                   </div>
                 )}
 
-
-              <ChannelList {...{ setLoading }} {...{ loading }} />
-
+              {pathname.split("/")[2] !== "@me" && (
+                <ChannelList {...{ setLoading }} {...{ loading }} />
+              )}
             </div>
             <div>
               <div className="server-nav-bottom">

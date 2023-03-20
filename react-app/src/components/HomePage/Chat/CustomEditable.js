@@ -8,7 +8,7 @@ const useStyles = createUseStyles((theme) => ({
     textOverflow: "ellipse",
     // maxWidth: '100%',
     width: '100%',
-    padding: '10px 30px'
+    padding: '10px 14px'
   },
 }));
 

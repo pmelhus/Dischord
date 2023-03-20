@@ -31,7 +31,6 @@ const useStyles = createUseStyles((theme) => ({
     margin: "5px",
   },
   imageAndUsername: {
-
     width: "100%",
   },
 
@@ -42,15 +41,14 @@ const useStyles = createUseStyles((theme) => ({
     color: theme.offWhite,
   },
   usernameAndContentFirst: {
-
-    width: '100%'
+    width: "100%",
   },
   contentFirst: {
     margin: "0",
     color: theme.offWhite,
     marginLeft: "4px",
     // marginTop: "7px",
-    width: '100%'
+    width: "100%",
   },
   username: {
     marginLeft: "4px",
@@ -120,7 +118,10 @@ const useStyles = createUseStyles((theme) => ({
     display: "inline",
   },
   firstFormContainer: {
-    width: '100%'
+    width: "100%",
+  },
+  formEditDM:{
+    width: "100%",
   }
 }));
 
@@ -313,7 +314,13 @@ const DirectMessage = ({
                   ></img>
 
                   <div className={classes.usernameAndContentFirst}>
-                    <div style={{ display: "flex", alignItems: "flex-end", width: '100%' }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-end",
+                        width: "100%",
+                      }}
+                    >
                       <h4 className={classes.username}>
                         {messageUser?.username}
                       </h4>
@@ -334,12 +341,9 @@ const DirectMessage = ({
                                   {...{ chatInput }}
                                   {...{ setChatInput }}
                                 />
-
                               </form>
                               <div>
-
-
-                              <p id="message-edit-instructions">
+                                <p id="message-edit-instructions">
                                   Press
                                   <button type="button" onClick={handleCancel}>
                                     <i className="fa-solid fa-xmark fa-xl"></i>
@@ -388,7 +392,7 @@ const DirectMessage = ({
                 <>
                   {showEditor ? (
                     <>
-                      <>
+                      <div className={classes.formEditDM}>
                         <form className={classes.channelChatForm}>
                           <SlateTextEditor
                             {...{ setShowEditor }}
@@ -399,7 +403,16 @@ const DirectMessage = ({
                             {...{ errors }}
                           />
                         </form>
-                      </>
+                        <div style={{paddingLeft: '54px', paddingTop: '6px'}}>
+                                <p id="message-edit-instructions">
+                                  Press
+                                  <button type="button" onClick={handleCancel}>
+                                    <i className="fa-solid fa-xmark fa-xl"></i>
+                                  </button>
+                                  to cancel. Press enter to submit.
+                                </p>
+                              </div>
+                      </div>
                     </>
                   ) : (
                     <div className={classes.messageContentDiv}>

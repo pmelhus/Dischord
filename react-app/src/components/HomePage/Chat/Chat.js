@@ -264,7 +264,7 @@ const Chat = ({
             <Route exact path="/channels/*/*">
               <div className="channel-chat-messages">
                 <div>
-                  {currentChannel.name === "general" ? (
+                  {currentChannel?.name === "general" ? (
                     <div className={classes.inviteFriendsWelcome}>
                       <InviteFriendsWelcome
                         {...{ setHighlight }}
@@ -279,10 +279,10 @@ const Chat = ({
                         <i className="fa-2xl fa-light fa-hashtag"></i>
                       </div>
                       <div className={classes.channelWelcome}>
-                      <h1>Welcome to #{currentChannel.name}!</h1>
+                      <h1>Welcome to #{currentChannel?.name}!</h1>
                       </div>
                       <div className={classes.channelWelcomeMessage}>
-                        <p>This is the start of the #{currentChannel.name} channel.</p>
+                        <p>This is the start of the #{currentChannel?.name} channel.</p>
                         </div>
                     </div>
                   )}

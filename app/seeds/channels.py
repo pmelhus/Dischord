@@ -4,12 +4,12 @@ from ..models import db, Channel
 channels = [
     {
         "server_id": 1,
-        "name": "The Popular kids",
+        "name": "general",
         "description": "Who's the real king of pop?"
     },
     {
         "server_id": 2,
-        "name": "The coasts",
+        "name": "general",
         "description": "Tupac or Biggie?"
     },
     # {

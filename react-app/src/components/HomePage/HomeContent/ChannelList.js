@@ -5,10 +5,10 @@ import { useLocation } from "react-router-dom";
 import CreateChannelForm from "./CreateChannelForm";
 import EditChannelForm from "./EditChannelForm";
 import ChannelListDiv from "./ChannelListDiv";
-import {genChannels} from '../../../store/channel'
+import { genChannels } from "../../../store/channel";
 
-const ChannelList = ({setLoading, loading}) => {
-  const dispatch = useDispatch()
+const ChannelList = ({ setLoading, loading }) => {
+  const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState(true);
   const { pathname } = useLocation();
   const channels = useSelector((state) => Object.values(state.channels));
@@ -21,7 +21,6 @@ const ChannelList = ({setLoading, loading}) => {
   const currentServer = servers.find(
     (server) => server.id === parseInt(pathname.split("/")[2])
   );
-
 
   const serverChannelsFiltered = channels.filter(
     (channel) => channel.server_id === parseInt(pathname.split("/")[2])
@@ -57,8 +56,6 @@ const ChannelList = ({setLoading, loading}) => {
     };
   }, [showDropdown]);
 
-
-
   // Invite users section
 
   return (
@@ -79,22 +76,21 @@ const ChannelList = ({setLoading, loading}) => {
               </button>
             )}
           </div>
-<div className='channel-list-div-scroll'>
-
-          {serverChannelsFiltered.map((channel) => {
-            return (
-              <ChannelListDiv
-                {...{ channel }}
-                {...{ setSelectedChannel }}
-                // {...{ currChannel }}
-                {...{ setShowEditForm }}
-                {...{ handleEditChannel }}
-                {...{ setShowDropdown }}
-                key={channel.id}
-              />
-            );
-          })}
-</div>
+          <div className="channel-list-div-scroll">
+            {serverChannelsFiltered.map((channel) => {
+              return (
+                <ChannelListDiv
+                  {...{ channel }}
+                  {...{ setSelectedChannel }}
+                  // {...{ currChannel }}
+                  {...{ setShowEditForm }}
+                  {...{ handleEditChannel }}
+                  {...{ setShowDropdown }}
+                  key={channel.id}
+                />
+              );
+            })}
+          </div>
 
           <>
             {showChannelForm && (

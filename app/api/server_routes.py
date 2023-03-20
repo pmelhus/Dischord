@@ -24,7 +24,7 @@ def validation_errors_to_error_messages(validation_errors):
 @server_routes.route('/usersServers/<int:id>')
 @login_required
 def servers(id):
-    print('HERE')
+
 
     # query all server members
     members = db.session.query(server_members).all()

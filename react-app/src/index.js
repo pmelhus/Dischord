@@ -42,7 +42,8 @@ const theme = {
   redTheme: 'rgb(200 56 73)',
   redThemeGrayed: 'rgba(200, 56, 73, .5)',
   boxShadowButton: 'rgba(2, 2, 2, 0.15)',
-  darkMenuBackground: 'rgb(17, 18, 20)'
+  darkMenuBackground: 'rgb(17, 18, 20)',
+  hashGray: 'rgb(65, 67, 74)'
 }
 
 ReactDOM.render(

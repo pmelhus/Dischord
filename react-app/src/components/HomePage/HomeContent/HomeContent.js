@@ -155,7 +155,9 @@ const HomeContent = ({ socket, setLoading, loading }) => {
                   </div>
                 )}
 
+
               <ChannelList {...{ setLoading }} {...{ loading }} />
+
             </div>
             <div>
               <div className="server-nav-bottom">

@@ -49,14 +49,15 @@ const useStyles = createUseStyles((theme) => ({
     margin: "0px 20px 26px 20px",
   },
   channelChatFormHighlighted: {
+    boxSizing: "border-box",
     backgroundColor: "#4a51577c",
     display: "flex",
     alignItems: "center",
     borderRadius: "7px",
-    // height: "40px",
+    maxHeight: "400px",
+    minHeight: "40px",
     overflow: "auto",
-
-    margin: "0 10px",
+    margin: "0px 20px 26px 20px",
     boxShadow: `0 0 0 4px ${theme.messageHighlight}`,
   },
   errorMsg: {
@@ -64,6 +65,28 @@ const useStyles = createUseStyles((theme) => ({
     position: "absolute",
     bottom: "0px",
   },
+  newChannel: {
+    padding: '12px'
+  },
+  channelHash: {
+    color: theme.offWhite,
+    backgroundColor: theme.hashGray,
+    borderRadius: '100%',
+    width: '50px',
+    height: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  channelWelcome: {
+    color: theme.offWhite,
+    padding: '4px',
+    marginTop: '2px'
+  },
+  channelWelcomeMessage: {
+    color: theme.textGray,
+    padding: '4px'
+  }
 }));
 
 const Chat = ({
@@ -124,9 +147,8 @@ const Chat = ({
     );
     if (sentMessage.errors) {
       await setErrors(sentMessage.errors);
-      return {'errors': sentMessage.errors}
+      return { errors: sentMessage.errors };
     } else {
-
       await socket?.emit("chat", sentMessage.owner_id);
 
       // await setErrors({})
@@ -135,10 +157,9 @@ const Chat = ({
       // clear the input field after the message is sent
       await setErrors({});
       await setChatInput("");
-      return false
+      return false;
     }
   };
-
 
   useEffect(() => {
     genChannelMessages();
@@ -151,7 +172,6 @@ const Chat = ({
   let serverMembersArr = [];
   if (currentServer) {
     currentServer.members_ids?.forEach((member) => {
-
       serverMembersArr.push(member.user_id);
     });
   }
@@ -167,8 +187,6 @@ const Chat = ({
   });
 
   // const onlineServerMembers = users.filter()
-
-
 
   useEffect(() => {
     setMessageError(true);
@@ -246,14 +264,28 @@ const Chat = ({
             <Route exact path="/channels/*/*">
               <div className="channel-chat-messages">
                 <div>
-                  <div className={classes.inviteFriendsWelcome}>
-                    <InviteFriendsWelcome
-                      {...{ setHighlight }}
-                      {...{ currentServer }}
-                      {...{ user }}
-                      {...{ setInviteModal }}
-                    />
-                  </div>
+                  {currentChannel.name === "general" ? (
+                    <div className={classes.inviteFriendsWelcome}>
+                      <InviteFriendsWelcome
+                        {...{ setHighlight }}
+                        {...{ currentServer }}
+                        {...{ user }}
+                        {...{ setInviteModal }}
+                      />
+                    </div>
+                  ) : (
+                    <div className={classes.newChannel}>
+                      <div className={classes.channelHash}>
+                        <i className="fa-2xl fa-light fa-hashtag"></i>
+                      </div>
+                      <div className={classes.channelWelcome}>
+                      <h1>Welcome to #{currentChannel.name}!</h1>
+                      </div>
+                      <div className={classes.channelWelcomeMessage}>
+                        <p>This is the start of the #{currentChannel.name} channel.</p>
+                        </div>
+                    </div>
+                  )}
                   {loadingMessages ? (
                     <div className="channel-message-div-loader">
                       <Placeholder />
@@ -302,7 +334,7 @@ const Chat = ({
                     placeholder={`Message ${currentChannel?.name}`}
                     {...{ chatInput }}
                     {...{ setChatInput }}
-                    {...{errors}}
+                    {...{ errors }}
                   />
 
                   {/* <button type="submit">Send</button> */}

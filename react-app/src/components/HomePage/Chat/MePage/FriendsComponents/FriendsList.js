@@ -8,6 +8,8 @@ import {
 } from "../../../../../store/inbox";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 const useStyles = createUseStyles((theme) => ({
   avatar: {
@@ -125,6 +127,25 @@ const FriendsList = () => {
     return await history.push(`/channels/@me/${existingInbox.uuid}`);
   };
 
+  const tooltip = (
+    <Tooltip placement="top" id="tooltip-top">
+      <div className={classes.buttonNameContainer}>
+        <div className={classes.tooltipText}>Message</div>
+      </div>
+    </Tooltip>
+  );
+
+  const popperConfig = {
+    modifiers: [
+      {
+        name: "offset",
+        options: {
+          offset: [0, 6], // set margin-top to 10px
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <div className={classes.heading}>
@@ -136,43 +157,50 @@ const FriendsList = () => {
         const currFriend = users[determineId(friend)];
         return (
           <>
-          <div className={classes.cardContainer}>
-            <div key={friend.id} className={classes.divider}></div>
-            <div className={classes.outgoingCard}>
-              <div className={classes.imageAndText}>
-                <div>
-                  <img
-                    className={classes.avatar}
-                    src={currFriend?.image_url}
-                  ></img>
-                </div>
-                <div style={{ paddingLeft: "10px" }}>
+            <div className={classes.cardContainer}>
+              <div key={friend.id} className={classes.divider}></div>
+              <div className={classes.outgoingCard}>
+                <div className={classes.imageAndText}>
                   <div>
-                    <h3 style={{ color: theme.offWhite }}>
-                      {currFriend?.username}
-                    </h3>
-                    {/* <p style={{ fontSize: "11px", color: theme.textGray }}>
+                    <img
+                      className={classes.avatar}
+                      src={currFriend?.image_url}
+                    ></img>
+                  </div>
+                  <div style={{ paddingLeft: "10px" }}>
+                    <div>
+                      <h3 style={{ color: theme.offWhite }}>
+                        {currFriend?.username}
+                      </h3>
+                      {/* <p style={{ fontSize: "11px", color: theme.textGray }}>
                         Incoming Friend Request
                       </p> */}
                     </div>
                   </div>
                 </div>
-              <div style={{ display: "flex" }}>
-                <div
-                  onClick={() => handleDmChat(friend)}
-                  className={classes.messageFriend}
-                >
-                  <i className="fa-solid fa-message"></i>
+                <div style={{ display: "flex" }}>
+                  <OverlayTrigger
+                    trigger={["focus", "hover"]}
+                    placement="top"
+                    overlay={tooltip}
+ 
+                    popperConfig={popperConfig}
+                  >
+                    <div
+                      onClick={() => handleDmChat(friend)}
+                      className={classes.messageFriend}
+                    >
+                      <i className="fa-solid fa-message"></i>
+                    </div>
+                  </OverlayTrigger>
                 </div>
               </div>
-              </div>
             </div>
-
           </>
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};
 
 export default FriendsList;

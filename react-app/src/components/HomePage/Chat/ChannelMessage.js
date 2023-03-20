@@ -303,15 +303,11 @@ const ChannelMessage = ({
           <div className="message-content">
             {showEdit ? (
               <>
-              <div>
+              <div style={{width: '100%'}}>
 
 
                 <div className="message-edit-container">
-                  {errors && errors.content && (
-                    <div className="error-msg-message-message">
-                      <p>*{errors.content}*</p>
-                    </div>
-                  )}
+
 
                   {/* <div className="message-edit-input-container">
                       <div
@@ -338,6 +334,11 @@ const ChannelMessage = ({
 
 
                 </div>
+                  {errors && errors.content && (
+                    <div className="error-msg-message-message">
+                      <p>*{errors.content}*</p>
+                    </div>
+                  )}
                 <p id="message-edit-instructions">
                     Press
                     <button type="button" onClick={handleCancel}>

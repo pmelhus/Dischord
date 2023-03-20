@@ -76,7 +76,7 @@ const HomeContent = ({ socket, setLoading, loading }) => {
 
   return (
     <div className="home-content-container">
-      <Route path="/channels/@me">
+      <Route exact path="/channels/@me">
         <div className="server-sidebar-container">
           <FriendsNavBar />
 

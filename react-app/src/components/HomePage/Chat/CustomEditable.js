@@ -5,7 +5,7 @@ const useStyles = createUseStyles((theme) => ({
   editable: {
     overflow: "auto",
     whiteSpace: "pre-wrap",
-    textOverflow: "ellipses",
+    textOverflow: "ellipse",
     // maxWidth: '100%',
     width: '100%',
     padding: '10px 30px'

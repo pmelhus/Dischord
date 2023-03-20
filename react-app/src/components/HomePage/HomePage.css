@@ -595,8 +595,8 @@ display:block;
   width: calc(100% - 322px);
   min-width: 400px;
   /* min-width: 90 */
-  min-height: 100%;
-  height: 100%;
+
+
   /* flex-shrink: 0; */
 }
 
@@ -693,7 +693,7 @@ margin-bottom: 10px;
   position: relative;
   /* height: 60px; */
   flex-shrink: 0;
-  height: fit-content;
+  height: auto;
   min-height: 20px;
 flex-basis: auto;
 /* font-family: --primary-font; */
@@ -788,6 +788,7 @@ width: 100%;
   font-size: 12px;
   margin-top: 2px;
   margin-left: 4px;
+  color:whitesmoke;
 }
 
 #message-edit-instructions i {
@@ -815,10 +816,13 @@ height: 20px;
 
 .message-edit-input-container {
   width: 99%;
+  height:auto;
 }
 
 .message-edit-container {
   width: 100%;
+  height:auto;
+  background-color: rgba(74, 81, 87, .486)
 }
 
 .message-edit-input-container button {
@@ -835,12 +839,16 @@ height: 20px;
 }
 
 .message-content-edit {
-  height: 24px;
+
+word-wrap:break-word;
+overflow: auto;
+  overflow-wrap: break-word;
+  text-overflow: ellipse;
   width: 100%;
 font-size: 16px;
   border: none;
   background-color: transparent;
-  resize: none;
+white-space: pre-wrap;
   outline: none;
   color: rgba(255, 255, 255, 0.791);
   background-color:#62656a7c;
@@ -848,6 +856,7 @@ font-size: 16px;
   padding-left: 6px;
   padding-top: 6px;
   padding-bottom: 6px;
+
 }
 
 .channel-chat-user-msg h4 {
@@ -856,18 +865,19 @@ padding: 0;
 }
 
 #message-edited {
-  font-size: 11px;
+  font-size: 10px;
   margin-left: 6px;
   margin-top: 2px;
-  color:rgba(229, 230, 232, 0.968);
+  color:rgba(130, 136, 148, 0.968);
   top: 8px;
+  padding-bottom: 2px;
   /* position: absolute; */
 }
 
 .message-content-div {
   overflow-y: scroll;
-  height: fit-content;
-  max-height: 115px;
+  height: auto;
+  /* max-height: 115px; */
   word-wrap: break-word;
   background-color:#62656a43;
   padding: 10px;

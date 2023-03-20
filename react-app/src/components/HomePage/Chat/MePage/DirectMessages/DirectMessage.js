@@ -31,7 +31,7 @@ const useStyles = createUseStyles((theme) => ({
     margin: "5px",
   },
   imageAndUsername: {
-    display: "flex",
+
     width: "100%",
   },
 
@@ -41,12 +41,16 @@ const useStyles = createUseStyles((theme) => ({
     // marginBottom: "14px",
     color: theme.offWhite,
   },
-  usernameAndContentFirst: {},
+  usernameAndContentFirst: {
+
+    width: '100%'
+  },
   contentFirst: {
     margin: "0",
     color: theme.offWhite,
     marginLeft: "4px",
     // marginTop: "7px",
+    width: '100%'
   },
   username: {
     marginLeft: "4px",
@@ -64,8 +68,8 @@ const useStyles = createUseStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     borderRadius: "7px",
-    height: "40px",
-    width: "calc(100% - 48px)",
+    // height: "40px",
+    // minWidth: '100%',
     marginLeft: "48px",
   },
   channelChatFormFirst: {
@@ -73,7 +77,7 @@ const useStyles = createUseStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     borderRadius: "7px",
-    height: "40px",
+
     width: "calc(100% - 48px)",
   },
   loadingIconEdit: {
@@ -94,9 +98,11 @@ const useStyles = createUseStyles((theme) => ({
   messageContentDivFirst: {
     display: "flex",
     width: "100%",
-    height: "20px",
+    // height: "20px",
     alignItems: "center",
-    marginTop: "9px",
+    marginTop: "6px",
+    alignItems: "end",
+    // flexDirection: 'column'
   },
   messageContentDiv: {
     display: "flex",
@@ -104,12 +110,18 @@ const useStyles = createUseStyles((theme) => ({
     height: "20px",
     alignItems: "center",
     margin: "4px 0",
+    alignItems: "end",
+    // flexDirection: 'column'
   },
   editedMessage: {
     color: theme.darkGray,
     marginLeft: "4px",
     fontSize: "11px",
+    display: "inline",
   },
+  firstFormContainer: {
+    width: '100%'
+  }
 }));
 
 const DirectMessage = ({
@@ -182,6 +194,12 @@ const DirectMessage = ({
       await setEditLoading(false);
       await setErrors({});
     }
+  };
+
+  const handleCancel = () => {
+    setShowEditor(false);
+    setErrors({});
+    // setMessageEditId(message.id);
   };
 
   const checkAdjacentMessages = (message, inboxDms, ind) => {
@@ -295,7 +313,7 @@ const DirectMessage = ({
                   ></img>
 
                   <div className={classes.usernameAndContentFirst}>
-                    <div style={{ display: "flex", alignItems: "flex-end" }}>
+                    <div style={{ display: "flex", alignItems: "flex-end", width: '100%' }}>
                       <h4 className={classes.username}>
                         {messageUser?.username}
                       </h4>
@@ -307,7 +325,7 @@ const DirectMessage = ({
                       <>
                         {showEditor ? (
                           <>
-                            <>
+                            <div className={classes.firstFormContainer}>
                               <form className={classes.channelChatFormFirst}>
                                 <SlateTextEditor
                                   {...{ setShowEditor }}
@@ -316,17 +334,31 @@ const DirectMessage = ({
                                   {...{ chatInput }}
                                   {...{ setChatInput }}
                                 />
+
                               </form>
-                            </>
+                              <div>
+
+
+                              <p id="message-edit-instructions">
+                                  Press
+                                  <button type="button" onClick={handleCancel}>
+                                    <i className="fa-solid fa-xmark fa-xl"></i>
+                                  </button>
+                                  to cancel. Press enter to submit.
+                                </p>
+                              </div>
+                            </div>
                           </>
                         ) : (
                           <div className={classes.messageContentDivFirst}>
-                            <p className={classes.contentFirst}>
+                            <div className={classes.contentFirst}>
                               {message.content}
-                            </p>
-                            {message.edited && (
-                              <p className={classes.editedMessage}>(edited)</p>
-                            )}
+                              {message.edited && (
+                                <p className={classes.editedMessage}>
+                                  (edited)
+                                </p>
+                              )}
+                            </div>
                           </div>
                         )}
                       </>
@@ -364,16 +396,19 @@ const DirectMessage = ({
                             editMessage={true}
                             {...{ chatInput }}
                             {...{ setChatInput }}
+                            {...{ errors }}
                           />
                         </form>
                       </>
                     </>
                   ) : (
                     <div className={classes.messageContentDiv}>
-                      <p className={classes.content}>{message.content}</p>
-                      {message.edited && (
-                        <p className={classes.editedMessage}>(edited)</p>
-                      )}
+                      <div className={classes.content}>
+                        {message.content}
+                        {message.edited && (
+                          <p className={classes.editedMessage}>(edited)</p>
+                        )}
+                      </div>
                     </div>
                   )}
                 </>
@@ -403,7 +438,11 @@ const DirectMessage = ({
       </div>
       {deleteConfirm && (
         <Modal>
-          <DeleteDmConfirm {...{socket}} {...{ message }} {...{ setDeleteConfirm }} />
+          <DeleteDmConfirm
+            {...{ socket }}
+            {...{ message }}
+            {...{ setDeleteConfirm }}
+          />
         </Modal>
       )}
     </>

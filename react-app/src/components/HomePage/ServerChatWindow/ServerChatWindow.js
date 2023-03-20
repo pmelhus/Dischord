@@ -21,7 +21,7 @@ const ServerChatWindow = ({
   const dispatch = useDispatch();
 
   const [loaded, setLoaded] = useState(false);
-  // console.log(sessionUser)
+
   useEffect(async () => {
     await dispatch(loadAllRequests(sessionUser.id));
     await dispatch(loadAllFriends(sessionUser.id));

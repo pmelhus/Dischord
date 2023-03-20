@@ -38,21 +38,31 @@ const useStyles = createUseStyles((theme) => ({
     justifyContent: "center",
   },
   channelChatForm: {
+    boxSizing: "border-box",
     backgroundColor: "#4a51577c",
     display: "flex",
     alignItems: "center",
     borderRadius: "7px",
-    height: "40px",
-    margin: "0 10px",
+    maxHeight: "400px",
+    minHeight: "40px",
+    overflow: "auto",
+    margin: "0px 20px 26px 20px",
   },
   channelChatFormHighlighted: {
     backgroundColor: "#4a51577c",
     display: "flex",
     alignItems: "center",
     borderRadius: "7px",
-    height: "40px",
+    // height: "40px",
+    overflow: "auto",
+
     margin: "0 10px",
     boxShadow: `0 0 0 4px ${theme.messageHighlight}`,
+  },
+  errorMsg: {
+    color: "red",
+    position: "absolute",
+    bottom: "0px",
   },
 }));
 
@@ -101,12 +111,6 @@ const Chat = ({
   //   if (httpIndex) return string.slice(0, httpIndex);
   // }
 
-  const idleTimer = (socket, id) => {
-    // setTimeout(() => {
-    //   socket?.emit("change_idle", id);
-    // }, "3600000");
-  };
-
   // state for highlighting message field
   const [highlight, setHighlight] = useState(false);
 
@@ -118,21 +122,23 @@ const Chat = ({
         channel_id: channelId,
       })
     );
-    if (sentMessage && sentMessage.errors) {
+    if (sentMessage.errors) {
       await setErrors(sentMessage.errors);
-      return;
-    }
-    // console.log(sentMessage, "SENT MESSAGE");
-    await socket?.emit("chat", sentMessage.owner_id);
+      return {'errors': sentMessage.errors}
+    } else {
 
-    await socket?.emit("timeout_user");
-    // await setErrors({})
-    await setIsSent(true);
-    await bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    // clear the input field after the message is sent
-    await setErrors({});
-    await setChatInput("");
+      await socket?.emit("chat", sentMessage.owner_id);
+
+      // await setErrors({})
+      await setIsSent(true);
+      await bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      // clear the input field after the message is sent
+      await setErrors({});
+      await setChatInput("");
+      return false
+    }
   };
+
 
   useEffect(() => {
     genChannelMessages();
@@ -145,7 +151,7 @@ const Chat = ({
   let serverMembersArr = [];
   if (currentServer) {
     currentServer.members_ids?.forEach((member) => {
-      // console.log(member, "member")
+
       serverMembersArr.push(member.user_id);
     });
   }
@@ -162,7 +168,7 @@ const Chat = ({
 
   // const onlineServerMembers = users.filter()
 
-  // console.log(serverMembersArr, 'CURRENT SERVER HERE')
+
 
   useEffect(() => {
     setMessageError(true);
@@ -186,11 +192,11 @@ const Chat = ({
     }
   }, []);
 
-  useEffect(async() => {
+  useEffect(async () => {
     if (uuid && currInbox) {
-      await setLoadingMessages(true)
-     await dispatch(genDirectMessages(currInbox.id));
-     await setLoadingMessages(false)
+      await setLoadingMessages(true);
+      await dispatch(genDirectMessages(currInbox.id));
+      await setLoadingMessages(false);
     }
   }, [pathname]);
 
@@ -208,15 +214,21 @@ const Chat = ({
   }, [highlight]);
 
   useEffect(async () => {
-   await dispatch(loadAllFriends(sessionUser.id));
-   await setRequestLoaded(true);
+    await dispatch(loadAllFriends(sessionUser.id));
+    await setRequestLoaded(true);
   }, [dispatch]);
 
   return (
     <>
       <Switch>
         <Route path="/channels/@me/*">
-          {requestLoaded && <DirectMessageConversation {...{setLoadingMessages}} {...{loadingMessages}} {...{ socket }} />}
+          {requestLoaded && (
+            <DirectMessageConversation
+              {...{ setLoadingMessages }}
+              {...{ loadingMessages }}
+              {...{ socket }}
+            />
+          )}
         </Route>
         <div className="chat-container">
           <div
@@ -274,35 +286,35 @@ const Chat = ({
                   )}
                 </div>
               </div>
-              <div className="channel-chat-form-div">
-                {/* {pathname.split("/")[2] !== "@me" &&
+              {/* <div className={classes.channelChatFormDiv}> */}
+              {/* {pathname.split("/")[2] !== "@me" &&
                 pathname.split("/")[3] !== "noChannels" && ( */}
-                <>
+              <>
+                <form
+                  className={
+                    highlight
+                      ? classes.channelChatFormHighlighted
+                      : classes.channelChatForm
+                  }
+                >
+                  <SlateTextEditor
+                    {...{ sendChat }}
+                    placeholder={`Message ${currentChannel?.name}`}
+                    {...{ chatInput }}
+                    {...{ setChatInput }}
+                    {...{errors}}
+                  />
+
+                  {/* <button type="submit">Send</button> */}
                   {errors && messageError && errors.content && (
-                    <div className="error-msg-message">
+                    <div className={classes.errorMsg}>
                       <p>*{errors.content}*</p>
                     </div>
                   )}
-                  <form
-                    className={
-                      highlight
-                        ? classes.channelChatFormHighlighted
-                        : classes.channelChatForm
-                    }
-                  >
-                    <SlateTextEditor
-
-                      {...{ sendChat }}
-                      placeholder={`Message ${currentChannel?.name}`}
-                      {...{ chatInput }}
-                      {...{ setChatInput }}
-                    />
-
-                    {/* <button type="submit">Send</button> */}
-                  </form>
-                </>
-                {/* )} */}
-              </div>
+                </form>
+              </>
+              {/* )} */}
+              {/* </div> */}
             </Route>
           </div>
           <Route path="/channels/*/*">

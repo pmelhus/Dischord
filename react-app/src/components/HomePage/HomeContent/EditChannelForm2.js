@@ -24,7 +24,6 @@ const EditChannelForm2 = ({ setShowEditForm2, channel }) => {
 
     const editedChannel = await dispatch(editChannel(payload));
     if (editedChannel.errors) {
-      // console.log(newEstate.errors)
       setErrors(editedChannel.errors);
       return;
     } else {

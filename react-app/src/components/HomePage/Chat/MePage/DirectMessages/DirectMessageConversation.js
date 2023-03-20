@@ -13,16 +13,17 @@ import {
 } from "../../../../../store/friend";
 import Placeholder from "../../../../Placeholders/Placeholder";
 
-
-
 const useStyles = createUseStyles((theme) => ({
   slateEditor: {
+    boxSizing: "border-box",
     backgroundColor: "#4a51577c",
-    margin: "8px 14px",
-    borderRadius: "7px",
-    height: "40px",
     display: "flex",
     alignItems: "center",
+    borderRadius: "7px",
+    maxHeight: "400px",
+    minHeight: "40px",
+    overflow: "auto",
+    margin: "0px 20px 26px 20px",
   },
   container: {
     backgroundColor: "#36393f",
@@ -32,8 +33,8 @@ const useStyles = createUseStyles((theme) => ({
     flexDirection: "column",
     alignItems: "space-between",
 
-    height: "calc(100% - 15px)",
-    maxHeight: "calc(100% - 55px)",
+    height: "calc(100% - 50px)",
+    maxHeight: "calc(100% - 50px)",
   },
   messages: {
     width: "100%",
@@ -73,8 +74,9 @@ const useStyles = createUseStyles((theme) => ({
   directMessagesContainer: {
     position: "relative",
     flexShrink: "0",
-    minHeight: "20px",
-    height: "fit-content",
+    // minHeight: "20px",
+    // height: "fit-content",
+
     flexBasis: "auto",
     width: "100%",
   },
@@ -123,6 +125,11 @@ const useStyles = createUseStyles((theme) => ({
     borderRadius: "3px",
     cursor: "pointer",
   },
+  errorMsg: {
+    color: "red",
+    position: "absolute",
+    bottom: "0px",
+  },
 }));
 
 const DirectMessageConversation = ({
@@ -152,9 +159,8 @@ const DirectMessageConversation = ({
   const currInbox = inboxes.find((inbox) => inbox.uuid === uuid);
 
   const [errors, setErrors] = useState({});
+  const [messageError, setMessageError] = useState(true);
   const [isSent, setIsSent] = useState(false);
-
-
 
   const bottomRef = useRef(null);
 
@@ -173,17 +179,18 @@ const DirectMessageConversation = ({
     );
     if (sentMessage && sentMessage.errors) {
       await setErrors(sentMessage.errors);
-      return;
+      return { errors: sentMessage.errors };
+    } else {
+      await socket?.emit("dmChat", sentMessage.owner_id, currInbox?.id);
+      await setIsSent(true);
+
+      // await socket?.emit("timeout_user");
+      // await setErrors({})
+      // clear the input field after the message is sent
+      await setErrors({});
+      await setChatInput("");
+      return false;
     }
-
-    await socket?.emit("dmChat", sentMessage.owner_id, currInbox?.id);
-    await setIsSent(true);
-
-    // await socket?.emit("timeout_user");
-    // await setErrors({})
-    // clear the input field after the message is sent
-    await setErrors({});
-    await setChatInput("");
   };
 
   const directMessages = useSelector((state) =>
@@ -245,7 +252,6 @@ const DirectMessageConversation = ({
     };
     e.preventDefault();
     const sentRequest = await dispatch(createFriendRequest(payload));
-    console.log(sentRequest);
     if (sentRequest && sentRequest.errors) {
       await setErrors(sentRequest.errors);
       return;
@@ -261,6 +267,13 @@ const DirectMessageConversation = ({
         request.self_id === sessionUser.id) &&
       (request.friend_id === otherUser.id || request.self_id === otherUser.id)
   );
+
+  useEffect(() => {
+    setMessageError(true);
+    if (chatInput.length < 1001) {
+      setMessageError(false);
+    }
+  }, [chatInput]);
 
   return (
     <div className={classes.container}>
@@ -326,20 +339,25 @@ const DirectMessageConversation = ({
                 </div>
               </FadeIn>
             ))}
+        <div style={{ height: "1px" }} ref={bottomRef}></div>
           </>
         )}
-        <div style={{ height: "1px" }} ref={bottomRef}></div>
       </div>
       <div className={classes.slateEditor}>
         <SlateTextEditor
+          {...{ errors }}
           {...{ sendChat }}
           placeholder={`Message `}
           {...{ chatInput }}
           {...{ setChatInput }}
           editMessage={false}
         />
+        {errors && messageError && errors.content && (
+          <div className={classes.errorMsg}>
+            <p>*{errors.content}*</p>
+          </div>
+        )}
       </div>
-
     </div>
   );
 };

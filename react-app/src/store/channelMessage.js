@@ -37,7 +37,7 @@ export const genChannelMessages = (id) => async (dispatch) => {
 
 export const createChannelMessage = (payload) => async (dispatch) => {
   const edited = false;
-  // console.log(payload, 'PAYLOAD=========')
+
   const { user_id, msg, channel_id} = payload;
 
   const f = new FormData();
@@ -53,7 +53,7 @@ export const createChannelMessage = (payload) => async (dispatch) => {
     }),
   ]);
 
-  // console.log(response);
+
   if (response.ok) {
     const data = await response.json();
     dispatch(addChannelMessage(data));
@@ -81,7 +81,7 @@ export const editChannelMessage = (payload) => async (dispatch) => {
 
 
   const { id, content, channel_id, owner_id, edited} = payload;
-  // console.log(payload, 'HEEERE')
+
   const f = new FormData();
   f.append("content", content);
   f.append("channel_id", channel_id);
@@ -113,13 +113,13 @@ export const editChannelMessage = (payload) => async (dispatch) => {
       return {'errors':errorObj};
     }
   } else {
-    console.log('ERRORS')
+
     return ["An error occurred. Please try again."];
   }
 };
 
 export const deleteChannelMessage = (channelMessage) => async (dispatch) => {
-  // console.log(channelMessage, 'HIYA')
+
   const { id } = channelMessage;
   const response = await fetch(`/api/channel_messages/${id}`, {
     method: "DELETE",
@@ -157,7 +157,7 @@ const channelMessageReducer = (state = {}, action) => {
       return copyState;
     case LOAD_CHANNEL_MESSAGES:
       const channelMessageData = {};
-      // console.log(action.payload)
+
       if (action.payload) {
         for (let channelMessage of action.payload) {
           channelMessageData[channelMessage.id] = channelMessage;

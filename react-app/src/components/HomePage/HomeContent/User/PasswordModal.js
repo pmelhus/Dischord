@@ -24,7 +24,7 @@ const PasswordModal = ({ user, setPasswordModal, setEditModal }) => {
 
     if (editedPassword.errors) {
       setErrors(editedPassword.errors);
-      console.log(editedPassword.errors)
+
       return;
     } else {
       setEditModal(false);

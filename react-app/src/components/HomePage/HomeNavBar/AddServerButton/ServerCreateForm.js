@@ -30,7 +30,7 @@ const ServerCreateForm = ({ setShowServerModal }) => {
     await setLoading(true);
     const newServer = await dispatch(createServer(payload));
     if (newServer.errors) {
-      // console.log(newEstate.errors)
+
       await setLoading(false);
       setErrors(newServer.errors);
       return;

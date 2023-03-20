@@ -33,7 +33,7 @@ const addAllInboxMembers = (data) => {
 
 export const createInbox = (payload) => async (dispatch) => {
   const { self_id, friend_id } = payload;
-  // console.log('test')
+
   const f = new FormData();
 
   f.append("self_id", self_id);
@@ -68,7 +68,7 @@ export const createInbox = (payload) => async (dispatch) => {
 
 export const addInboxMembers = (payload) => async (dispatch) => {
   const { self_id, friend_id, inbox_id } = payload;
-  // console.log('test')
+
   const f = new FormData();
 
   f.append("self_id", self_id);
@@ -167,7 +167,7 @@ const inboxReducer = (state = {}, action) => {
         [action.payload.inbox.id]: action.payload.inbox,
       };
     case GET_INBOX:
-      console.log(action.payload, 'BOX')
+
       return {
         ...state,
         [action.payload.id]: action.payload,

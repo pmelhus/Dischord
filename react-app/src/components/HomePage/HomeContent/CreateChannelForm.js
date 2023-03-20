@@ -23,9 +23,7 @@ const CreateChannelForm = ({ setShowChannelForm }) => {
 
     const payload = { name, description, server_id };
     const newChannel = await dispatch(createChannel(payload));
-    //  console.log(newChannel)
     if (newChannel.errors) {
-      console.log(newChannel.errors);
       setErrors(newChannel.errors);
       return;
     } else {

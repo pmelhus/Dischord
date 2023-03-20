@@ -52,7 +52,6 @@ const DirectMessageHeader = () => {
   };
 
   const dmUser = users[determineId(inboxMembers)];
-  console.log(dmUser, "here");
 
   return (
     <>

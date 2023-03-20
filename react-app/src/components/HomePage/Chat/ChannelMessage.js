@@ -1,5 +1,5 @@
 import { editChannelMessage } from "../../../store/channelMessage";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal } from "../../../context/Modal";
 // import EditMessageModal from "./DeleteConfirmModalMessage ";
@@ -9,6 +9,99 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import UserProfilePopover from "../UserProfilePopover/UserProfilePopover";
 import { useLocation, Route } from "react-router-dom";
 import LinkDisplay from "./LinkDisplay";
+import SlateTextEditor from "./SlateTextEditor";
+import { Slate } from "slate-react";
+import { createUseStyles, useTheme } from "react-jss";
+
+const useStyles = createUseStyles((theme) => ({
+  messageDiv: {
+    "&:hover": {
+      backgroundColor: theme.messageBackground,
+    },
+    marginRight: "4px",
+  },
+
+  imageAndUsername: {
+    display: "flex",
+    width: "100%",
+  },
+
+  content: {
+    margin: "0",
+    marginLeft: "56px",
+    // marginBottom: "14px",
+    color: theme.offWhite,
+  },
+  usernameAndContentFirst: {},
+  contentFirst: {
+    margin: "0",
+    color: theme.offWhite,
+    marginLeft: "4px",
+    // marginTop: "7px",
+  },
+  username: {
+    marginLeft: "4px",
+    color: theme.offWhite,
+    fontSize: "15px",
+  },
+  date: {
+    margin: "0",
+    marginLeft: "14px",
+    color: theme.darkGray,
+    fontSize: "12px",
+  },
+  channelChatForm: {
+    backgroundColor: "#4a51577c",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "7px",
+    height: "40px",
+    width: "calc(100% - 48px)",
+    marginLeft: "48px",
+  },
+  channelChatFormFirst: {
+    backgroundColor: "#4a51577c",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "7px",
+
+    width: "calc(100% - 48px)",
+  },
+  loadingIconEdit: {
+    width: "30px",
+    height: "24px",
+    color: "white",
+    marginLeft: "60px",
+    objectFit: "cover",
+    color: theme.offWhite,
+  },
+  loadingIconEditFirst: {
+    width: "30px",
+    height: "24px",
+    color: "white",
+    objectFit: "cover",
+    color: theme.offWhite,
+  },
+  messageContentDivFirst: {
+    display: "flex",
+    width: "100%",
+    // height: "20px",
+    alignItems: "center",
+    marginTop: "6px",
+  },
+  messageContentDiv: {
+    display: "flex",
+    width: "100%",
+    height: "20px",
+    alignItems: "center",
+    margin: "4px 0",
+  },
+  editedMessage: {
+    color: theme.darkGray,
+    marginLeft: "4px",
+    fontSize: "11px",
+  },
+}));
 
 const ChannelMessage = ({
   setMessageEditId,
@@ -18,10 +111,12 @@ const ChannelMessage = ({
   messageEditId,
   currentChannelMessages,
 }) => {
+  const theme = useTheme();
+  const classes = useStyles({ theme });
   const users = useSelector((state) => state.users);
   const messageUser = users[message.owner_id];
   const sessionUser = useSelector((state) => state.session.user);
-  // console.log(sessionUser)
+
   const [showEdit, setShowEdit] = useState(false);
   const [content, setContent] = useState(message.content);
   const [errors, setErrorsEdit] = useState({});
@@ -32,19 +127,24 @@ const ChannelMessage = ({
   // const [messageEditId, setMessageEditId] = useState(null);
   const servers = useSelector((state) => state.servers);
 
-  const handleEditModal = () => {
-    console.log(messageEditId, "MESSAGE EDIT ID");
-    console.log(message.id, "MESSAGE ID");
+  const [value, setValue] = useState("");
 
+  const textAreaRef = useRef(null);
+
+  const updateHeight = () => {
+    const element = textAreaRef.current;
+    element.style.height = "auto";
+    element.style.height = `${element.scrollHeight}px`;
+  };
+
+  const handleEditModal = () => {
     setShowEdit(true);
     setContent(message.content);
     setMessageEditId(message.id);
-    // console.log(messageEditId, "MESSAGE EDIT ID ");
   };
 
   const editInputSubmit = async (e) => {
     // channel_id, content, edited, owner_id, id
-    await e.preventDefault();
     const payload = {
       channel_id: message.channel_id,
       content: content,
@@ -57,10 +157,10 @@ const ChannelMessage = ({
 
     if (editedMessage.errors) {
       setErrorsEdit(editedMessage.errors);
-      // console.log(editedMessage.errors);
+
       // setShowEdit(false);
       setContent(message.content);
-      // console.log(content.length, "CONTENT");
+
       if (content.length > 1000) {
         setContent(content);
       }
@@ -79,7 +179,6 @@ const ChannelMessage = ({
     setShowEdit(false);
     setErrorsEdit({});
     // setMessageEditId(message.id);
-    // console.log(messageEditId, "MESSAGE EDIT ID ");
   };
 
   const handleDeleteModal = () => {
@@ -140,7 +239,7 @@ const ChannelMessage = ({
     </Popover>
   );
 
-// Checks for url in string
+  // Checks for url in string
   const checkIfIncludes = (string) => {
     const urlRegex =
       // eslint-disable-next-line no-useless-escape
@@ -204,45 +303,66 @@ const ChannelMessage = ({
           <div className="message-content">
             {showEdit ? (
               <>
+              <div style={{width: '100%'}}>
+
+
                 <div className="message-edit-container">
+
+
+                  {/* <div className="message-edit-input-container">
+                      <div
+                      role='textbox'
+                        ref={textAreaRef}
+                        className="message-content-edit"
+                        value={content}
+                        onChange={(e) => {
+                          setContent(e.target.value);
+
+                        }}
+                      >
+                        {content}
+                      </div>
+                    </div> */}
+
+                  <SlateTextEditor
+                    {...{ setShowEdit }}
+                    editMessage={true}
+                    sendChat={editInputSubmit}
+                    chatInput={content}
+                    setChatInput={setContent}
+                  />
+
+
+                </div>
                   {errors && errors.content && (
                     <div className="error-msg-message-message">
                       <p>*{errors.content}*</p>
                     </div>
                   )}
-                  <form onSubmit={editInputSubmit}>
-                    <div className="message-edit-input-container">
-                      <input
-                        className="message-content-edit"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                      ></input>
-                    </div>
-                    <p id="message-edit-instructions">
-                      Press
-                      <button type="button" onClick={handleCancel}>
-                        <i className="fa-solid fa-xmark fa-xl"></i>
-                      </button>
-                      to cancel. Press enter to submit.
-                    </p>
-                  </form>
-                </div>
+                <p id="message-edit-instructions">
+                    Press
+                    <button type="button" onClick={handleCancel}>
+                      <i className="fa-solid fa-xmark fa-xl"></i>
+                    </button>
+                    to cancel. Press enter to submit.
+                  </p>
+              </div>
               </>
             ) : (
               <div className="message-content-edited">
-
                 {/* Displays regular message unless theres a link present in the message */}
 
                 {checkIfIncludes(message.content) !== -1 ? (
                   <>
                     <LinkDisplay {...{ message }} />
+                    {message.edited && <p id="message-edited">(edited)</p>}
                   </>
                 ) : (
-                  <p id="message-actual-content">{`${message?.content}`}</p>
+                  <div style={{display: 'flex', alignItems: 'end'}}>
+                    <p id="message-actual-content">{`${message?.content}`}</p>
+                    {message.edited && <p id="message-edited">(edited)</p>}
+                  </div>
                 )}
-                {/* <div> */}
-                {message.edited && <p id="message-edited">(edited)</p>}
-                {/* </div> */}
               </div>
             )}
             {sessionUser.id === messageUser.id && !showEdit ? (

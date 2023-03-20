@@ -28,7 +28,7 @@ const ServerEditModal = ({ setShowEditModal }) => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+
     if (e.target.value === "true") {
       setPrivacy(true);
     }
@@ -57,7 +57,6 @@ const ServerEditModal = ({ setShowEditModal }) => {
     const editedServer = await dispatch(editServer(payload));
 
     if (editedServer.errors) {
-      // console.log(newEstate.errors)
       await setErrors(editedServer.errors);
       await setLoading(false);
       return;

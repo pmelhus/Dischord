@@ -138,7 +138,6 @@ const AddFriendInput = () => {
     const payload = { self_id: sessionUser.id, friend_username: username };
     e.preventDefault();
     const sentRequest = await dispatch(createFriendRequest(payload));
-    console.log(sentRequest);
     if (sentRequest && sentRequest.errors) {
       await setErrors(sentRequest.errors);
       return;

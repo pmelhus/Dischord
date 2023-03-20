@@ -69,7 +69,6 @@ const InviteUserItem = ({ socket, currentServer, user, setInviteModal }) => {
     // const serverMember = await dispatch(createServerMember(payload))
     // await socket.emit('chat')
     // if (serverMember.errors) {
-    //   console.log(serverMember.errors);
 
     //   await setErrors(serverMember.errors);
     //   return

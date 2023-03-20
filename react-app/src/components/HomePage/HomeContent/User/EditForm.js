@@ -19,7 +19,7 @@ const EditForm = ({ editModal, setEditModal, socket, setLoading }) => {
 
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
   const handleCancel = () => {
-    console.log(editModal);
+
     setEditModal(!editModal);
   };
 
@@ -53,7 +53,7 @@ const EditForm = ({ editModal, setEditModal, socket, setLoading }) => {
   const handlePasswordModal = (e) => {
     e.preventDefault();
     // setEditModal(false)
-    console.log("werkin");
+
     setPasswordModal(!passwordModal);
   };
 

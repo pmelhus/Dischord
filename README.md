@@ -2,7 +2,7 @@
 
 ## Dischord at a Glance
 
-Dischord is a full stack application intended for musicians and other creatives to network, communicate, and connect. Users can create profiles, servers, and channels. They're able to live message one another on a server given that the other user is a member of that server.  There is a Demo User available to browse all of the logged in features.
+Dischord is a full stack application intended for musicians and other creatives to network, communicate, and connect. Users can create profiles, servers, channels in servers, friend requests, and server invitations. Through the implementation of Socket.IO, users can also send live messages to server chat rooms or directly message their friends. With the use of Slate-React, when users type in a link that leads to either a youtube video or image, the image will render in the respective chat room. I have also created a "Friend Suggestion" feature where the current user will be connected with the mutual friends of all of their current friends in their friend list (the suggestions appear in order of highest frequency of mutuality between current friends). There is a Demo User available to browse all of the logged in features.
 
 
 
@@ -47,10 +47,12 @@ Dischord is a full stack application intended for musicians and other creatives 
 - Logged in users can:
   - Sign up / login with email.
   - Create, edit, and delete their servers and channels
-  - Send friend requests to other users using their username
-  - Once friends, the user can invite someone from their friend list to a server
-  - Live messaging is implemented for both servers and direct messages between friends
   - Update their profile and servers with a personal avatar
+  - Send friend requests to other users using their username
+  - See a list of friend suggestions based on the mutuality of the friends of their own friends
+  - Invite friends from their friend list to a server
+  - Send live messages to a server or directly to one of their friends
+  - See images and youtube videos rendered in the chat room once a message with the corresponding link has been sent
 
 - Friend Recommendations
 
@@ -149,10 +151,12 @@ Dischord relies on PostgreSQL to maintain its relational database.
 
 - Socket IO
   - Understanding the dataflow of Socket IO took some time and effort. After getting a better grasp of how the data flows from the front to the backend, I was able to successfully implement the live chat feature in the application.
+- Slate-React
+  - Rendering messages via Slate and rendering images and videos based on links in the message was challenging. Slate has a special way of rendering text as nodes so understanding the different types of nodes and how they related to the text editor was crucial to it's implementation. Controlling the way they were rendering (transformed) required extensive reading into the documentation.
 
 ## Conclusion and Next Steps
 
-- The next step for Dischord is to add a friends feature, direct messaging, and implement voice chat.
+- The next step for Dischord are to implement voice chat and let users explore other public servers.
 - The long term goal of Dischord is to implement low-latency server voice chats so that musicians can play together in real time.
 <br>
 <br>

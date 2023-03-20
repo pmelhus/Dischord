@@ -20,7 +20,6 @@ const DeleteDmConfirm = ({ socket, message, setDeleteConfirm }) => {
     const deletedMessage = await dispatch(deleteDirectMessage(message));
 
     if (deletedMessage && deletedMessage.errors) {
-      // console.log(newEstate.errors)
       setErrors(deletedMessage.errors);
       return;
     }

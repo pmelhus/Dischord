@@ -19,7 +19,6 @@ const DeleteConfirmModalMessage = ({
     const deletedMessage = await dispatch(deleteChannelMessage(message));
     await setDeleteEvent(true);
     if (deletedMessage && deletedMessage.errors) {
-      // console.log(newEstate.errors)
       setErrors(deletedMessage.errors);
       return;
     }

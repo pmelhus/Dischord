@@ -13,7 +13,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 
 const useStyles = createUseStyles((theme) => ({
 
-  
+
 }));
 
 const MePage = ({ selected, setSelected, loaded }) => {
@@ -57,7 +57,7 @@ const MePage = ({ selected, setSelected, loaded }) => {
     }
   }
 
-  console.log(emptyFriendsListFunc())
+
 
   // const requests = useSelector((state) => Object.values(state.friends.requests));
 

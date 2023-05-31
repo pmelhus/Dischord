@@ -28,7 +28,7 @@ body {
   /* min-width: 1980px;
   min-height: 1080px; */
   /* overflow: hidden; */
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 
   font-family: "gg sans","Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 
